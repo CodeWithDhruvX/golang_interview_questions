@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Operators in Go",
+      "content": "In Go, operators like `+`, `-`, and `*` are commonly used in arithmetic expressions. This guide explores how to handle constraints with these operators effectively, keeping your code simple and robust.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Arithmetic Operators",
+      "content": "Go supports basic arithmetic operators such as `+`, `-`, `*`, `/`, and `%` for performing arithmetic on numbers. These operators work with integers and floating-point numbers.\n\nExample:\n```go\npackage main\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(5 + 3)  // Output: 8\n\tfmt.Println(10 - 4) // Output: 6\n\tfmt.Println(2 * 3)  // Output: 6\n\tfmt.Println(10 / 2) // Output: 5\n\tfmt.Println(10 % 3) // Output: 1\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Handling Overflow and Underflow",
+      "content": "In Go, performing arithmetic with integers can result in overflow or underflow. When an overflow occurs, the result wraps around to the opposite end of the number range.\n\nExample:\n```go\npackage main\nimport \"fmt\"\n\nfunc main() {\n\tvar maxInt int = 2147483647 // max value for int32\n\tfmt.Println(maxInt + 1) // Will cause overflow\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Overflow Example Explanation",
+      "content": "In the previous example, when adding `1` to `2147483647` (the max value of a 32-bit integer), an overflow happens, and the value wraps around to the minimum value of the integer type.\n\nTo handle overflow, you can use a larger integer type like `int64` or use a library like `math/big` for arbitrary precision.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Handling Floating-Point Precision",
+      "content": "When performing operations on floating-point numbers (`float32` or `float64`), Go can encounter precision issues. This is due to the way floating-point numbers are represented in memory.\n\nExample:\n```go\npackage main\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(0.1 + 0.2) // Expected: 0.3, but result may not be exactly 0.3\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Precision Issue Explanation",
+      "content": "The result of `0.1 + 0.2` might not be exactly `0.3` because of how floating-point numbers are stored in binary. This is a common issue in many programming languages.\n\nTo mitigate such issues, it's important to round results when needed, or use a higher precision type, such as `math/big.Float`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Working with Complex Numbers",
+      "content": "Go also supports complex numbers using the `complex` type. You can perform arithmetic on complex numbers using the same operators.\n\nExample:\n```go\npackage main\nimport \"fmt\"\n\nfunc main() {\n\tz1 := complex(3, 4)\n\tz2 := complex(1, 2)\n\tfmt.Println(z1 + z2) // Output: (4+6i)\n\tfmt.Println(z1 - z2) // Output: (2+2i)\n\tfmt.Println(z1 * z2) // Output: (-5+10i)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Constraints with Complex Numbers",
+      "content": "When working with complex numbers in Go, ensure that you understand the rules of complex arithmetic. Go allows basic operations such as addition, subtraction, multiplication, and division.\n\nIf you need advanced operations, you can utilize the `math/cmplx` package.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go Operator Constraints Summary",
+      "content": "| Operator | Supported Types | Notes |\n|----------|-----------------|-------|\n| +        | int, float, complex | Adds numbers |\n| -        | int, float, complex | Subtracts numbers |\n| *        | int, float, complex | Multiplies numbers |\n| /        | int, float         | Divides numbers (avoid division by zero) |\n| %        | int               | Modulo operation (applies to integers) |",
+      "slide_type": "table"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Test your knowledge on Go operators with these questions:\n\n1. What happens when you exceed the integer limit in Go?\n2. How do you handle precision issues when working with floating-point numbers in Go?\n3. Can you perform arithmetic on complex numbers in Go? What operators are supported?\n4. What type would you use to prevent overflow issues in Go arithmetic?\n\nTry answering these questions on your own!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the solutions:\n\n1. **Overflow/Underflow**: When you exceed the integer limit in Go, the value wraps around, causing overflow or underflow. To avoid this, you can use larger integer types or libraries like `math/big`.\n\n2. **Floating-point precision**: Floating-point precision issues can be handled by rounding results or using higher precision types like `math/big.Float`.\n\n3. **Complex numbers**: Yes, Go supports complex numbers. You can perform arithmetic using operators like `+`, `-`, and `*`.\n\n4. **Overflow prevention**: To prevent overflow, you can use `int64` for larger ranges or `math/big` for arbitrary precision arithmetic.",
+      "slide_type": "code"
+    }
+  ]
+  

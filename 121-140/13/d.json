@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Type Sets in Go 1.18+",
+      "content": "In Go 1.18+, type sets are used in conjunction with **type parameters** and **generics**. Type sets define the set of types that a generic type parameter can accept. They play a crucial role in making Go more flexible and reusable without sacrificing type safety.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is a Type Set?",
+      "content": "A **type set** is a set of types that a generic function, method, or type can work with. In Go 1.18+, this is part of **type parameters** used in **generics**. Type sets allow developers to specify constraints on types, enabling greater flexibility while maintaining type safety.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defining Type Sets Using Constraints",
+      "content": "Type sets are typically defined using **constraints** in Go. A constraint specifies the allowed types for a generic. Here's how to define a simple constraint using an interface:\n\n```go\npackage main\n\ntype Number interface {\n\tint | float64\n}\n\nfunc add[T Number](a, b T) T {\n\treturn a + b\n}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Union Types in Type Sets",
+      "content": "In Go 1.18+, you can use **union types** in your type sets. This means you can combine multiple types into a single set, allowing more flexibility. For example, `int | float64` creates a union type that includes both `int` and `float64`.\n\nExample:\n\n```go\ntype Number interface {\n\tint | float64\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Set Example with a Function",
+      "content": "Consider the following example where we use a type set to define a function that can accept both integers and floats.\n\n```go\npackage main\n\nimport \"fmt\"\n\ntype Number interface {\n\tint | float64\n}\n\nfunc multiply[T Number](a, b T) T {\n\treturn a * b\n}\n}\n\nfunc main() {\n\tfmt.Println(multiply(2, 3))  // Output: 6\n\tfmt.Println(multiply(2.5, 4.5))  // Output: 11.25\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Constraints with Built-in Types",
+      "content": "Go 1.18+ allows constraints to be applied to built-in types. For example, the built-in `comparable` constraint is used to restrict types to only those that can be compared for equality:\n\n```go\ntype Comparable interface {\n\tcomparable\n}\n\nfunc isEqual[T Comparable](a, b T) bool {\n\treturn a == b\n}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Advanced Constraints: Interface and Structs",
+      "content": "You can also use interfaces and structs as constraints in type sets. This allows for more complex constraints. For instance, you can use a constraint that requires a type to implement a specific interface:\n\n```go\ntype MyInterface interface {\n\tDoSomething() string\n}\n\ntype Worker[T MyInterface] struct {\n\tItem T\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Set Limitations",
+      "content": "While type sets in Go 1.18+ offer great flexibility, there are still some limitations. For instance, Go does not yet support constraints like **polymorphic** types (i.e., constraints on methods, or more complex behaviors that depend on type characteristics beyond simple types).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Type Sets?",
+      "content": "Type sets allow for greater code reuse and type safety in Go programs. By using generics with type sets, you can write more flexible, efficient, and readable code without needing to duplicate logic for every data type.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. What is a **type set** in Go 1.18+?\n2. How do you define a **constraint** using a type set?\n3. What is a **union type** in a type set?\n4. Can you use structs as constraints in Go type sets? Give an example.\n\nTry to answer these questions to check your understanding!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions:\n\n1. A **type set** defines the set of types that a generic function, method, or type can accept.\n2. A **constraint** can be defined by using an interface with the allowed types, e.g., `type Number interface { int | float64 }`.\n3. A **union type** allows you to define a set of types using the `|` operator, e.g., `int | float64`.\n4. Yes, structs can be used as constraints in type sets. Example:\n\n```go\ntype MyInterface interface {\n\tDoSomething() string\n}\n\ntype Worker[T MyInterface] struct {\n\tItem T\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

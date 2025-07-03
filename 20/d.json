@@ -1,0 +1,64 @@
+[
+    {
+      "title": "Introduction to Panic and Recover",
+      "content": "**panic** and **recover** are powerful built-in mechanisms in Go used for handling abnormal or unexpected runtime behavior.\n\n- `panic`: Instantly stops the normal control flow of the program. Typically used when something goes seriously wrong.\n- `recover`: Allows a program to regain control after a panic, but only if called inside a `defer` function.\n\nThis mechanism is not meant to replace conventional error handling using `error` values. Instead, it is used in situations where continuing execution is either dangerous or meaningless.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is Panic?",
+      "content": "`panic` is used to indicate a program failure. When a function panics, it starts unwinding the call stack, executing any `defer` statements along the way. If the panic is not recovered, the program crashes.\n\nCommon causes of panic:\n- Accessing an array or slice out of bounds\n- Dereferencing a `nil` pointer\n- Manually triggering `panic()` with a custom message\n\nUse `panic` when your program is in a state where proceeding would be unsafe, such as a corrupted internal state or invalid assumptions.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Example of Panic",
+      "content": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Start\")\n    panic(\"Something went wrong!\")\n    fmt.Println(\"End\") // This will not run\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "What is Recover?",
+      "content": "`recover` is used to regain control after a `panic`. It must be called from within a deferred function, or it has no effect.\n\nWhen `recover` is used inside a `defer`, and a panic has occurred, it captures the panic value and stops the panic sequence. This prevents the program from crashing.\n\nIf no panic has occurred, `recover` simply returns `nil`. This makes `recover` ideal for writing defensive code in libraries or critical systems where a panic should be logged but not crash the system.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using Defer, Panic, and Recover",
+      "content": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    defer func() {\n        if r := recover(); r != nil {\n            fmt.Println(\"Recovered from panic:\", r)\n        }\n    }()\n\n    fmt.Println(\"Start\")\n    panic(\"Unexpected error\")\n    fmt.Println(\"End\") // This will not run\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Panic vs Recover Comparison",
+      "content": [
+        {
+          "Function": "panic",
+          "Purpose": "To raise a runtime error and stop execution"
+        },
+        {
+          "Function": "recover",
+          "Purpose": "To catch and handle a panic inside a deferred function"
+        },
+        {
+          "Function": "panic without recover",
+          "Purpose": "Program crashes with error and stack trace"
+        },
+        {
+          "Function": "panic with recover",
+          "Purpose": "Recovers control and prevents crash"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "When to Use Panic and Recover",
+      "content": "**Use `panic`** when the program encounters an error from which it cannot or should not recover. These are rare and usually signal a bug or critical issue like:\n- Memory corruption\n- Missing essential configurations\n- Invariant violations (e.g., impossible conditions)\n\n**Use `recover`** sparingly, typically in the following cases:\n- To log and recover from panics in HTTP handlers or goroutines\n- To keep a long-running service stable\n\nAvoid using `panic` and `recover` for regular error handling; instead, return errors where appropriate. Reserve these tools for truly exceptional scenarios.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Real-World Use Case",
+      "content": "In production systems, it’s important that a panic in one part of the program doesn’t bring the entire system down. This is especially true in web servers or concurrent systems using goroutines.\n\nExample:\n- A web server like Gin or Echo uses `recover` in a middleware to catch panics from handlers. Instead of crashing, it logs the error and sends a 500 response.\n- In CLI tools or batch jobs, developers wrap the entry point in a defer-recover block to catch panics and print helpful debugging info.\n\nUsing `recover` in strategic places ensures stability and better fault tolerance in Go applications.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Takeaways",
+      "content": "- **panic** is a last-resort mechanism for handling unrecoverable errors.\n- **recover** provides a way to catch and handle panics gracefully.\n- Always wrap `recover()` in a `defer` block; it won’t work otherwise.\n- These tools are best used sparingly and carefully.\n- For routine errors, prefer returning `error` values and handling them explicitly.\n\nUnderstanding panic and recover helps in building resilient applications and writing defensive code in Go.",
+      "slide_type": "text"
+    }
+  ]

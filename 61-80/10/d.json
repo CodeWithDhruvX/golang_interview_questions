@@ -1,0 +1,61 @@
+[
+    {
+      "title": "Introduction to sync.WaitGroup",
+      "content": "**sync.WaitGroup** is a type provided by Go’s `sync` package that helps you wait for a collection of goroutines to finish executing.\n\nIt is commonly used in concurrent programs to block until all goroutines have completed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use WaitGroup?",
+      "content": "- Managing concurrency safely\n- Waiting for multiple goroutines without complex locking\n- Clean and readable synchronization pattern\n\nInstead of manually signaling with channels, `sync.WaitGroup` provides a simpler way to coordinate goroutines.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How sync.WaitGroup Works",
+      "content": "- `Add(n)`: Increments the counter by n\n- `Done()`: Decrements the counter by 1 (called by goroutines)\n- `Wait()`: Blocks until the counter is 0\n\nThese three methods are the core of `WaitGroup` usage.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic WaitGroup Example",
+      "content": "package main\n\nimport (\n    \"fmt\"\n    \"sync\"\n)\n\nfunc worker(id int, wg *sync.WaitGroup) {\n    defer wg.Done()\n    fmt.Printf(\"Worker %d starting\\n\", id)\n    // simulate work\n    fmt.Printf(\"Worker %d done\\n\", id)\n}\n\nfunc main() {\n    var wg sync.WaitGroup\n    for i := 1; i <= 3; i++ {\n        wg.Add(1)\n        go worker(i, &wg)\n    }\n    wg.Wait()\n    fmt.Println(\"All workers completed\")\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "WaitGroup Methods Overview",
+      "content": [
+        {
+          "Method": "Add(n int)",
+          "Description": "Increases the WaitGroup counter by n"
+        },
+        {
+          "Method": "Done()",
+          "Description": "Decreases the counter by 1"
+        },
+        {
+          "Method": "Wait()",
+          "Description": "Blocks until the counter becomes 0"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Common Mistakes with WaitGroup",
+      "content": "- Calling `Add` **after** goroutines have started\n- Forgetting to call `Done()` inside the goroutine\n- Not using pointer when passing WaitGroup (pass `*sync.WaitGroup`)\n- Mismanaging the counter can lead to deadlocks or premature exits",
+      "slide_type": "text"
+    },
+    {
+      "title": "Visualizing WaitGroup Flow",
+      "content": "1. `main` adds 3 to the WaitGroup counter.\n2. 3 goroutines start, each calls `Done()` when finished.\n3. `main` waits at `Wait()` until the counter reaches 0.\n\nThis ensures that `main` exits only after all work is complete.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "**Question 1:** What happens if you forget to call `wg.Done()` inside a goroutine?\n\n**Question 2:** Can you pass `sync.WaitGroup` by value to a function?\n\n**Question 3:** In what order should `Add`, `go func()`, and `Wait` be called?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "// Question 1:\n// The counter never reaches 0, so `Wait()` blocks forever (deadlock).\n\n// Question 2:\n// No. Always pass a pointer (`*sync.WaitGroup`) so all goroutines modify the same counter.\n\n// Question 3:\n// Correct order:\n// 1. Call `Add()`\n// 2. Start goroutine\n// 3. Inside goroutine, call `Done()`\n// 4. In main, call `Wait()` after starting goroutines",
+      "slide_type": "code"
+    }
+  ]
+  

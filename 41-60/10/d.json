@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Polymorphism in Go",
+      "content": "Polymorphism is a concept in object-oriented programming where an object can take on multiple forms. In Go, polymorphism is achieved through interfaces, which allow different types to be treated as the same type.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Polymorphism through Interfaces",
+      "content": "In Go, interfaces are used to define polymorphism. A type is said to implement an interface if it provides methods that the interface defines. No explicit declaration is required to implement an interface in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example of Polymorphism",
+      "content": "Consider a simple example where we have an interface `Speaker` and two types `Person` and `Robot` that implement this interface.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Polymorphism Code Example",
+      "content": "```go\npackage main\nimport \"fmt\"\n\n// Define the Speaker interface\ntype Speaker interface {\n\tSpeak() string\n}\n\n// Define the Person type\ntype Person struct{}\nfunc (p Person) Speak() string {\n\treturn \"Hello!\"\n}\n\n// Define the Robot type\ntype Robot struct{}\nfunc (r Robot) Speak() string {\n\treturn \"Beep boop!\"\n}\n\n// Function that takes a Speaker interface\nfunc talk(s Speaker) {\n\tfmt.Println(s.Speak())\n}\n\nfunc main() {\n\tp := Person{}\n\tr := Robot{}\n\ntalk(p)  // Output: Hello!\ntalk(r)  // Output: Beep boop!\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Points About Polymorphism in Go",
+      "content": "- Polymorphism in Go is based on interfaces.\n- Types don’t need to explicitly declare that they implement an interface.\n- Interfaces allow for flexible and reusable code.\n- Polymorphism enables code to work with different types uniformly.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Advantages of Polymorphism in Go",
+      "content": "- **Loose Coupling**: It reduces dependencies between components.\n- **Code Reusability**: The same code can work with different types.\n- **Extensibility**: New types can be added without modifying existing code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Use Cases of Polymorphism",
+      "content": "- **Event Handling**: Handling different events in a common way.\n- **Data Serialization**: Supporting multiple data formats using polymorphic structures.\n- **Generic Programming**: Writing functions that can accept different types using interfaces.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Pitfalls",
+      "content": "Although polymorphism is powerful, it can introduce complexity if not used carefully. Overuse of interfaces can lead to difficult-to-understand code. It’s important to strike a balance between flexibility and simplicity.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Question 1: What is needed for a type to implement an interface in Go?\n\n### Question 2: In the provided example, what will be the output when calling `talk(p)` and `talk(r)`?\n\n### Question 3: Name one advantage of using polymorphism in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solution 1: A type implements an interface if it provides the methods defined by that interface.\n\n### Solution 2: The output will be:\n- `talk(p)` will print `Hello!`\n- `talk(r)` will print `Beep boop!`\n\n### Solution 3: One advantage of polymorphism in Go is **code reusability**. The same code can work with different types that implement the same interface.",
+      "slide_type": "code"
+    }
+  ]
+  

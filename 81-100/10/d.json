@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to Versioning in Go Modules",
+      "content": "In Go, versioning helps ensure that your code dependencies remain stable and compatible across different environments. This is especially important as your application grows and evolves.\n\nGo modules, introduced in Go 1.11, provide a way to manage dependencies and their versions in a more structured manner. Understanding how to handle versioning in Go modules is essential for managing project dependencies effectively.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is a Go Module?",
+      "content": "A Go module is a collection of Go packages that are versioned together. It is defined by a `go.mod` file, which keeps track of the module's dependencies and their versions.\n\nThe module system helps manage third-party libraries and dependencies, ensuring compatibility by allowing you to specify versions of dependencies in your project.",
+      "slide_type": "text"
+    },
+    {
+      "title": "The go.mod File",
+      "content": "The `go.mod` file is the heart of Go modules. It contains metadata about your module, including its dependencies and their specific versions.\n\n### Example of a go.mod file:\n\n```go\nmodule example.com/myapp\n\ngo 1.18\n\nrequire (\n  github.com/gin-gonic/gin v1.7.2\n  github.com/sirupsen/logrus v1.8.1\n)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Understanding Versioning Syntax",
+      "content": "In Go, versions are specified using the semantic versioning system: `major.minor.patch`. For example, `v1.2.3`.\n\n- **Major** version changes: Introduce breaking changes.\n- **Minor** version changes: Add new features but maintain backward compatibility.\n- **Patch** version changes: Include bug fixes without breaking the API.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Handling Version Conflicts",
+      "content": "Sometimes, different dependencies may require different versions of the same package. Go resolves these conflicts by selecting the minimal version that satisfies all requirements.\n\nYou can also use `go get` to update or downgrade dependencies to specific versions if necessary.\n\n### Example:\n```bash\ngo get github.com/gin-gonic/gin@v1.7.5\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using `go get` for Versioning",
+      "content": "`go get` is used to add new dependencies or update existing ones. It allows you to specify the version of the module you want to use.\n\nYou can specify versions using a tag, commit, or branch.\n\n### Example:\n```bash\ngo get github.com/example/module@v1.2.3\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Working with Pre-Releases",
+      "content": "Pre-releases like alpha, beta, or release candidates can be used for testing or early adoption. In Go, pre-release versions are also managed using the same semantic versioning approach.\n\nTo use a pre-release version, specify it as part of the version string:\n\n```bash\ngo get github.com/example/module@v1.2.3-beta\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Go Module Versioning Commands",
+      "content": "Go provides several commands to interact with modules and manage versions:\n\n- `go mod tidy`: Removes unused dependencies.\n- `go mod vendor`: Copies dependencies into a `vendor/` directory.\n- `go get`: Fetches a specific version of a dependency.\n- `go mod verify`: Verifies dependencies against their checksums.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Understanding `go.mod` and `go.sum`",
+      "content": "`go.mod` contains metadata about your module, while `go.sum` contains cryptographic hashes for verifying the integrity of module dependencies.\n\nIt’s important to keep both files updated to ensure that your project is reproducible and secure.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Semantic Versioning with Go",
+      "content": "Go relies on semantic versioning (SemVer) to ensure compatibility between different versions of a module. The version number structure follows this pattern:\n\n- `major.minor.patch`\n\nMake sure to update the version properly when making breaking changes, adding new features, or fixing bugs.\n\n### Example:\n\n- `v1.2.0`: New features (backward compatible)\n- `v2.0.0`: Breaking changes",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n1. What is the role of the `go.mod` file in Go modules?\n2. How do you specify a pre-release version in Go?\n3. What is the difference between a `major`, `minor`, and `patch` version in semantic versioning?\n4. What command would you use to fetch a specific version of a dependency?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n1. The `go.mod` file defines the module’s dependencies and their versions. It ensures that your project has consistent and reproducible builds.\n2. To specify a pre-release version, use the `@` symbol followed by the version, such as `v1.2.3-beta`.\n3. A `major` version introduces breaking changes, a `minor` version adds features in a backward-compatible way, and a `patch` version fixes bugs without breaking anything.\n4. To fetch a specific version, use the command `go get <module>@<version>`. For example: `go get github.com/example/module@v1.2.3`.",
+      "slide_type": "code"
+    }
+  ]
+  

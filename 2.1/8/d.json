@@ -1,0 +1,68 @@
+[
+    {
+      "title": "Introduction to Maps in Go",
+      "content": "**Maps** in Go are built-in data types that associate keys with values, similar to dictionaries in Python or objects in JavaScript. They are unordered collections of key-value pairs.\n\nMaps offer constant-time complexity for basic operations like insertion, deletion, and retrieval, making them highly efficient for many practical applications. Each key in a map must be unique, and attempting to assign a value to an existing key will simply update that key’s value.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Maps?",
+      "content": "- Efficient lookup of values based on keys\n- Useful for counting, grouping, and storing data with unique identifiers\n- Flexible and easy to use\n\nMaps are ideal when you need to quickly retrieve data based on a specific key or perform associative operations. For example, they are often used to count word frequency, cache results, manage configuration settings, or represent JSON-like structures. Their dynamic size also means you don’t need to predefine the number of entries, unlike arrays.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax to Declare a Map",
+      "content": "```go\nvar m map[string]int             // Declares a nil map\nm = make(map[string]int)         // Initializes the map\n\n// Or use shorthand\nm := map[string]int{\"a\": 1, \"b\": 2}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Working with Map Elements",
+      "content": "```go\nm := make(map[string]int)\nm[\"age\"] = 30            // Add or update a value\nfmt.Println(m[\"age\"])     // Retrieve a value\n\nval, ok := m[\"age\"]       // Check if key exists\nif ok {\n    fmt.Println(\"Key exists with value:\", val)\n} else {\n    fmt.Println(\"Key does not exist\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Deleting a Key from a Map",
+      "content": "```go\ndelete(m, \"age\")  // Removes the key \"age\" from the map\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Iterating Over a Map",
+      "content": "```go\nm := map[string]int{\"a\": 1, \"b\": 2}\nfor key, value := range m {\n    fmt.Println(key, value)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Important Notes",
+      "content": "- Keys must be of a comparable type (e.g., string, int, bool)\n- Maps are not safe for concurrent use (use sync.Map for concurrency)\n- Accessing a non-existent key returns the zero value of the value type\n\nGo requires that keys in a map are of a type that supports comparison operators, as it relies on hashing and equality checks. For concurrent environments, a regular map can lead to race conditions—`sync.Map` is a concurrency-safe alternative but has different semantics. It’s also important to know that reading a non-existent key won’t crash your program—it simply returns the default zero value of the value type (e.g., 0 for int, \"\" for string, false for bool).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Map vs Array vs Slice",
+      "content": [
+        {
+          "Index Type": "Custom keys (e.g., string, int)",
+          "Type": "Map",
+          "Use Case": "Key-based lookup"
+        },
+        {
+          "Index Type": "Fixed-length, integer index",
+          "Type": "Array",
+          "Use Case": "Static-sized list"
+        },
+        {
+          "Index Type": "Variable-length, integer index",
+          "Type": "Slice",
+          "Use Case": "Dynamic list"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Common Mistakes with Maps",
+      "content": "- Forgetting to initialize the map with `make`\n- Assuming iteration order is fixed (it's not)\n- Trying to access keys without checking existence (can lead to bugs)\n\nIf you declare a map without initializing it using `make()` or a literal, it remains `nil`, and attempting to add elements will cause a runtime panic. Another subtle issue is assuming consistent iteration order—Go randomizes it deliberately to prevent reliance on any specific order. Always use the `ok` idiom when accessing values to ensure your code behaves safely and predictably.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Summary",
+      "content": "- Maps are essential key-value data structures in Go\n- Easy to create, modify, and iterate\n- Use `make()` to initialize and `delete()` to remove keys\n- Handle missing keys safely with the `ok` idiom\n\nMaps in Go provide a powerful and efficient way to organize data that relies on fast key-based access. They shine in scenarios where data relationships are best described by associations rather than sequences. By understanding their rules, limitations, and best practices, you can use maps to build robust and performant Go applications.",
+      "slide_type": "text"
+    }
+  ]

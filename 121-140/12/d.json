@@ -1,0 +1,48 @@
+[
+    {
+      "title": "Introduction to Custom Types vs Type Aliases in Go",
+      "content": "In Go, we can define new types using `type`. There are two main ways to create types: **Custom Types** and **Type Aliases**. Although they seem similar, they serve different purposes and have distinct behaviors.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Custom Types in Go",
+      "content": "A **Custom Type** is defined by creating a new type based on an existing one. It creates a distinct type that is separate from its base type.\n\n```go\npackage main\n\ntype Celsius float64\n\nfunc main() {\n    var temp Celsius = 25.0\n    fmt.Println(temp)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Characteristics of Custom Types",
+      "content": "- Custom types create a completely new type.\n- You can define methods on custom types.\n- Custom types are not interchangeable with their underlying types.\n\nFor example, a `Celsius` type is not automatically interchangeable with `float64`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Type Aliases in Go",
+      "content": "A **Type Alias** creates a new name for an existing type. It doesn’t create a new distinct type; rather, it makes the alias and the original type completely interchangeable.\n\n```go\npackage main\n\ntype CelsiusAlias = float64\n\nfunc main() {\n    var temp CelsiusAlias = 25.0\n    fmt.Println(temp)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Characteristics of Type Aliases",
+      "content": "- Type aliases do not create a new type, they just give an existing type a new name.\n- They are fully interchangeable with the original type.\n- You cannot define methods on type aliases.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Comparison: Custom Types vs Type Aliases",
+      "content": "Here's a comparison between **Custom Types** and **Type Aliases** in Go:\n\n| Feature                     | Custom Types               | Type Aliases                |\n|-----------------------------|----------------------------|-----------------------------|\n| New Type Creation            | Yes                        | No                          |\n| Interchangeable with Base    | No                         | Yes                         |\n| Methods Definition           | Yes                        | No                          |\n| Use Case                     | To create distinct types   | To create a new name for existing types |\n",
+      "slide_type": "table"
+    },
+    {
+      "title": "When to Use Custom Types vs Type Aliases",
+      "content": "Use **Custom Types** when you need to define distinct behavior or logic for your type, such as methods specific to that type.\n\nUse **Type Aliases** when you simply want to give a new name to an existing type for readability or convenience, without changing its underlying behavior.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- Which of the following can have methods defined on them?\n  - 1. Custom Types\n  - 2. Type Aliases\n- What happens when you try to assign a `Custom Type` variable to a variable of its base type?\n- Can a Type Alias be used to define new behavior in Go?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "- **Which of the following can have methods defined on them?**\n  - Answer: 1. Custom Types\n  - Explanation: Only custom types allow you to define methods. Type aliases cannot have methods.\n\n- **What happens when you try to assign a `Custom Type` variable to a variable of its base type?**\n  - Answer: You will get a type mismatch error. Custom types are distinct from their underlying types.\n\n- **Can a Type Alias be used to define new behavior in Go?**\n  - Answer: No, type aliases do not introduce new behavior. They only provide a new name for an existing type.\n",
+      "slide_type": "code"
+    }
+  ]
+  

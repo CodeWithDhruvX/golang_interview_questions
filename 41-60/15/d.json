@@ -1,0 +1,48 @@
+[
+    {
+      "title": "Can Structs Implement Multiple Interfaces in Go?",
+      "content": "In Go, structs can indeed implement multiple interfaces. This feature allows Go to create flexible and reusable code. However, the key concept is that Go relies on implicit interface implementation, meaning you don’t have to explicitly declare that a struct implements an interface.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is an Interface in Go?",
+      "content": "An interface in Go is a type that specifies a set of method signatures. A type (like a struct) implements an interface by providing methods that match the method signatures in the interface. Interfaces are satisfied implicitly in Go, which means no declaration is needed to indicate that a type implements an interface.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defining Interfaces and Structs",
+      "content": "Here’s an example of how to define an interface and a struct in Go:\n\n```go\npackage main\n\nimport \"fmt\"\n\ntype Speaker interface {\n    Speak() string\n}\n\ntype Person struct {\n    Name string\n}\n\nfunc (p Person) Speak() string {\n    return \"Hello, my name is \" + p.Name\n}\n\nfunc main() {\n    p := Person{Name: \"John\"}\n    fmt.Println(p.Speak())\n}\n```\nThis example shows a `Person` struct that implements the `Speaker` interface.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Multiple Interfaces Example",
+      "content": "Go structs can implement multiple interfaces. Here's an example:\n\n```go\npackage main\n\nimport \"fmt\"\n\ntype Flyer interface {\n    Fly() string\n}\n\ntype Speaker interface {\n    Speak() string\n}\n\ntype Bird struct {\n    Name string\n}\n\nfunc (b Bird) Speak() string {\n    return \"Tweet! I am \" + b.Name\n}\n\nfunc (b Bird) Fly() string {\n    return b.Name + \" is flying!\"\n}\n\nfunc main() {\n    b := Bird{Name: \"Eagle\"}\n    fmt.Println(b.Speak())\n    fmt.Println(b.Fly())\n}\n```\nIn this case, the `Bird` struct implements both `Flyer` and `Speaker` interfaces.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Points to Remember",
+      "content": "- Go uses **implicit** interface implementation.\n- A struct can implement multiple interfaces if it provides the required methods.\n- You don’t need to explicitly declare that a struct implements an interface.\n- Interfaces in Go are used to define behavior, not data.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Practical Use of Multiple Interfaces",
+      "content": "Using multiple interfaces allows Go programs to follow the **composition over inheritance** principle, leading to more flexible and reusable code.\n\nFor example, a `Robot` struct could implement both a `Speaker` interface and a `Mover` interface. This approach allows for a modular design, where structs can provide different combinations of behaviors.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Limitations of Interface Implementation",
+      "content": "While structs can implement multiple interfaces, there are some important limitations:\n\n1. A struct can only implement interfaces implicitly; there’s no way to declare that a struct explicitly implements an interface.\n2. Interfaces are satisfied based on method signatures, so the struct’s method signatures must match exactly.\n3. Multiple interfaces with conflicting method names can lead to ambiguity in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quiz/Challenge: Test Your Understanding",
+      "content": "### Quick Questions:\n\n1. Can a struct in Go implement multiple interfaces? (Yes/No)\n2. How does Go determine whether a struct implements an interface?\n3. What happens if a struct has methods that match two different interfaces but have the same method name?\n4. True or False: You need to explicitly declare that a struct implements an interface in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n\n1. **Yes**, a struct can implement multiple interfaces in Go.\n2. Go determines whether a struct implements an interface based on whether the struct has methods that match the method signatures in the interface.\n3. If two interfaces have the same method name but different signatures, the code will result in an error due to ambiguity. The method signature must match exactly.\n4. **False**, Go uses implicit interface implementation, so you don’t need to explicitly declare that a struct implements an interface.",
+      "slide_type": "code"
+    }
+  ]
+  

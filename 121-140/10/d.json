@@ -1,0 +1,53 @@
+[
+    {
+      "title": "What are Tagged Unions?",
+      "content": "Tagged unions, also known as sum types or algebraic data types (ADTs), allow a single data structure to hold different types of data. The key idea is that a value can be one of several different types, but the type is always tagged with a label (or tag) to identify which type it currently holds.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Use Cases for Tagged Unions",
+      "content": "Tagged unions are useful when you need a type that can represent multiple different forms of data, each with distinct structure. For example:\n\n- Modeling different shapes (circle, square, triangle)\n- Handling various types of messages in a system (text, image, file)\n- Representing error or success states in a program.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Simulating Tagged Unions in Go",
+      "content": "Go does not have native support for tagged unions. However, we can simulate them using `structs` and `interfaces`. Each type can be represented by a struct, and the tag can be an additional field that indicates the type of the data.\n\n```go\ntype Shape interface{\n    Area() float64\n}\n\ntype Circle struct{\n    Radius float64\n}\n\nfunc (c Circle) Area() float64 {\n    return 3.14 * c.Radius * c.Radius\n}\n\ntype Square struct{\n    Side float64\n}\n\nfunc (s Square) Area() float64 {\n    return s.Side * s.Side\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Representing Tagged Unions with Structs",
+      "content": "We can simulate a tagged union using a combination of structs and an explicit type field.\n\n```go\ntype TaggedUnion struct {\n    Type string\n    Value interface{}\n}\n\nfunc main() {\n    var t TaggedUnion\n    t.Type = \"circle\"\n    t.Value = Circle{Radius: 5}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using Type Assertions",
+      "content": "Type assertions allow you to check and extract the underlying value from an interface. For tagged unions, we can use type assertions to retrieve the correct value from the `interface{}` field.\n\n```go\nif circle, ok := t.Value.(Circle); ok {\n    fmt.Println(\"Circle Area:\", circle.Area())\n} else if square, ok := t.Value.(Square); ok {\n    fmt.Println(\"Square Area:\", square.Area())\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Benefits of Simulating Tagged Unions in Go",
+      "content": "Simulating tagged unions in Go allows you to create flexible data structures. Some benefits include:\n\n- Easy handling of different types of data\n- Enforcing type safety using Go's strong typing\n- Flexibility in structuring complex data models\n\nHowever, Go's approach with `interfaces` and type assertions can be verbose and error-prone when compared to languages with native support for tagged unions.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Limitations of Simulated Tagged Unions",
+      "content": "Simulating tagged unions in Go can have some drawbacks:\n\n- Requires boilerplate code for each new union type\n- Type assertions can introduce runtime errors if not handled properly\n- Lack of exhaustiveness checking when adding new types\n\nThese are the trade-offs when working with Go's type system compared to languages with built-in ADT support.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Use Tagged Unions in Go",
+      "content": "Consider using tagged unions in Go when you:\n\n- Need to represent a value that could have different types of data\n- Want to avoid using multiple `if` statements or `switch` cases for type checking\n- Need to model domain-specific concepts (e.g., shapes, messages, states) in a clear and type-safe way.\n\nHowever, be mindful of the verbosity and potential runtime errors.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Try to answer the following questions!\n\n1. What is a tagged union?\n2. How can you simulate tagged unions in Go?\n3. What are some potential drawbacks of using tagged unions in Go?\n4. Why might you choose to use tagged unions in Go for certain use cases?\n\nTest your knowledge, and move to the next slide for solutions!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the answers to the challenge:\n\n1. A tagged union is a data structure that can store values of different types, but each value is tagged with a label (type) to indicate its specific form.\n\n2. In Go, you can simulate tagged unions using `structs` and `interfaces`. You define different types and store them in an interface, then use type assertions to extract and work with the underlying types.\n\n3. Drawbacks include boilerplate code, potential runtime errors due to improper type assertions, and lack of exhaustiveness checking when adding new types.\n\n4. Tagged unions are useful when you need to represent multiple types of data under a single variable while maintaining type safety. They are especially beneficial for modeling complex domain concepts.",
+      "slide_type": "code"
+    }
+  ]
+  

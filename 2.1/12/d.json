@@ -1,0 +1,32 @@
+[
+    {
+      "title": "Introduction",
+      "content": "In Go, maps are an unordered collection of key-value pairs, allowing you to quickly access values using unique keys. Maps are highly efficient for lookups, inserts, and deletions. When using maps in Go, you might wonder what happens when you try to delete a key that doesn’t exist. In this slide, we'll explore this behavior and why it doesn't cause an error.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Map Deletion in Go",
+      "content": "To remove a key-value pair from a map in Go, you use the built-in `delete()` function. This function takes two arguments: the map and the key you want to delete. If the key exists in the map, `delete()` removes it. If the key doesn’t exist, Go handles it gracefully.\n\nHere’s the syntax:\n\n```go\ndelete(map, key)\n``` \nNo error is raised when you try to delete a non-existing key. This behavior allows you to safely attempt deletions without worrying about whether the key is present or not.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Deleting a Non-Existing Key",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n\tm := map[string]int{\"a\": 1, \"b\": 2}\n\tfmt.Println(m)\n\ndelete(m, \"c\") // Key 'c' does not exist\n\tfmt.Println(m)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Behavior of `delete()`",
+      "content": "The `delete()` function is designed to be safe, even if the key you’re trying to remove does not exist in the map. In such cases, Go doesn’t throw an error or panic. Instead, it simply does nothing and the map remains unchanged.\n\nThis behavior is important because it allows you to perform deletions without needing to first check if the key exists, saving you from writing extra conditional checks. This makes `delete()` more concise and error-resistant in practice.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Map After Deletion",
+      "content": "In the code example earlier, the map contains two key-value pairs: `\"a\": 1` and `\"b\": 2`. When we attempt to delete the key `\"c\"`, which does not exist, the map remains unchanged. \n\nHere’s the output of the program:\n\n```\nmap[a:1 b:2]\nmap[a:1 b:2]\n```\n\nThis shows that after calling `delete(m, \"c\")`, the map's contents are the same as before, and no error occurs. The `delete()` function silently handles non-existing keys.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Takeaways",
+      "content": "1. Deleting a key that doesn’t exist in Go maps does not cause an error or panic. It’s a safe operation.\n2. The map is left unchanged, and the program continues to execute normally.\n3. This makes the `delete()` function convenient for removing items from a map without needing to check if the key is present.\n\nThis behavior is helpful when you want to ensure that no unwanted side effects occur when deleting a non-existing key, especially in cases where the key might not be present but you still want to ensure no errors arise.",
+      "slide_type": "text"
+    }
+  ]

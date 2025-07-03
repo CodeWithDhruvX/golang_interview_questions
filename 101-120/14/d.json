@@ -1,0 +1,48 @@
+[
+    {
+      "title": "Introduction to Middleware",
+      "content": "In Go web applications, **middleware** is a layer that sits between the HTTP request and the final handler. It allows you to modify the request, perform actions, or handle responses before they reach the main handler or after the response is sent to the client.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Middleware Does",
+      "content": "Middleware can:\n- Authenticate requests\n- Log request details\n- Modify request or response data\n- Handle errors\n- Perform cross-cutting concerns like CORS handling and rate limiting.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Middleware in Go Example",
+      "content": "Here’s a simple middleware example in Go using the `net/http` package:\n\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n)\n\n// Simple middleware to log requests\nfunc loggingMiddleware(next http.Handler) http.Handler {\n\treturn http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {\n\t\tfmt.Println(\"Request received: \", r.URL.Path)\n\t\tnext.ServeHTTP(w, r)\n\t})\n}\n\nfunc main() {\n\thttp.HandleFunc(\"/\", func(w http.ResponseWriter, r *http.Request) {\n\t\tw.Write([]byte(\"Hello, world!\"))\n\t})\n\n\thttp.ListenAndServe(\":8080\", loggingMiddleware(http.DefaultServeMux))\n}\n```\nThis middleware logs every incoming request before the handler responds.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Chaining Multiple Middleware",
+      "content": "Middleware can be chained together. Here's an example with two middleware layers:\n\n```go\nfunc main() {\n\thttp.HandleFunc(\"/\", func(w http.ResponseWriter, r *http.Request) {\n\t\tw.Write([]byte(\"Hello from chained middleware!\"))\n\t})\n\n\thttp.ListenAndServe(\":8080\", loggingMiddleware(authMiddleware(http.DefaultServeMux)))\n}\n```\nIn this example, `authMiddleware` would authenticate the request, and `loggingMiddleware` would log it before the main handler is executed.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Middleware Types",
+      "content": "Here are some commonly used middleware in Go web apps:\n- **Authentication middleware**: Ensures the user is authenticated.\n- **Logging middleware**: Logs details about requests.\n- **CORS middleware**: Adds cross-origin resource sharing headers.\n- **Recovery middleware**: Catches panics and prevents server crashes.\n- **Rate limiting middleware**: Restricts the number of requests within a time period.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Advantages of Middleware",
+      "content": "Middleware offers several advantages:\n- **Separation of concerns**: Each middleware has a specific job, making the code more modular and easier to manage.\n- **Code reusability**: You can reuse middleware across different endpoints.\n- **Better organization**: Chaining middleware helps organize tasks like logging, authentication, and error handling.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Middleware Works in the Request-Response Cycle",
+      "content": "Middleware functions are executed in the order they are added. Here’s a basic flow:\n1. Request is received.\n2. Middleware functions are invoked in sequence.\n3. Final handler processes the request and generates a response.\n4. Middleware functions are invoked in reverse order to modify the response before it’s sent to the client.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Let's test your understanding of middleware in Go!\n\n1. What is the primary role of middleware in a Go web app?\n2. How do you chain multiple middleware functions together in Go?\n3. Name three types of middleware commonly used in Go web apps.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the answers to the challenge:\n\n1. **Primary role of middleware**: Middleware in a Go web app handles pre- or post-processing tasks such as logging, authentication, error handling, or modifying requests/responses.\n\n2. **Chaining multiple middleware**: You chain multiple middleware functions together by passing the next middleware handler into the current one, like so:\n```go\nhttp.ListenAndServe(\":8080\", middleware1(middleware2(mainHandler)))\n```\n\n3. **Common types of middleware**: Some commonly used types are:\n- Authentication middleware\n- Logging middleware\n- CORS middleware\n- Rate limiting middleware\n- Recovery middleware",
+      "slide_type": "code"
+    }
+  ]
+  

@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Go Project Structure",
+      "content": "In Go, project structure is important for maintainability, readability, and scalability. A clean structure helps developers quickly navigate and manage large codebases. We'll go over a simple and effective approach to structuring a Go project.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Project Structure",
+      "content": "A basic Go project structure typically includes:\n\n```\nmy_project/\n  ├── cmd/\n  │   └── myapp/\n  │       └── main.go\n  ├── pkg/\n  │   └── mypackage/\n  │       └── mypackage.go\n  ├── internal/\n  ├── go.mod\n  ├── go.sum\n  └── README.md\n```\n\n- `cmd/`: Contains application entry points.\n- `pkg/`: Contains reusable libraries or modules.\n- `internal/`: Contains private packages that cannot be imported by other projects.\n- `go.mod` & `go.sum`: Used for Go modules (dependency management).",
+      "slide_type": "code"
+    },
+    {
+      "title": "cmd/ Directory Explained",
+      "content": "The `cmd/` directory is where your application's entry points live. It is common to have a subdirectory named after your application. The `main.go` file contains the `main()` function which kicks off your program.\n\nExample structure:\n```\ncmd/\n  └── myapp/\n      └── main.go\n```\nIn `main.go`, you can import packages from `pkg/` and use them to implement the application's functionality.",
+      "slide_type": "text"
+    },
+    {
+      "title": "pkg/ Directory Explained",
+      "content": "The `pkg/` directory holds the core logic or reusable code of your application. These are packages that could potentially be imported by other applications or services.\n\nExample structure:\n```\npkg/\n  └── mypackage/\n      └── mypackage.go\n```\nThis is where you place the business logic, utilities, and other packages that don't depend on any specific application context.",
+      "slide_type": "text"
+    },
+    {
+      "title": "internal/ Directory Explained",
+      "content": "The `internal/` directory is for code that is meant to be private and cannot be imported by other Go projects. This enforces a boundary and ensures that certain packages remain internal to the project.\n\nExample structure:\n```\ninternal/\n  └── privatepackage/\n      └── private.go\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "go.mod & go.sum Files",
+      "content": "The `go.mod` file defines the Go module and the required dependencies for the project, while the `go.sum` file contains checksums for these dependencies. These files are generated when you run `go mod init`.\n\nExample of a `go.mod` file:\n```\nmodule my_project\n\ngo 1.18\n\ndependencies:\n  github.com/gin-gonic/gin v1.7.4\n```\n\nThese files allow Go to manage your dependencies and their versions automatically.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Structure Matters",
+      "content": "A well-structured project:\n- Improves code readability.\n- Helps teams collaborate effectively.\n- Makes testing easier.\n- Simplifies dependency management.\n\nIn Go, sticking to common conventions like `cmd/`, `pkg/`, and `internal/` helps make your project scalable and maintainable over time.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Best Practices",
+      "content": "Some best practices for Go project structure:\n- Keep packages small and focused.\n- Avoid circular dependencies.\n- Use `internal/` for private code.\n- Organize code logically in `cmd/` and `pkg/`.\n- Use Go modules (`go.mod`) to manage dependencies.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n1. What is the main purpose of the `cmd/` directory in a Go project?\n2. Where would you put reusable libraries or utilities in a Go project?\n3. What is the difference between the `pkg/` and `internal/` directories?\n4. What files are automatically generated when running `go mod init`?\n5. Why is Go's project structure important for scalability and maintenance?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions:\n1. The `cmd/` directory contains the application's entry points, typically in a `main.go` file.\n2. Reusable libraries or utilities go in the `pkg/` directory.\n3. `pkg/` contains public packages that can be imported by other projects, while `internal/` contains private packages that cannot be imported outside the project.\n4. The `go.mod` and `go.sum` files are automatically generated when running `go mod init`.\n5. A good project structure improves code readability, collaboration, testing, and simplifies dependency management, making the project more maintainable and scalable in the long run.",
+      "slide_type": "code"
+    }
+  ]
+  

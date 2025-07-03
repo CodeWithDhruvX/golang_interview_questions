@@ -1,0 +1,67 @@
+[
+    {
+      "title": "Introduction to Go Project Layout",
+      "content": "In Go, structuring a project is essential for scalability and maintainability. A well-organized layout allows easier navigation and separation of concerns across the project.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Standard Go Project Layout Overview",
+      "content": "A typical Go project layout includes various directories to separate code, tests, and configuration files. Here’s a simplified structure:\n\n```\nmyproject/\n├── cmd/\n│   └── app/\n├── internal/\n│   └── app/\n├── pkg/\n├── api/\n├── web/\n├── go.mod\n└── README.md\n```\n\nEach directory serves a specific purpose, and knowing where to place files is key to a well-organized Go project.",
+      "slide_type": "text"
+    },
+    {
+      "title": "cmd Directory",
+      "content": "The `cmd` directory contains applications that are the entry point of your Go program. Each application typically resides in its own subdirectory.\n\nExample:\n\n```\ncmd/\n└── app/\n    └── main.go\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "internal Directory",
+      "content": "The `internal` directory holds code that is only meant to be used within the project. Go restricts access to anything in the `internal` directory, preventing external packages from importing it.\n\nExample:\n\n```\ninternal/\n└── app/\n    └── handler.go\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "pkg Directory",
+      "content": "The `pkg` directory contains libraries or reusable packages that are meant to be shared across different applications or even externally. This is where code that can be shared outside the project would reside.\n\nExample:\n\n```\npkg/\n└── utils/\n    └── helper.go\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "api Directory",
+      "content": "The `api` directory contains API definitions like protocol buffers, GraphQL schemas, or REST endpoint specifications. This directory helps with organizing API-related files.\n\nExample:\n\n```\napi/\n└── v1/\n    └── api.proto\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "web Directory",
+      "content": "The `web` directory houses frontend code or web-specific files, such as HTML, CSS, JavaScript, or Go templates. This can be useful for web applications that have their own server-side logic.\n\nExample:\n\n```\nweb/\n└── static/\n    └── index.html\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "go.mod and README.md",
+      "content": "The `go.mod` file is crucial as it defines the module, its dependencies, and Go version. The `README.md` file serves as a documentation hub, explaining how to build and use the project.\n\nExample:\n\n```\ngo.mod\n└── module myproject\n\nREADME.md\n└── # Project Title\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Project Structure Visualization",
+      "content": "A diagram of a Go project layout can help clarify the organization.\n\n```\nmyproject/\n├── cmd/\n├── internal/\n├── pkg/\n├── api/\n├── web/\n├── go.mod\n└── README.md\n```",
+      "slide_type": "table",
+      "content": [
+        { "directory": "cmd/", "description": "Contains entry points for the application." },
+        { "directory": "internal/", "description": "Contains project-specific code that shouldn't be imported externally." },
+        { "directory": "pkg/", "description": "Reusable code and libraries meant for internal or external use." },
+        { "directory": "api/", "description": "API definitions and specifications like gRPC or GraphQL." },
+        { "directory": "web/", "description": "Frontend assets, Go templates, or web-specific files." },
+        { "directory": "go.mod", "description": "Module definition and dependency management." },
+        { "directory": "README.md", "description": "Project documentation." }
+      ]
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions\n\n1. What directory contains reusable packages that can be shared across different applications?\n2. Which directory in a Go project restricts external access to its contents?\n3. Where would you typically place your API definitions?\n4. What file defines the Go module and its dependencies?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions\n\n1. The `pkg` directory contains reusable packages that can be shared across different applications.\n2. The `internal` directory restricts external access to its contents.\n3. API definitions typically go in the `api` directory.\n4. The `go.mod` file defines the Go module and its dependencies.",
+      "slide_type": "code"
+    }
+  ]
+  

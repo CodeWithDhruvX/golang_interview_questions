@@ -1,0 +1,64 @@
+[
+    {
+      "title": "What is context.Context?",
+      "content": "The `context.Context` type in Go is used to carry deadlines, cancellation signals, and other request-scoped values across API boundaries and goroutines.\n\nIt helps manage **timeouts**, **cancellation**, and **passing values** in concurrent Go programs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use context.Context?",
+      "content": "- To cancel goroutines when they are no longer needed.\n- To set timeouts or deadlines for operations (like HTTP requests).\n- To avoid resource leaks and improve control over concurrent flows.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Creating a Cancellable Context",
+      "content": "ctx, cancel := context.WithCancel(context.Background())\ndefer cancel() // Call to release resources when done",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using the Cancel Function",
+      "content": "Use the `cancel()` function to signal cancellation to all goroutines using the same context. This is typically done:\n\n- When the work is finished.\n- On a specific error condition.\n- After a timeout or signal.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Listening for Cancellation",
+      "content": "select {\ncase <-ctx.Done():\n    fmt.Println(\"Cancelled:\", ctx.Err())\ncase result := <-someWork():\n    fmt.Println(\"Got result:\", result)\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using context.WithTimeout",
+      "content": "ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)\ndefer cancel()\n\n// Useful for setting a maximum duration for a task",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Context Functions",
+      "content": [
+        { "Function": "context.WithCancel", "Description": "Creates a cancellable context manually." },
+        { "Function": "context.WithTimeout", "Description": "Cancels automatically after a timeout." },
+        { "Function": "context.WithDeadline", "Description": "Cancels at a specific time." },
+        { "Function": "ctx.Done()", "Description": "Returns a channel closed on cancellation." },
+        { "Function": "ctx.Err()", "Description": "Returns the reason for cancellation." }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Best Practices",
+      "content": "- Always call `cancel()` to avoid resource leaks.\n- Use `context.Background()` for root-level contexts.\n- Avoid using `context.TODO()` unless absolutely necessary.\n- Propagate context to child goroutines/functions.\n- Use `ctx.Err()` to check cancellation reason.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Simple Use Case: HTTP Handler",
+      "content": "func handler(w http.ResponseWriter, r *http.Request) {\n    ctx := r.Context()\n\n    select {\n    case <-time.After(5 * time.Second):\n        fmt.Fprintln(w, \"Finished!\")\n    case <-ctx.Done():\n        http.Error(w, \"Request canceled\", http.StatusRequestTimeout)\n    }\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "1. What does `ctx.Done()` return?\n2. Why should you always call the `cancel()` function?\n3. How do you create a context that cancels after 3 seconds?\n\nTry to answer before moving to the next slide!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "// 1. ctx.Done() returns a <-chan struct{} that is closed when the context is cancelled.\n\n// 2. Always call cancel() to release resources associated with the context:\nctx, cancel := context.WithCancel(context.Background())\ndefer cancel()\n\n// 3. Create a context with timeout:\nctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)\ndefer cancel()",
+      "slide_type": "code"
+    }
+  ]
+  

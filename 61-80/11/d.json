@@ -1,0 +1,51 @@
+[
+    {
+      "title": "What is sync.Mutex?",
+      "content": "The `sync.Mutex` is a mutual exclusion lock in Go used to prevent race conditions by ensuring only one goroutine accesses critical sections of code at a time.\n\n- Part of the `sync` package\n- Useful in concurrent programming\n- Locks shared resources",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Mutex Works Internally",
+      "content": "A `Mutex` uses a binary state:\n- **Locked**: The resource is in use by a goroutine.\n- **Unlocked**: The resource is available.\n\nGoroutines attempting to `Lock()` a locked mutex will block until it is `Unlock()`ed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Usage of sync.Mutex",
+      "content": "```go\npackage main\nimport (\n  \"fmt\"\n  \"sync\"\n)\n\nvar mu sync.Mutex\nvar count int\n\nfunc increment() {\n  mu.Lock()\n  count++\n  mu.Unlock()\n}\n\nfunc main() {\n  increment()\n  fmt.Println(\"Count:\", count)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Mutex Methods",
+      "content": [ 
+        { "Method": "Lock()", "Description": "Acquires the lock. Blocks if already locked by another goroutine." },
+        { "Method": "Unlock()", "Description": "Releases the lock. Must be called after Lock()." }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "When to Use Mutex",
+      "content": "- When multiple goroutines access shared variables.\n- To protect critical sections of code.\n- Avoid data races.\n\nUse `go run -race yourfile.go` to detect race conditions.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Incorrect Mutex Usage Example",
+      "content": "```go\n// Missing Unlock causes deadlock\nmu.Lock()\ncount++\n// mu.Unlock() is not called\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Best Practices with Mutex",
+      "content": "- Always pair `Lock()` with `Unlock()` using `defer`.\n- Keep locked sections minimal.\n- Avoid nested mutexes if possible.\n\n```go\nmu.Lock()\ndefer mu.Unlock()\n// safe critical section\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n1. What happens if you forget to call `Unlock()` after `Lock()`?\n2. Can multiple goroutines hold the same mutex at the same time?\n3. Where would you use `defer mu.Unlock()` in a function?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n1. Forgetting `Unlock()` causes a **deadlock**, blocking other goroutines.\n2. No, only **one** goroutine can hold the mutex at a time.\n3. Use `defer mu.Unlock()` **immediately after Lock()** to ensure it's called even if the function returns early.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

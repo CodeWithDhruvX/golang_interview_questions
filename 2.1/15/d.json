@@ -1,0 +1,65 @@
+[
+    {
+      "title": "Introduction to Structs in Go",
+      "content": "In Go, a `struct` (short for structure) is a **user-defined data type** that allows you to combine data items of different types into a single logical unit. Think of it as a blueprint or template for creating custom data models. Structs are especially useful when you want to represent complex entities like a `Person`, `Book`, or `Car`, each of which has multiple attributes (like name, age, price, etc.).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Structs?",
+      "content": "- **Logical Grouping**: Structs allow you to logically group related fields, making your code more meaningful.\n- **Real-world Modeling**: You can model real-world objects in code using structs, e.g., a `Student` with `Name`, `RollNo`, and `Grade`.\n- **Improved Readability**: Structs give clear structure to your data, reducing confusion.\n- **Type Safety**: Unlike maps or interfaces, structs are strongly typed at compile time, catching errors early.\n- **Method Association**: You can define methods on structs, enabling behavior along with data.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defining a Struct",
+      "content": "type Person struct {\n    Name string\n    Age  int\n    Email string\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Creating and Initializing Structs",
+      "content": "func main() {\n    var p1 Person\n    p1.Name = \"Alice\"\n    p1.Age = 30\n    p1.Email = \"alice@example.com\"\n\n    p2 := Person{\n        Name: \"Bob\",\n        Age: 25,\n        Email: \"bob@example.com\",\n    }\n\n    fmt.Println(p1)\n    fmt.Println(p2)\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Accessing Struct Fields",
+      "content": "Once you've created a struct variable, you can access its fields using the **dot (`.`) operator**. This makes it easy to read or update individual pieces of the structured data. For example:\n\n```go\nfmt.Println(p1.Name) // Accesses the Name field of p1\n```\n\nYou can also assign new values to fields using the same syntax. Field names are case-sensitive and must be capitalized if you want them to be accessible outside the package (exported).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Structs with Functions",
+      "content": "You can define methods on structs to add behavior:\n\n```go\ntype Person struct {\n    Name string\n    Age  int\n}\n\nfunc (p Person) Greet() {\n    fmt.Printf(\"Hello, my name is %s and I am %d years old.\\n\", p.Name, p.Age)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Pointers to Structs",
+      "content": "Using pointers with structs allows you to modify the original data:\n\n```go\nfunc updateEmail(p *Person, newEmail string) {\n    p.Email = newEmail\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Anonymous Structs",
+      "content": "Go allows creating anonymous structs without defining a named type:\n\n```go\nuser := struct {\n    ID    int\n    Admin bool\n}{\n    ID:    1,\n    Admin: true,\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Structs vs Maps",
+      "content": [
+        {
+          "Aspect": "Struct",
+          "Details": "Fixed schema, compile-time type safety"
+        },
+        {
+          "Aspect": "Map",
+          "Details": "Dynamic keys, more flexible but less type-safe"
+        },
+        {
+          "Aspect": "Use Case",
+          "Details": "Use structs for known fields, maps for dynamic fields"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Summary",
+      "content": "- Structs are powerful tools for creating custom data types.\n- They allow grouping of fields under one name, giving better structure to your programs.\n- You can define methods on structs, enabling object-oriented-style behavior.\n- Using pointers with structs lets you modify the original struct data.\n- Structs are a better choice than maps when you know the structure of your data in advance and want type safety.\n\nBy mastering structs, you'll be able to write cleaner, more maintainable Go code for real-world applications.",
+      "slide_type": "text"
+    }
+  ]

@@ -1,0 +1,71 @@
+[
+    {
+      "title": "Introduction to Plugin Systems in Go",
+      "content": "A **plugin system** allows you to dynamically load external components (plugins) into your application without recompiling it. This is great for:\n\n- Extending functionality\n- Enabling modular architecture\n- Supporting user-defined behaviors\n\nGo provides native support for plugins via the `plugin` package.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Concepts: Go Plugin System",
+      "content": "- **Plugins** in Go are compiled shared objects (`.so` files).\n- Use the `plugin` standard library to load them at runtime.\n- Symbols (functions or variables) can be looked up and used.\n\n> ⚠️ Plugin support is currently limited to Linux and macOS, and doesn't work on Windows.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Directory Structure Example",
+      "content": "```\nmyapp/\n├── main.go\n├── plugins/\n│   └── greeter/\n│       ├── greeter.go\n│       └── greeter.so (compiled)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Creating a Plugin (greeter.go)",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc Greet(name string) {\n    fmt.Printf(\"Hello, %s!\\n\", name)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Compiling the Plugin",
+      "content": "Use the following command to build a plugin from `greeter.go`:\n\n```bash\ngo build -buildmode=plugin -o greeter.so greeter.go\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Loading and Using the Plugin",
+      "content": "```go\npackage main\n\nimport (\n    \"plugin\"\n    \"log\"\n)\n\nfunc main() {\n    plug, err := plugin.Open(\"./plugins/greeter/greeter.so\")\n    if err != nil {\n        log.Fatal(err)\n    }\n\n    sym, err := plug.Lookup(\"Greet\")\n    if err != nil {\n        log.Fatal(err)\n    }\n\n    greetFunc, ok := sym.(func(string))\n    if !ok {\n        log.Fatal(\"unexpected type from module\")\n    }\n\n    greetFunc(\"Go Developer\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Plugin System: Pros and Cons",
+      "content": [
+        {
+          "Pros": "Dynamic extension of functionality",
+          "Cons": "Limited platform support"
+        },
+        {
+          "Pros": "No need to recompile main application",
+          "Cons": "Difficult error handling"
+        },
+        {
+          "Pros": "Supports large modular systems",
+          "Cons": "Plugins must be compiled with same Go version"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Making It Extensible: Plugin Interface",
+      "content": "```go\ntype Greeter interface {\n    Greet(name string)\n}\n\n// In your plugin, you must implement this interface\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Optional: Plugin Registry Pattern",
+      "content": "You can build your own lightweight registry system:\n\n```go\nvar Plugins = map[string]interface{}{}\n\nfunc Register(name string, plugin interface{}) {\n    Plugins[name] = plugin\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. What Go build mode must be used to create a plugin?\n2. How do you access a symbol (function or variable) from a loaded plugin?\n3. What are two limitations of Go's plugin system?\n4. Write a simple interface that a plugin could implement.\n\n_Tip: Review the code examples for hints!_",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```go\n// 1. Use this command to build a plugin:\n// go build -buildmode=plugin -o myplugin.so myplugin.go\n\n// 2. Use plugin.Lookup:\nsym, err := plug.Lookup(\"FunctionName\")\n\n// 3. Limitations:\n// - Works only on Linux/macOS (not Windows)\n// - Plugin and main app must use the same Go version\n\n// 4. Example plugin interface:\ntype Greeter interface {\n    Greet(name string)\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

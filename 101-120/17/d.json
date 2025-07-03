@@ -1,0 +1,57 @@
+[
+    {
+      "title": "Introduction to Clean Architecture in Go",
+      "content": "Clean architecture encourages the separation of concerns in your Go application by splitting responsibilities into layers.\n\nThe most common layers include:\n- **Handler (Controller)**\n- **Service (Business Logic)**\n- **Repository (Data Access)**\n\nThis helps make the code modular, testable, and maintainable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is the Service Layer?",
+      "content": "The **Service Layer** contains business logic. It handles operations and processes that fulfill user requests without knowing how data is stored.\n\n### Responsibilities:\n- Coordinate between handlers and repositories\n- Apply business rules\n- Return data in a useful format",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is the Repository Layer?",
+      "content": "The **Repository Layer** is responsible for interacting with the database or any data source.\n\n### Responsibilities:\n- Abstract database operations\n- Provide clean methods for data access\n- Keep persistence logic separate from business logic",
+      "slide_type": "text"
+    },
+    {
+      "title": "Service Layer Example in Go",
+      "content": "```go\n// user_service.go\n\ntype UserService struct {\n    repo UserRepository\n}\n\nfunc (s *UserService) GetUserByID(id int) (*User, error) {\n    user, err := s.repo.FindByID(id)\n    if err != nil {\n        return nil, err\n    }\n    // Add business logic if needed\n    return user, nil\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Repository Layer Example in Go",
+      "content": "```go\n// user_repository.go\n\ntype UserRepository interface {\n    FindByID(id int) (*User, error)\n}\n\ntype UserRepoImpl struct {\n    db *sql.DB\n}\n\nfunc (r *UserRepoImpl) FindByID(id int) (*User, error) {\n    row := r.db.QueryRow(\"SELECT id, name FROM users WHERE id = ?\", id)\n    var user User\n    err := row.Scan(&user.ID, &user.Name)\n    return &user, err\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Why Use Service and Repository Layers?",
+      "content": "- **Separation of concerns**: Keeps business logic and data access isolated.\n- **Testability**: You can mock repositories to test services.\n- **Maintainability**: Changes in database structure won’t affect business logic directly.\n- **Reusability**: Services and repositories can be reused across different parts of your app.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Service vs Repository Responsibilities",
+      "content": [
+        {
+          "Layer": "Service",
+          "Responsibilities": "Business rules, coordination between layers"
+        },
+        {
+          "Layer": "Repository",
+          "Responsibilities": "Database access, raw data retrieval"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### 1. What does the service layer do in a Go application?\n- a) Handle HTTP requests\n- b) Define routes\n- c) Implement business logic\n- d) Access the database\n\n### 2. Which layer is responsible for writing SQL queries?\n- a) Handler\n- b) Service\n- c) Repository\n- d) Middleware\n\n### 3. True or False: The repository layer should contain business rules.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n1. **c) Implement business logic**  \n   The service layer focuses on business rules and logic.\n\n2. **c) Repository**  \n   The repository layer is responsible for interacting with the database and writing SQL queries.\n\n3. **False**  \n   The repository should focus only on data access, not business rules.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

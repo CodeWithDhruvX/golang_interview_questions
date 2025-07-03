@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to Memory Management in Go",
+      "content": "In Go, memory management is handled automatically through **garbage collection (GC)**. The Go runtime ensures that memory is allocated and deallocated efficiently, so developers don't have to manually manage memory like in languages such as C or C++.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go's Memory Allocation: Heap vs Stack",
+      "content": "Go manages memory using two main areas:\n\n1. **Stack Memory**: Used for local variables in functions. It's faster and more efficient but has limited space.\n2. **Heap Memory**: Used for dynamic memory allocation. It's slower but can grow in size as needed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Stack Memory Works in Go",
+      "content": "The stack is used for function calls and local variables. It's managed by the **Go runtime** with a **stack pointer**. Each goroutine (Go's lightweight thread) has its own stack, which starts small and grows dynamically as needed.\n\nKey points:\n- Stack memory is automatically allocated when a function is called.\n- It is deallocated when the function returns.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Heap Memory Works in Go",
+      "content": "Heap memory is used when objects are created using the **new** or **make** functions, or when a variable's lifetime needs to extend beyond the scope of the function that created it.\n\n- **Heap allocation** is slower compared to stack allocation.\n- Memory in the heap is managed by the garbage collector.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go Garbage Collection",
+      "content": "Go uses an automatic **garbage collector (GC)** to clean up memory. The GC runs periodically to detect and reclaim unused memory, preventing memory leaks.\n\n- The GC identifies unreachable objects and frees their memory.\n- It's designed to have low latency to minimize its impact on performance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go's GC and Pauses",
+      "content": "Go's garbage collector operates in **three phases**:\n\n1. **Mark Phase**: The garbage collector identifies which objects are in use.\n2. **Sweep Phase**: Unreachable objects are freed.\n3. **Pause Phase**: The program pauses briefly for GC work.\n\nGo optimizes GC pauses to ensure low latency.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Automatic Memory Management in Goroutines",
+      "content": "Each goroutine has its own stack, which starts at a small size (e.g., 2 KB) and can grow dynamically. This stack management allows Go to handle many goroutines concurrently without running out of memory.\n\nKey points:\n- Goroutines are lightweight and use less memory than traditional threads.\n- Stack growth and shrinkage happen automatically based on usage.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Escape Analysis in Go",
+      "content": "Go uses **escape analysis** to determine if a variable should be allocated on the heap or the stack. If a variable 'escapes' the function (e.g., it's returned), it will be allocated on the heap.\n\nThis process helps optimize memory allocation and improves performance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Memory Leaks in Go",
+      "content": "Even though Go has automatic memory management, memory leaks can still occur if references to objects are not properly removed.\n\n**Common causes**:\n- Holding onto references to unused objects.\n- Creating memory cycles that prevent garbage collection from freeing memory.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go's Memory Management Summary",
+      "content": "In summary, Go provides an efficient memory management system with automatic garbage collection and dynamic memory allocation. It ensures developers don't need to manually manage memory, allowing them to focus more on application logic.\n\n- Stack vs. Heap\n- Garbage Collection\n- Goroutines and Escape Analysis\n\nThis system helps Go achieve high concurrency while maintaining good performance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Test your understanding of Go's memory management with these questions:\n\n1. What are the two primary areas where Go allocates memory?\n2. What does Go use to automatically reclaim unused memory?\n3. Why do goroutines have their own stacks?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the answers to the challenge questions:\n\n1. **Stack Memory** and **Heap Memory**.\n2. Go uses the **garbage collector (GC)** to reclaim unused memory.\n3. Goroutines have their own stacks to allow for lightweight, concurrent execution without running out of memory.",
+      "slide_type": "code"
+    }
+  ]
+  

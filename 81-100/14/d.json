@@ -1,0 +1,67 @@
+[
+    {
+      "title": "Introduction to Logging in Go",
+      "content": "Logging is a key part of any application for debugging and monitoring. Go offers basic logging through its standard library, and advanced logging with third-party packages like **logrus**, **zap**, and **zerolog**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using the log Package",
+      "content": "```go\npackage main\nimport (\n    \"log\"\n)\n\nfunc main() {\n    log.Println(\"This is a log message\")\n    log.Fatal(\"This is a fatal error\") // Exits the program\n    log.Panic(\"This will panic\")       // Panics after logging\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Log Output Explained",
+      "content": "- `log.Println()`: Standard log message\n- `log.Fatal()`: Logs the message and exits the program\n- `log.Panic()`: Logs and then panics\n\nAll functions write to standard error and include timestamps by default.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Customizing the Default Logger",
+      "content": "```go\nlog.SetPrefix(\"[MyApp] \")\nlog.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)\nlog.Println(\"Customized log output\")\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Logging Flags Explained",
+      "content": [
+        { "Flag": "log.Ldate", "Description": "Adds the date: 2009/01/23" },
+        { "Flag": "log.Ltime", "Description": "Adds the time: 01:23:23" },
+        { "Flag": "log.Lshortfile", "Description": "Adds file name and line number" },
+        { "Flag": "log.Llongfile", "Description": "Full path and line number" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Why Use Structured Logging?",
+      "content": "- Easier to search and analyze logs\n- More machine-readable for monitoring tools\n- Supports key-value pairs (e.g., userID=123, status=error)",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using logrus for Structured Logging",
+      "content": "```go\nimport log \"github.com/sirupsen/logrus\"\n\nfunc main() {\n    log.WithFields(log.Fields{\n        \"user\": \"johndoe\",\n        \"status\": \"active\",\n    }).Info(\"User login\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "logrus vs zap vs zerolog",
+      "content": [
+        { "Library": "logrus", "Performance": "Medium", "Structured Logging": "Yes", "Ease of Use": "Easy" },
+        { "Library": "zap", "Performance": "High", "Structured Logging": "Yes", "Ease of Use": "Moderate" },
+        { "Library": "zerolog", "Performance": "Very High", "Structured Logging": "Yes", "Ease of Use": "Moderate" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Best Practices for Logging in Go",
+      "content": "- Don’t log sensitive information\n- Use levels: info, warn, error, debug\n- Prefer structured logging for production\n- Redirect logs to files or external systems (e.g., ELK, Loki)",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n1. What does `log.Fatal()` do after printing the message?\n2. How can you include the filename in log output using Go's log package?\n3. Name one advantage of structured logging.\n4. Which third-party logging library is best for high-performance applications?\n5. Write a one-line logrus statement that logs a warning with the key `\"attempt\"` set to `3`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```go\n// 1. log.Fatal() logs the message and exits the program.\n// 2. Use log.SetFlags(log.Lshortfile) to include the filename.\n// 3. Structured logs are machine-readable and easy to parse.\n// 4. zerolog is great for high-performance logging.\n// 5. log.WithField(\"attempt\", 3).Warn(\"Login attempt failed\")\n```",
+      "slide_type": "code"
+    }
+  ]
+  

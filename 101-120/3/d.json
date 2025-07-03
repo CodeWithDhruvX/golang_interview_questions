@@ -1,0 +1,48 @@
+[
+    {
+      "title": "What is the CMD Directory in Go?",
+      "content": "In Go, the `cmd` directory is a conventional location for storing the main applications of a project. It typically contains one or more subdirectories, each representing a single executable program or service within the larger project.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Structure of the CMD Directory",
+      "content": "The `cmd` directory holds Go code for executable programs that are separate from libraries or packages. Each program typically resides in its own subdirectory within `cmd/`.\n\nFor example:\n```\nmyproject/\n  ├── cmd/\n  │   ├── app1/\n  │   │   └── main.go\n  │   └── app2/\n  │       └── main.go\n```\nThis allows each subdirectory to build a different binary program from the same repository.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use the CMD Directory?",
+      "content": "The `cmd` directory helps to organize Go projects, especially when multiple executable programs are involved. It separates the code for different applications from reusable libraries or packages, which are typically stored in other directories like `pkg/` or `internal/`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example CMD Directory with Multiple Apps",
+      "content": "Here’s an example of a project with two executable programs in the `cmd` directory:\n\n```\nmyproject/\n  ├── cmd/\n  │   ├── api/\n  │   │   └── main.go\n  │   └── worker/\n  │       └── main.go\n  ├── internal/\n  │   └── service/\n  ├── pkg/\n  │   └── utils/\n```\nIn this example, `api` and `worker` are two distinct executables built from the same repository.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How to Build an Executable from CMD",
+      "content": "To build an executable program from the `cmd` directory, navigate to the specific subdirectory and run `go build`.\n\nFor example:\n\n```\ncd myproject/cmd/api\ngo build\n```\nThis command compiles `main.go` in the `api` folder and generates an executable.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Benefits of Using CMD",
+      "content": "- **Separation of Concerns**: Keeps executables separate from libraries.\n- **Clarity**: Makes it clear where your executable programs are located in the project.\n- **Scalability**: Helps organize complex projects with multiple executables.\n- **Build Flexibility**: Allows building individual binaries without unnecessary dependencies.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Patterns with CMD",
+      "content": "A common pattern in Go projects is to place the main entry point for each executable program in the `cmd` folder, then use shared libraries and code from other directories like `pkg` and `internal`.\n\n- `cmd/`: Main programs or services.\n- `pkg/`: Reusable libraries.\n- `internal/`: Private code, only accessible within the repository.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- What does the `cmd` directory typically store in a Go project?\n- Why is it useful to separate executables into different subdirectories under `cmd`?\n- How do you build an executable program from the `cmd` directory?\n- What is the purpose of the `pkg` and `internal` directories in relation to `cmd`?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "- The `cmd` directory stores executable programs or services in a Go project.\n- It helps organize the project and separate different applications.\n- To build an executable from the `cmd` directory, navigate to the app's subdirectory and run `go build`.\n- The `pkg` directory holds reusable libraries, while `internal` stores code that is private to the project and not meant to be imported outside.\n",
+      "slide_type": "code"
+    }
+  ]
+  

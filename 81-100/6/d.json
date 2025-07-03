@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Table-Driven Testing",
+      "content": "Table-driven testing is a popular testing pattern in Go, where you define a table of test cases, each with input data and expected results. This makes it easier to add new test cases and ensures that your tests are organized and easy to manage.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Table-Driven Testing?",
+      "content": "Table-driven tests offer several advantages:\n\n- **Organized and readable tests**\n- **Easy to add new cases**\n- **Reduce duplication**\n- **Consistent structure**",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Structure of Table-Driven Test",
+      "content": "The structure involves creating a slice of test cases, each with fields for the input data and expected output. Then, you loop through the table and run each test.\n\n### Example:\n\n```go\npackage main\n\nimport (\n\t\"testing\"\n)\n\nfunc Add(a, b int) int {\n\treturn a + b\n}\n\nfunc TestAdd(t *testing.T) {\n\ttests := []struct {\n\t\ta, b, expected int\n\t}{\n\t\t{1, 2, 3},\n\t\t{2, 3, 5},\n\t\t{0, 0, 0},\n\t}\n\n\tfor _, test := range tests {\n\t\tt := test // capture range variable\n\t\tt.Run(fmt.Sprintf(\"%d + %d = %d\", t.a, t.b, t.expected), func(t *testing.T) {\n\t\t\tresult := Add(t.a, t.b)\n\t\t\tif result != t.expected {\n\t\t\t\tt.Errorf(\"expected %d, got %d\", t.expected, result)\n\t\t\t}\n\t})\n\t}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Elements of Table-Driven Test",
+      "content": "A typical table-driven test includes:\n\n1. **Test Struct**: Defines input and expected output.\n2. **Test Loop**: Iterates over each test case.\n3. **Assertion**: Verifies that the result matches the expected value.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Benefits of Table-Driven Testing",
+      "content": "Table-driven testing is especially useful for:\n\n- **Multiple test cases**: It keeps your tests concise when you have many similar test cases.\n- **Easy maintenance**: You can easily modify or add new tests without changing the structure of your test function.\n- **Consistent results**: By following the same format, your tests become more predictable and easier to manage.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Advanced Table-Driven Test Example",
+      "content": "In more complex cases, you can include multiple conditions, such as edge cases or different combinations of inputs.\n\nExample of testing a function that calculates the maximum of two integers:\n\n```go\nfunc Max(a, b int) int {\n\tif a > b {\n\t\treturn a\n\t}\n\treturn b\n}\n\nfunc TestMax(t *testing.T) {\n\ttests := []struct {\n\t\ta, b, expected int\n\t}{\n\t\t{1, 2, 2},\n\t\t{5, 3, 5},\n\t\t{7, 7, 7},\n\t\t{-1, 2, 2},\n\t}\n\n\tfor _, test := range tests {\n\t\tresult := Max(test.a, test.b)\n\t\tif result != test.expected {\n\t\t\tt.Errorf(\"expected %d, got %d\", test.expected, result)\n\t\t}\n\t}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Table-Driven Testing with Error Handling",
+      "content": "In table-driven testing, you can also handle errors by testing functions that return errors. You can include an `error` field in your struct to verify that errors are correctly returned when expected.\n\nExample:\n\n```go\nfunc Divide(a, b int) (int, error) {\n\tif b == 0 {\n\t\treturn 0, fmt.Errorf(\"cannot divide by zero\")\n\t}\n\treturn a / b, nil\n}\n\nfunc TestDivide(t *testing.T) {\n\ttests := []struct {\n\t\ta, b, expected int\n\t\tshouldError bool\n\t}{\n\t\t{10, 2, 5, false},\n\t\t{10, 0, 0, true},\n\t}\n\n\tfor _, test := range tests {\n\t\tresult, err := Divide(test.a, test.b)\n\t\tif test.shouldError && err == nil {\n\t\t\tt.Errorf(\"expected error for %d / %d\", test.a, test.b)\n\t\t}\n\t\tif !test.shouldError && result != test.expected {\n\t\t\tt.Errorf(\"expected %d, got %d\", test.expected, result)\n\t\t}\n\t}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Table-Driven Test with Nested Subtests",
+      "content": "You can use subtests within each table-driven test case. This is useful when you want to categorize tests within a single case.\n\nExample:\n\n```go\nfunc TestOperations(t *testing.T) {\n\ttests := []struct {\n\t\tname  string\n\t\top1, op2 int\n\t\texpected int\n\t}{\n\t\t{\"Add\", 1, 2, 3},\n\t\t{\"Subtract\", 5, 3, 2},\n\t}\n\n\tfor _, test := range tests {\n\t\tt.Run(test.name, func(t *testing.T) {\n\t\t\tvar result int\n\t\t\tif test.name == \"Add\" {\n\t\t\t\tresult = test.op1 + test.op2\n\t\t\t} else if test.name == \"Subtract\" {\n\t\t\t\tresult = test.op1 - test.op2\n\t\t\t}\n\t\t\tif result != test.expected {\n\t\t\t\tt.Errorf(\"expected %d, got %d\", test.expected, result)\n\t\t}\n\t})\n\t}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- **What is the main advantage of using table-driven testing in Go?**\n- **What type of test cases can be easily handled using table-driven testing?**\n- **How do you handle error scenarios in a table-driven test?**\n\nTry writing a test for a function that checks whether a number is positive, negative, or zero using table-driven testing.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here’s a possible solution to the challenge:\n\n```go\nfunc CheckSign(n int) string {\n\tif n > 0 {\n\t\treturn \"Positive\"\n\t} else if n < 0 {\n\t\treturn \"Negative\"\n\t}\n\treturn \"Zero\"\n}\n\nfunc TestCheckSign(t *testing.T) {\n\ttests := []struct {\n\t\tnumber int\n\t\texpected string\n\t}{\n\t\t{5, \"Positive\"},\n\t\t{-3, \"Negative\"},\n\t\t{0, \"Zero\"},\n\t}\n\n\tfor _, test := range tests {\n\t\tresult := CheckSign(test.number)\n\t\tif result != test.expected {\n\t\t\tt.Errorf(\"expected %s, got %s\", test.expected, result)\n\t\t}\n\t}\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

@@ -1,0 +1,61 @@
+[
+    {
+      "title": "Introduction to Interfaces",
+      "content": "An **interface** defines a contract that a class must follow. It only contains method signatures and properties without any implementation.\n\nInterfaces help achieve **abstraction** and **multiple inheritance** in object-oriented programming.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Features of Interfaces",
+      "content": "- Defines method signatures without bodies.\n- Cannot contain implementation (only contracts).\n- Classes that implement the interface must define the methods.\n- Supports multiple inheritance.\n- Helps achieve abstraction and loose coupling.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax: Defining an Interface (Example in TypeScript)",
+      "content": "```typescript\ninterface Vehicle {\n  make: string;\n  model: string;\n  start(): void;\n  stop(): void;\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Syntax: Implementing an Interface",
+      "content": "```typescript\nclass Car implements Vehicle {\n  make: string;\n  model: string;\n\n  constructor(make: string, model: string) {\n    this.make = make;\n    this.model = model;\n  }\n\n  start() {\n    console.log(`${this.make} ${this.model} started.`);\n  }\n\n  stop() {\n    console.log(`${this.make} ${this.model} stopped.`);\n  }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Interface vs Abstract Class",
+      "content": [
+        {
+          "Comparison": "Interface",
+          "Purpose": "Defines *what* should be done, not *how*",
+          "Multiple Inheritance": "Supported",
+          "Method Implementation": "Not allowed"
+        },
+        {
+          "Comparison": "Abstract Class",
+          "Purpose": "Can define *how* and *what*",
+          "Multiple Inheritance": "Not supported (only one abstract class)",
+          "Method Implementation": "Allowed (with abstract and concrete methods)"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Real-world Analogy",
+      "content": "Think of an interface like a **remote control**. The remote defines what buttons (methods) exist — like `powerOn()`, `volumeUp()`, but it doesn’t care *how* the TV implements these actions internally.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Best Practices for Interfaces",
+      "content": "- Keep interfaces small and focused.\n- Prefer multiple small interfaces over a large, all-in-one interface (Interface Segregation Principle).\n- Name interfaces descriptively (e.g., `Drawable`, `Serializable`).\n- Document interfaces clearly for implementers.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. **What does an interface define?**\n2. **Can an interface contain method implementations?**\n3. **What's a real-world analogy for an interface?**\n4. **Write a simple interface called `Animal` with two methods: `eat()` and `sleep()`.**",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n\n1. **What does an interface define?**\n   - A contract specifying method signatures and properties.\n\n2. **Can an interface contain method implementations?**\n   - No, it only defines method signatures.\n\n3. **What's a real-world analogy for an interface?**\n   - A remote control — specifies available actions but not how they work.\n\n4. **Simple Interface Example:**\n```typescript\ninterface Animal {\n  eat(): void;\n  sleep(): void;\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

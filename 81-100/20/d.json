@@ -1,0 +1,80 @@
+[
+    {
+      "title": "Introduction to Idiomatic Go",
+      "content": "Idiomatic Go code is clean, readable, and follows conventions established by the Go community. These practices improve maintainability and collaboration in Go projects.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Follow Effective Naming Conventions",
+      "content": "- Use **short but descriptive** names\n- Avoid unnecessary abbreviations\n- **Exported names** (starting with uppercase) should be meaningful\n- Common conventions:\n  - `i, j` for loop counters\n  - `err` for errors\n  - `ctx` for context",
+      "slide_type": "text"
+    },
+    {
+      "title": "Naming Example",
+      "content": "```go\n// Bad\nfunc DataProcessor(d []int) {}\n\n// Good\nfunc ProcessData(data []int) {}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Use `gofmt` and Linters",
+      "content": "- Always run `gofmt` to format your code automatically\n- Use linters like `golint`, `staticcheck`, or `govet` to catch potential issues early\n- Consistent formatting makes code easier to read and debug",
+      "slide_type": "text"
+    },
+    {
+      "title": "Favor Composition Over Inheritance",
+      "content": "Go does **not** support traditional inheritance. Instead, use **interfaces** and **struct embedding** to achieve code reuse and flexibility.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Composition Example",
+      "content": "```go\ntype Logger struct {\n    Prefix string\n}\n\nfunc (l Logger) Log(msg string) {\n    fmt.Println(l.Prefix, msg)\n}\n\ntype Server struct {\n    Logger\n}\n\n// Server now has Log method from Logger\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Keep Functions Short and Focused",
+      "content": "- Each function should do **one thing** and do it well\n- Aim for **clarity and simplicity**\n- Break complex logic into helper functions",
+      "slide_type": "text"
+    },
+    {
+      "title": "Error Handling: Keep It Simple",
+      "content": "- Use `if err != nil` frequently — it’s normal in Go\n- Handle errors **immediately** and clearly\n- Prefer **explicit error messages**",
+      "slide_type": "text"
+    },
+    {
+      "title": "Error Handling Example",
+      "content": "```go\nf, err := os.Open(\"file.txt\")\nif err != nil {\n    log.Fatalf(\"failed to open file: %v\", err)\n}\ndefer f.Close()\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Use Go’s Concurrency Features Wisely",
+      "content": "- Use **goroutines** for concurrency\n- Use **channels** for communication\n- Avoid unnecessary complexity; keep concurrency safe and understandable",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Goroutine Example",
+      "content": "```go\nfunc sayHello() {\n    fmt.Println(\"Hello from goroutine\")\n}\n\ngo sayHello()\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Summary of Best Practices",
+      "content": [
+        { "Practice": "Use gofmt and linters", "Benefit": "Ensures consistent formatting" },
+        { "Practice": "Short, descriptive names", "Benefit": "Improves readability" },
+        { "Practice": "Keep functions small", "Benefit": "Easier to test and debug" },
+        { "Practice": "Use interfaces", "Benefit": "Promotes flexibility and modularity" },
+        { "Practice": "Handle errors explicitly", "Benefit": "Avoids silent failures" },
+        { "Practice": "Use goroutines wisely", "Benefit": "Safe and scalable concurrency" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. What is the idiomatic way to handle errors in Go?\n2. Which Go tool is used to auto-format your code?\n3. Why is composition preferred over inheritance in Go?\n4. What should you avoid when naming functions or variables?\n5. How would you start a function as a goroutine?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n1. Use `if err != nil` immediately after the operation.\n2. Use `gofmt`.\n3. Go doesn't support traditional inheritance; composition allows flexible and reusable code.\n4. Avoid non-descriptive or overly abbreviated names.\n5. Use the `go` keyword before the function call: `go myFunction()`.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to Garbage Collection in Go",
+      "content": "Garbage collection (GC) in Go is a process that automatically reclaims memory that is no longer in use by the program. The Go runtime system manages this process without requiring the programmer to manually handle memory allocation and deallocation.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Garbage Collection is Important",
+      "content": "Memory management is crucial for long-running applications. Garbage collection helps to:\n- Prevent memory leaks\n- Ensure efficient use of system resources\n- Reduce the need for manual memory management (which can lead to errors and inefficiencies)",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Go's Garbage Collector Works",
+      "content": "Go's garbage collector uses a **tracing garbage collector** approach, where it identifies and collects unused memory by tracking all references to allocated objects. It uses a **mark-and-sweep** algorithm to identify and free up memory that is no longer referenced by the program.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Concepts of Go's GC",
+      "content": "1. **Heap**: The region of memory where dynamically allocated objects are stored.\n2. **Roots**: The set of variables that directly reference other variables or objects.\n3. **Mark Phase**: Identifying all objects that are still reachable by following the roots.\n4. **Sweep Phase**: Reclaiming memory of unreachable objects.",
+      "slide_type": "text"
+    },
+    {
+      "title": "GC in Action - Code Example",
+      "content": "```go\npackage main\nimport \"fmt\"\n\nfunc main() {\n    slice := []int{1, 2, 3}\n    fmt.Println(slice)\n    slice = nil // Memory will be reclaimed by GC when no references exist.\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "GC Tuning in Go",
+      "content": "Go provides the ability to tune the behavior of the garbage collector via environment variables and runtime functions. These include:\n- `GOGC`: Controls the garbage collection target percentage (default is 100)\n- `GODEBUG`: Used to enable debugging information for garbage collection",
+      "slide_type": "text"
+    },
+    {
+      "title": "How GOGC Works",
+      "content": "The `GOGC` environment variable determines when garbage collection will run. The default value of `GOGC` is 100, which means GC will run when the heap size doubles. A higher value reduces GC frequency, but might lead to higher memory usage.",
+      "slide_type": "text"
+    },
+    {
+      "title": "GC vs. Manual Memory Management",
+      "content": "Go's garbage collector automatically handles memory management, unlike languages like C and C++ where the programmer is responsible for allocating and freeing memory manually. This helps prevent issues like dangling pointers and memory leaks but comes with a slight performance cost due to the GC process.",
+      "slide_type": "text"
+    },
+    {
+      "title": "GC in Action - Visual Flow",
+      "content": "![GC Visual Flow](https://example.com/gc_flow_diagram.png)\n\nThis diagram illustrates the typical lifecycle of objects and how garbage collection works by identifying reachable objects and collecting the unreachable ones.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Challenges with Garbage Collection",
+      "content": "Some challenges with GC include:\n- **Pause times**: Garbage collection can introduce pauses in the application.\n- **Tuning**: Tuning the garbage collector to meet specific performance goals can be complex.\n- **Memory usage**: The GC can introduce overhead, especially for applications with high memory usage.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Quick Quiz:\n1. What is the primary role of the garbage collector in Go?\n2. What are the two phases of Go's garbage collection process?\n3. How does the `GOGC` variable affect garbage collection in Go?\n\nTry to answer these questions based on the concepts you've learned so far!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions:\n1. The primary role of the garbage collector in Go is to automatically reclaim memory that is no longer being used by the program.\n2. The two phases of Go's garbage collection process are:\n   - Mark Phase: Identifying reachable objects.\n   - Sweep Phase: Reclaiming memory of unreachable objects.\n3. The `GOGC` variable controls the garbage collection frequency. A value of 100 means GC will run when the heap size doubles.\n\nGreat job testing your understanding!",
+      "slide_type": "code"
+    }
+  ]
+  

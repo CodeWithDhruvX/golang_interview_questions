@@ -1,0 +1,48 @@
+[
+    {
+      "title": "Introduction to Type Embedding",
+      "content": "In Go, **type embedding** is a powerful feature that allows one struct to include another struct within it. This enables composition rather than inheritance, fostering code reuse and flexibility.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Type Embedding Works in Go",
+      "content": "When you embed a struct in another struct, the fields and methods of the embedded struct become part of the outer struct, allowing access directly to them.\n\nExample:\n```go\npackage main\n\ntype Engine struct {\n  horsepower int\n}\n\ntype Car struct {\n  Engine  // Type embedding\n  brand   string\n}\n\nfunc main() {\n  car := Car{\n    Engine: Engine{horsepower: 400},\n    brand:  'Ferrari',\n  }\n  fmt.Println(car.horsepower)  // Accessing Engine's field directly\n}```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Difference Between Type Embedding and Inheritance",
+      "content": "In Go, inheritance (like in traditional OOP languages) is not supported. Instead, **type embedding** allows struct fields and methods of the embedded type to be accessed directly, providing a way to reuse code.\n\n**Key Differences**:\n- **Inheritance**: Involves subclassing and is hierarchical.\n- **Type Embedding**: No hierarchy, focuses on composition and code reuse.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example of Inheritance in OOP",
+      "content": "In traditional OOP languages like Java or C++, inheritance allows a class to inherit fields and methods from a parent class.\n\nExample in Java:\n```java\nclass Animal {\n  void speak() {\n    System.out.println('Animal speaks');\n  }\n}\n\nclass Dog extends Animal {\n  void speak() {\n    System.out.println('Dog barks');\n  }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Embedding in Go: Advantages",
+      "content": "- Promotes composition over inheritance\n- Enables flexible and reusable code\n- Helps maintain loose coupling between types\n- Allows easy method overriding (if needed) using methods with the same name in the outer struct",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example of Method Overriding with Type Embedding",
+      "content": "In Go, method overriding can be achieved by defining a method with the same name on the outer struct, which will override the embedded struct's method.\n\nExample:\n```go\npackage main\n\nimport \"fmt\"\n\ntype Animal struct {}\nfunc (a Animal) Speak() { fmt.Println('Animal speaks') }\n\ntype Dog struct {\n  Animal\n}\nfunc (d Dog) Speak() { fmt.Println('Dog barks') }\n\nfunc main() {\n  dog := Dog{}\n  dog.Speak()  // Output: Dog barks\n}```",
+      "slide_type": "code"
+    },
+    {
+      "title": "When to Use Type Embedding",
+      "content": "Type embedding is ideal when you want to model 'has-a' relationships, where one struct 'has' another struct's behavior. It’s useful for code reuse, and when creating objects with shared functionality.\n\nExample: A `Car` 'has' an `Engine`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quiz/Challenge: Test Your Understanding",
+      "content": "### Questions:\n1. What is the main difference between type embedding in Go and inheritance in traditional OOP?\n2. Can Go achieve method overriding with type embedding? If so, how?\n3. In the following code, what will be the output?\n\n```go\npackage main\nimport \"fmt\"\ntype Animal struct {}\nfunc (a Animal) Speak() { fmt.Println('Animal speaks') }\ntype Dog struct { Animal }\nfunc (d Dog) Speak() { fmt.Println('Dog barks') }\nfunc main() {\n  dog := Dog{}\n  dog.Speak()\n}```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n1. Type embedding focuses on composition (having a struct inside another), while inheritance creates a hierarchical class structure with parent-child relationships.\n2. Yes, Go can achieve method overriding by defining a method with the same name on the outer struct (the struct embedding the other).\n3. The output of the code will be: `Dog barks`. The `Speak` method defined in `Dog` overrides the `Speak` method from `Animal`.\n\nExplanation: The `Speak` method from `Dog` is called because it overrides the method from `Animal`.",
+      "slide_type": "code"
+    }
+  ]
+  

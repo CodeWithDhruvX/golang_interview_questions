@@ -1,0 +1,38 @@
+[
+    {
+        "title": "What is Go (Golang)?",
+        "content": "### Definition:\nGo, often referred to as **Golang** due to its domain name (golang.org), is an open-source programming language developed for system-level and web-scale software. It combines the performance and safety of a statically typed language with the speed of dynamic languages. Go is compiled, meaning it translates source code directly into machine code, resulting in fast executables. Its design emphasizes simplicity and clarity, making it an ideal language for modern backend development, cloud services, and microservices.",
+        "slide_type": "text"
+    },
+    {
+        "title": "Who Developed Go?",
+        "content": "### Developed By:\nGo was developed at **Google in 2007** by three renowned computer scientists: **Robert Griesemer**, **Rob Pike**, and **Ken Thompson**. Each of them played a major role in the history of computing—Thompson co-created Unix and the C programming language. Their goal with Go was to create a language that addressed the complexity, slowness, and scaling issues of C++ and Java, especially for Google’s massive codebase and infrastructure. It became open source in 2009 to build a broader community around it.",
+        "slide_type": "text"
+    },
+    {
+        "title": "Why Go Was Created",
+        "content": "### Motivation Behind Go:\nThe creators of Go observed that existing languages at Google were either too slow in compilation (like C++) or lacked essential features such as proper concurrency (like Java and Python). Go was designed to:\n- **Simplify software development** with clean syntax and modern tools.\n- **Speed up build times** with lightning-fast compilation.\n- **Handle concurrent workloads** through built-in concurrency primitives.\n- **Improve code maintainability** in large-scale codebases.\nIt was a response to real-world engineering challenges rather than academic problems.",
+        "slide_type": "text"
+    },
+    {
+        "title": "Key Features of Go",
+        "content": "### Key Features:\n- ✅ **Fast Compilation**: Go compiles to machine code very quickly, speeding up development cycles.\n- ✅ **Built-in Concurrency**: Concurrency is a first-class citizen through **goroutines** (lightweight threads) and **channels** (safe data communication).\n- ✅ **Garbage Collection**: Automatic memory management without manual freeing of memory.\n- ✅ **Simplicity**: The language design avoids unnecessary complexity; there's only one way to do things.\n- ✅ **Cross-platform Support**: Go supports easy cross-compilation, ideal for containerized apps and microservices.\n- ✅ **Robust Standard Library**: Comes with packages for web servers, I/O, testing, and more, reducing the need for third-party tools.",
+        "slide_type": "text"
+    },
+    {
+        "title": "Hello World in Go",
+        "content": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}",
+        "slide_type": "code"
+    },
+    {
+        "title": "Go at a Glance",
+        "slide_type": "table",
+        "content": [
+            {"Aspect": "Type", "Details": "Compiled, Statically Typed"},
+            {"Aspect": "Year", "Details": "2009 (Open Sourced)"},
+            {"Aspect": "Creators", "Details": "Griesemer, Pike, Thompson"},
+            {"Aspect": "Concurrency", "Details": "Goroutines & Channels"},
+            {"Aspect": "Use Case", "Details": "Web Servers, Microservices, CLI tools"}
+        ]
+    }
+]

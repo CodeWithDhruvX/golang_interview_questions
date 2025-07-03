@@ -1,0 +1,61 @@
+[
+    {
+      "title": "Introduction to For Loop in Go",
+      "content": "In Go, a `for` loop is the only loop construct available. It is versatile and can be used in a variety of ways: as a traditional for loop, as a while loop, or as an infinite loop. Let's explore its usage in different formats.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic For Loop Syntax",
+      "content": "The basic syntax of a for loop in Go is:\n\n```go\nfor initialization; condition; post {\n    // code to execute\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "For Loop Example 1: Counting from 1 to 5",
+      "content": "Here is a simple example that counts from 1 to 5:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    for i := 1; i <= 5; i++ {\n        fmt.Println(i)\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "For Loop as a While Loop",
+      "content": "You can also use a for loop as a while loop in Go. Here's an example where the loop runs while the condition is true:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    i := 1\n    for i <= 5 {\n        fmt.Println(i)\n        i++\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Infinite For Loop",
+      "content": "An infinite for loop can be created by omitting the condition part. This loop will continue indefinitely until it is explicitly broken out of:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    for {\n        fmt.Println(\"This is an infinite loop\")\n        break\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Breaking and Continuing a For Loop",
+      "content": "You can control the flow of a for loop using `break` (to exit the loop) or `continue` (to skip to the next iteration). Here’s an example:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    for i := 1; i <= 5; i++ {\n        if i == 3 {\n            continue\n        }\n        if i == 5 {\n            break\n        }\n        fmt.Println(i)\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "For Loop vs Other Loops",
+      "content": "Unlike many other languages, Go has only one looping construct: the `for` loop. In Go, there's no `while` or `do-while`. This makes the `for` loop highly flexible and adaptable.\n\n- `for` (initialization; condition; post)\n- `for condition`\n- `for` (infinite loop)",
+      "slide_type": "text"
+    },
+    {
+      "title": "For Loop in Table Format",
+      "content": [
+        {
+          "type": "Traditional For Loop",
+          "example": "```go\nfor i := 1; i <= 5; i++ {\n    fmt.Println(i)\n}```"
+        },
+        {
+          "type": "While Loop",
+          "example": "```go\ni := 1\nfor i <= 5 {\n    fmt.Println(i)\n    i++\n}```"
+        },
+        {
+          "type": "Infinite Loop",
+          "example": "```go\nfor {\n    fmt.Println(\"Infinite loop\")\n    break\n}```"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Takeaway",
+      "content": "The `for` loop in Go is simple yet powerful, and by understanding its flexibility, you can use it for a wide variety of tasks in your code. Mastering the `for` loop is essential for writing efficient Go code.",
+      "slide_type": "text"
+    }
+  ]
+  

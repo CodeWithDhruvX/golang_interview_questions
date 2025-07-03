@@ -1,0 +1,56 @@
+[
+    {
+      "title": "Introduction to Maps in Go",
+      "content": "Maps in Go are powerful data structures that allow you to associate keys with corresponding values. Internally, Go uses a hash table to implement maps, providing fast access to values when the key is known. They are declared using the `map[keyType]valueType` syntax. For example, a map of string to int can be declared as `map[string]int`. Maps are dynamic and grow as needed, making them ideal for use cases like frequency counting, lookup tables, and configuration storage.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is Key Existence Check?",
+      "content": "When working with maps in Go, not every key you try to access may be present. Unlike some other languages that throw an error when a key is missing, Go returns the zero value of the value type. However, relying on zero values can be misleading—for example, is an `int` value of `0` in the map, or is it just a missing key? This is where key existence checking comes in. It helps distinguish between 'absent' and 'present with zero value', making your code more reliable and readable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax to Check Key in Map",
+      "content": "```go\nvalue, exists := myMap[key]\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How It Works",
+      "content": "- In Go, when you access a map with a key, you can capture two values: the value itself and a boolean indicating whether the key was found.\n- This pattern is known as the *comma ok idiom*, which is also used in other parts of Go, such as type assertions and channel receives.\n- If the key is not present in the map, the `exists` boolean will be `false`, and the `value` will be the zero value for the type (e.g., `0` for `int`, `\"\"` for `string`).\n- This idiom is efficient and expressive, helping you handle both existence and actual values in one line of code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Key Exists",
+      "content": "```go\nmyMap := map[string]int{\"apple\": 5, \"banana\": 10}\n\nvalue, exists := myMap[\"apple\"]\nif exists {\n    fmt.Println(\"Key found with value:\", value)\n} else {\n    fmt.Println(\"Key not found\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example: Key Does Not Exist",
+      "content": "```go\nvalue, exists := myMap[\"grape\"]\nif exists {\n    fmt.Println(\"Key found with value:\", value)\n} else {\n    fmt.Println(\"Key not found\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Why This Matters",
+      "content": "- When a key doesn't exist in the map, Go doesn't throw an error—it silently returns the zero value. This behavior, while safe, can lead to logical bugs if not handled correctly.\n- For example, if you're counting words in a text and access `wordCount[\"go\"]`, you might get `0`—but you can't tell whether the word \"go\" never appeared, or appeared zero times due to a logic error.\n- To avoid such ambiguity, the comma-ok idiom is essential. It makes your intent explicit and guards your program against incorrect assumptions.\n- Especially in cases where the zero value is a valid input (like `0`, `false`, or `\"\"`), skipping the existence check can result in incorrect logic flow.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Map Access Comparison",
+      "content": [
+        {
+          "behavior": "Returns zero value if key doesn't exist",
+          "method": "value := myMap[key]"
+        },
+        {
+          "behavior": "Returns value and a boolean indicating existence",
+          "method": "value, exists := myMap[key]"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Summary",
+      "content": "- The comma-ok idiom (`value, exists := myMap[key]`) is the recommended way to safely access keys in a Go map.\n- It ensures that your program handles both found and not-found keys in a clear and intentional way.\n- This idiom is crucial when the value type's zero value (e.g., 0, \"\", false) could be mistaken for a real value.\n- Practicing this idiom will help you write more idiomatic, safe, and bug-resistant Go code, especially when maps are used in loops, data processing, or configuration lookups.",
+      "slide_type": "text"
+    }
+  ]

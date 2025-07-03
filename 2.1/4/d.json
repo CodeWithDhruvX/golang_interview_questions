@@ -1,0 +1,61 @@
+[
+    {
+      "title": "What Are Slices in Go?",
+      "content": "**Slices** in Go are lightweight data structures that provide access to portions of arrays. Internally, a slice contains three components: a pointer to the underlying array, the length of the slice, and its capacity.\n\nThey are more flexible than arrays because they can grow and shrink dynamically. Slices are passed by reference, meaning changes to a slice inside a function affect the original slice unless explicitly copied.\n\nExample:\n```go\nnumbers := []int{1, 2, 3, 4, 5}\n```\nThis slice points to an array of 5 integers but behaves like a dynamic list.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Copy Slices?",
+      "content": "Copying slices in Go is essential for maintaining data integrity and avoiding side effects. When slices are assigned or passed to functions, only the slice header is copied—not the underlying array.\n\nThis can lead to unintended modifications if multiple slices reference the same array. By copying the slice, we create a new underlying array that is safe to modify without affecting the original.\n\nUse cases include:\n- Functional programming patterns where immutability is desired\n- Creating backups before transformations\n- Isolating data for concurrent goroutines",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using `copy()` Function",
+      "content": "Go provides a built-in `copy()` function specifically designed to copy slice data efficiently.\n\nThe function copies elements from a source slice into a destination slice, returning the number of elements actually copied, which is the minimum of the two lengths.\n\nSyntax:\n```go\ncopy(destination, source)\n```\nIt's important to ensure the destination slice is properly allocated using `make()` before calling `copy()`, otherwise it may result in a runtime panic or no data being copied.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Copying Slices with copy()",
+      "content": "```go\noriginal := []int{1, 2, 3}                   // Original slice\ncopySlice := make([]int, len(original))      // Allocate new slice with same length\ncopy(copySlice, original)                    // Use built-in copy function\nfmt.Println(copySlice)                       // Output: [1 2 3]\n```\n\nIn this example, `copySlice` is a brand-new slice that holds the same data as `original`. Any changes made to `copySlice` will not affect `original`, ensuring data safety and isolation. The use of `make()` is critical here to allocate the exact memory needed before copying.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Important Note About copy()",
+      "content": "The `copy()` function only copies as many elements as will fit in the destination slice.\n\nFor example:\n```go\nsrc := []int{1, 2, 3}\ndst := make([]int, 2)\ncopy(dst, src)\n```\nThis will copy only the first 2 elements. It does **not** expand the destination automatically.\n\nIf you're expecting a full copy, always ensure the destination slice has equal or greater length than the source. Failing to do so may result in incomplete data or logic bugs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Custom Copy Using Loop",
+      "content": "```go\noriginal := []int{10, 20, 30}                   // Source slice\ndestination := make([]int, len(original))      // Allocate new slice with same length\nfor i := range original {\n    destination[i] = original[i]               // Copy each element manually\n}\nfmt.Println(destination)                       // Output: [10 20 30]\n```\n\nThis manual copying method gives you full control, allowing for custom logic like filtering, transformation, or conditional copying while iterating. It’s slightly slower than `copy()` but useful for tailored operations.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Shallow Copy vs Deep Copy",
+      "content": [
+        {
+          "Description": "Copies only the slice header (pointer, length, capacity), not the underlying data.",
+          "Type": "Shallow Copy"
+        },
+        {
+          "Description": "Copies the actual data, making a new underlying array.",
+          "Type": "Deep Copy"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Slice Copy: Common Mistake",
+      "content": "```go\n// Mistake: Just assigning one slice to another\noriginal := []int{1, 2, 3}\ncopySlice := original       // This does NOT create a new copy\ncopySlice[0] = 100\nfmt.Println(original)       // Output: [100 2 3] - original is modified too\n```\n\nThis example highlights a common pitfall in Go. When you assign one slice to another, both variables point to the same underlying array. Any changes made via one variable are reflected in the other, which can introduce subtle and hard-to-detect bugs in your code.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Best Practice to Copy Slices",
+      "content": "To avoid unintended data sharing between slices, it's best to create a new slice using `make()` and then use the `copy()` function to copy data.\n\nThis ensures that changes to one slice will not affect the other. It's especially important in concurrent programs or when working with slices inside functions where isolation is necessary.\n\nExample:\n```go\nnewSlice := make([]int, len(original))\ncopy(newSlice, original)\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Summary",
+      "content": "- **Slices are references** to arrays and share underlying memory.\n- **Use `copy()`** to perform a deep copy (i.e., duplicate the underlying data).\n- **Avoid direct assignment** if you want data isolation.\n- Always allocate the destination slice before copying.\n- Understanding shallow vs deep copy is essential to prevent side effects and bugs, especially in large applications or concurrent processing.",
+      "slide_type": "text"
+    }
+  ]

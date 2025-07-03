@@ -1,0 +1,48 @@
+[
+    {
+      "title": "Introduction to Function Literals",
+      "content": "A **function literal** in Go, also called an **anonymous function**, is a function defined inline without a name. It can be used immediately or assigned to a variable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax of Function Literal",
+      "content": "```go\nfunc(a int, b int) int {\n    return a + b\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Assigning to a Variable",
+      "content": "```go\nadd := func(a int, b int) int {\n    return a + b\n}\n\nfmt.Println(add(3, 4)) // Output: 7\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Immediate Invocation",
+      "content": "```go\nresult := func(a int, b int) int {\n    return a * b\n}(3, 4)\n\nfmt.Println(result) // Output: 12\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Use Case: Inline Functions",
+      "content": "- Encapsulate short logic inline\n- Avoid polluting the namespace with function names\n- Useful in goroutines, callbacks, or closures",
+      "slide_type": "text"
+    },
+    {
+      "title": "Function Literal with Closure",
+      "content": "```go\ncounter := func() func() int {\n    count := 0\n    return func() int {\n        count++\n        return count\n    }\n}()\n\nfmt.Println(counter()) // 1\nfmt.Println(counter()) // 2\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Uses of Anonymous Functions",
+      "content": [
+        { "Use Case": "Callbacks", "Description": "Pass function as argument for async or event-driven logic" },
+        { "Use Case": "Goroutines", "Description": "Launch short-lived concurrent code blocks" },
+        { "Use Case": "Closures", "Description": "Maintain state across multiple calls" },
+        { "Use Case": "Functional Style", "Description": "Apply, map, or filter-like patterns" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Summary",
+      "content": "- Function literals are unnamed functions\n- Can be assigned to variables or called immediately\n- Useful for short logic, closures, and concurrency",
+      "slide_type": "text"
+    }
+  ]
+  

@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Service and Repository Layers",
+      "content": "In Go (Golang), the **Service** and **Repository** layers are part of a clean architecture or layered architecture approach.\n\n- **Repository Layer**: Handles data operations (DB interactions).\n- **Service Layer**: Contains business logic and communicates with the repository.\n\nThis separation promotes code reusability, testing, and cleaner organization.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Service and Repository Layers?",
+      "content": "- **Separation of concerns**: Business logic and data logic stay independent.\n- **Easier testing**: You can mock services or repositories.\n- **Scalability**: Changes in one layer don’t affect others.\n- **Readability**: Clear responsibility for each part of the application.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Layered Architecture Overview",
+      "content": [
+        { "Layer": "Handler (API)", "Responsibility": "Handles HTTP requests/responses" },
+        { "Layer": "Service", "Responsibility": "Contains business logic" },
+        { "Layer": "Repository", "Responsibility": "Manages database operations" },
+        { "Layer": "Model", "Responsibility": "Defines data structures" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Sample Repository Interface",
+      "content": "```go\n// user_repository.go\npackage repository\n\ntype User struct {\n    ID   int\n    Name string\n}\n\ntype UserRepository interface {\n    GetByID(id int) (*User, error)\n    Save(user *User) error\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Sample Service Implementation",
+      "content": "```go\n// user_service.go\npackage service\n\nimport (\n    \"myapp/repository\"\n)\n\ntype UserService struct {\n    repo repository.UserRepository\n}\n\nfunc NewUserService(r repository.UserRepository) *UserService {\n    return &UserService{repo: r}\n}\n\nfunc (s *UserService) GetUserName(id int) (string, error) {\n    user, err := s.repo.GetByID(id)\n    if err != nil {\n        return \"\", err\n    }\n    return user.Name, nil\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Connecting Service and Repository",
+      "content": "```go\n// main.go or handler.go\n\nrepo := repository.NewUserRepo()\nservice := service.NewUserService(repo)\n\nname, err := service.GetUserName(1)\nif err != nil {\n    // handle error\n}\nfmt.Println(\"User Name:\", name)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Benefits Recap",
+      "content": "- **Testability**: Easy to write unit tests for service and repo.\n- **Maintainability**: Isolate changes to business or data logic.\n- **Clarity**: Easier to understand app structure for new developers.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions\n\n1. What is the main purpose of the **repository layer**?\n2. True or False: The **service layer** handles database queries directly.\n3. What is one benefit of separating service and repository layers?\n4. Fill in the blank: The service layer contains the application's _____ logic.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```md\n1. It handles data persistence and database operations.\n2. False – the service layer should not interact with the database directly.\n3. Answers may vary: maintainability, testability, clarity, separation of concerns.\n4. Business\n```",
+      "slide_type": "code"
+    }
+  ]
+  

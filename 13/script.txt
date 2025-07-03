@@ -1,0 +1,277 @@
+“Alright, let’s talk about something called Function Literals in Go. Now, I know that name sounds a bit technical, but it’s actually a simple and useful concept once you get the hang of it.
+
+So here’s the idea — a function literal, also called an anonymous function, is basically a function that you write without giving it a name. Yep, no name at all!
+
+Imagine you’re solving a quick math problem in your notebook, and instead of giving the formula a title or labeling it, you just write it down and use it immediately. That’s what an anonymous function is — a function that you can create on the spot and either use right away, or save in a variable and use later.
+
+This is super handy when you want to write short, one-time-use functions, like when you're sorting something, or doing some quick filtering on a list.
+
+It’s kind of like when you're preparing for a campus interview and you quickly write a helper function just for that small problem — no need to name it or reuse it elsewhere. That’s the real use of a function literal.
+
+And don't worry — we’ll see how it looks in code in the next slide. But for now, just remember: Function literals = unnamed functions you can use like any other variable. Simple, right?”
+
+
+=================================================
+
+
+🟦 Slide Title: Syntax of Function Literal
+
+“Okay, now let’s look at the actual syntax of a function literal in Go. On the screen, you’ll see a small code snippet:
+
+go
+Copy
+Edit
+func(a int, b int) int {
+    return a + b
+}
+Let’s break it down step by step.
+
+So first, we have func — that’s how every function in Go starts. But notice this time, we’re not giving it a name like add or calculate. This function is anonymous — it doesn’t have a name.
+
+Next, inside the brackets — (a int, b int) — we’re defining two input parameters. One is a, and the other is b, and both of them are of type int, which means they’re integers.
+
+Then after that, we say int again — this part tells Go that our function will return an integer. So the input is two integers, and the output is also an integer.
+
+Now, inside the curly braces { return a + b }, we’re just returning the sum of a and b.
+
+That’s it! You’ve just written a function literal that adds two numbers. Simple, right?
+
+But remember — right now, this function is just defined. To actually use it, you’d either call it directly or assign it to a variable. And we’ll look at that part in an upcoming slide.
+
+For now, just focus on the structure — how it looks, and how it behaves just like a normal function, but without a name.”
+
+
+
+
+
+
+=================================
+
+
+🟦 Slide Title: Syntax of Function Literal
+
+“Okay, now let’s look at the actual syntax of a function literal in Go. On the screen, you’ll see a small code snippet:
+
+go
+Copy
+Edit
+func(a int, b int) int {
+    return a + b
+}
+Let’s break it down step by step.
+
+So first, we have func — that’s how every function in Go starts. But notice this time, we’re not giving it a name like add or calculate. This function is anonymous — it doesn’t have a name.
+
+Next, inside the brackets — (a int, b int) — we’re defining two input parameters. One is a, and the other is b, and both of them are of type int, which means they’re integers.
+
+Then after that, we say int again — this part tells Go that our function will return an integer. So the input is two integers, and the output is also an integer.
+
+Now, inside the curly braces { return a + b }, we’re just returning the sum of a and b.
+
+That’s it! You’ve just written a function literal that adds two numbers. Simple, right?
+
+But remember — right now, this function is just defined. To actually use it, you’d either call it directly or assign it to a variable. And we’ll look at that part in an upcoming slide.
+
+For now, just focus on the structure — how it looks, and how it behaves just like a normal function, but without a name.”
+
+
+
+====================================================
+
+“Alright, now let’s see how we can actually use a function literal by assigning it to a variable. This is where function literals get really practical.
+
+So, take a look at this code:
+
+go
+Copy
+Edit
+add := func(a int, b int) int {
+    return a + b
+}
+Let’s walk through it.
+
+We start with add := — that means we’re creating a variable called add. And instead of storing a number or string inside it, we’re storing a function!
+
+The function we’re assigning is an anonymous function — see that func(a int, b int) int part? That defines two integer inputs and returns an integer. Just like we saw earlier.
+
+Inside the function body, we simply return a + b.
+
+So now, add is holding a function. Think of add like a shortcut name — just like a nickname you give someone to call them quickly — here, we’re giving this anonymous function a name using a variable.
+
+And then we use it in the next line:
+
+go
+Copy
+Edit
+fmt.Println(add(3, 4)) // Output: 7
+We’re calling the add function with 3 and 4, and printing the result. Since the function just adds the two numbers, we get 7 as the output.
+
+Now why is this useful? Imagine you’re building a calculator app, or writing sorting logic — sometimes you want to pass small custom functions as values. Function literals let you do that neatly, without writing full-blown named functions each time.
+
+Just be careful: when you assign a function to a variable, always check that the syntax is correct. Beginners often forget the func keyword or mess up the parentheses. So just watch out for that.
+
+Alright, so now you’ve seen how to store a function inside a variable and use it just like any other value — cool, right?”
+
+
+
+
+
+===========================================================
+
+
+“Okay, now this is an interesting one — it's called Immediate Invocation. Sounds fancy, but it’s actually very straightforward.
+
+Let’s look at this line of code:
+
+go
+Copy
+Edit
+result := func(a int, b int) int {
+    return a * b
+}(3, 4)
+Alright, what’s happening here?
+
+We start with a function literal — func(a int, b int) int — just like before. It takes two integers and returns their product.
+
+Now here comes the twist. Right after the function definition, we immediately pass the values (3, 4).
+
+This means: define the function and call it right away. You don’t save it in a variable first and then call it later — you're just saying, “Hey Go, run this function now using 3 and 4.”
+
+So 3 gets passed as a, and 4 as b. The function returns 3 * 4, which is 12.
+
+That value — 12 — gets stored in the variable result.
+
+And then in the next line:
+
+go
+Copy
+Edit
+fmt.Println(result) // Output: 12
+We print the result, and of course, it shows 12.
+
+Now why would someone do this?
+
+Well, sometimes you need to run a small calculation or some logic immediately — maybe during initialization or when you're setting up a value. Instead of writing extra code and polluting your file with extra function names, you just write it, run it, and move on.
+
+Think of it like a quick mental math you do before writing the final answer in an exam — you don’t need to save that calculation anywhere, you just do it instantly.
+
+Just one tip — when you're doing immediate invocation, always remember the extra brackets at the end (...). Many beginners forget them and then wonder why the code isn’t working.
+
+So, quick summary — this is how you write a function and run it immediately, in one go!”
+
+
+
+==============================================================
+
+
+
+“Alright, now let’s see where function literals are actually useful in real-life coding — like why should we even care about them?
+
+So the first point says: Encapsulate short logic inline.
+
+What this means is — sometimes, we just need to write a small piece of logic, maybe just 2–3 lines, and we don’t want to define a full separate function for it. In those cases, we can simply use an inline function — write the logic right where it's needed, and keep our code clean and focused.
+
+It’s like when you solve a small math step in the margin during a classroom test — you don’t make a new page for it, you just do it right there.
+
+Next — Avoid polluting the namespace with function names.
+
+Now this is a fancy way of saying — if you define a lot of named functions, your code will start to get messy. Every function gets a name, and over time, it becomes hard to track what's important and what's just a helper.
+
+But if you use anonymous functions for small tasks, you're not adding extra names to your program — your code stays simple and organized.
+
+And finally — Useful in goroutines, callbacks, or closures.
+
+This is where function literals really shine. When you’re working with things like goroutines — which are Go’s way of doing parallel tasks — or callbacks, where you need to pass some logic into another function, inline functions make it super easy.
+
+Instead of defining the function somewhere else, you just write it right where it’s used.
+
+So to summarise — anonymous functions aren’t just a fancy trick. They’re a neat tool that help you keep your code short, clean, and more readable — especially for quick tasks or background work.”
+
+
+
+
+
+====================================================
+
+
+“Now this is where things get really interesting — we’re looking at a function literal with a closure.
+
+Let’s walk through this code step by step and I’ll explain what’s going on, in simple terms.
+
+go
+Copy
+Edit
+counter := func() func() int {
+    count := 0
+    return func() int {
+        count++
+        return count
+    }
+}()
+Alright — first, we’re defining an anonymous function using func() func() int. That might look confusing at first, but it just means: this function returns another function that returns an int.
+
+Inside it, we declare count := 0. That’s our starting value. Now here’s the magic: we return another function — another anonymous one — and this inner function increases the count by 1 and returns it.
+
+Now notice the brackets at the end — () — that means we are calling the outer function immediately.
+
+So the outer function runs, sets up the count variable, and returns the inner function — and that inner function is stored in the variable counter.
+
+Now here’s the cool part:
+
+go
+Copy
+Edit
+fmt.Println(counter()) // 1
+fmt.Println(counter()) // 2
+Each time we call counter(), it runs the inner function — and that inner function remembers the value of count, even though the outer function has already finished running.
+
+That’s called a closure — the inner function closes over the count variable and keeps it alive between calls.
+
+So the first time we call counter(), count becomes 1. The second time, it increases to 2 — and so on.
+
+This is super useful in real-world coding. For example, let’s say you're building a quiz app, and you want to track how many questions the user has answered — closures let you maintain that state in a clean way, without using global variables.
+
+Just a heads up: closures can confuse beginners at first, but once you get this concept, you’ll see how powerful it is in real applications.”
+
+
+
+==============================================================
+
+
+
+“Now let’s look at where anonymous functions are commonly used in Go. This table shows a few practical use cases that you’ll definitely come across, especially once you start building real projects.
+
+Let’s take them one by one:
+
+🔹 Callbacks — So first up, callbacks. A callback is just a function you pass as an argument to another function. It’s commonly used when you're dealing with asynchronous or event-based logic. For example, maybe you’re reading from a file or waiting for user input — once that task is done, Go can call back your anonymous function to handle the response. You’ll see this often in frameworks, APIs, and custom utilities.
+
+🔹 Goroutines — This is a big one in Go. Goroutines let you run functions in the background, in parallel. Now, when you just want to run a small piece of logic concurrently — like downloading a file, or pinging a server — instead of creating a whole named function, you can simply use an anonymous function. It's neat, quick, and keeps the code focused.
+
+🔹 Closures — We just saw an example of this in the previous slide. Closures are when an anonymous function captures variables from outside its own scope. This is super useful when you need to maintain some state — like a counter — across multiple function calls. It’s clean, and avoids using global variables.
+
+🔹 Functional Style — And finally, anonymous functions are great for doing things like map, filter, or apply — just like in other programming languages. Let’s say you have a list of student marks and you want to filter out the ones above 90 — instead of writing a full named function, you can just use an inline anonymous function right inside your loop or processing logic.
+
+So the main idea is — whenever you have short, one-off logic, and you don’t want to clutter your code with too many named functions — anonymous functions can really help. They’re small, powerful, and make your code more readable if used properly.”
+
+==================================================================
+
+
+“Alright, let’s quickly wrap up everything we learned about function literals in Go.
+
+First — Function literals are unnamed functions. That just means you can define a function without giving it a name. Instead of writing something like func add(), you just use func() and go ahead with the logic. It keeps things simple when the function is only needed in one place.
+
+Second — You can assign these functions to variables or call them immediately. If you assign them to a variable, you can use that variable just like any normal function. And if you want to run the function right away, you can just add brackets at the end — that's called immediate invocation. Very useful for quick calculations or setup logic.
+
+And finally — They're really handy for short logic, closures, and concurrency. So if you’re writing small helper logic, or need a function that remembers a value between calls — like a counter — function literals make that easy. And when you’re working with goroutines or background tasks, they let you launch clean, short-lived functions without cluttering your code with too many names.
+
+So basically, function literals give you more flexibility and cleaner code — especially in situations where you don’t want to overcomplicate things. It’s a small concept, but once you start using it, you’ll see how useful it is in real-world Go programming.”
+
+
+
+And that’s it! Now you know what function literals are and how to use them in Go.
+
+If you found this helpful, do hit the Like button and Subscribe for more short, beginner-friendly Go tutorials — specially made for new developers like you.
+
+And hey — got questions or topics you want me to cover? Just drop a comment below. I read them all!
+
+See you in the next one 

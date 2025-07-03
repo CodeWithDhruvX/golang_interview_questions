@@ -1,0 +1,69 @@
+[
+    {
+      "title": "Introduction to Error Handling",
+      "content": "**Error handling** in Go is explicit and simple. Unlike exceptions in other languages, Go uses **multiple return values** to signal errors. A function that can fail typically returns two values: the result and an `error` type. If everything is fine, the error is `nil`. This approach makes it clear when an error needs to be handled and encourages developers to write robust and readable error-handling logic.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Error Handling Syntax",
+      "content": "```go\npackage main\nimport (\n    \"fmt\"\n    \"errors\"\n)\n\nfunc divide(a, b int) (int, error) {\n    if b == 0 {\n        return 0, errors.New(\"cannot divide by zero\")\n    }\n    return a / b, nil\n}\n\nfunc main() {\n    result, err := divide(10, 0)\n    if err != nil {\n        fmt.Println(\"Error:\", err)\n    } else {\n        fmt.Println(\"Result:\", result)\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Error Handling Pattern",
+      "content": "Go encourages developers to handle errors **immediately after function calls**. This results in code that is straightforward and easy to follow. The most common pattern is:\n\n```go\nresult, err := someFunction()\nif err != nil {\n    // handle error\n}\n```\n\nThis structure makes it explicit that something can go wrong, and it forces the developer to think about handling it. Unlike languages that use exceptions, Go does not let you skip error checking — which leads to more predictable and stable software.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Creating Custom Errors",
+      "content": "```go\nimport \"fmt\"\n\ntype MyError struct {\n    Message string\n}\n\nfunc (e *MyError) Error() string {\n    return fmt.Sprintf(\"Custom Error: %s\", e.Message)\n}\n\nfunc doSomething() error {\n    return \u0026MyError{Message: \"something went wrong\"}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using fmt.Errorf for Context",
+      "content": "```go\nimport (\n    \"fmt\"\n    \"errors\"\n)\n\nfunc readFile() error {\n    err := errors.New(\"file not found\")\n    return fmt.Errorf(\"readFile failed: %w\", err)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Unwrapping Errors",
+      "content": "Go 1.13+ introduced error wrapping and unwrapping using `errors.Is()` and `errors.As()`.\n\n```go\nimport (\n    \"errors\"\n    \"fmt\"\n)\n\nvar ErrNotFound = errors.New(\"not found\")\n\nfunc getItem() error {\n    return fmt.Errorf(\"getItem failed: %w\", ErrNotFound)\n}\n\nfunc main() {\n    err := getItem()\n    if errors.Is(err, ErrNotFound) {\n        fmt.Println(\"Item not found\")\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Panic vs Error",
+      "content": "In Go, you should use **errors** for expected problems (like a file not existing) and **panic** for unexpected or critical failures (like accessing a nil pointer). A `panic` will stop the normal execution of a program, but it can be **recovered** using `recover()` inside a `defer` function — though this is typically reserved for top-level control (e.g., in HTTP middleware).\n\n- **Use errors**: for validation, user input issues, file I/O errors, etc.\n- **Use panic**: for bugs that shouldn't happen (programming mistakes, corrupted memory, etc.)\n\nHandling errors properly with this separation helps build more maintainable and crash-resistant programs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Handling Multiple Errors",
+      "content": "You can combine errors using packages like `golang.org/x/sync/errgroup` or handle them manually using error slices.\n\n```go\nvar errs []error\n\nif err := doTask1(); err != nil {\n    errs = append(errs, err)\n}\nif err := doTask2(); err != nil {\n    errs = append(errs, err)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Error Handling Functions",
+      "content": [
+        {
+          "Description": "Creates a new error with a static message",
+          "Function": "errors.New"
+        },
+        {
+          "Description": "Formats and optionally wraps an error",
+          "Function": "fmt.Errorf"
+        },
+        {
+          "Description": "Checks if an error is a specific value",
+          "Function": "errors.Is"
+        },
+        {
+          "Description": "Checks and casts error to a specific type",
+          "Function": "errors.As"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Best Practices",
+      "content": "**Best practices** in Go error handling ensure your code is clean, maintainable, and secure:\n\n- ✅ **Always check for errors** returned by functions — don’t ignore them.\n- ✅ **Wrap errors with context** using `fmt.Errorf(\"something failed: %w\", err)` so the caller knows where it failed.\n- ✅ **Return early** when errors occur to avoid deep nesting.\n- ❌ **Avoid using panic** unless it's absolutely necessary.\n- ✅ **Use custom error types** if you want structured error handling.\n\nFollowing these practices makes your application easier to debug, especially in production where logs are your main visibility into runtime issues.",
+      "slide_type": "text"
+    }
+  ]

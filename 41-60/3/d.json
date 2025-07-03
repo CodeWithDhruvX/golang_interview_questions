@@ -1,0 +1,74 @@
+[
+    {
+      "title": "Introduction to Receivers",
+      "content": "In Go, methods can be associated with types using **receivers**.\n\nThere are two types:\n- **Value Receiver**: Operates on a copy of the value.\n- **Pointer Receiver**: Operates on the original value via its memory address.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is a Value Receiver?",
+      "content": "- A **copy** of the value is used inside the method.\n- Changes made inside the method **do not affect** the original value.\n\n**When to use:**\n- When the method does **not** modify the receiver.\n- When working with **small structs**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Value Receiver",
+      "content": "```go\ntype Rectangle struct {\n    Width, Height int\n}\n\nfunc (r Rectangle) Area() int {\n    r.Width = 100 // Change won't affect original\n    return r.Width * r.Height\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "What is a Pointer Receiver?",
+      "content": "- A **pointer** to the value is used inside the method.\n- Changes made inside the method **affect** the original value.\n\n**When to use:**\n- When the method **modifies** the receiver.\n- When working with **large structs** (to avoid copying).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Pointer Receiver",
+      "content": "```go\ntype Rectangle struct {\n    Width, Height int\n}\n\nfunc (r *Rectangle) Scale(factor int) {\n    r.Width *= factor\n    r.Height *= factor\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Comparison Table: Pointer vs Value Receivers",
+      "content": [
+        {
+          "Aspect": "Memory",
+          "Value Receiver": "Copy of value",
+          "Pointer Receiver": "Original value address"
+        },
+        {
+          "Aspect": "Modification",
+          "Value Receiver": "Does not affect original",
+          "Pointer Receiver": "Affects original"
+        },
+        {
+          "Aspect": "Use case",
+          "Value Receiver": "Read-only methods, small structs",
+          "Pointer Receiver": "Mutating methods, large structs"
+        },
+        {
+          "Aspect": "Performance",
+          "Value Receiver": "More overhead for large structs",
+          "Pointer Receiver": "More efficient for large structs"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Tip: Method Sets",
+      "content": "- **Value receivers** can be called on both values and pointers.\n- **Pointer receivers** can **only** be called on pointers.\n\nThis affects how you use your types!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Visual Recap",
+      "content": "- **Value Receiver:** Copy ➔ Method ➔ Original unchanged\n- **Pointer Receiver:** Address ➔ Method ➔ Original changed\n\nTry drawing a small diagram to visualize memory addresses!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- **Question:** What operator is used to get the address of a variable in Go?\n- **Question:** How do you dereference a pointer to get the value?\n\n*Tip: Try writing a small program to answer these!*",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "- **Answer 1:** Use the `&` operator to get the address of a variable.\n- **Answer 2:** Use the `*` operator to dereference a pointer and get its value.\n\nExample:\n```go\nvar x int = 10\nvar p *int = &x\nfmt.Println(*p) // Prints 10\n```",
+      "slide_type": "code"
+    }
+  ]
+  

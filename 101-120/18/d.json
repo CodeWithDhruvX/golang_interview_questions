@@ -1,0 +1,59 @@
+[
+    {
+      "title": "What is Separation of Concerns?",
+      "content": "Separation of concerns (SoC) is a software design principle for separating a computer program into distinct sections:\n\n- Each section addresses a separate concern.\n- Helps maintain code that is easier to develop, test, and scale.\n\nIn RESTful Go apps, SoC can be achieved using layers like routing, handlers, services, and repositories.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Typical Layers in a RESTful Go App",
+      "content": "- **Router**: Maps HTTP routes to handler functions.\n- **Handler/Controller**: Handles requests and responses.\n- **Service**: Contains business logic.\n- **Repository**: Deals with database interactions.\n- **Model**: Defines data structures.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Layered Architecture in Table Form",
+      "content": [
+        { "Layer": "Router", "Responsibility": "Route mapping" },
+        { "Layer": "Handler", "Responsibility": "Parse requests & return responses" },
+        { "Layer": "Service", "Responsibility": "Business logic" },
+        { "Layer": "Repository", "Responsibility": "Database access" },
+        { "Layer": "Model", "Responsibility": "Data structures" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Folder Structure Example",
+      "content": "project/\n├── main.go\n├── router/\n│   └── routes.go\n├── handlers/\n│   └── user_handler.go\n├── services/\n│   └── user_service.go\n├── repositories/\n│   └── user_repo.go\n└── models/\n    └── user.go",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example: User Handler",
+      "content": "package handlers\n\nimport (\n    \"encoding/json\"\n    \"net/http\"\n    \"yourapp/services\"\n)\n\nfunc GetUser(w http.ResponseWriter, r *http.Request) {\n    userID := r.URL.Query().Get(\"id\")\n    user, err := services.GetUserByID(userID)\n    if err != nil {\n        http.Error(w, \"User not found\", http.StatusNotFound)\n        return\n    }\n    json.NewEncoder(w).Encode(user)\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example: Service Layer",
+      "content": "package services\n\nimport \"yourapp/repositories\"\n\nfunc GetUserByID(id string) (User, error) {\n    return repositories.FetchUserByID(id)\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example: Repository Layer",
+      "content": "package repositories\n\nimport \"yourapp/models\"\n\nfunc FetchUserByID(id string) (models.User, error) {\n    // Simulate DB access\n    return models.User{ID: id, Name: \"John Doe\"}, nil\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Benefits of Separation of Concerns",
+      "content": "- Easier to test each part independently\n- Clean and readable code\n- Improved team collaboration\n- Easier to refactor and scale\n- Encourages reuse and abstraction",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. What is the role of the service layer in a RESTful Go app?\n2. Why should the repository layer not include HTTP logic?\n3. What Go file typically maps URLs to handlers?\n4. In which layer would you validate input data?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "// 1. The service layer contains business logic, such as validation or data transformation.\n\n// 2. The repository layer should only deal with the database. Including HTTP logic breaks separation of concerns.\n\n// 3. The router or route.go file maps HTTP paths to specific handler functions.\n\n// 4. Input validation is typically done in the handler or service layer, depending on complexity.",
+      "slide_type": "code"
+    }
+  ]
+  

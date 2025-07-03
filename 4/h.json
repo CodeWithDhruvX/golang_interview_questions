@@ -1,0 +1,147 @@
+[  
+  {
+    "title": "Go डेटा प्रकारों का अवलोकन",
+    "content": "### Go एक statically typed भाषा है:\n- हर variable का compile time पर एक defined type होता है।\n- Primitive, Composite और Special types का समर्थन करता है।\n\n### मुख्य श्रेणियाँ:\n- Primitive: `int`, `float`, `bool`, `string`\n- Composite: `array`, `slice`, `map`, `struct`\n- Special: `interface`, `function`, `channel`, `pointer`",
+    "slide_type": "text"
+  },
+  {
+    "title": "Integer Types",
+    "content": "### Go में Integer Types:\n- Signed: `int`, `int8`, `int16`, `int32`, `int64`\n- Unsigned: `uint`, `uint8`, `uint16`, `uint32`, `uint64`\n\n### Notes:\n- `int`/`uint` का size system architecture पर निर्भर करता है।\n- Fixed-size integers का उपयोग precise memory control या external data formats के लिए करें।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Integer Type Example",
+    "content": "var a int = 10\nvar b int64 = 9223372036854775807",
+    "slide_type": "code"
+  },
+  {
+    "title": "Floating Point Types",
+    "content": "### Go में Floating Point:\n- `float32`: लगभग 6 digits की precision\n- `float64`: लगभग 15 digits की precision, default float type\n\n### Use Case:\n- Scientific और precise decimal calculations के लिए `float64` preferred है।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Floating Point Type Example",
+    "content": "var pi float32 = 3.14\nvar gravity float64 = 9.80665",
+    "slide_type": "code"
+  },
+  {
+    "title": "Complex Number Types",
+    "content": "### Complex Numbers का समर्थन:\n- `complex64`: real और imaginary भाग `float32` में\n- `complex128`: real और imaginary भाग `float64` में\n\n### Methods:\n- `real()` और `imag()` functions से भाग निकालें।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Complex Number Example",
+    "content": "var z complex64 = 1 + 2i\nfmt.Println(real(z), imag(z))",
+    "slide_type": "code"
+  },
+  {
+    "title": "Boolean Type",
+    "content": "### Boolean Type:\n- Type: `bool`\n- Values: `true`, `false`\n- Default value: `false`\n\nControl flow (`if`, `for`, logical operations) में उपयोग होता है।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Boolean Type Example",
+    "content": "var isGoFun bool = true\nif isGoFun {\n    fmt.Println(\"Go शानदार है!\")\n}",
+    "slide_type": "code"
+  },
+  {
+    "title": "String Type",
+    "content": "### Go में String:\n- Immutable UTF-8 encoded byte sequence\n- Double quotes या backticks में declared\n- Byte द्वारा indexed (character द्वारा नहीं)\n\nSlicing और `len()` का उपयोग करें।",
+    "slide_type": "text"
+  },
+  {
+    "title": "String Type Example",
+    "content": "var greeting string = \"Hello, Go!\"\nfmt.Println(greeting)",
+    "slide_type": "code"
+  },
+  {
+    "title": "Array Type",
+    "content": "### Array:\n- Fixed-size elements का collection\n- Type: `[n]T`, जहाँ `n` length और `T` element type है\n- Value type है → assignment पर copy होता है\n\nUsually slices बनाने के लिए उपयोग किया जाता है।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Array Type Example",
+    "content": "var numbers [3]int = [3]int{1, 2, 3}\nfmt.Println(numbers)",
+    "slide_type": "code"
+  },
+  {
+    "title": "Slice Type",
+    "content": "### Slice:\n- Array का dynamic और flexible view\n- Syntax: `[]T`\n- Functions: `append()`, `copy()`, slicing\n\nInternally pointer, length और capacity रखता है।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Slice Type Example",
+    "content": "nums := []int{10, 20, 30}\nnums = append(nums, 40)\nfmt.Println(nums)",
+    "slide_type": "code"
+  },
+  {
+    "title": "Map Type",
+    "content": "### Map:\n- Key-value pair collection\n- Keys comparable types के होने चाहिए (no slices/maps/functions)\n- Existence check करें: `val, ok := map[key]`",
+    "slide_type": "text"
+  },
+  {
+    "title": "Map Type Example",
+    "content": "scores := map[string]int{\"Alice\": 90, \"Bob\": 85}\nfmt.Println(scores[\"Alice\"])",
+    "slide_type": "code"
+  },
+  {
+    "title": "Struct Type",
+    "content": "### Struct:\n- Fields को group करने के लिए custom type\n- Methods, nesting और embedding supported\n- Complex data model करने के लिए उपयुक्त",
+    "slide_type": "text"
+  },
+  {
+    "title": "Struct Type Example",
+    "content": "type Person struct {\n    Name string\n    Age  int\n}\np := Person{\"John\", 30}\nfmt.Println(p.Name)",
+    "slide_type": "code"
+  },
+  {
+    "title": "Pointer Type",
+    "content": "### Pointer:\n- Memory addresses store करते हैं\n- Syntax: `*T`, address के लिए `&`, value के लिए `*`\n\nNo pointer arithmetic → C/C++ से अधिक सुरक्षित।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Pointer Type Example",
+    "content": "x := 10\np := &x\nfmt.Println(*p)",
+    "slide_type": "code"
+  },
+  {
+    "title": "Function Type",
+    "content": "### Functions as Types:\n- First-class citizens\n- Variables में store, pass, और return किया जा सकता है\n- Anonymous functions supported",
+    "slide_type": "text"
+  },
+  {
+    "title": "Function Type Example",
+    "content": "func add(a int, b int) int {\n    return a + b\n}\nfmt.Println(add(2, 3))",
+    "slide_type": "code"
+  },
+  {
+    "title": "Interface Type",
+    "content": "### Interface:\n- Method sets को define करता है\n- किसी भी type को implicitly satisfy कर सकता है\n- `interface{}` खाली interface है → कोई भी value store कर सकता है",
+    "slide_type": "text"
+  },
+  {
+    "title": "Interface Type Example",
+    "content": "type Speaker interface {\n    Speak() string\n}\ntype Dog struct{}\nfunc (d Dog) Speak() string {\n    return \"Woof!\"\n}",
+    "slide_type": "code"
+  },
+  {
+    "title": "Channel Type",
+    "content": "### Channel:\n- Goroutines के बीच communication के लिए उपयोग होता है\n- Types: `chan T`, `chan<- T`, `<-chan T`\n- Buffered और unbuffered दोनों हो सकते हैं",
+    "slide_type": "text"
+  },
+  {
+    "title": "Channel Type Example",
+    "content": "ch := make(chan int)\ngo func() { ch <- 42 }()\nfmt.Println(<-ch)",
+    "slide_type": "code"
+  },
+  {
+    "title": "Rune and Byte Types",
+    "content": "### Rune और Byte:\n- `rune`: `int32` का alias, एक Unicode character को represent करता है\n- `byte`: `uint8` का alias, binary data और ASCII characters के लिए\n\nStrings और byte-level operations में उपयोगी।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Rune and Byte Example",
+    "content": "var r rune = '₹'\nvar b byte = 'A'\nfmt.Println(r, b)",
+    "slide_type": "code"
+  }
+]

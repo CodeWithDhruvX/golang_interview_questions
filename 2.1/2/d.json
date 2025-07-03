@@ -1,0 +1,64 @@
+[
+    {
+      "title": "Understanding Slices in Go",
+      "content": "In Go, a **slice** is a lightweight data structure that provides a more powerful interface than an array. A slice points to an underlying array and includes a length and a capacity. Unlike arrays, slices are dynamic—you don’t need to specify their size ahead of time. Slices are commonly used because they offer flexibility and are easier to work with in real-world applications.",
+      "slide_type": "text"
+    },
+    {
+      "title": "The `append()` Function",
+      "content": "Go provides a built-in function called `append()` to add elements to a slice. It automatically increases the slice’s capacity if needed, and returns a new slice containing the old and new elements. Since slices are backed by arrays, if the capacity is exceeded, a new array is created behind the scenes and the data is copied over. That’s why it's important to always assign the result of `append()` back to your slice variable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Appending a Single Element",
+      "content": "```go\nnumbers := []int{1, 2, 3}\nnumbers = append(numbers, 4)\nfmt.Println(numbers) // Output: [1 2 3 4]\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Appending Multiple Elements",
+      "content": "```go\nnumbers := []int{1, 2}\nnumbers = append(numbers, 3, 4, 5)\nfmt.Println(numbers) // Output: [1 2 3 4 5]\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Appending Another Slice",
+      "content": "```go\nslice1 := []int{1, 2}\nslice2 := []int{3, 4}\nslice1 = append(slice1, slice2...)\nfmt.Println(slice1) // Output: [1 2 3 4]\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Why Use `...` When Appending a Slice?",
+      "content": "When you're appending one slice to another, you need to use the `...` (ellipsis) operator to unpack the elements of the second slice. This tells the `append()` function to treat the contents of the slice as individual elements rather than a single nested slice. If you skip the `...`, the compiler will throw an error because it's not expecting a slice inside another slice in that context.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Appending to a Nil Slice",
+      "content": "```go\nvar data []int // nil slice\ndata = append(data, 10)\nfmt.Println(data) // Output: [10]\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Summary of Append Usage",
+      "content": [
+        {
+          "Syntax": "append(slice, elem)",
+          "Usage": "Append one element"
+        },
+        {
+          "Syntax": "append(slice, elem1, elem2, ...)",
+          "Usage": "Append multiple elements"
+        },
+        {
+          "Syntax": "append(slice1, slice2...)",
+          "Usage": "Append another slice"
+        },
+        {
+          "Syntax": "append(nil, elements...)",
+          "Usage": "Append to nil slice"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Things to Remember",
+      "content": "- `append()` always returns a new slice, even if the underlying array does not change, so you must assign it back to the original slice variable.\n- If the capacity of the slice is exceeded, Go automatically allocates a new array with more space and copies the data.\n- Appending to `nil` slices is completely valid in Go. The language will handle allocation for you.\n- Since slices are passed by reference, modifications to the original slice (after appending) may affect other slices that share the same underlying array—unless a new array was allocated during append.",
+      "slide_type": "text"
+    }
+  ]

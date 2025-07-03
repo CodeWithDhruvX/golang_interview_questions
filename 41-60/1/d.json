@@ -1,0 +1,47 @@
+[
+    {
+      "title": "Introduction to Pointers in Go",
+      "content": "Pointers store the **memory address** of a value rather than the value itself.\n\nThey are useful for:\n- Sharing data without copying\n- Managing resources efficiently\n- Modifying data inside functions",
+      "slide_type": "text"
+    },
+    {
+      "title": "Declaring and Using Pointers",
+      "content": "To create a pointer:\n```go\nvar p *int\n```\nHere, `p` is a pointer to an integer.\n\nTo assign a value:\n```go\nvar x int = 42\np = &x\n```\n`&x` gives the address of `x`.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Dereferencing Pointers",
+      "content": "To access the value a pointer points to, use the `*` operator:\n```go\nfmt.Println(*p) // Outputs: 42\n```\nThis is called **dereferencing** the pointer.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Pointers in Functions",
+      "content": "Passing a pointer to a function allows the function to modify the original variable:\n```go\nfunc updateValue(num *int) {\n  *num = 100\n}\n\nfunc main() {\n  x := 5\n  updateValue(&x)\n  fmt.Println(x) // Prints 100\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Pointer Concepts: Quick Table",
+      "content": [
+        { "Concept": "Address Operator", "Symbol": "`&`", "Description": "Gets the address of a variable." },
+        { "Concept": "Dereference Operator", "Symbol": "`*`", "Description": "Gets the value stored at an address." },
+        { "Concept": "Nil Pointer", "Symbol": "`nil`", "Description": "Pointer that does not point to any value." }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Common Mistakes with Pointers",
+      "content": "- Forgetting to initialize before using a pointer.\n- Dereferencing a `nil` pointer, causing a runtime panic.\n- Misunderstanding when you need to pass by value vs by reference.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- **Question:** What operator is used to get the address of a variable in Go?\n- **Question:** How do you dereference a pointer to get the value?\n\n*Tip: Try writing a small program to answer these!*",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "- **Answer 1:** Use the `&` operator to get the address of a variable.\n- **Answer 2:** Use the `*` operator to dereference a pointer and get its value.\n\nExample:\n```go\nvar x int = 10\nvar p *int = &x\nfmt.Println(*p) // Prints 10\n```",
+      "slide_type": "code"
+    }
+  ]
+  

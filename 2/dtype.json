@@ -1,0 +1,87 @@
+[
+    {
+      "title": "Key Features of Go - Overview",
+      "content": "### Golang is a modern, statically typed programming language developed by Google.\n- It combines the performance of compiled languages like C++ with the simplicity of scripting languages like Python.\n- Go is particularly known for its simplicity, strong standard library, and built-in support for concurrency, making it ideal for scalable system design and cloud-native applications.",
+      "slide_type": "text"
+    },
+    {
+      "title": "1. Simplicity and Clean Syntax",
+      "content": "### Minimalistic Design:\n- Go avoids unnecessary complexity and redundant features, making the codebase clean and readable.\n- No inheritance, no generics (until Go 1.18), and no annotations.\n- This helps developers focus on logic and design rather than language syntax.\n- Real-world Impact: Companies like Uber and Dropbox adopted Go to simplify large codebases and reduce developer onboarding time.",
+      "slide_type": "text"
+    },
+    {
+      "title": "2. Static Typing with Safety",
+      "content": "### Compile-time Type Checking:\n- Go enforces static typing which ensures type correctness at compile-time, reducing bugs.\n- Developers get early feedback without sacrificing readability.\n- Compared to dynamically typed languages, Go reduces the chances of runtime type errors, which enhances software reliability and maintainability.",
+      "slide_type": "text"
+    },
+    {
+      "title": "3. Built-in Concurrency",
+      "content": "### Concurrency Made Easy:\n- Go introduces `goroutines` (lightweight threads) and `channels` (communication pipelines) as first-class features.\n- This eliminates the complexity of thread handling and synchronization seen in other languages.\n- Real-world Use Case: Go powers concurrency-heavy applications like Docker, which needs to manage multiple containers in parallel efficiently.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go Concurrency Example",
+      "content": "go func() {\n    fmt.Println(\"Hello from goroutine\")\n}()\n\nmsg := <-myChannel",
+      "slide_type": "code"
+    },
+    {
+      "title": "4. Compiled Language",
+      "content": "### Native Machine Code Execution:\n- Go is a compiled language which means it translates code directly into machine-level instructions.\n- This results in **faster execution**, **lower memory usage**, and **quick deployment**.\n- Ideal for building production-ready microservices and CLI tools that require performance and speed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "5. Garbage Collection",
+      "content": "### Efficient Memory Management:\n- Go uses an advanced garbage collector designed to minimize pause times and memory overhead.\n- Developers don't need to manage memory explicitly, which increases developer productivity and safety.\n- Perfect for building long-running services and real-time applications without worrying about memory leaks.",
+      "slide_type": "text"
+    },
+    {
+      "title": "6. Rich Standard Library",
+      "content": "### Out-of-the-box Utilities:\n- Go ships with a comprehensive standard library covering HTTP, file I/O, string handling, crypto, and much more.\n- This reduces dependency on third-party libraries, enhancing security and maintainability.\n- Example: Building a basic HTTP server requires just a few lines of Go code with `net/http`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "7. Cross-Platform Compilation",
+      "content": "### Seamless Multi-OS Builds:\n- Go supports building executables for multiple OS and architectures using environment variables.\n- You can compile code for Linux, Windows, macOS, ARM, etc. without changing your source code.\n- Extremely useful for deploying microservices or CLI tools across cloud platforms and edge devices.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Cross-Platform Compilation Example",
+      "content": "GOOS=linux GOARCH=amd64 go build",
+      "slide_type": "code"
+    },
+    {
+      "title": "8. Fast Compilation",
+      "content": "### Instant Feedback Loop:\n- Go compiles source code into binaries very quickly, even for large projects.\n- This enhances the developer experience and promotes frequent testing and iterations.\n- Go achieves this by using a single-pass compiler and optimized build cache.\n- Result: Faster CI/CD pipelines and reduced development cycles.",
+      "slide_type": "text"
+    },
+    {
+      "title": "9. Built-in Tooling",
+      "content": "### Integrated Developer Tools:\n- Go comes with built-in tools that simplify everyday tasks:\n  - `gofmt` ensures consistent code formatting.\n  - `go test` allows easy test writing and benchmarking.\n  - `go mod` handles dependency versioning.\n  - `godoc` generates interactive documentation.\n- These tools reduce external tooling dependency and enforce Go idioms across teams.",
+      "slide_type": "text"
+    },
+    {
+      "title": "10. Interface-Based Design",
+      "content": "### Flexible Abstraction Without Inheritance:\n- Interfaces in Go are satisfied **implicitly** — any type that implements the method set automatically satisfies the interface.\n- This promotes loose coupling, testability, and clean architecture.\n- Example: Use `io.Reader` interface to write code that works with any readable stream, without knowing the underlying type.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Interface Implementation Example",
+      "content": "type Reader interface {\n    Read(p []byte) (n int, err error)\n}\n\n// Any type that implements Read method satisfies Reader interface.",
+      "slide_type": "code"
+    },
+    {
+      "title": "11. Memory Safety",
+      "content": "### Safe by Default:\n- Go does not allow pointer arithmetic, significantly reducing the chances of memory corruption and segmentation faults.\n- Its type safety ensures safe conversions and strict checks on variable use.\n- Combined with garbage collection, Go provides a robust memory-safe environment, making it ideal for production-grade systems.",
+      "slide_type": "text"
+    },
+    {
+      "title": "12. Ideal for Microservices & Cloud-Native Development",
+      "content": "### Optimized for Modern Architecture:\n- Go's fast compilation, low memory footprint, and static binaries make it ideal for Docker containers and Kubernetes deployments.\n- Its concurrency model enables handling of thousands of requests without blocking.\n- Leading tech companies like Netflix, Uber, and Dropbox use Go to build scalable microservices.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Interview Bonus - Go vs Python/Java",
+      "content": "### Comparison Perspective:\n- Go vs Python:\n  - Go is **much faster** (compiled vs interpreted).\n  - Better concurrency handling via goroutines vs Python’s GIL.\n- Go vs Java:\n  - Simpler, with faster compile times.\n  - Smaller memory footprint and binary size.\n  - No JVM, so easier containerization.\n- Summary: Go is chosen for high-performance, scalable backend systems requiring fast development cycles.",
+      "slide_type": "text"
+    }
+  ]

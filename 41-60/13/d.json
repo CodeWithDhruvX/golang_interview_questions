@@ -1,0 +1,69 @@
+[
+    {
+      "title": "Introduction to Duck Typing",
+      "content": "Duck typing is a concept in programming where an object's suitability is determined by the presence of certain methods and properties, rather than the object's type itself.\n\n> \"If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.\"",
+      "slide_type": "text"
+    },
+    {
+      "title": "Core Idea Behind Duck Typing",
+      "content": "- Focuses on **behavior**, not on the object's **class** or **inheritance**.\n- Common in **dynamically typed languages** like Python, Ruby, and JavaScript.\n- Encourages **flexibility** and **less strict type checking**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Duck Typing Example in Python",
+      "content": "```python\nclass Duck:\n    def quack(self):\n        print(\"Quack, quack!\")\n\nclass Person:\n    def quack(self):\n        print(\"I'm pretending to be a duck!\")\n\ndef make_it_quack(duck_like):\n    duck_like.quack()\n\n# Both will work!\nmake_it_quack(Duck())\nmake_it_quack(Person())\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Advantages of Duck Typing",
+      "content": "- **Flexibility**: Functions can accept any object with the right methods.\n- **Simpler Code**: No need for complex inheritance hierarchies.\n- **Rapid Prototyping**: Quickly test new ideas without heavy type definitions.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Risks of Duck Typing",
+      "content": "- **Runtime Errors**: Mistakes show up during execution, not at compile time.\n- **Harder Debugging**: More caution is needed when calling methods.\n- **Lack of Autocompletion**: In some IDEs without type hints, it's harder to get coding assistance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Duck Typing vs Static Typing",
+      "content": [
+        {
+          "aspect": "Duck Typing",
+          "description": "Based on methods and properties."
+        },
+        {
+          "aspect": "Static Typing",
+          "description": "Based on declared types at compile time."
+        },
+        {
+          "aspect": "Flexibility",
+          "description": "Very flexible but riskier."
+        },
+        {
+          "aspect": "Error Detection",
+          "description": "Errors detected only during runtime."
+        },
+        {
+          "aspect": "Common Languages",
+          "description": "Python, Ruby, JavaScript."
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Real-World Analogy",
+      "content": "Imagine you ask someone to deliver a speech. You don't check their university degree; you just see if they can **speak confidently** and **deliver**. That's duck typing!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Which of the following best describes Duck Typing?\n\n1. 🦆 It checks the object's type before calling a method.\n2. 🦆 It checks if the object has the required behavior (methods/properties).\n3. 🦆 It forces objects to inherit from a specific class.\n4. 🦆 It avoids method checking completely.\n\n### Mini Task:\n- Write a Python function that accepts anything with a `.speak()` method and calls it!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n**Correct Answer:**\n\n- **2.** Duck typing checks if an object has the required behavior (methods/properties).\n\n**Mini Task Solution:**\n```python\nclass Dog:\n    def speak(self):\n        print(\"Woof!\")\n\nclass Robot:\n    def speak(self):\n        print(\"Beep boop.\")\n\ndef make_it_speak(entity):\n    entity.speak()\n\nmake_it_speak(Dog())\nmake_it_speak(Robot())\n```\n\n**Explanation:**\n- We are not checking types!\n- We only care if `.speak()` exists.",
+      "slide_type": "code"
+    }
+  ]
+  

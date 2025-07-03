@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to Go Generics",
+      "content": "Go generics are a way to write flexible and reusable functions, types, and data structures. Prior to Go 1.18, Go lacked generics, meaning developers had to rely on type assertions or use the `interface{}` type for flexible code, which was often less type-safe. With generics, Go allows you to write functions and types that work with any data type while maintaining type safety.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Go Generics?",
+      "content": "Generics help reduce code duplication, making your code more concise and maintainable. Instead of writing multiple functions to handle different types, you can write a single, reusable function or type that works with any type. Additionally, generics improve type safety, as the Go compiler can catch errors at compile time instead of runtime.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Syntax of Generics",
+      "content": "In Go 1.18 and later, you can define a generic function using a type parameter. Here’s an example of a simple generic function that works with any type of input.\n\n```go\nfunc Print[T any](value T) {\n    fmt.Println(value)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Parameters and Constraints",
+      "content": "You can restrict the types a generic function or type can work with using constraints. A constraint specifies which types can be used in a generic. For example, you can define a constraint that only allows numeric types.\n\n```go\nfunc Add[T int | float64](a T, b T) T {\n    return a + b\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Generic Types in Go",
+      "content": "In addition to generic functions, Go 1.18 allows you to define generic types. This can be useful for creating reusable data structures that work with any type.\n\nExample:\n\n```go\ntype Box[T any] struct {\n    value T\n}\n\nfunc (b Box[T]) GetValue() T {\n    return b.value\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Practical Example: A Generic Swap Function",
+      "content": "Let's write a generic function to swap the values of two variables:\n\n```go\nfunc Swap[T any](a, b T) (T, T) {\n    return b, a\n}\n\nfunc main() {\n    x, y := 1, 2\n    x, y = Swap(x, y)\n    fmt.Println(x, y) // Output: 2 1\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Go Generics with Interfaces",
+      "content": "You can also use interfaces as constraints to define more specific behavior for your generics. For instance, if you want to constrain a generic to types that implement the `Stringer` interface:\n\n```go\nfunc PrintString[T fmt.Stringer](value T) {\n    fmt.Println(value.String())\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Go Generics with Maps",
+      "content": "A common use of generics is with maps. You can create a generic map that accepts any key and value type:\n\n```go\nfunc CreateMap[K comparable, V any](keys []K, values []V) map[K]V {\n    m := make(map[K]V)\n    for i, key := range keys {\n        m[key] = values[i]\n    }\n    return m\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Go Generics in Collections",
+      "content": "Another common application is working with collections. For example, a function that returns the maximum value from a slice can be written generically to handle different types:\n\n```go\nfunc Max[T int | float64](values []T) T {\n    var max T\n    for _, v := range values {\n        if v > max {\n            max = v\n        }\n    }\n    return max\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Best Practices for Using Generics",
+      "content": "When using generics, keep these best practices in mind:\n- Keep it simple: Only use generics where it makes sense.\n- Use constraints to limit the types a generic can work with when necessary.\n- Avoid overly complex generic functions that are difficult to understand.\n\nGenerics are a powerful tool, but they should be used thoughtfully to avoid unnecessary complexity.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions\n1. What is the primary benefit of using generics in Go?\n2. How would you define a generic function that only accepts integers or floats?\n3. Write a generic function to compare two values and return the larger one.\n4. Can you use generics with Go's `interface{}` type?\n\nTest your understanding before moving to the next slide!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions\n1. The primary benefit of using generics in Go is to write reusable code that works with different types while maintaining type safety.\n\n2. To define a generic function that only accepts integers or floats:\n```go\nfunc Add[T int | float64](a T, b T) T {\n    return a + b\n}\n``` \n\n3. A generic function to compare two values and return the larger one:\n```go\nfunc Max[T comparable](a, b T) T {\n    if a > b {\n        return a\n    }\n    return b\n}\n``` \n\n4. Generics in Go are used to handle different types, and the `interface{}` type can be avoided in favor of specific type parameters.",
+      "slide_type": "code"
+    }
+  ]
+  

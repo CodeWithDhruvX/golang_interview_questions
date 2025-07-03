@@ -1,0 +1,119 @@
+[
+    {
+      "title": "What is a Variable in Go?",
+      "content": "A variable in Go is a named storage location that can hold a value of a specific type. Variables are strongly typed in Go, which means the compiler enforces type rules at compile time, improving performance and catching errors early. Go provides different ways to declare variables, giving developers flexibility while maintaining clarity and safety. Variables can be declared with an explicit type or rely on type inference, depending on the use case.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Declaration Syntax",
+      "content": "// General syntax:\nvar name type\n\n// Example:\nvar age int // declares an integer variable named 'age'",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example - Basic Declaration",
+      "content": "var age int        // declares an integer variable\nvar name string    // declares a string variable\nvar isActive bool  // declares a boolean variable\n\n// These are not initialized, so they will get zero values.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Declaration with Initialization",
+      "content": "You can declare and initialize a variable at the same time using the `var` keyword. This is particularly useful when you already know the value that the variable should hold. Initializing during declaration also helps avoid issues related to zero values and ensures clarity by explicitly showing the variable's type and value together.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example - Declaration with Initialization",
+      "content": "var age int = 25            // explicitly declaring type and initializing\nvar name string = \"John\"     // string variable with initial value\nvar isActive bool = true     // boolean variable set to true",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Inference",
+      "content": "Go supports type inference, which means the compiler can automatically determine the type of a variable based on the assigned value. This allows you to write less code while keeping it strongly typed. It is especially useful in scenarios where the type is obvious from the context, improving code readability and developer efficiency.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example - Type Inference",
+      "content": "var age = 30           // Go infers 'int' type from the value 30\nvar name = \"Alice\"     // Go infers 'string' type from the value \"Alice\"",
+      "slide_type": "code"
+    },
+    {
+      "title": "Short Variable Declaration (:=)",
+      "content": "Short variable declaration using `:=` is the most concise way to declare and initialize variables in Go. It is only allowed within function bodies and cannot be used at the package level. This form is extremely useful for quick assignments and is commonly seen in idiomatic Go code. However, you must be careful with redeclarations in the same scope.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example - Short Declaration",
+      "content": "count := 10             // infers type as int\nmessage := \"Hello\"      // infers type as string\nactive := false         // infers type as bool\n\n// All of these are local to the function they're defined in.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Invalid Use of := Outside Function",
+      "content": "// This will result in a compilation error:\nusername := \"admin\" // ❌ Not allowed outside functions\n\n// Correct way at package level:\nvar username = \"admin\"",
+      "slide_type": "code"
+    },
+    {
+      "title": "Multiple Variable Declaration",
+      "content": "Go allows declaring multiple variables in a single line or in a grouped declaration block. This helps organize code better, especially when initializing related variables together. Grouped declarations improve code readability and reduce redundancy, particularly in cases where the variables share the same type or purpose.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example - Multiple Declarations",
+      "content": "var a, b, c int                  // multiple variables of same type\nvar name, age = \"Alice\", 30      // type inferred separately\nx, y := 5, \"Go\"                   // short declaration with different types",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example - Grouped Declaration",
+      "content": "var (\n    name string = \"Bob\"    // string type with initial value\n    age  int    = 28       // integer type\n    active bool = true     // boolean type\n)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Zero Values in Go",
+      "content": "When a variable is declared in Go but not initialized, it is automatically given a zero value. The zero value depends on the variable’s type: numeric types default to 0, booleans to false, strings to an empty string, and pointers (or interfaces) to nil. Understanding zero values is essential to avoid unexpected behavior in your programs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Zero Values Table",
+      "slide_type": "table",
+      "content": [
+        { "Type": "int", "Zero Value": "0" },
+        { "Type": "float64", "Zero Value": "0.0" },
+        { "Type": "string", "Zero Value": "\"\"" },
+        { "Type": "bool", "Zero Value": "false" },
+        { "Type": "pointer", "Zero Value": "nil" }
+      ]
+    },
+    {
+      "title": "Example - Zero Value",
+      "content": "var s string\nfmt.Println(s) // prints: \"\"\n\n// 's' has an empty string as its default zero value.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Constants vs Variables",
+      "content": "Constants are immutable values declared using the `const` keyword. Unlike variables, constants cannot be reassigned after declaration. They are evaluated at compile time and are often used for fixed configuration values such as Pi, status codes, or application versioning. Constants also help in optimizing performance and code clarity.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example - Constant Declaration",
+      "content": "const Pi = 3.14\n\n// Pi is a constant float64 that cannot be changed.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Variable Scope in Go",
+      "content": "The scope of a variable determines where it can be accessed in the code. In Go, variables can be local (inside a function), or package-level (outside any function but within a package). Go does not have traditional global variables accessible across packages; instead, exported variables (starting with a capital letter) can be accessed from other packages. Proper scoping ensures better encapsulation, memory management, and code structure.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Best Practices",
+      "content": "- Prefer short declarations (`:=`) when working within functions for cleaner and more concise code.\n- Declare variables close to where they are used to improve readability and maintainability.\n- Avoid declaring unused variables, as Go treats them as compilation errors.\n- Use clear and descriptive names that convey the purpose of the variable.\n- Group logically related variable declarations together, especially when they share a common purpose or data type.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Summary - Variable Declarations",
+      "slide_type": "table",
+      "content": [
+        { "Declaration Style": "var x int", "Usage": "Declares variable `x` of type int" },
+        { "Declaration Style": "var x = 5", "Usage": "Type inferred" },
+        { "Declaration Style": "x := 5", "Usage": "Short syntax (inside functions)" },
+        { "Declaration Style": "var ( ... )", "Usage": "Grouped declarations" }
+      ]
+    }
+  ]
+  

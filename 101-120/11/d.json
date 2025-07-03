@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Generics in Go",
+      "content": "Generics in Go allow you to write functions, types, and data structures that can operate on any data type. This feature was introduced in Go 1.18 and enables more reusable and flexible code.\n\nIn this guide, we will focus on how to implement a generic function with constraints in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Are Constraints?",
+      "content": "In Go, constraints define what types can be used with a generic function. Constraints are typically interfaces that restrict the types that can be passed into a generic function.\n\nA constraint can either allow any type or restrict it to specific types such as numbers or comparable types.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defining a Generic Function",
+      "content": "A generic function is declared using square brackets `[]` containing the type parameters. Here's a simple example:\n\n```go\nfunc Print[T any](value T) {\n    fmt.Println(value)\n}\n```\n\nThis function takes a type `T` and prints its value. The `any` keyword is a special type constraint that allows any type to be passed in.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using Constraints with Interfaces",
+      "content": "You can use interfaces as constraints to limit the types that can be passed into a function. For example, to only allow numeric types, you can define a constraint as follows:\n\n```go\ntype Number interface {\n    int | int64 | float64\n}\n\nfunc Sum[T Number](a, b T) T {\n    return a + b\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Constraints with Multiple Types",
+      "content": "You can also specify multiple types in a constraint. Here's an example of a constraint that allows either integers or floats:\n\n```go\ntype Numeric interface {\n    int | float64\n}\n\nfunc Multiply[T Numeric](a, b T) T {\n    return a * b\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using Constraints for Comparable Types",
+      "content": "You can restrict a generic function to only work with comparable types. In Go, types that support comparison (`==` and `!=`) can be used in constraints.\n\nExample:\n\n```go\ntype Comparable interface {\n    comparable\n}\n\nfunc FindMax[T Comparable](a, b T) T {\n    if a > b {\n        return a\n    }\n    return b\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Combining Multiple Constraints",
+      "content": "You can combine multiple constraints to restrict a generic function to types that satisfy multiple conditions. For example, you can combine `comparable` and `Number` constraints:\n\n```go\ntype NumericComparable interface {\n    Number & comparable\n}\n\nfunc FindMax[T NumericComparable](a, b T) T {\n    if a > b {\n        return a\n    }\n    return b\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Why Use Generics with Constraints?",
+      "content": "Using generics with constraints makes your code more flexible, reusable, and type-safe. By defining constraints, you can ensure that the function behaves correctly for only the allowed types, avoiding runtime errors and unnecessary type assertions.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Answer these questions to test your knowledge!\n\n1. What is the purpose of constraints in Go generics?\n2. How would you write a generic function that only accepts types that are numbers?\n3. What is the difference between `any` and `comparable` as constraints?\n4. Can you combine multiple constraints? How?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the solutions to the challenge:\n\n1. **Constraints** limit the types that can be used with a generic function, ensuring type safety and correct behavior.\n\n2. To write a generic function that only accepts numeric types, you can use an interface like `type Number interface { int | float64 }`.\n\n3. `any` allows any type to be used, while `comparable` restricts the function to types that support comparison operations like `==` and `!=`.\n\n4. Yes, you can combine multiple constraints. For example, you can combine `Number & comparable` to restrict a function to numeric types that can be compared.\n\n```go\ntype NumericComparable interface {\n    Number & comparable\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

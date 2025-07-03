@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Go Package Naming",
+      "content": "Go encourages clear, concise, and meaningful package names. These names play an important role in how others read and use your code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "General Naming Guidelines",
+      "content": "- Use short, lowercase names.\n- Avoid underscores, hyphens, or mixedCaps.\n- Package name should describe what it provides.\n- Keep it singular unless the package truly represents a collection.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Good vs Bad Package Names",
+      "content": "```go\n// Good\npackage math\npackage time\n\n// Bad\npackage stringUtils  // too verbose\npackage MathHelper   // uses capital letters\npackage my_package   // contains underscore\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Package Name Matches Directory",
+      "content": "In Go, the package name should match the folder (directory) name. This keeps imports and structure consistent.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Package Names in Imports",
+      "content": "```go\n// directory: utils\npackage utils\n\n// usage in another file\nimport \"github.com/user/project/utils\"\nutils.DoSomething()\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Avoid Stutter in Package Names",
+      "content": "Don't repeat the package name in identifiers. It causes redundancy.\n\n**Bad:** `circle.Circle{}`\n\n**Good:** `circle.Shape{}` or just `circle.New()`",
+      "slide_type": "text"
+    },
+    {
+      "title": "Table: Do's and Don'ts Summary",
+      "content": [
+        { "Do": "Use short, lowercase names", "Don't": "Use long or camelCase names" },
+        { "Do": "Name by functionality (e.g., `json`)", "Don't": "Add 'Utils' or 'Helper'" },
+        { "Do": "Keep package name and folder name the same", "Don't": "Mix names between folder and package" },
+        { "Do": "Avoid name stuttering", "Don't": "Repeat package name in functions/types" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Naming Tip: Internal vs Public Packages",
+      "content": "- `internal/` packages are not importable outside the module.\n- Still follow same naming guidelines.\n- Keep internal packages focused and purpose-driven.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. Which of these is a good package name?\n   - a) stringUtils\n   - b) strings\n   - c) MyMath\n\n2. True or False: Package names should match their folder names.\n\n3. What’s wrong with `json.JsonParser`?\n\n4. Rewrite `my_package` to follow Go naming conventions.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n1. **b) strings** – concise, lowercase, and descriptive.\n\n2. **True** – Go expects consistency between directory and package name.\n\n3. **Stuttering** – avoid repeating the package name in identifiers. Prefer `json.Parser`.\n\n4. Rename `my_package` to `mypackage` or a clearer name like `parser` or `utils`, depending on its purpose.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

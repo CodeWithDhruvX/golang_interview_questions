@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Maps in Go",
+      "content": "In Go, a map is a built-in data type that allows you to associate keys with values. Think of it like a dictionary where you can quickly look up a value if you know the key. Maps are great for storing related data, such as a list of items and their prices, or usernames and their email addresses. Each key in a map must be unique, and you can access values using their corresponding keys.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Syntax of a Map",
+      "content": "```go\nmyMap := map[string]int{\n    \"apple\":  5,\n    \"banana\": 3,\n    \"cherry\": 7,\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using range to Iterate",
+      "content": "The `range` keyword is a powerful feature in Go used to iterate over elements of arrays, slices, strings, and maps. When used with a map, `range` returns two values in each iteration: the current key and its associated value. This allows you to loop through all entries in a map easily and perform actions like printing or processing the data.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Iterate Over Map",
+      "content": "```go\nfor key, value := range myMap {\n    fmt.Printf(\"Key: %s, Value: %d\\n\", key, value)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Only Iteration",
+      "content": "Sometimes, you may only need the keys of a map and not the values. In such cases, Go lets you skip the value by omitting it and only writing the key in the `range` loop. This can help make your code cleaner and more efficient by not assigning unused variables.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Keys Only",
+      "content": "```go\nfor key := range myMap {\n    fmt.Println(\"Key:\", key)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Map Iteration Order",
+      "content": "Unlike arrays or slices, the order of items in a map is not fixed or predictable. Each time you iterate over a map, the order in which the key-value pairs are returned may change. This is by design in Go to ensure performance and efficiency, so you should never rely on the order of map elements when writing your code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Sorting Map Keys",
+      "content": "If you need to process map elements in a consistent order, such as alphabetical order of keys, you must manually extract the keys into a slice, sort that slice, and then use it to access values in the desired sequence. Go provides the `sort` package which can be used to sort slices of strings, integers, and other types.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Sorted Map Iteration",
+      "content": "```go\nkeys := make([]string, 0, len(myMap))\nfor k := range myMap {\n    keys = append(keys, k)\n}\nsort.Strings(keys)\n\nfor _, k := range keys {\n    fmt.Printf(\"%s: %d\\n\", k, myMap[k])\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Summary: Iterating Over Maps",
+      "content": [
+        { "Concept": "Basic Iteration", "Description": "Use `range` to get key and value" },
+        { "Concept": "Key Only", "Description": "Use `for key := range map`" },
+        { "Concept": "Order", "Description": "Iteration order is random" },
+        { "Concept": "Sorted Access", "Description": "Sort keys separately if needed" }
+      ],
+      "slide_type": "table"
+    }
+  ]
+  

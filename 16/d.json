@@ -1,0 +1,74 @@
+[
+    {
+      "title": "Introduction to new() and make()",
+      "content": "In Go, both `new()` and `make()` are used to allocate memory, but they serve different purposes and are used with different types.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Purpose of new()",
+      "content": "`new(T)` allocates memory for a value of type T and returns a pointer to it. The memory is zeroed. It's used for all types.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Purpose of make()",
+      "content": "`make(T)` initializes and returns a non-nil value of type T, where T must be a slice, map, or channel. It returns the value itself, not a pointer.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example of new()",
+      "content": "```\npackage main\nimport \"fmt\"\n\nfunc main() {\n    p := new(int)    // p is of type *int\n    fmt.Println(*p)  // prints 0, because it's zeroed\n    *p = 42\n    fmt.Println(*p)  // prints 42\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example of make()",
+      "content": "```\npackage main\nimport \"fmt\"\n\nfunc main() {\n    m := make(map[string]int)  // m is initialized map\n    m[\"a\"] = 1\n    fmt.Println(m[\"a\"])        // prints 1\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Differences",
+      "content": [
+        {
+          "Aspect": "Used With",
+          "new()": "All types",
+          "make()": "Only slices, maps, channels"
+        },
+        {
+          "Aspect": "Return Type",
+          "new()": "Pointer to type",
+          "make()": "Initialized value of type"
+        },
+        {
+          "Aspect": "Memory",
+          "new()": "Allocates zeroed memory",
+          "make()": "Allocates and initializes internal structures"
+        },
+        {
+          "Aspect": "Nil Possibility",
+          "new()": "Returns non-nil pointer",
+          "make()": "Returns non-nil initialized value"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "When to Use new()",
+      "content": "Use `new()` when you need a pointer to a newly allocated zeroed memory block for any type, especially custom structs or basic types.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Use make()",
+      "content": "Use `make()` when working with slices, maps, or channels that need to be initialized before use. `make()` handles internal data structure setup.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Mistake",
+      "content": "`new(map[string]int)` will create a nil map pointer. You cannot use it without initializing. Use `make()` instead.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Summary",
+      "content": "- `new()` returns a pointer to a zeroed value.\n- `make()` returns an initialized instance of slices, maps, or channels.\n- Use `make()` for built-in reference types, `new()` for others.",
+      "slide_type": "text"
+    }
+  ]
+  

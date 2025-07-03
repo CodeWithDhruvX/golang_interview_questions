@@ -1,0 +1,48 @@
+[
+    {
+      "title": "Introduction to iota in Go",
+      "content": "In Go, `iota` is a predeclared identifier that simplifies constant declarations. It is primarily used to create a sequence of related constants in an easy and readable way.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How iota Works",
+      "content": "The `iota` identifier starts at 0 in the first constant declaration and increments by 1 with each subsequent constant in the same block.\n\nExample:\n\n```go\nconst (\n  a = iota  // 0\n  b = iota  // 1\n  c = iota  // 2\n)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using iota for Bit Shifting",
+      "content": "`iota` can also be used to create constants with bit-shift operations.\n\nExample:\n\n```go\nconst (\n  _ = iota\n  KB = 1 << (10 * iota)  // 1 << 10\n  MB = 1 << (10 * iota)  // 1 << 20\n  GB = 1 << (10 * iota)  // 1 << 30\n)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "iota with Enumerated Constants",
+      "content": "You can use `iota` to generate enumerated values in a readable and compact way.\n\nExample:\n\n```go\nconst (\n  Red = iota\n  Green\n  Blue\n)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example: Days of the Week",
+      "content": "Let's use `iota` to represent the days of the week in Go.\n\nExample:\n\n```go\nconst (\n  Sunday = iota\n  Monday\n  Tuesday\n  Wednesday\n  Thursday\n  Friday\n  Saturday\n)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Advantages of iota",
+      "content": "1. Reduces the need for manually incrementing constants.\n2. Simplifies constant declaration blocks.\n3. Makes code cleaner and easier to maintain.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When Not to Use iota",
+      "content": "Avoid using `iota` for constants that don't follow a sequential pattern or require unique values that cannot be expressed through simple increments.\n\nExample:\n\n```go\nconst (\n  Pi = 3.14  // Fixed constant\n  E  = 2.71  // Fixed constant\n)\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Quiz\n1. What does `iota` do in Go?\n2. How does `iota` behave when used in multiple constants?\n3. How would you use `iota` for representing powers of two?\n\nTry writing some Go code based on these questions!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions\n1. `iota` is a special identifier in Go that generates a sequence of values starting from 0 and incrementing by 1 for each constant.\n2. `iota` increments automatically in a block of constants, making it easy to define sequential values.\n3. To represent powers of two with `iota`, you can use bit shifts like this:\n\n```go\nconst (\n  _ = iota\n  KB = 1 << (10 * iota)\n  MB = 1 << (10 * iota)\n  GB = 1 << (10 * iota)\n)\n```",
+      "slide_type": "code"
+    }
+  ]
+  

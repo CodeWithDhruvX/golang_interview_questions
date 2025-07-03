@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to len() and cap()",
+      "content": "In Go, `len()` and `cap()` are built-in functions that provide insights into the structure and size of collections like slices, arrays, maps, and channels. These functions are essential for understanding how data is stored and managed in memory. While `len()` tells you how many elements are currently present, `cap()` reveals how much space has been allocated in total — a key concept when optimizing memory and performance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What does len() do?",
+      "content": "`len()` is a built-in function in Go that returns the number of elements that are currently stored in a collection:\n\n- For **slices and arrays**, it returns the actual number of elements present.\n- For **maps**, it returns the number of key-value pairs.\n- For **channels**, it shows how many values are currently buffered.\n\nThis function is especially useful for loops and validations. For example, when iterating over a slice or map, you can use `len()` to avoid out-of-range errors or to check if the collection is empty.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What does cap() do?",
+      "content": "`cap()` is a built-in function that returns the total capacity of a slice, array, or channel. It tells you the **maximum number of elements** the structure can hold before it needs to grow or reallocate memory:\n\n- For **slices**, it shows the size of the underlying array.\n- For **channels**, it indicates the buffer capacity.\n\nUnlike `len()`, `cap()` is not available for maps. Knowing the capacity helps developers manage performance by pre-allocating memory and avoiding repeated reallocation, especially in large-scale data processing.",
+      "slide_type": "text"
+    },
+    {
+      "title": "len() and cap() with Slices",
+      "content": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    nums := make([]int, 3, 5)\n    fmt.Println(\"len:\", len(nums)) // Output: 3\n    fmt.Println(\"cap:\", cap(nums)) // Output: 5\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "len() with Maps and Channels",
+      "content": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    m := map[string]int{\"a\": 1, \"b\": 2}\n    fmt.Println(\"Map len:\", len(m))\n\n    ch := make(chan int, 4)\n    ch \u003c- 1\n    ch \u003c- 2\n    fmt.Println(\"Channel len:\", len(ch))\n    fmt.Println(\"Channel cap:\", cap(ch))\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Difference Between len() and cap()",
+      "content": [
+        {
+          "Description": "Returns the current number of elements.",
+          "Property": "len()"
+        },
+        {
+          "Description": "Returns the maximum number of elements that can be held.",
+          "Property": "cap()"
+        },
+        {
+          "Description": "len(): slices, arrays, maps, channels | cap(): slices, arrays, channels",
+          "Property": "Applicable To"
+        },
+        {
+          "Description": "Only len() works; cap() is not applicable.",
+          "Property": "Maps"
+        },
+        {
+          "Description": "len() shows usage; cap() shows potential space.",
+          "Property": "Purpose"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Why It Matters",
+      "content": "Understanding `len()` and `cap()` is crucial for writing efficient and performant Go programs. Here's why:\n\n- **Memory Management**: Knowing the capacity of a slice or channel helps you avoid unnecessary memory allocations.\n- **Performance Optimization**: Reducing memory growth operations can significantly improve speed in performance-critical applications.\n- **Buffer Control**: With channels, `cap()` helps design proper buffering strategies for concurrent systems.\n- **Debugging**: These functions offer quick insights into your data structures when troubleshooting logic errors or inefficiencies.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Recap",
+      "content": "- `len()` returns the current count of elements in a slice, array, map, or channel.\n- `cap()` returns the total allocated space (only for slices, arrays, and channels).\n- `len()` is useful for loops and validations.\n- `cap()` is essential for performance tuning.\n- Only `len()` works on maps; `cap()` is not defined for them.\n\nUnderstanding the difference between these two can help you build robust, scalable, and memory-efficient Go applications.",
+      "slide_type": "text"
+    }
+  ]

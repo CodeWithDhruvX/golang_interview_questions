@@ -1,0 +1,62 @@
+[
+    {
+      "title": "Introduction to Generics in Go",
+      "content": "In Go, generics allow you to write functions, types, and data structures that work with any data type. But, can these generics also implement interfaces? Let's explore!",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Are Interfaces in Go?",
+      "content": "In Go, an interface is a type that specifies a set of method signatures. A type is said to implement an interface if it provides definitions for all the methods in that interface.\n\n```go\ntype Speaker interface {\n    Speak() string\n}\n\ntype Person struct {}\n\nfunc (p Person) Speak() string {\n    return \"Hello!\"\n}\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Can Generics Implement Interfaces?",
+      "content": "Yes, generic types can implement interfaces in Go. The key is understanding how Go handles types with methods and ensuring that a generic type fulfills the method requirements of an interface.\n\nFor example, you can define a generic type that satisfies an interface as long as it provides the necessary methods.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Generic Type Implementing an Interface",
+      "content": "Let's look at an example where a generic type implements an interface.\n\n```go\npackage main\n\nimport \"fmt\"\n\ntype Printer[T any] interface {\n    Print(value T)\n}\n\ntype MyPrinter[T any] struct {}\n\nfunc (mp MyPrinter[T]) Print(value T) {\n    fmt.Println(value)\n}\n\nfunc main() {\n    var p Printer[int] = MyPrinter[int]{}\n    p.Print(123)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Interface Constraints on Generics",
+      "content": "To implement an interface, a generic type may require a constraint that ensures the type implements the interface.\n\nFor example, we can create a constraint that only allows types that implement a certain interface.\n\n```go\ntype Speaker interface {\n    Speak() string\n}\n\ntype Printer[T Speaker] struct {}\n\nfunc (p Printer[T]) Print(value T) {\n    fmt.Println(value.Speak())\n}\n\nfunc main() {\n    var sp Printer[Person] = Printer[Person]{}\n    sp.Print(Person{})\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Table of Generic Types Implementing Interfaces",
+      "content": "Below is a table summarizing different scenarios for using generics with interfaces in Go.\n",
+      "slide_type": "table",
+      "content": [
+        {
+          "Scenario": "Generic Type with No Interface",
+          "Example": "```go\ntype Box[T any] struct {}\n```"
+        },
+        {
+          "Scenario": "Generic Type Implementing an Interface",
+          "Example": "```go\ntype Printer[T any] interface {\n    Print(value T)\n}\ntype MyPrinter[T any] struct {}\n```"
+        },
+        {
+          "Scenario": "Generic Type with Interface Constraints",
+          "Example": "```go\ntype Speaker interface {\n    Speak() string\n}\ntype Printer[T Speaker] struct {}\n```"
+        }
+      ]
+    },
+    {
+      "title": "Limitations of Generics and Interfaces",
+      "content": "Go generics are powerful, but there are some limitations, especially when combining generics with interfaces. One limitation is that Go doesn't support constrained methods on generic types directly.\n\nYou may need to rely on type assertions or type switches in some scenarios.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n1. What is the key to a generic type implementing an interface in Go?\n2. How would you create a generic type that implements an interface?\n3. Can you use constraints on generics when working with interfaces? If yes, how?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions:\n1. The key is ensuring that the generic type provides all the methods required by the interface.\n2. A generic type implements an interface by defining methods that match the signature in the interface.\n3. Yes, you can use constraints on generics to enforce that a type implements a specific interface. This is done by declaring the constraint on the generic type.\n\n```go\ntype Printer[T Speaker] struct {}\nfunc (p Printer[T]) Print(value T) {\n    fmt.Println(value.Speak())\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

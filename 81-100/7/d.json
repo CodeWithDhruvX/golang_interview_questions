@@ -1,0 +1,79 @@
+[
+    {
+      "title": "Introduction to Benchmarking in Go",
+      "content": "Benchmarking helps measure the performance of your Go code. By identifying slow parts of your program, you can optimize them for better speed and efficiency.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Benchmarking is Important",
+      "content": "Benchmarking helps:\n- Measure code performance\n- Identify performance bottlenecks\n- Validate optimizations\n\nWithout proper benchmarking, optimizations may not have the intended effect.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go's Benchmarking Framework",
+      "content": "Go has a built-in benchmarking framework within the testing package. You can define benchmark functions and run them using `go test`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Creating a Benchmark Function",
+      "content": "A benchmark function in Go has the form:\n\n```go\nfunc Benchmark<FunctionName>(b *testing.B) {\n  // Code to benchmark\n}\n```\nThe `testing.B` object allows you to run the benchmark multiple times and measure the time taken.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example Benchmark Code",
+      "content": "Here’s an example of how to benchmark a simple function that calculates the sum of an array:\n\n```go\nfunc BenchmarkSum(b *testing.B) {\n  for i := 0; i < b.N; i++ {\n    sum([]int{1, 2, 3, 4, 5})\n  }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Running the Benchmark",
+      "content": "To run benchmarks, use the following command:\n\n```bash\ngo test -bench .\n```\nThis will execute all benchmarks in the current package and display the results.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Interpreting Benchmark Results",
+      "content": "Benchmark results are displayed as:\n\n```bash\nBenchmarkSum-8    20000000    70.0 ns/op\n```\n- `20000000` is the number of iterations\n- `70.0 ns/op` is the time per operation (nanoseconds per operation)\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Optimizing Based on Results",
+      "content": "Once you identify slow functions, try optimizing them, then rerun the benchmarks to see if your changes improved performance. Example optimizations can include algorithm changes or memory improvements.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Table: Benchmarking Results Comparison",
+      "content": [
+        {
+          "Function": "Sum",
+          "Iterations": "20,000,000",
+          "Time/Op": "70.0 ns"
+        },
+        {
+          "Function": "Multiply",
+          "Iterations": "30,000,000",
+          "Time/Op": "50.0 ns"
+        },
+        {
+          "Function": "Sort",
+          "Iterations": "5,000,000",
+          "Time/Op": "150.0 ns"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Benchmarking with Different Inputs",
+      "content": "You can benchmark with varying input sizes to see how performance scales. Modify your benchmark function to handle different inputs:\n\n```go\nfunc BenchmarkSortWithInputSize(b *testing.B) {\n  inputs := []int{10, 100, 1000}\n  for _, size := range inputs {\n    b.Run(fmt.Sprintf(\"size=%d\", size), func(b *testing.B) {\n      // Benchmark sort for this input size\n    })\n  }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- What does the `b.N` in a benchmark function represent?\n- How do you run a benchmark in Go?\n- What does the output `70.0 ns/op` mean?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "1. `b.N` represents the number of iterations Go will run the benchmark for.\n2. You run a benchmark in Go using the command: `go test -bench .`\n3. `70.0 ns/op` means that each operation in the benchmark takes 70 nanoseconds to complete.",
+      "slide_type": "code"
+    }
+  ]
+  

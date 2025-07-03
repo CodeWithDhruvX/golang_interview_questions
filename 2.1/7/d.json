@@ -1,0 +1,60 @@
+[
+    {
+      "title": "Introduction to Slice Passing in Go",
+      "content": "In Go, slices are passed **by value**, but they often behave like they're passed **by reference**. This behavior can be misleading, especially if you're coming from other programming languages. When you pass a slice to a function, you're passing a copy of the slice header, not the entire underlying array. As a result, changes to the elements inside the slice reflect in the original, but structural changes like resizing don't.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is a Slice in Go?",
+      "content": "- A **slice** is a descriptor that provides a window into an underlying array.\n- It contains three fields:\n  1. **Pointer** – points to the first element in the array the slice refers to.\n  2. **Length** – the number of elements the slice contains.\n  3. **Capacity** – the maximum number of elements from the start pointer to the end of the underlying array.\n- Unlike arrays, slices are **dynamic** and can grow using `append()`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Function Parameter Passing in Go",
+      "content": "Go always uses **pass-by-value**, meaning function arguments are copied when passed. However, for reference-like types such as slices, the copied value includes a pointer to the same memory location (array). This allows modifications to the slice's contents to affect the original array, even though the slice header itself is copied. If the slice is re-sliced or resized within the function, those changes won’t reflect outside the function unless the new slice is returned or explicitly passed back.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Code Example: Passing a Slice to Function",
+      "content": "```go\nfunc modifySlice(s []int) {\n    s[0] = 100\n}\n\nfunc main() {\n    nums := []int{1, 2, 3}\n    modifySlice(nums)\n    fmt.Println(nums) // Output: [100 2 3]\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Explanation of Code Behavior",
+      "content": "- In the `modifySlice` function, the slice `s` receives a **copy of the slice header**, but both `s` and `nums` point to the **same underlying array**.\n- When we do `s[0] = 100`, the underlying array is modified.\n- Since both `s` and `nums` share that array, the change is visible in `nums`.\n- This gives the illusion of pass-by-reference, even though only the header was passed by value.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Modifying Slice Length Inside Function",
+      "content": "```go\nfunc appendToSlice(s []int) {\n    s = append(s, 4)\n    fmt.Println(\"Inside function:\", s) // [1 2 3 4]\n}\n\nfunc main() {\n    nums := []int{1, 2, 3}\n    appendToSlice(nums)\n    fmt.Println(\"Outside function:\", nums) // [1 2 3]\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Why the Length Change Didn’t Persist",
+      "content": "- When using `append`, Go may allocate a new array if the existing one doesn’t have enough capacity.\n- Inside `appendToSlice`, `s` becomes a new slice pointing to a new array.\n- This change does **not affect** the original slice `nums` in `main()` because only the original header was passed, and now the header points elsewhere.\n- Therefore, any changes to length or capacity inside the function won't be reflected outside unless returned.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Behaviors of Slices in Functions",
+      "content": [
+        {
+          "behavior": "Modifying element values",
+          "effect": "Changes persist"
+        },
+        {
+          "behavior": "Changing length (e.g. append)",
+          "effect": "Changes don't affect original slice if reallocation occurs"
+        },
+        {
+          "behavior": "Passing slice to another function",
+          "effect": "Both share same backing array unless new one is created"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Summary: Slice Passing in Go",
+      "content": "- Although slices are passed **by value**, they reference a shared underlying array.\n- **Element modifications** within a function affect the original slice.\n- **Structural modifications** like `append()` may cause reallocation, breaking the shared link.\n- Always be cautious when modifying or resizing slices inside functions.\n- To persist such changes, return the modified slice or use pointers to slices.",
+      "slide_type": "text"
+    }
+  ]

@@ -1,0 +1,51 @@
+[
+    {
+      "title": "Introduction to Map Sorting in Go",
+      "content": "In Go, maps are unordered by nature. If you want to sort a map, you must extract its keys or values into a slice and sort them manually using the `sort` package.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Maps Are Unordered",
+      "content": "Maps in Go do not preserve any order of insertion or key/value.\n\nThis design choice allows for efficient access but means you must explicitly sort when needed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Steps to Sort a Map by Key",
+      "content": "- Extract the keys from the map into a slice\n- Use `sort.Strings()` or `sort.Ints()` to sort the keys\n- Iterate over the sorted keys to access values in sorted order",
+      "slide_type": "text"
+    },
+    {
+      "title": "Code: Sort Map by Key",
+      "content": "package main\n\nimport (\n    \"fmt\"\n    \"sort\"\n)\n\nfunc main() {\n    m := map[string]int{\"b\": 2, \"a\": 1, \"c\": 3}\n\n    keys := make([]string, 0, len(m))\n    for k := range m {\n        keys = append(keys, k)\n    }\n\n    sort.Strings(keys)\n\n    for _, k := range keys {\n        fmt.Printf(\"%s: %d\\n\", k, m[k])\n    }\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Steps to Sort a Map by Value",
+      "content": "- Convert map entries to a slice of key-value pairs\n- Use `sort.Slice()` with a custom comparator to sort by value\n- Iterate over the sorted slice",
+      "slide_type": "text"
+    },
+    {
+      "title": "Code: Sort Map by Value",
+      "content": "package main\n\nimport (\n    \"fmt\"\n    \"sort\"\n)\n\nfunc main() {\n    m := map[string]int{\"b\": 2, \"a\": 1, \"c\": 3}\n\n    type kv struct {\n        Key   string\n        Value int\n    }\n\n    var sorted []kv\n    for k, v := range m {\n        sorted = append(sorted, kv{k, v})\n    }\n\n    sort.Slice(sorted, func(i, j int) bool {\n        return sorted[i].Value < sorted[j].Value\n    })\n\n    for _, kv := range sorted {\n        fmt.Printf(\"%s: %d\\n\", kv.Key, kv.Value)\n    }\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Comparison: Key vs Value Sorting",
+      "content": [
+        { "Aspect": "Sorting By Key", "Approach": "Sort keys separately, then access map" },
+        { "Aspect": "Sorting By Value", "Approach": "Create a slice of key-value pairs and sort using custom logic" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Best Practices",
+      "content": "- Always choose sorting method based on your use case\n- Avoid modifying the map while sorting\n- Consider performance if dealing with large maps",
+      "slide_type": "text"
+    },
+    {
+      "title": "Conclusion",
+      "content": "Maps in Go are unordered, but with simple techniques using slices and the `sort` package, you can easily sort by keys or values as needed.",
+      "slide_type": "text"
+    }
+  ]
+  

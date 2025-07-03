@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Struct to JSON Conversion in Go",
+      "content": "In Go, structs are often used to represent data in a more organized way. Converting a struct to JSON format is useful when you need to send data over the network or store it in a JSON format.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Convert Struct to JSON?",
+      "content": "JSON is a widely used data format that allows data exchange between systems. By converting Go structs to JSON, you can easily send structured data to APIs or save it in a database.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using `encoding/json` Package",
+      "content": "In Go, the `encoding/json` package provides functions to work with JSON. The most commonly used function to convert a struct to JSON is `json.Marshal()`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example Code: Converting Struct to JSON",
+      "content": "```go\npackage main\n\nimport (\n\t\"encoding/json\"\n\t\"fmt\"\n)\n\ntype Person struct {\n\tName  string `json:\"name\"`\n\tAge   int    `json:\"age\"`\n}\n\nfunc main() {\n\tp := Person{Name: \"John\", Age: 30}\n\tjsonData, err := json.Marshal(p)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t}\n\tfmt.Println(string(jsonData))\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Explanation of the Code",
+      "content": "In the example code:\n- We define a `Person` struct with fields `Name` and `Age`.\n- The `json.Marshal()` function is used to convert the struct into JSON format.\n- We handle errors in case the conversion fails.\n- The resulting JSON is printed as a string.",
+      "slide_type": "text"
+    },
+    {
+      "title": "JSON Tags in Go Structs",
+      "content": "You can customize the names of the fields in the resulting JSON by using tags. The tags are added after the field type, e.g., `json:\"name\"`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Struct to JSON Output",
+      "content": "After converting the `Person` struct, the output JSON will look like this:\n```json\n{\"name\":\"John\",\"age\":30}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Handling Nested Structs",
+      "content": "Go can also convert nested structs to JSON. You simply need to define the struct correctly and use `json.Marshal()` on the outer struct.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example Code: Nested Struct to JSON",
+      "content": "```go\npackage main\n\nimport (\n\t\"encoding/json\"\n\t\"fmt\"\n)\n\ntype Address struct {\n\tStreet string `json:\"street\"`\n\tCity   string `json:\"city\"`\n}\n\ntype Person struct {\n\tName    string  `json:\"name\"`\n\tAge     int     `json:\"age\"`\n\tAddress Address `json:\"address\"`\n}\n\nfunc main() {\n\tp := Person{Name: \"John\", Age: 30, Address: Address{Street: \"123 Main St\", City: \"Metropolis\"}}\n\tjsonData, err := json.Marshal(p)\n\tif err != nil {\n\t\tfmt.Println(err)\n\t}\n\tfmt.Println(string(jsonData))\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Struct to JSON Output (Nested)",
+      "content": "The output for the nested struct will look like this:\n```json\n{\"name\":\"John\",\"age\":30,\"address\":{\"street\":\"123 Main St\",\"city\":\"Metropolis\"}}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Errors",
+      "content": "Some common errors while converting structs to JSON include:\n- Incorrect use of struct tags.\n- Missing or incorrect field types.\n- Failing to handle errors when using `json.Marshal()`.\n\nMake sure to handle errors properly and use the correct tags.",
+      "slide_type": "text"
+    }
+  ]
+  

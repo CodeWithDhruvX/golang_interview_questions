@@ -1,0 +1,88 @@
+[
+    {
+      "title": "Go में Variable क्या है?",
+      "content": "### Variable की परिभाषा\nGo में variable एक नामित storage स्थान होता है जो किसी विशेष प्रकार (type) का मान संग्रहीत करता है।\n\n- Go में variables **strongly typed** होते हैं, जिससे compile time पर type-checking होती है।\n- Variables को अलग-अलग तरीकों से घोषित किया जा सकता है:\n  - Type के साथ\n  - Initialization के साथ\n  - Type inference द्वारा",
+      "slide_type": "text"
+    },
+    {
+      "title": "Variable की सामान्य घोषणा",
+      "content": "```go\n// सामान्य सिंटैक्स:\nvar name type\n\n// उदाहरण:\nvar age int // 'age' नाम का int प्रकार का variable घोषित करता है\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Initialization के साथ घोषणा",
+      "content": "### Initialization के लाभ\n- जब मान ज्ञात हो, तब एक साथ declaration और initialization करें।\n- यह zero value से बचने में मदद करता है।\n- Code स्पष्ट और सुरक्षित बनता है।\n\n```go\nvar age int = 25\nvar name string = \"John\"\nvar isActive bool = true\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Initialization के साथ",
+      "content": "```go\nvar age int = 25\nvar name string = \"John\"\nvar isActive bool = true\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Inference क्या है?",
+      "content": "### Type Inference\n- Go में compiler **मान के आधार पर** type निर्धारित कर सकता है।\n- इससे कोड छोटा और पढ़ने में आसान होता है।\n- Syntax: `var name = value`\n\n```go\nvar age = 30       // int inferred\nvar name = \"Alice\" // string inferred\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Type Inference",
+      "content": "```go\nvar age = 30       // Go इसे int मानता है\nvar name = \"Alice\" // Go इसे string मानता है\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Short Declaration (:=)",
+      "content": "### `:=` का उपयोग\n- केवल **function के अंदर** उपयोग करें।\n- एक साथ declaration और initialization करता है।\n- सबसे संक्षिप्त तरीका है variable बनाने का।\n\n```go\ncount := 10\nmessage := \"Hello\"\nactive := false\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Short Declaration",
+      "content": "```go\ncount := 10\nmessage := \"Hello\"\nactive := false\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Multiple Variables एक साथ",
+      "content": "### एक से अधिक variables\n- एक ही लाइन में या block में कई variables घोषित कर सकते हैं।\n- Code को व्यवस्थित और साफ बनाता है।\n\n```go\nvar a, b, c int\nvar name, age = \"Alice\", 30\nx, y := 5, \"Go\"\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Grouped Declaration",
+      "content": "```go\nvar (\n    name string = \"Bob\"\n    age  int    = 28\n    active bool = true\n)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Zero Values क्या होते हैं?",
+      "content": "### Default Zero Values\n- Variable घोषित किया गया लेकिन initialize नहीं किया गया हो तो उसे default value मिलती है।\n- Type के अनुसार:\n  - `int` → `0`\n  - `bool` → `false`\n  - `string` → `\"\"`\n  - `pointer` या `interface` → `nil`",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Zero Value",
+      "content": "```go\nvar s string\nfmt.Println(s) // output: \"\"\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Constants और Variables में अंतर",
+      "content": "### Constants (`const` keyword)\n- Constants ऐसे मान होते हैं जो बदल नहीं सकते।\n- Compile time पर evaluate होते हैं।\n- उपयोग करें जहाँ fixed मान की आवश्यकता हो जैसे Pi, version आदि।\n\n```go\nconst Pi = 3.14\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Constant",
+      "content": "```go\nconst Pi = 3.14\nfmt.Println(Pi)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Variable Scope क्या होता है?",
+      "content": "### Scope\n- **Local**: Function के अंदर घोषित\n- **Package-level**: Function के बाहर लेकिन उसी package में\n- Go में traditional global variables नहीं होते, लेकिन **exported** variables (capital letter से शुरू) को अन्य packages से access किया जा सकता है।",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### निम्नलिखित प्रश्नों के उत्तर दें:\n\n1. नीचे दिए गए code snippet में क्या त्रुटि है?\n   ```go\n   username := \"admin\"\n   ```\n   यह code function के बाहर लिखा गया है।\n\n2. एक ही समय में `name` (string) और `age` (int) को कैसे declare और initialize करेंगे?\n\n3. `var x int` और `x := 10` में क्या अंतर है?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```go\n// उत्तर 1:\n// Error: short declaration (:=) केवल function के अंदर मान्य है।\n// सही तरीका:\nvar username = \"admin\"\n\n// उत्तर 2:\nname, age := \"Alice\", 25\n\n// उत्तर 3:\nvar x int     // केवल घोषणा, zero value = 0\nx := 10       // घोषणा + initialization, inferred type = int\n```",
+      "slide_type": "code"
+    }
+  ]
+  

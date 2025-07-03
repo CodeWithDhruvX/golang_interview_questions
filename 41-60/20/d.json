@@ -1,0 +1,75 @@
+[
+    {
+      "title": "Introduction to the reflect Package",
+      "content": "The `reflect` package in Go provides the ability to inspect types and values at runtime. It allows for operations like type inspection, dynamic method invocation, and value manipulation, which are not possible with static typing alone.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Can Reflect Do?",
+      "content": "The `reflect` package allows you to:\n- Get type and value information of variables\n- Dynamically set values of variables\n- Check if a type is a specific type\n- Access struct fields and their values dynamically",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using reflect.TypeOf",
+      "content": "The `reflect.TypeOf` function returns the `reflect.Type` object representing the type of a variable.\n\nExample:\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"reflect\"\n)\n\nfunc main() {\n\tx := 42\n\ntypeOfX := reflect.TypeOf(x)\n\n\tfmt.Println(typeOfX)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using reflect.ValueOf",
+      "content": "The `reflect.ValueOf` function returns the `reflect.Value` representing the actual value of a variable.\n\nExample:\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"reflect\"\n)\n\nfunc main() {\n\tx := 42\n\n\tvalueOfX := reflect.ValueOf(x)\n\tfmt.Println(valueOfX)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Setting Values with reflect",
+      "content": "The `reflect.Value` can also be used to modify the values of variables (only if the variable is settable). This is done with the `Set` method.\n\nExample:\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"reflect\"\n)\n\nfunc main() {\n\tx := 42\n\tvalue := reflect.ValueOf(&x)\n\tvalue.Elem().Set(reflect.ValueOf(100))\n\tfmt.Println(x) // Output will be 100\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using reflect for Struct Fields",
+      "content": "Reflecting on structs allows you to dynamically access and modify struct fields.\n\nExample:\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"reflect\"\n)\n\ntype Person struct {\n\tName string\n\tAge  int\n}\n\nfunc main() {\n\tp := Person{Name: \"Alice\", Age: 30}\n\tv := reflect.ValueOf(&p)\n\tfield := v.Elem().FieldByName(\"Name\")\n\tfmt.Println(field.String())  // Output: Alice\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Table: Reflect Functions",
+      "content": [
+        {
+          "Function": "reflect.TypeOf",
+          "Description": "Returns the type of a variable."
+        },
+        {
+          "Function": "reflect.ValueOf",
+          "Description": "Returns the value of a variable."
+        },
+        {
+          "Function": "reflect.Value.Set",
+          "Description": "Sets the value of a variable (if settable)."
+        },
+        {
+          "Function": "reflect.Value.FieldByName",
+          "Description": "Accesses a struct field by name."
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Common Use Cases",
+      "content": "The `reflect` package is particularly useful in scenarios such as:\n- Building libraries that work with multiple types\n- Implementing serialization and deserialization (e.g., in JSON/XML packages)\n- Creating frameworks or tools that need to inspect and modify user-defined types dynamically",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Avoid reflect",
+      "content": "While `reflect` is powerful, it should be used sparingly because:\n- It can reduce code clarity.\n- It can lead to performance overhead.\n- It can bypass the type safety Go usually enforces.\n\nUse it only when you absolutely need dynamic type inspection or manipulation.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Quick Questions\n1. What does the `reflect.TypeOf` function return?\n2. How can you modify a struct field using `reflect`?\n3. Why should you use the `reflect` package cautiously?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions\n1. The `reflect.TypeOf` function returns the type of the provided value (as `reflect.Type`).\n2. You can modify a struct field using `reflect.ValueOf(&structVar).Elem().FieldByName(\"FieldName\")` and then using `.Set` to change the field's value.\n3. The `reflect` package should be used cautiously because it introduces performance overhead, reduces clarity, and bypasses Go's static typing and type safety.",
+      "slide_type": "code"
+    }
+  ]
+  

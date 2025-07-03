@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Variadic Functions क्या होते हैं?",
+    "content": "Variadic functions ऐसे functions होते हैं जो एक या ज्यादा arguments accept करते हैं, और उन arguments की संख्या रन-टाइम पर decide होती है।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Variadic Functions कैसे काम करते हैं?",
+    "content": "इन functions में एक special parameter होता है जिसे ellipsis (`...`) के साथ लिखा जाता है। यह parameter multiple values को handle करने की ability देता है।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Code Example (Go)",
+    "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc printNumbers(numbers ...int) {\n  for _, num := range numbers {\n    fmt.Println(num)\n  }\n}\n\nfunc main() {\n  printNumbers(1, 2, 3, 4, 5)\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Code Example Explanation",
+    "content": "इस code में `printNumbers` function एक variadic function है जो `int` type के multiple arguments accept करता है। जब हम इस function को call करते हैं, तो हम multiple arguments pass कर सकते हैं जैसे कि `1, 2, 3, 4, 5`।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Variadic Functions का Use Case",
+    "content": "अगर आपको एक function के through multiple values को process करना हो, बिना हर argument को manually specify किये, तब आप variadic function का use करते हैं।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Table: Variadic Functions का Comparison",
+    "content": [
+      { "Feature": "Arguments की संख्या", "Description": "Fixed vs Variable" },
+      { "Feature": "Function Call", "Description": "Multiple arguments pass कर सकते हैं" },
+      { "Feature": "Flexibility", "Description": "Variable number of arguments को handle करता है" }
+    ],
+    "slide_type": "table"
+  }
+]

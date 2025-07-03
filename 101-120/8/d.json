@@ -1,0 +1,58 @@
+[
+    {
+      "title": "What is Dependency Injection?",
+      "content": "Dependency Injection (DI) is a design pattern used to implement Inversion of Control (IoC), allowing a program to achieve loose coupling. In Go, DI is commonly used to provide dependencies to structs or functions rather than hard-coding them within the class or function.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Dependency Injection?",
+      "content": "Dependency Injection provides the following benefits:\n\n- **Loose coupling**: It reduces the dependencies between components.\n- **Easier testing**: You can inject mock dependencies in tests.\n- **Flexibility**: You can change components without affecting the rest of the code.\n- **Better maintainability**: It makes code easier to maintain and modify.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Example of Dependency Injection in Go",
+      "content": "In Go, DI is often done through constructor functions or directly into struct fields.\n\nExample:\n\n```go\npackage main\n\nimport \"fmt\"\n\n// Service interface\ntype Service interface {\n    Serve() string\n}\n\n// Concrete implementation of Service\ntype ServiceImpl struct {}\n\nfunc (s *ServiceImpl) Serve() string {\n    return \"Service is working!\"\n}\n\n// Constructor for ServiceImpl\nfunc NewService() Service {\n    return &ServiceImpl{}\n}\n\n// Client that accepts Service dependency\ntype Client struct {\n    Service Service\n}\n\n// Constructor for Client\nfunc NewClient(service Service) Client {\n    return Client{Service: service}\n}\n\nfunc main() {\n    service := NewService()\n    client := NewClient(service)\n    fmt.Println(client.Service.Serve())\n}\n```\n",
+      "slide_type": "code"
+    },
+    {
+      "title": "How DI Works in Go",
+      "content": "In the Go example above, the `Client` struct depends on the `Service` interface. Instead of creating the `Service` directly inside the `Client`, we inject it into the `Client`'s constructor. This allows the `Client` to operate independently of the concrete `Service` implementation.\n\nKey Points:\n- The `Client` receives its dependencies (like `Service`) from outside.\n- This makes `Client` flexible and easy to test.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Constructor Functions for DI",
+      "content": "In Go, constructor functions are a popular way to inject dependencies. They are simple functions that return an instance of a struct along with its dependencies.\n\nExample:\n\n```go\nfunc NewService() Service {\n    return &ServiceImpl{}\n}\n\nfunc NewClient(service Service) Client {\n    return Client{Service: service}\n}\n```\nThese constructor functions are used to assemble and inject dependencies at the time of object creation.",
+      "slide_type": "code"
+    },
+    {
+      "title": "DI in Larger Applications",
+      "content": "In larger Go applications, DI can be managed with more advanced techniques such as using third-party DI libraries or creating a manual DI container.\n\nFor example, you could create a central function that initializes and wires up all the dependencies of your application, providing the correct components to different parts of your system. This can help manage complex dependency graphs and simplify the application architecture.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common DI Patterns in Go",
+      "content": "There are a few common patterns for DI in Go:\n\n1. **Constructor Injection**: Dependencies are provided to objects via their constructors.\n2. **Setter Injection**: Dependencies are provided via setter methods.\n3. **Interface Injection**: Components are injected via interfaces, typically in more complex systems.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Challenges with Dependency Injection in Go",
+      "content": "While DI provides many benefits, it can also come with challenges in Go:\n\n- **Verbosity**: You may need a lot of boilerplate code, especially for large applications.\n- **No built-in DI container**: Go doesn't have a standard DI container like some other languages (e.g., Spring in Java).\n- **Manual Dependency Management**: You need to manage dependencies manually, which can be cumbersome in large systems.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Summary",
+      "content": "Dependency Injection (DI) helps decouple components in your Go programs, making code easier to maintain and test. While Go doesn’t have a built-in DI container, it still allows for DI through constructor functions and manual dependency management.\n\n**Key Benefits**:\n- Loosely coupled components\n- Easier unit testing\n- Better flexibility\n\nDespite its benefits, it can introduce challenges such as verbosity and manual management.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Let's test your understanding of Dependency Injection in Go! Answer the following questions:\n\n1. What is Dependency Injection?\n2. What are the main benefits of using Dependency Injection?\n3. How is Dependency Injection typically implemented in Go?\n4. What is the purpose of constructor functions in DI?\n5. Name one challenge you might face when using DI in Go.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the answers to the challenge questions:\n\n1. **What is Dependency Injection?**\n   - Dependency Injection is a design pattern that allows objects to receive their dependencies from external sources instead of creating them internally.\n\n2. **What are the main benefits of using Dependency Injection?**\n   - The main benefits include loose coupling, easier testing, flexibility, and better maintainability.\n\n3. **How is Dependency Injection typically implemented in Go?**\n   - DI in Go is often implemented through constructor functions that accept dependencies as parameters.\n\n4. **What is the purpose of constructor functions in DI?**\n   - Constructor functions are used to create and initialize objects along with their dependencies, ensuring that the dependencies are provided externally.\n\n5. **Name one challenge you might face when using DI in Go.**\n   - One challenge is the verbosity of the code, especially in larger applications, as Go does not have a built-in DI container.\n",
+      "slide_type": "code"
+    }
+  ]
+  

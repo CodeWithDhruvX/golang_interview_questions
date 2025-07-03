@@ -1,0 +1,67 @@
+[
+    {
+      "title": "Introduction to cgo",
+      "content": "cgo is a feature in Go that enables the integration of C code within Go programs. It allows Go code to call C functions directly and vice versa.\n\n**Why use cgo?**\n- To reuse existing C libraries\n- To access system-level APIs only exposed in C\n- To improve performance in specific scenarios",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Use cgo",
+      "content": "- You need to interface with a mature C library (e.g., SQLite, OpenSSL).\n- Performance-critical code exists in C and needs to be reused.\n- Certain OS-level APIs are only available in C headers.\n- Go doesn’t have the required functionality or library support.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic cgo Syntax Example",
+      "content": "```go\n// #include <stdio.h>\n// void hello() { printf(\"Hello from C!\\n\"); }\nimport \"C\"\n\nfunc main() {\n    C.hello()\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "cgo Code Layout",
+      "content": "```go\n// #include <stdlib.h>\n// #include \"myclib.h\"\nimport \"C\"\n\nfunc UseCLibrary() {\n    C.my_c_function()\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Components of cgo",
+      "content": [
+        { "Component": "C block", "Description": "Special comment before `import \"C\"` where C headers or inline C code is written." },
+        { "Component": "C.<symbol>", "Description": "Used in Go to reference C variables or functions." },
+        { "Component": "`//export`", "Description": "Directive to expose Go functions to C." },
+        { "Component": "Linking", "Description": "Use `#cgo LDFLAGS:` to link against C libraries." }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Common cgo Directives",
+      "content": [
+        { "Directive": "#cgo CFLAGS", "Purpose": "Sets C compiler flags." },
+        { "Directive": "#cgo LDFLAGS", "Purpose": "Sets linker flags for C libraries." },
+        { "Directive": "//export", "Purpose": "Marks a Go function callable from C." }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Pros and Cons of Using cgo",
+      "content": "### ✅ Pros\n- Access to powerful C libraries\n- Performance for low-level operations\n- System-level control\n\n### ❌ Cons\n- Reduces portability (platform-dependent)\n- More complex build process\n- Breaks Go’s pure concurrency model (C code may block Go scheduler)",
+      "slide_type": "text"
+    },
+    {
+      "title": "Alternatives to cgo",
+      "content": "- **Pure Go libraries**: Prefer when available\n- **syscall or internal packages**: For system calls\n- **FFI with cgo wrappers**: For safer abstraction\n\n**Tip**: Only use cgo if there's no performant or feasible alternative in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Best Practices for Using cgo",
+      "content": "- Minimize the amount of C code used\n- Keep C-Go boundaries narrow\n- Handle memory management carefully\n- Test across platforms if using OS-specific C APIs",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### 🧠 Questions:\n\n1. What is the purpose of the `import \"C\"` statement?\n2. Name one benefit and one drawback of using cgo.\n3. What directive would you use to link a C library?\n4. Write a small Go function that calls a C function `int add(int, int);`\n5. Why should memory management be considered carefully with cgo?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```go\n// 1. `import \"C\"` allows Go to interface with C code defined in the special comment above it.\n\n// 2. Benefit: Access to mature C libraries.\n//    Drawback: Reduces portability and adds complexity.\n\n// 3. Use `#cgo LDFLAGS: -l<libname>` to link a C library.\n\n// 4. Example:\n// #include <stdio.h>\n// int add(int a, int b) { return a + b; }\nimport \"C\"\n\nfunc main() {\n    sum := C.add(2, 3)\n    fmt.Println(\"Sum:\", sum)\n}\n\n// 5. C doesn’t have garbage collection, so forgetting to free memory can cause leaks when mixing with Go.",
+      "slide_type": "code"
+    }
+  ]
+  

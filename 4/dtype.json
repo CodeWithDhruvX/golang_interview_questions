@@ -1,0 +1,158 @@
+[
+    {
+      "title": "Overview of Go Data Types",
+      "content": "### Go is a statically typed language:\n- Every variable has a defined type at compile time.\n- Supports **primitive**, **composite**, and **special** types.\n\n### Main Categories:\n- Primitive: `int`, `float`, `bool`, `string`\n- Composite: `array`, `slice`, `map`, `struct`\n- Special: `interface`, `function`, `channel`, `pointer`",
+      "slide_type": "text"
+    },
+    {
+      "title": "Integer Types",
+      "content": "### Integer Types in Go:\n- Signed: `int`, `int8`, `int16`, `int32`, `int64`\n- Unsigned: `uint`, `uint8`, `uint16`, `uint32`, `uint64`\n\n### Notes:\n- `int`/`uint` size depends on the system architecture.\n- Use fixed-size integers for precise memory control or external data formats.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Integer Type Example",
+      "content": "var a int = 10\nvar b int64 = 9223372036854775807",
+      "slide_type": "code"
+    },
+    {
+      "title": "Floating Point Types",
+      "content": "### Floating Point in Go:\n- `float32`: ~6 digits precision\n- `float64`: ~15 digits, default for float operations\n\n### Use Case:\n- `float64` preferred for scientific & precise decimal calculations.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Floating Point Type Example",
+      "content": "var pi float32 = 3.14\nvar gravity float64 = 9.80665",
+      "slide_type": "code"
+    },
+    {
+      "title": "Complex Number Types",
+      "content": "### Complex Number Support:\n- `complex64` → `float32` parts\n- `complex128` → `float64` parts\n\n### Methods:\n- Use `real()` and `imag()` to extract parts.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Complex Number Example",
+      "content": "var z complex64 = 1 + 2i\nfmt.Println(real(z), imag(z))",
+      "slide_type": "code"
+    },
+    {
+      "title": "Boolean Type",
+      "content": "### Boolean Type in Go:\n- Type: `bool`\n- Values: `true`, `false`\n- Default (zero) value: `false`\n\nCommonly used in control flows like `if`, `for`, and logical operations.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Boolean Type Example",
+      "content": "var isGoFun bool = true\nif isGoFun {\n    fmt.Println(\"Go is awesome!\")\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "String Type",
+      "content": "### String in Go:\n- Immutable UTF-8 encoded byte sequence\n- Declared using double quotes or backticks for raw strings\n- Indexed by **byte**, not character\n\nUse slicing and `len()` to manipulate.",
+      "slide_type": "text"
+    },
+    {
+      "title": "String Type Example",
+      "content": "var greeting string = \"Hello, Go!\"\nfmt.Println(greeting)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Array Type",
+      "content": "### Arrays in Go:\n- Fixed-size collection of elements\n- Type: `[n]T` where `n` is length, `T` is element type\n- Value type → copied on assignment\n\nRarely used directly, mostly to build slices.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Array Type Example",
+      "content": "var numbers [3]int = [3]int{1, 2, 3}\nfmt.Println(numbers)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Slice Type",
+      "content": "### Slice in Go:\n- Dynamic, flexible view of an array\n- Syntax: `[]T`\n- Functions: `append()`, `copy()`, slicing\n\nInternally contains pointer, length, and capacity.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Slice Type Example",
+      "content": "nums := []int{10, 20, 30}\nnums = append(nums, 40)\nfmt.Println(nums)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Map Type",
+      "content": "### Map in Go:\n- Key-value pair collection\n- Keys must be comparable types (no slices/maps/functions)\n- Check existence with: `val, ok := map[key]`",
+      "slide_type": "text"
+    },
+    {
+      "title": "Map Type Example",
+      "content": "scores := map[string]int{\"Alice\": 90, \"Bob\": 85}\nfmt.Println(scores[\"Alice\"])",
+      "slide_type": "code"
+    },
+    {
+      "title": "Struct Type",
+      "content": "### Structs in Go:\n- Custom data types to group fields\n- Support methods, nesting, and embedding\n- Ideal for modeling complex data",
+      "slide_type": "text"
+    },
+    {
+      "title": "Struct Type Example",
+      "content": "type Person struct {\n    Name string\n    Age  int\n}\np := Person{\"John\", 30}\nfmt.Println(p.Name)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Pointer Type",
+      "content": "### Pointers in Go:\n- Store memory addresses\n- Syntax: `*T` (pointer to type T), `&` for address, `*` for value\n\nNo pointer arithmetic allowed → safer than C/C++",
+      "slide_type": "text"
+    },
+    {
+      "title": "Pointer Type Example",
+      "content": "x := 10\np := &x\nfmt.Println(*p)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Function Type",
+      "content": "### Functions as Types:\n- First-class citizens\n- Can be stored in variables, passed, and returned\n- Anonymous functions supported",
+      "slide_type": "text"
+    },
+    {
+      "title": "Function Type Example",
+      "content": "func add(a int, b int) int {\n    return a + b\n}\nfmt.Println(add(2, 3))",
+      "slide_type": "code"
+    },
+    {
+      "title": "Interface Type",
+      "content": "### Interfaces in Go:\n- Specify method sets\n- A type satisfies an interface implicitly\n- `interface{}` is the empty interface → can hold any type",
+      "slide_type": "text"
+    },
+    {
+      "title": "Interface Type Example",
+      "content": "type Speaker interface {\n    Speak() string\n}\ntype Dog struct{}\nfunc (d Dog) Speak() string {\n    return \"Woof!\"\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Channel Type",
+      "content": "### Channels in Go:\n- Used for communication between goroutines\n- Types: `chan T`, `chan<- T`, `<-chan T`\n- Can be buffered or unbuffered",
+      "slide_type": "text"
+    },
+    {
+      "title": "Channel Type Example",
+      "content": "ch := make(chan int)\ngo func() { ch <- 42 }()\nfmt.Println(<-ch)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Rune and Byte Types",
+      "content": "### Rune and Byte:\n- `rune`: alias for `int32`, represents a Unicode character\n- `byte`: alias for `uint8`, used for binary data and ASCII chars\n\nUseful in string and byte-level manipulation.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Rune and Byte Example",
+      "content": "var r rune = '₹'\nvar b byte = 'A'\nfmt.Println(r, b)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Conversion in Go",
+      "content": "### Explicit Type Conversion:\n- Go does **not allow implicit type conversion**\n- Syntax: `T(value)`\n\nImproves type safety and avoids unexpected behaviors.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Type Conversion Example",
+      "content": "var x int = 42\nvar y float64 = float64(x)\nfmt.Println(y)",
+      "slide_type": "code"
+    }
+  ]
+  

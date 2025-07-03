@@ -1,0 +1,74 @@
+[
+    {
+      "title": "Introduction to Struct Tags",
+      "content": "**Struct tags** in Go are annotations that allow developers to attach metadata to struct fields. This metadata is often used by external libraries (like `encoding/json`, `database/sql`, or form binders) to influence how the data is processed. Struct tags are especially useful in serialization and deserialization processes, allowing you to control field names, validation rules, or other properties without changing the actual struct field names.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Struct Tag Syntax",
+      "content": "```go\nFieldName FieldType `key:\"value\" key2:\"value2\"`\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example: JSON Struct Tags",
+      "content": "```go\ntype User struct {\n    Name  string `json:\"name\"`\n    Email string `json:\"email\"`\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using Struct Tags with encoding/json",
+      "content": "```go\nuser := User{Name: \"Alice\", Email: \"alice@example.com\"}\ndata, _ := json.Marshal(user)\nfmt.Println(string(data)) // Output: {\"name\":\"Alice\",\"email\":\"alice@example.com\"}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Default Field Names Without Tags",
+      "content": "By default, when structs are marshaled to formats like JSON, the field names used in the output match the struct’s field names exactly—including capitalization. This can be a problem because many formats, like JSON, expect lowercase or snake_case field names. Without struct tags, the flexibility to customize this behavior is lost, leading to inconsistencies or unexpected outputs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Custom Tag Keys",
+      "content": "Go allows you to define your own tag keys beyond the standard ones like `json`, `xml`, or `db`. This is particularly useful when writing or using custom libraries that need to parse metadata from structs. For instance, a configuration loader might look for `config:\"...\"` tags to map fields from a file to a struct. These tags provide an elegant way to separate code logic from metadata and keep your struct definitions declarative and readable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Parsing Struct Tags Using Reflection",
+      "content": "```go\nt := reflect.TypeOf(User{})\nfield, _ := t.FieldByName(\"Name\")\ntag := field.Tag.Get(\"json\")\nfmt.Println(tag) // Output: name\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Multiple Tags on a Field",
+      "content": "```go\ntype Product struct {\n    ID    int    `json:\"id\" db:\"product_id\"`\n    Title string `json:\"title\" db:\"product_title\"`\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Use Cases for Struct Tags",
+      "content": [
+        {
+          "Example Tag": "`json:\"field_name\"`",
+          "Use Case": "JSON/XML Encoding"
+        },
+        {
+          "Example Tag": "`db:\"column_name\"`",
+          "Use Case": "Database Mapping"
+        },
+        {
+          "Example Tag": "`form:\"field_name\"`",
+          "Use Case": "Form Binding"
+        },
+        {
+          "Example Tag": "`validate:\"required\"`",
+          "Use Case": "Validation"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Best Practices",
+      "content": "- **Use backticks (`\\``)**: Struct tags must be enclosed in backticks, not quotes, to be parsed correctly by Go.\n- **Keep tag keys lowercase**: Most Go libraries expect lowercase tag keys, so stick to that convention.\n- **Be consistent**: Use the same tag key formats and naming conventions throughout your codebase to avoid confusion.\n- **Avoid overusing tags**: Tags should improve clarity, not reduce it. Use them only when necessary.\n- **Document custom tags**: If you define your own tag keys for internal tools or libraries, ensure they are well-documented so others can use them effectively.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Summary",
+      "content": "Struct tags provide a powerful mechanism to control the behavior of struct fields in Go. They allow external packages to understand how to process your data without requiring changes to your actual code logic. By understanding and applying struct tags effectively, you can write cleaner, more maintainable, and more interoperable Go applications. Whether you’re working with APIs, databases, or custom libraries, mastering struct tags is an essential skill for any Go developer.",
+      "slide_type": "text"
+    }
+  ]

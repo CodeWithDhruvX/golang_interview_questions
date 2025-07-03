@@ -1,0 +1,64 @@
+[
+    {
+      "title": "What Are Race Conditions?",
+      "content": "A **race condition** happens when two or more Goroutines access shared data concurrently, and at least one of them modifies it. This can lead to unpredictable behavior and bugs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example of a Race Condition",
+      "content": "```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n)\n\nvar counter = 0\n\nfunc increment() {\n\tfor i := 0; i < 1000; i++ {\n\t\tcounter++\n\t}\n}\n\nfunc main() {\n\tgo increment()\n\tgo increment()\n\ttime.Sleep(1 * time.Second)\n\tfmt.Println(\"Final counter:\", counter)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How to Detect Race Conditions",
+      "content": "- Use Go’s built-in **race detector**:\n\n```sh\ngo run -race main.go\n```\n\n- This helps identify race conditions during development by analyzing concurrent access patterns.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Preventing Race Conditions in Go",
+      "content": "- Use **mutexes** to protect shared resources.\n- Use **channels** for communication between Goroutines.\n- Avoid sharing data whenever possible.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using Mutex to Prevent Races",
+      "content": "```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"sync\"\n\t\"time\"\n)\n\nvar counter = 0\nvar mu sync.Mutex\n\nfunc increment() {\n\tfor i := 0; i < 1000; i++ {\n\t\tmu.Lock()\n\t\tcounter++\n\t\tmu.Unlock()\n\t}\n}\n\nfunc main() {\n\tgo increment()\n\tgo increment()\n\ttime.Sleep(1 * time.Second)\n\tfmt.Println(\"Final counter:\", counter)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using Channels to Avoid Races",
+      "content": "```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"time\"\n)\n\nfunc increment(ch chan int) {\n\tcount := 0\n\tfor i := 0; i < 2000; i++ {\n\t\tcount++\n\t}\n\tch <- count\n}\n\nfunc main() {\n\tch := make(chan int)\n\tgo increment(ch)\n\tgo increment(ch)\n\na := <-ch\nb := <-ch\nfmt.Println(\"Final counter:\", a+b)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Mutex vs Channels",
+      "content": [
+        {
+          "Approach": "Mutex",
+          "Pros": "Efficient, simple for protecting shared variables",
+          "Cons": "Risk of deadlocks, more manual control"
+        },
+        {
+          "Approach": "Channels",
+          "Pros": "Safer, idiomatic in Go for communication",
+          "Cons": "Can be less efficient if overused"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Tips to Avoid Race Conditions",
+      "content": "- Prefer communication over shared memory.\n- Keep shared data access confined to one Goroutine if possible.\n- Use sync primitives only when necessary.\n- Always test with `-race` flag during development.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. What Go tool can you use to detect race conditions?\n2. What's the primary purpose of a `sync.Mutex`?\n3. Fill in the blank:\n\n```go\nch := make(chan int)\ngo func() {\n\tch <- 42\n}()\nfmt.Println(<___>) // What goes here?\n```\n\n4. True or False: Channels can be used to safely share data between Goroutines.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n1. Use `go run -race main.go` to detect race conditions.\n2. `sync.Mutex` is used to protect shared data by locking and unlocking around access/modification.\n3. The blank should be `<-ch` to receive the value from the channel.\n4. True – Channels allow safe communication between Goroutines.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

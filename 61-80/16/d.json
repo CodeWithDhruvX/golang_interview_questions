@@ -1,0 +1,74 @@
+[
+    {
+      "title": "Introduction to Goroutines",
+      "content": "Goroutines are lightweight threads managed by the Go runtime. They allow you to run functions concurrently, enabling powerful parallel programming.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Pass Data Between Goroutines?",
+      "content": "- Share results of computations\n- Communicate between concurrent tasks\n- Coordinate workflows in parallel programs",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Ways to Share Data",
+      "content": [
+        { "method": "Channels", "description": "Safe way to communicate between goroutines using Go's built-in concurrency feature." },
+        { "method": "Shared Variables with Mutex", "description": "Use `sync.Mutex` to protect access to shared memory." },
+        { "method": "WaitGroups", "description": "Wait for a group of goroutines to finish, often used with channels or mutexes." }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Using Channels to Pass Data",
+      "content": "Channels are typed pipes that allow goroutines to communicate safely. Data sent into one end of the channel can be received from the other end.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Pass Data via Channel",
+      "content": "package main\n\nimport (\n  \"fmt\"\n)\n\nfunc sendData(ch chan string) {\n  ch <- \"Hello from goroutine\"\n}\n\nfunc main() {\n  ch := make(chan string)\n  go sendData(ch)\n  msg := <-ch\n  fmt.Println(msg)\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Buffered vs Unbuffered Channels",
+      "content": [
+        { "type": "Unbuffered", "description": "Blocks sender until receiver receives." },
+        { "type": "Buffered", "description": "Allows limited number of values to be sent without blocking." }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Using Mutex for Shared Data",
+      "content": "Use `sync.Mutex` to prevent race conditions when multiple goroutines access shared variables.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Mutex with Shared Data",
+      "content": "package main\n\nimport (\n  \"fmt\"\n  \"sync\"\n)\n\nvar (\n  count int\n  mu sync.Mutex\n)\n\nfunc increment(wg *sync.WaitGroup) {\n  mu.Lock()\n  count++\n  mu.Unlock()\n  wg.Done()\n}\n\nfunc main() {\n  var wg sync.WaitGroup\n  for i := 0; i < 5; i++ {\n    wg.Add(1)\n    go increment(&wg)\n  }\n  wg.Wait()\n  fmt.Println(\"Count:\", count)\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Choosing the Right Approach",
+      "content": [
+        { "scenario": "Simple message passing", "recommended": "Channels" },
+        { "scenario": "Shared state or counters", "recommended": "Mutex" },
+        { "scenario": "Waiting for completion", "recommended": "WaitGroup" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Tips for Safe Concurrency",
+      "content": "- Always avoid race conditions\n- Prefer channels for communication\n- Use `go run -race` to detect issues\n- Keep data access simple and predictable",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "**1. What does an unbuffered channel do when no one is receiving?**\n- A. Sends immediately\n- B. Blocks until a receiver is ready\n- C. Drops the data\n\n**2. Which tool is best for protecting shared variables?**\n- A. Channel\n- B. WaitGroup\n- C. Mutex\n\n**3. What will `go run -race` help you find?**\n- A. Syntax errors\n- B. Memory leaks\n- C. Race conditions",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "// 1. Answer: B - Blocks until a receiver is ready\n// Explanation: Unbuffered channels require both sender and receiver to be ready.\n\n// 2. Answer: C - Mutex\n// Explanation: Mutex locks shared resources to avoid concurrent access.\n\n// 3. Answer: C - Race conditions\n// Explanation: The race detector helps you catch data access issues between goroutines.",
+      "slide_type": "code"
+    }
+  ]
+  

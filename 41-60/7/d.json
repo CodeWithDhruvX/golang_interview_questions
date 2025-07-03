@@ -1,0 +1,59 @@
+[
+    {
+      "title": "Introduction to Type Assertion",
+      "content": "In Go, **type assertion** provides access to an interface's underlying concrete value.\n\nIt is used when you know the actual type that is stored inside an interface value.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax of Type Assertion",
+      "content": "The basic syntax for type assertion is:\n\n```go\nvalue := interfaceValue.(ActualType)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Simple Example",
+      "content": "```go\nvar i interface{} = \"hello\"\ns := i.(string)\nfmt.Println(s) // Output: hello\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Assertion with Check",
+      "content": "You can safely perform type assertions with two return values:\n\n```go\nvalue, ok := interfaceValue.(ActualType)\nif ok {\n    fmt.Println(\"Type assertion successful\", value)\n} else {\n    fmt.Println(\"Type assertion failed\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "When to Use Two-Value Assertion",
+      "content": "Use two-value form of type assertion when you're unsure if the interface holds the type you are asserting. This prevents runtime panics.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Pitfall",
+      "content": "If you assert a wrong type without checking (single-value form), your program will **panic** at runtime.\n\nAlways prefer two-value form when uncertain!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Type Assertion vs Type Switch",
+      "content": "Type switches are better if you want to handle multiple possible types.\n\nExample:\n\n```go\nswitch v := interfaceValue.(type) {\ncase int:\n    fmt.Println(\"int\", v)\ncase string:\n    fmt.Println(\"string\", v)\ndefault:\n    fmt.Println(\"unknown type\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Summary Table: Type Assertion Forms",
+      "content": [
+        {
+          "form": "Single value",
+          "example": "s := i.(string)",
+          "risk": "Panics if wrong type"
+        },
+        {
+          "form": "Two values",
+          "example": "s, ok := i.(string)",
+          "risk": "Safe, no panic"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Best Practices",
+      "content": "- Always check the type when unsure.\n- Prefer type switches for multiple types.\n- Use type assertion sparingly; favor concrete types where possible.",
+      "slide_type": "text"
+    }
+  ]
+  

@@ -1,0 +1,80 @@
+[
+    {
+      "title": "Introduction to Go's log Package",
+      "content": "Go provides the `log` package to help developers print messages and handle errors. Three commonly used functions are:\n\n- `log.Println`\n- `log.Fatal`\n- `log.Panic`\n\nUnderstanding their differences helps you manage error output and program control flow effectively.",
+      "slide_type": "text"
+    },
+    {
+      "title": "log.Println Explained",
+      "content": "`log.Println(\"Something happened\")`\n\n- Prints a message to the standard output (stderr by default).\n- Adds a newline automatically.\n- Does **not** stop the program.\n- Great for regular logging or debugging.",
+      "slide_type": "text"
+    },
+    {
+      "title": "log.Fatal Explained",
+      "content": "`log.Fatal(\"Fatal error occurred\")`\n\n- Logs the message like `Println`.\n- Then calls `os.Exit(1)` — exits immediately.\n- Use it for unrecoverable errors where cleanup isn’t needed or already done.",
+      "slide_type": "text"
+    },
+    {
+      "title": "log.Panic Explained",
+      "content": "`log.Panic(\"Something went very wrong\")`\n\n- Logs the message.\n- Then calls `panic()` — triggers panic handling (defer functions still run).\n- Useful if you want to crash but allow deferred cleanup.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Comparison Table",
+      "content": [
+        {
+          "Function": "log.Println",
+          "Logs Message": "✅",
+          "Stops Program": "❌",
+          "Triggers Panic": "❌",
+          "Runs Defers": "✅"
+        },
+        {
+          "Function": "log.Fatal",
+          "Logs Message": "✅",
+          "Stops Program": "✅",
+          "Triggers Panic": "❌",
+          "Runs Defers": "❌"
+        },
+        {
+          "Function": "log.Panic",
+          "Logs Message": "✅",
+          "Stops Program": "✅",
+          "Triggers Panic": "✅",
+          "Runs Defers": "✅"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Code Example: log.Println",
+      "content": "package main\n\nimport \"log\"\n\nfunc main() {\n    log.Println(\"This is a normal log message\")\n    log.Println(\"The program continues running\")\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Code Example: log.Fatal",
+      "content": "package main\n\nimport \"log\"\n\nfunc main() {\n    log.Fatal(\"This is a fatal error\")\n    // The following line will not execute\n    log.Println(\"Won't be reached\")\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Code Example: log.Panic",
+      "content": "package main\n\nimport \"log\"\n\nfunc main() {\n    defer log.Println(\"Cleanup before panic\")\n    log.Panic(\"Something went very wrong\")\n    // This line won’t be reached either\n    log.Println(\"Won't be reached\")\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "When to Use Each",
+      "content": "- **Use `log.Println`**: for regular logging or debugging.\n- **Use `log.Fatal`**: when the program must stop due to an unrecoverable error.\n- **Use `log.Panic`**: when something is seriously wrong, but you want deferred functions to still run.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. Which function will stop the program and **not** run deferred functions?\n2. Which one triggers a panic and **does** run deferred functions?\n3. Which is best for simple logging without stopping the program?\n4. What would be the output of this code?\n\n```go\nfunc main() {\n    defer fmt.Println(\"Bye\")\n    log.Fatal(\"Oops\")\n}\n```\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "// Answers:\n\n1. `log.Fatal` — it exits the program immediately and skips defers.\n2. `log.Panic` — it triggers panic, so defers still run.\n3. `log.Println` — it's meant for non-fatal logging.\n4. Output:\n```\nOops\n// 'Bye' will NOT be printed because log.Fatal exits immediately.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

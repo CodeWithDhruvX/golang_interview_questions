@@ -1,0 +1,53 @@
+[
+    {
+      "title": "What is Go Mod?",
+      "content": "Go Mod (short for Go Modules) is a system introduced in Go 1.11 for managing dependencies in Go projects. It replaces the older GOPATH-based approach and provides a more structured way to handle external libraries and versions in your Go project.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Features of Go Mod",
+      "content": "- Dependency Management: Automatically tracks and installs the required dependencies.\n- Versioning: Allows specifying exact versions for dependencies.\n- Offline Work: You can work without needing to fetch dependencies from the internet if they’re cached.\n- Easier Upgrades: Go modules provide a simple way to upgrade or downgrade dependencies.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Go Mod Works",
+      "content": "Go Mod works by creating a `go.mod` file in the root of your Go project. This file contains information about the modules you depend on, including their versions. The `go.sum` file keeps track of the exact cryptographic hash of each dependency to ensure integrity.\n\nWhen you run commands like `go build` or `go get`, Go will automatically update your `go.mod` and `go.sum` files as needed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Creating a Go Module",
+      "content": "To create a Go module, use the following command:\n\n```bash\ngo mod init <module-name>\n```\n\nThis command initializes a new Go module and creates a `go.mod` file, which tracks your dependencies.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Adding Dependencies",
+      "content": "To add a dependency to your Go module, use the command:\n\n```bash\ngo get <dependency-name>@<version>\n```\n\nThis will add the specified dependency to your `go.mod` file and automatically download it.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Go Mod Commands Overview",
+      "content": "| Command               | Description                                                      |\n|-----------------------|------------------------------------------------------------------|\n| `go mod init`          | Initializes a new module in the project directory.               |\n| `go mod tidy`          | Removes unnecessary dependencies and adds any missing ones.      |\n| `go mod vendor`        | Copies dependencies into a `vendor/` directory for offline use. |\n| `go mod verify`        | Verifies the integrity of dependencies.                          |",
+      "slide_type": "table"
+    },
+    {
+      "title": "Understanding go.sum",
+      "content": "The `go.sum` file ensures the integrity of dependencies by storing cryptographic hashes of each dependency version used in your project. This ensures that the exact same code is fetched every time, preventing tampering or unexpected changes in dependencies.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go Mod Workflow Example",
+      "content": "Here is an example workflow for using Go Mod in a project:\n\n1. Create a Go module: `go mod init mymodule`\n2. Add dependencies: `go get github.com/gorilla/mux`\n3. Build your project: `go build`\n4. Tidy up dependencies: `go mod tidy`\n5. Verify integrity: `go mod verify`",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- What does the `go mod init` command do?\n- How does `go mod tidy` help in maintaining a Go project?\n- What is the purpose of the `go.sum` file in Go Mod?\n\nTry to answer these questions based on what you've learned so far!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "1. `go mod init` creates a `go.mod` file and initializes the project as a Go module.\n2. `go mod tidy` removes unused dependencies and adds any that are missing, ensuring the `go.mod` file is accurate.\n3. The `go.sum` file stores cryptographic hashes of dependencies to ensure integrity and consistency of the modules used in the project.",
+      "slide_type": "code"
+    }
+  ]
+  

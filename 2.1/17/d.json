@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Struct Embedding",
+      "content": "In Go, a struct can be embedded within another struct, which allows the outer struct to inherit the fields and methods of the embedded struct. This is a form of composition that is often referred to as 'struct inheritance' in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Struct Embedding Syntax",
+      "content": "Embedding a struct is as simple as declaring the type of the struct inside another struct. The embedded struct's fields and methods can be accessed directly from the outer struct.\n\n```go\ntype Address struct {\n  Street, City string\n}\n\ntype Person struct {\n  Name    string\n  Age     int\n  Address // Embedded struct\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Accessing Embedded Struct Fields",
+      "content": "You can access fields of the embedded struct using the outer struct's instance directly, without needing to refer to the embedded struct by name.\n\nFor example, if you have a `Person` instance, you can directly access the `Street` and `City` fields from the embedded `Address` struct.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Code Example: Accessing Embedded Struct Fields",
+      "content": "```go\nfunc main() {\n  p := Person{Name: \"John\", Age: 30, Address: Address{Street: \"123 Elm St\", City: \"Gotham\"}}\n  fmt.Println(p.Name)     // Accessing outer struct field\n  fmt.Println(p.Street)   // Accessing embedded struct field\n  fmt.Println(p.City)     // Accessing embedded struct field\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Advantages of Struct Embedding",
+      "content": "- **Code Reusability**: You can reuse the embedded struct’s fields and methods.\n- **Composition over Inheritance**: Go promotes composition rather than inheritance for better code organization and flexibility.\n- **Clear Structure**: Allows for a more modular and readable design.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Method Inheritance in Embedded Structs",
+      "content": "When a struct is embedded in another, its methods are inherited by the outer struct. You can call methods of the embedded struct directly through the outer struct instance.\n\nExample: If `Address` has a method `GetFullAddress()`, you can call it using a `Person` instance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Code Example: Inherited Methods",
+      "content": "```go\nfunc (a Address) GetFullAddress() string {\n  return a.Street + \", \" + a.City\n}\n\nfunc main() {\n  p := Person{Name: \"Alice\", Age: 25, Address: Address{Street: \"456 Oak St\", City: \"Metropolis\"}}\n  fmt.Println(p.GetFullAddress()) // Calling embedded struct method\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Limitations of Struct Embedding",
+      "content": "- **No explicit constructor**: Go does not have constructors like other OOP languages, so you need to manually initialize embedded structs.\n- **Method name conflicts**: If both the outer and embedded structs have methods with the same name, you must specify the method explicitly using the struct name.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Handling Method Conflicts in Embedded Structs",
+      "content": "If both the outer struct and the embedded struct define a method with the same name, you need to specify which method to call explicitly.\n\nExample: If both `Person` and `Address` have a method `GetFullAddress()`, calling `p.GetFullAddress()` will result in ambiguity.\nYou can resolve this by referring to the struct explicitly like `p.Address.GetFullAddress()`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Code Example: Resolving Method Conflicts",
+      "content": "```go\nfunc (p Person) GetFullAddress() string {\n  return \"Person: \" + p.Name\n}\n\nfunc main() {\n  p := Person{Name: \"Charlie\", Age: 40, Address: Address{Street: \"789 Pine St\", City: \"Smalltown\"}}\n  fmt.Println(p.GetFullAddress())      // Calling Person's method\n  fmt.Println(p.Address.GetFullAddress())  // Calling Address's method\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

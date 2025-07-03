@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to Go Memory Model",
+      "content": "The **Go memory model** defines how **goroutines** interact through **shared memory** and how changes made by one goroutine become visible to others.\n\nUnderstanding this model helps in writing safe, concurrent programs in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why the Memory Model Matters",
+      "content": "- Prevents **data races**\n- Ensures **correct synchronization**\n- Helps in reasoning about **visibility of writes and reads**\n- Enables efficient use of goroutines and channels",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Concepts",
+      "content": "- **Happens-before** relationship\n- **Synchronization primitives**: channels, mutexes, etc.\n- **Atomic operations**\n- **Visibility guarantees** across goroutines",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is Happens-Before?",
+      "content": "If operation A *happens before* operation B, then A's effects are visible to B.\n\nFor example, if you write to a variable and then use a channel to signal completion, the read on the other side of the channel will see the updated value.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using Channels for Synchronization",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    done := make(chan bool)\n    var message string\n\n    go func() {\n        message = \"hello\"\n        done <- true // write to channel happens after message assignment\n    }()\n\n    <-done // wait for the goroutine to finish\n    fmt.Println(message) // guaranteed to print \"hello\"\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Memory Visibility With Mutexes",
+      "content": "```go\npackage main\n\nimport (\n    \"fmt\"\n    \"sync\"\n)\n\nfunc main() {\n    var mu sync.Mutex\n    var count int\n\n    mu.Lock()\n    count = 42\n    mu.Unlock()\n\n    mu.Lock()\n    fmt.Println(count) // visibility guaranteed\n    mu.Unlock()\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Synchronization Tools in Go",
+      "content": [ 
+        { "Tool": "Channel", "Purpose": "Synchronize execution and share data" },
+        { "Tool": "sync.Mutex", "Purpose": "Mutual exclusion for critical sections" },
+        { "Tool": "sync.WaitGroup", "Purpose": "Wait for a group of goroutines to finish" },
+        { "Tool": "sync/atomic", "Purpose": "Low-level atomic memory operations" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Go Memory Model Guarantees",
+      "content": "- Writes that *happen before* a read are visible to that read.\n- Data races make the program's behavior **undefined**.\n- Proper synchronization ensures **predictability**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Avoiding Data Races",
+      "content": "- Use synchronization primitives correctly.\n- Never access shared variables from multiple goroutines without coordination.\n- Run `go run -race` to detect data races during development.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions\n\n1. What does the term *happens-before* mean in Go's memory model?\n2. How can a channel be used to ensure memory visibility?\n3. Which synchronization tools guarantee memory visibility between goroutines?\n4. What is the effect of a data race in a Go program?\n\nTry to answer before checking the solutions!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "// 1. *Happens-before* means one operation’s effects are guaranteed to be visible to another.\n// Example: a write followed by a channel send guarantees the read after channel receive sees the write.\n\n// 2. A channel can be used to synchronize goroutines.\n// When one goroutine sends on a channel after updating a variable, and another receives before reading,\n// the read sees the updated value.\n\n// 3. Channels, sync.Mutex, sync/atomic, and sync.WaitGroup are tools that guarantee visibility.\n\n// 4. A data race makes your program’s behavior undefined. It’s unpredictable and dangerous.",
+      "slide_type": "code"
+    }
+  ]
+  

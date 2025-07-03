@@ -1,0 +1,67 @@
+[
+    {
+      "title": "What is a Constant?",
+      "content": "In Go, a **constant** is a fixed value that cannot be changed during the execution of the program.\n\nConstants are declared using the `const` keyword and are evaluated at **compile time**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax of Constant Declaration",
+      "content": "```go\nconst identifier type = value\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Implicit Typing with Constants",
+      "content": "Go allows omission of the type if the type can be inferred.\n\n```go\nconst Pi = 3.14159\nfmt.Printf(\"%T\", Pi) // Output: float64\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Multiple Constants Declaration",
+      "content": "You can declare multiple constants together using a block:\n\n```go\nconst (\n  A = 1\n  B = 2\n  C = 3\n)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Untyped vs Typed Constants",
+      "content": "Untyped constants are more flexible because their type is inferred based on usage.\n\nTyped constants have a fixed type and cannot be assigned to variables of a different type without conversion.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Constants vs Variables",
+      "content": [
+        {
+          "Aspect": "Mutability",
+          "Constant": "Immutable",
+          "Variable": "Mutable"
+        },
+        {
+          "Aspect": "Declaration",
+          "Constant": "`const` keyword",
+          "Variable": "`var` or shorthand `:=`"
+        },
+        {
+          "Aspect": "Evaluation Time",
+          "Constant": "Compile-time",
+          "Variable": "Run-time"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Constant Declaration Table",
+      "content": [
+        {
+          "Form": "Single",
+          "Syntax": "const name = value"
+        },
+        {
+          "Form": "Typed",
+          "Syntax": "const name type = value"
+        },
+        {
+          "Form": "Grouped",
+          "Syntax": "const ( name1 = value1; name2 = value2 )"
+        }
+      ],
+      "slide_type": "table"
+    }
+  ]
+  

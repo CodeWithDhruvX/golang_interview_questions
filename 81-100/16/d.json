@@ -1,0 +1,58 @@
+[
+    {
+      "title": "What Are Build Tags in Go?",
+      "content": "Build tags in Go are special comments used to include or exclude files from the build based on conditions like the operating system, architecture, or custom tags.\n\nThey help you write platform-specific code or control which files are included during compilation.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax of a Build Tag",
+      "content": "```go\n//go:build <tag>\n// +build <tag> (deprecated)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Basic Example: OS-Specific Code",
+      "content": "```go\n//go:build linux\n\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Running on Linux\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "When Are Build Tags Useful?",
+      "content": "- Cross-platform support (e.g., Windows vs. Linux code)\n- Performance tuning for specific hardware\n- Conditional features (e.g., debug vs release)\n- Simplifying dependency management",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Build Tag Examples",
+      "content": [
+        { "tag": "//go:build linux", "description": "Includes the file only when building for Linux" },
+        { "tag": "//go:build windows && amd64", "description": "Includes file only for Windows 64-bit" },
+        { "tag": "//go:build !debug", "description": "Excludes file if 'debug' tag is set" },
+        { "tag": "//go:build go1.18", "description": "Includes file only if Go version is 1.18 or newer" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "How to Build with Tags",
+      "content": "```sh\ngo build -tags=debug\n``` \n\nYou can specify one or more build tags using `-tags`. The build system includes only files with matching `//go:build` lines.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Combining Tags and Logical Operators",
+      "content": "```go\n//go:build (linux || darwin) && amd64\n```\n\nThis includes the file only when building on Linux **or** macOS **and** 64-bit architecture.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Best Practices",
+      "content": "- Always use `//go:build` (Go 1.17+).\n- Group related platform-specific files in the same package.\n- Use descriptive file suffixes like `file_linux.go`, `file_windows.go`.\n- Keep tags simple and readable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions\n\n1. What does the following build tag do?\n   ```go\n   //go:build darwin && arm64\n   ```\n2. True or False: You can use `//go:build` to include files for only Windows systems.\n3. How would you build your Go app using a custom tag called `experimental`?\n4. What does the `!` symbol mean in a build tag?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n1. It includes the file only when building on macOS (darwin) with ARM64 architecture.\n\n2. True. Example: `//go:build windows`\n\n3. Run: `go build -tags=experimental`\n\n4. The `!` symbol negates the tag, meaning the file is included **only if** that tag is **not** present. Example: `//go:build !debug` includes the file when `debug` tag is not used.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Concrete और Abstract Types क्या हैं?",
+    "content": "### Concrete Types\n- Go में **Concrete Types** वे होते हैं जिनका पूरा data layout और behavior पहले से defined होता है।\n- ये memory में allocate होते हैं और इनसे directly values create की जा सकती हैं।\n- Examples: `int`, `float64`, `string`, `bool`, `struct`, `array`, आदि।\n\n### Abstract Types\n- **Abstract Types** behavior को define करते हैं लेकिन खुद कोई data नहीं रखते।\n- जैसे: `interface{}` — यह बताता है कि कोई type क्या कर सकता है, न कि वह क्या है।\n- इन्हें use करने के लिए underlying type की ज़रूरत होती है जो इनका implementation करे।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Concrete और Abstract Type का Code",
+    "content": "```go\n// Concrete Type Example\nvar age int = 25\n\n// Abstract Type Example\nvar x interface{}\nx = \"Hello\"\nfmt.Println(x)\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Concrete Types के Examples",
+    "content": "### सामान्य Concrete Types:\n- `int`, `float64`, `bool`, `string`, `complex64`\n- User-defined types जैसे `struct`, `array`, `slice`, `map`\n\n### विशेषताएँ:\n- Static और compile-time type checking\n- Fast और efficient memory usage\n- Code में type-safe operations\n\nConcrete types real-world objects जैसे entities और data models को represent करने के लिए ideal होते हैं।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Concrete Type का struct Example",
+    "content": "```go\ntype Person struct {\n  name string\n  age  int\n}\n\nfunc main() {\n  p := Person{\"Amit\", 30}\n  fmt.Println(p.name, p.age)\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Abstract Types: Interface का परिचय",
+    "content": "### Interface\n- Interface एक contract की तरह काम करता है जो बताता है कि कोई type क्या-क्या methods implement करेगा।\n- इसमें कोई implementation नहीं होती — सिर्फ method signatures होते हैं।\n\n### उपयोग:\n- Code reuse और flexibility\n- Functions या structs को loosely couple करना\n- Testing में mocking के लिए ideal\n\nInterface का असली फायदा तब दिखता है जब आप अलग-अलग types को एक समान तरीके से handle करना चाहते हैं।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Interface का Basic Example",
+    "content": "```go\ntype Speaker interface {\n  Speak() string\n}\n\ntype Dog struct{}\n\nfunc (d Dog) Speak() string {\n  return \"Bark\"\n}\n\nfunc main() {\n  var s Speaker\n  s = Dog{}\n  fmt.Println(s.Speak())\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Empty Interface (`interface{}`) क्या है?",
+    "content": "### Empty Interface\n- `interface{}` को **empty interface** कहते हैं क्योंकि इसमें कोई method define नहीं होती।\n- इसका मतलब है कि Go में हर type implicitly इसे implement करता है।\n- इसका उपयोग तब किया जाता है जब आप किसी function या data structure में कोई भी value accept करना चाहते हैं।\n\n### कब उपयोग करें?\n- JSON data parsing में\n- General-purpose containers में\n- Unknown या dynamic type handle करने के लिए\n\nध्यान दें कि इससे type safety खो सकती है, इसलिए इसका उपयोग सोच-समझकर करें।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Empty Interface का उपयोग",
+    "content": "```go\nfunc describe(i interface{}) {\n  fmt.Printf(\"%v, %T\\n\", i, i)\n}\n\nfunc main() {\n  describe(42)\n  describe(\"hello\")\n  describe(true)\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Quick Challenge: Test Your Understanding",
+    "content": "### Questions:\n1. क्या `interface{}` concrete type है या abstract type?\n2. नीचे दिए गए code में कौन सा Concrete type है?\n   ```go\n   var x float64 = 5.6\n   var y interface{} = x\n   ```\n3. Interface का क्या फायदा है?\n4. क्या `struct` एक abstract type है?\n\n👉 इन सवालों को अपने शब्दों में explain करने की कोशिश करें।\n💡 Hint: Concrete types directly instantiate होते हैं, जबकि abstract types behavior define करते हैं।",
+    "slide_type": "text"
+  },
+  {
+    "title": "Solutions: Quick Challenge",
+    "content": "```markdown\n1. `interface{}` एक **abstract type** है क्योंकि इसमें कोई implementation नहीं होता।\n2. `float64` एक concrete type है जो variable `x` को assign किया गया है।\n3. Interface flexibility और loosely coupled design देता है। आप किसी भी type से काम ले सकते हैं जो required methods implement करता हो।\n4. नहीं, `struct` एक **concrete type** है क्योंकि इसका पूरा definition और memory layout होता है।\n```",
+    "slide_type": "code"
+  }
+]

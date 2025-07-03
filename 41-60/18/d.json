@@ -1,0 +1,43 @@
+[
+    {
+      "title": "Introduction to Method Sets",
+      "content": "In Go, a method set is a set of methods that can be called on a particular type. The method set defines the behaviors that a type can implement, and methods can either be associated with a value receiver or a pointer receiver.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Value Receivers vs Pointer Receivers",
+      "content": "In Go, methods can be associated with either a **value receiver** or a **pointer receiver**.\n\n- **Value receiver**: The method operates on a copy of the value.\n- **Pointer receiver**: The method operates on the original value, allowing it to modify the value.\n\nThe method set of a type differs based on whether the receiver is a value or a pointer.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Method Set of Value Receiver",
+      "content": "When a method has a value receiver, the method set of that type consists of all methods with value receivers.\n\nExample:\n```go\npackage main\nimport \"fmt\"\ntype MyStruct struct { value int }\n\nfunc (m MyStruct) Show() { fmt.Println(m.value) }\n\nfunc main() {\n    m := MyStruct{10}\n    m.Show()  // Works because Show has a value receiver\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Method Set of Pointer Receiver",
+      "content": "When a method has a pointer receiver, the method set includes methods with pointer receivers. This means the method can modify the original value of the receiver.\n\nExample:\n```go\npackage main\nimport \"fmt\"\ntype MyStruct struct { value int }\n\nfunc (m *MyStruct) Modify() { m.value++ }\n\nfunc main() {\n    m := &MyStruct{10}\n    m.Modify()  // Works because Modify has a pointer receiver\n    fmt.Println(m.value)  // Output: 11\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Method Sets and Type Matching",
+      "content": "In Go, method sets are specific to the type of receiver. A value method can be called on both a value and a pointer, but a pointer method can only be called on a pointer type.\n\nExample of method set behavior:\n```go\npackage main\nimport \"fmt\"\ntype MyStruct struct { value int }\n\nfunc (m MyStruct) Show() { fmt.Println(m.value) }\n\nfunc (m *MyStruct) Modify() { m.value++ }\n\nfunc main() {\n    m := MyStruct{10}\n    m.Show()  // Works because Show has a value receiver\n    // m.Modify()  // Error: Modify requires a pointer receiver\n    p := &m\n    p.Modify()  // Works because Modify has a pointer receiver\n    fmt.Println(p.value)  // Output: 11\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Method Set Summary",
+      "content": "In Go, method sets are important for understanding how methods are associated with types and whether they modify the original data or not.\n\n- **Value receivers** allow methods to work on copies of values.\n- **Pointer receivers** allow methods to modify the original values.\n- The method set depends on the type of receiver (value or pointer).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Quiz:\n\n1. What is the main difference between a value receiver and a pointer receiver in Go?\n\n2. Can you call a method with a pointer receiver on a value type? Why or why not?\n\n3. Given this code snippet, will it compile?\n```go\npackage main\nimport \"fmt\"\ntype MyStruct struct { value int }\n\nfunc (m *MyStruct) Modify() { m.value++ }\n\nfunc main() {\n    m := MyStruct{10}\n    m.Modify()  // Will this work?\n    fmt.Println(m.value)\n}\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n\n1. **Value receiver**: Works on a copy of the value, **Pointer receiver**: Works on the original value and can modify it.\n\n2. No, methods with pointer receivers cannot be called on value types directly. You need a pointer type to call them.\n\n3. No, this code will not compile because `Modify` requires a pointer receiver, but `m` is a value type. To make it work, you need to use `&m` (a pointer to `m`), like so:\n```go\n    p := &m\n    p.Modify()  // This works\n```",
+      "slide_type": "code"
+    }
+  ]
+  

@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to CPU and Memory Profiling in Go",
+      "content": "In Go, profiling allows you to monitor the performance of your program, including CPU and memory usage. By using built-in Go tools, you can identify performance bottlenecks and optimize your code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Profile in Go?",
+      "content": "Profiling helps you to:\n\n- Detect performance bottlenecks\n- Optimize CPU and memory usage\n- Understand how your program behaves in terms of resource consumption\n\nGo provides built-in tools to easily perform profiling during runtime.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Enabling CPU Profiling",
+      "content": "To enable CPU profiling in Go, you need to use the `pprof` package. Here's how you can set it up:\n\n```go\npackage main\n\nimport (\n    \"fmt\"\n    \"net/http\"\n    _ \"net/http/pprof\"\n)\n\nfunc main() {\n    // Start an HTTP server for pprof\n    go func() {\n        log.Println(http.ListenAndServe(\"localhost:6060\", nil))\n    }()\n\n    // Your code here\n    fmt.Println(\"Profiling started...\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Enabling Memory Profiling",
+      "content": "Memory profiling can be done using the `pprof` package as well. Here’s a simple example:\n\n```go\npackage main\n\nimport (\n    \"fmt\"\n    \"net/http\"\n    _ \"net/http/pprof\"\n)\n\nfunc main() {\n    // Start an HTTP server for pprof\n    go func() {\n        log.Println(http.ListenAndServe(\"localhost:6060\", nil))\n    }()\n\n    // Allocate some memory\n    data := make([]byte, 1000000)\n    fmt.Println(len(data))\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Viewing Profiling Data",
+      "content": "After enabling profiling, you can access the profiling data by navigating to `http://localhost:6060/debug/pprof/` in your browser.\n\nThere you can view:\n- CPU profile (`/cpu.pprof`)\n- Memory profile (`/heap.pprof`)",
+      "slide_type": "text"
+    },
+    {
+      "title": "Recording CPU Profile",
+      "content": "To record the CPU profile for a specific period of time, you can use the `pprof.StartCPUProfile` and `pprof.StopCPUProfile` functions.\n\n```go\npackage main\n\nimport (\n    \"fmt\"\n    \"os\"\n    \"runtime/pprof\"\n)\n\nfunc main() {\n    file, err := os.Create(\"cpu_profile.pprof\")\n    if err != nil {\n        fmt.Println(\"Error creating file:\", err)\n        return\n    }\n    defer file.Close()\n\n    pprof.StartCPUProfile(file)\n    defer pprof.StopCPUProfile()\n\n    // Simulate some work\n    for i := 0; i < 1000000; i++ {\n        _ = i\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Recording Memory Profile",
+      "content": "You can record a memory profile using the `pprof.WriteHeapProfile` function.\n\n```go\npackage main\n\nimport (\n    \"fmt\"\n    \"os\"\n    \"runtime/pprof\"\n)\n\nfunc main() {\n    file, err := os.Create(\"memory_profile.pprof\")\n    if err != nil {\n        fmt.Println(\"Error creating file:\", err)\n        return\n    }\n    defer file.Close()\n\n    // Simulate memory usage\n    data := make([]byte, 1000000)\n    fmt.Println(len(data))\n\n    pprof.WriteHeapProfile(file)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Profiling with Go Tools",
+      "content": "Go provides additional tools like `go tool pprof` to analyze profiles.\n\nTo analyze a CPU profile, use:\n\n```bash\ngo tool pprof cpu_profile.pprof\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Interpreting Profiling Data",
+      "content": "Once you have the profiling data, you can analyze it to identify performance issues:\n\n- The CPU profile shows which functions are consuming CPU time.\n- The memory profile shows memory allocations and leaks.\n\nUse `go tool pprof` to visualize and dig deeper into this data.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Optimizing After Profiling",
+      "content": "After gathering profiling data, the next step is to optimize the code based on the findings:\n\n- Refactor CPU-intensive functions.\n- Reduce unnecessary memory allocations.\n\nRemember, profiling is an iterative process. Profile, optimize, and profile again!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- What function is used to start CPU profiling in Go?\n- How do you start memory profiling in Go?\n- How can you view profiling data in Go?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the answers:\n\n1. **Start CPU Profiling**: `pprof.StartCPUProfile(file)`\n2. **Start Memory Profiling**: `pprof.WriteHeapProfile(file)`\n3. **View Profiling Data**: Visit `http://localhost:6060/debug/pprof/` in your browser.\n\nThese are the basic steps to get started with profiling in Go.",
+      "slide_type": "code"
+    }
+  ]
+  

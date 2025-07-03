@@ -1,0 +1,66 @@
+[
+    {
+      "title": "Introduction to Generics in Go",
+      "content": "Generics in Go allow you to write functions, types, and data structures that can work with any data type, without sacrificing type safety. With the introduction of generics in Go 1.18, you can write more flexible and reusable code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Are Structs in Go?",
+      "content": "A struct in Go is a composite data type that groups variables (fields) together. Structs are used to represent real-world entities and store multiple related data points.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Generics with Structs",
+      "content": "Generics can be used with structs in Go to create data structures that can hold any type of value, providing more flexibility. You can define a generic struct that accepts any type as a type parameter.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defining a Generic Struct",
+      "content": "You can define a generic struct by specifying a type parameter in the struct definition. Here's an example of a generic struct that holds any type of value in a field:",
+      "slide_type": "code",
+      "content": "type Box[T any] struct {\n    Value T\n}\n\nfunc main() {\n    intBox := Box[int]{Value: 10}\n    stringBox := Box[string]{Value: \"Hello, Go!\"}\n    fmt.Println(intBox.Value, stringBox.Value)\n}"
+    },
+    {
+      "title": "Explanation of Generic Struct",
+      "content": "In the above code, `Box[T any]` is a generic struct where `T` can be any type. We use it to store an `int` in `intBox` and a `string` in `stringBox`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using the Generic Struct",
+      "content": "To use a generic struct, you specify the type you want to use for that struct when you create an instance. This allows you to reuse the same struct with different data types.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Benefits of Using Generics with Structs",
+      "content": "Using generics with structs provides several benefits:\n- **Code Reusability**: You can reuse the same struct definition with different types.\n- **Type Safety**: The compiler ensures type safety, preventing runtime errors.\n- **Cleaner Code**: Reduces the need for repetitive code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Generic Struct with Multiple Fields",
+      "content": "You can create a generic struct with multiple fields of different types. For example, a `Pair` struct that holds a pair of values of any type:",
+      "slide_type": "code",
+      "content": "type Pair[T, U any] struct {\n    First  T\n    Second U\n}\n\nfunc main() {\n    p := Pair[int, string]{First: 1, Second: \"apple\"}\n    fmt.Println(p.First, p.Second)\n}"
+    },
+    {
+      "title": "Using Generic Methods on Structs",
+      "content": "You can also define methods for a generic struct, allowing operations to be performed on values of different types. Here's an example of a method that works with any `Box` struct:",
+      "slide_type": "code",
+      "content": "func (b Box[T]) GetValue() T {\n    return b.Value\n}\n\nfunc main() {\n    intBox := Box[int]{Value: 10}\n    fmt.Println(intBox.GetValue()) // Output: 10\n}"
+    },
+    {
+      "title": "Performance Considerations",
+      "content": "Go’s generics are designed to be efficient, and they do not introduce runtime overhead. The Go compiler generates type-specific code for each instantiation of a generic type, so there is no performance penalty compared to using concrete types.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Answer the following questions based on what you've learned about generics with structs in Go:\n\n1. What is the primary benefit of using generics in Go?\n2. How would you define a struct that can hold any data type?\n3. What keyword is used to declare a type parameter in Go generics?\n4. Can you use generics with methods in Go? Give a short explanation.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions to the Quick Challenge:\n\n1. **Primary Benefit of Generics**: The primary benefit of using generics is **code reusability** while maintaining **type safety**.\n\n2. **Defining a Generic Struct**: To define a generic struct, use a type parameter in the struct definition. Example:\n\n```go\ntype Box[T any] struct {\n    Value T\n}\n``` \n\n3. **Keyword for Type Parameter**: The keyword used for defining a type parameter is `T`. You can replace `T` with any name, but `T` is commonly used.\n\n4. **Generics with Methods**: Yes, you can use generics with methods. Here's an example:\n\n```go\nfunc (b Box[T]) GetValue() T {\n    return b.Value\n}\n}```",
+      "slide_type": "code"
+    }
+  ]
+  

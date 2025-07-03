@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Worker Pools in Go",
+      "content": "A **worker pool** is a design pattern that is used to manage multiple workers (goroutines in Go) to process a large number of tasks concurrently. It helps in handling **parallelism** and **concurrency** efficiently, optimizing the use of resources. In Go, we use goroutines and channels to implement worker pools.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Worker Pools?",
+      "content": "Worker pools allow you to:\n\n- **Limit concurrency**: Control the number of concurrently running goroutines.\n- **Improve performance**: Efficiently distribute tasks among workers.\n- **Manage resources**: Avoid overwhelming the system with too many goroutines.\n- **Scalability**: Handle increasing workloads effectively.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Components of a Worker Pool",
+      "content": "A worker pool typically involves the following components:\n\n1. **Worker goroutines**: These are the goroutines that perform the tasks.\n2. **Task queue**: A queue of tasks (using channels in Go) that workers pick up.\n3. **Main goroutine**: This controls the pool, dispatching tasks and managing the worker goroutines.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Worker Pool Implementation in Go",
+      "content": "In Go, you can implement a worker pool using goroutines and channels. Here’s a simple example:\n\n```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"sync\"\n)\n\n// Task represents a task that will be processed\ntype Task struct {\n\tID int\n}\n\n// Worker function that processes tasks\nfunc worker(tasks <-chan Task, wg *sync.WaitGroup) {\n\tdefer wg.Done()\n\tfor task := range tasks {\n\t\tfmt.Printf(\"Processing task: %d\\n\", task.ID)\n\t}\n}\n\nfunc main() {\n\ttasks := make(chan Task, 10)\n\tvar wg sync.WaitGroup\n\n\t// Start 3 worker goroutines\n\tfor i := 0; i < 3; i++ {\n\t\twg.Add(1)\n\t\tgo worker(tasks, &wg)\n\t}\n\n\t// Send tasks to the workers\n\tfor i := 1; i <= 5; i++ {\n\t\ttasks <- Task{ID: i}\n\t}\n\n\t// Close the task channel and wait for workers to finish\n\tclose(tasks)\n\twg.Wait()\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Explanation of Code Example",
+      "content": "This Go program creates a simple worker pool:\n\n- We define a `Task` struct that represents each task.\n- The `worker` function processes tasks received from the channel.\n- We use a `sync.WaitGroup` to wait for all workers to complete their tasks.\n- The main function creates a channel, starts worker goroutines, sends tasks to the channel, and waits for completion.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Managing Worker Pool Size",
+      "content": "To limit the number of concurrently running workers, you can control the number of goroutines in the pool by adjusting the worker creation count:\n\n```go\nnumWorkers := 3  // Limit to 3 concurrent workers\n```\nYou can change this number based on your system's capacity and the nature of your tasks.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Handling Task Results",
+      "content": "You may want to gather results after processing each task. Here’s how you can implement a result channel in Go:\n\n```go\nresults := make(chan string)\n\n// Worker function that processes tasks and returns results\nfunc worker(tasks <-chan Task, results chan<- string, wg *sync.WaitGroup) {\n\tdefer wg.Done()\n\tfor task := range tasks {\n\t\tresults <- fmt.Sprintf(\"Task %d completed\", task.ID)\n\t}\n}\n\n// In main function, read results\nfor result := range results {\n\tfmt.Println(result)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Error Handling in Worker Pools",
+      "content": "In a real-world scenario, you may need to handle errors. A common pattern is to use a `results` channel to send error messages. Here’s an example:\n\n```go\nerrors := make(chan error)\n\nfunc worker(tasks <-chan Task, errors chan<- error, wg *sync.WaitGroup) {\n\tdefer wg.Done()\n\tfor task := range tasks {\n\t\tif task.ID == 3 { // Simulate an error\n\t\t\terrors <- fmt.Errorf(\"Error processing task: %d\", task.ID)\n\t\t} else {\n\t\t\tfmt.Printf(\"Task %d completed\\n\", task.ID)\n\t\t}\n\t}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Best Practices for Worker Pools",
+      "content": "1. **Limit worker count**: Avoid creating too many workers to prevent resource exhaustion.\n2. **Graceful shutdown**: Ensure that workers can clean up resources before exiting.\n3. **Error handling**: Implement robust error handling and timeouts.\n4. **Monitoring**: Keep track of the progress and performance of your workers.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- What is a worker pool in Go?\n- How do you limit the number of workers in a Go worker pool?\n- What would happen if you send more tasks than the number of workers in the pool?\n- How do you handle errors in a worker pool?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "1. **What is a worker pool in Go?**\n   - A worker pool is a concurrency pattern where multiple goroutines (workers) process tasks from a queue (channel).\n\n2. **How do you limit the number of workers in a Go worker pool?**\n   - You control the number of workers by setting the number of goroutines to spawn.\n\n3. **What would happen if you send more tasks than the number of workers in the pool?**\n   - The tasks will wait in the channel until a worker is available to process them.\n\n4. **How do you handle errors in a worker pool?**\n   - You can send error messages through an error channel and handle them in the main goroutine.",
+      "slide_type": "code"
+    }
+  ]
+  

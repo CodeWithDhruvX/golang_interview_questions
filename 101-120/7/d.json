@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to Singleton Pattern",
+      "content": "The Singleton Pattern is a design pattern that restricts the instantiation of a class to one object. It is useful when exactly one object is needed to coordinate actions across the system.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Singleton?",
+      "content": "Singleton is useful when:\n\n- You need to control access to shared resources.\n- You need to ensure that a class has only one instance.\n- You want to provide a global point of access to that instance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Steps to Implement Singleton in Go",
+      "content": "To implement the Singleton pattern in Go, follow these steps:\n\n1. Create a private static instance variable.\n2. Define a function that returns the instance, creating it only if it doesn't exist.\n3. Ensure that the constructor function is synchronized to prevent race conditions.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Singleton Code Example",
+      "content": "```go\npackage main\n\nimport (\n\t\"fmt\"\n\t\"sync\"\n)\n\n// Singleton type\ntype Singleton struct {\n\tvalue string\n}\n\nvar instance *Singleton\nvar mu sync.Mutex\n\n// GetInstance returns the single instance of Singleton\nfunc GetInstance() *Singleton {\n\tmu.Lock()\n\tdefer mu.Unlock()\n\tif instance == nil {\n\t\tinstance = &Singleton{value: \"Singleton\"}\n\t}\n\treturn instance\n}\n\nfunc main() {\n\tsingleton := GetInstance()\n\tfmt.Println(singleton.value)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Thread-Safety Considerations",
+      "content": "In Go, to ensure that the Singleton pattern is thread-safe, we use a `sync.Mutex` to lock the access to the shared instance. This prevents race conditions when multiple goroutines try to access the Singleton simultaneously.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Optimized Singleton with `sync.Once`",
+      "content": "Go's `sync.Once` is an optimized way to ensure that the initialization of the Singleton is done only once, even in the case of multiple goroutines.\n\n```go\nvar once sync.Once\n\nfunc GetInstance() *Singleton {\n\tonce.Do(func() {\n\t\tinstance = &Singleton{value: \"Singleton\"}\n\t})\n\treturn instance\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Thread-Safe Singleton with `sync.Once`",
+      "content": "In this improved version, `sync.Once` guarantees that the instance is only created once, regardless of how many goroutines attempt to access it. It simplifies the code and avoids the need for explicit locking.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Advantages of Singleton Pattern",
+      "content": "The main advantages of the Singleton pattern include:\n\n- **Controlled Access**: Ensures a single instance is shared.\n- **Resource Efficiency**: Prevents excessive object creation.\n- **Global Access**: Provides a global point of access to the instance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Disadvantages of Singleton Pattern",
+      "content": "The potential drawbacks of using a Singleton include:\n\n- **Testing Difficulties**: Singleton makes unit testing challenging.\n- **Hidden Dependencies**: Code using Singleton can introduce hidden dependencies.\n- **Global State**: Singleton introduces global state, which can lead to unexpected behaviors.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When Not to Use Singleton",
+      "content": "Avoid using Singleton when:\n\n- You need multiple instances of the object.\n- Your system has complex dependencies and testing is required.\n- It can lead to tight coupling between different parts of your application.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. What is the purpose of the Singleton pattern?\n2. How does `sync.Once` improve the Singleton implementation?\n3. What are the key advantages and disadvantages of the Singleton pattern?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n\n1. The Singleton pattern ensures that a class has only one instance and provides a global point of access to that instance.\n\n2. `sync.Once` ensures that the Singleton is initialized only once, even when multiple goroutines try to access it, making it more efficient and avoiding explicit locking.\n\n3. Advantages include controlled access, resource efficiency, and global access. Disadvantages include testing difficulties, hidden dependencies, and global state management issues.",
+      "slide_type": "code"
+    }
+  ]
+  

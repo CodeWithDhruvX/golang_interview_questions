@@ -1,0 +1,69 @@
+[
+    {
+      "title": "Introduction to Channels in Go",
+      "content": "In Go, channels are a way to communicate between goroutines, allowing them to send and receive values. There are two types of channels: buffered and unbuffered. Let's explore the difference between them.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Unbuffered Channels",
+      "content": "An **unbuffered channel** is one where data can only be sent and received if there is another goroutine ready to receive or send the data. This means that the sender will block until the receiver is ready, and the receiver will block until the sender has sent a value.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Unbuffered Channel Code Example",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n  ch := make(chan string)\n\n  go func() {\n    ch <- \"Hello, Go!\"\n  }()\n\n  msg := <- ch\n  fmt.Println(msg)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Buffered Channels",
+      "content": "A **buffered channel** allows sending and receiving data without blocking until the buffer is full or empty. The sender can send data into the channel without waiting for the receiver if there is space in the buffer, and similarly, the receiver can receive data without waiting until the buffer is not empty.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Buffered Channel Code Example",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n  ch := make(chan string, 2)\n\n  ch <- \"Hello\"\n  ch <- \"Go\"\n\n  fmt.Println(<-ch)\n  fmt.Println(<-ch)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Differences: Buffered vs Unbuffered",
+      "content": "The key differences between buffered and unbuffered channels are:\n\n1. **Blocking Behavior**: Unbuffered channels block until both sender and receiver are ready, whereas buffered channels allow sending and receiving without blocking until the buffer is full or empty.\n\n2. **Channel Capacity**: Unbuffered channels have no capacity to store data, while buffered channels have a defined capacity that can hold multiple values.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Comparison Table",
+      "content": [
+        {
+          "Attribute": "Blocking Behavior",
+          "Unbuffered Channel": "Blocks until both sender and receiver are ready",
+          "Buffered Channel": "Blocks only when the buffer is full or empty"
+        },
+        {
+          "Attribute": "Channel Capacity",
+          "Unbuffered Channel": "No capacity to store data",
+          "Buffered Channel": "Has a fixed capacity to store data"
+        },
+        {
+          "Attribute": "Use Case",
+          "Unbuffered Channel": "Used for synchronization between goroutines",
+          "Buffered Channel": "Used when you want to decouple sender and receiver to avoid blocking"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "When to Use Buffered vs Unbuffered Channels",
+      "content": "1. **Use Unbuffered Channels**: When you need synchronization between goroutines, such as ensuring that data is exchanged only when both sender and receiver are ready.\n\n2. **Use Buffered Channels**: When you want to decouple the sender and receiver and avoid blocking until the buffer is full or empty. This can improve performance when the sender and receiver operate at different speeds.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- What happens when you try to send data into an unbuffered channel if no receiver is ready?\n- When would you prefer using a buffered channel over an unbuffered channel?\n- What is the key difference between unbuffered and buffered channels?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "1. **Unbuffered Channel Blocking**: If no receiver is ready, the sender will block until a receiver is available.\n\n2. **Use of Buffered Channels**: Buffered channels are preferred when the sender and receiver operate at different speeds and you want to avoid blocking each other.\n\n3. **Key Difference**: The key difference is that unbuffered channels require both sender and receiver to be ready at the same time, while buffered channels allow sending and receiving without immediate blocking until the buffer is full or empty.",
+      "slide_type": "code"
+    }
+  ]
+  

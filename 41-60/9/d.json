@@ -1,0 +1,48 @@
+[
+    {
+      "title": "What is Interface Embedding?",
+      "content": "Interface embedding allows one interface to include methods from other interfaces. This enables you to compose more complex interfaces from simpler ones, creating flexible and reusable code.\n\nIn Go, this is done by embedding one interface inside another.\n\nExample:\n```go\ntype Animal interface {\n    Speak() string\n}\n\ntype Dog interface {\n    Animal\n    Bark() string\n}\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Can Interfaces Be Embedded in Go?",
+      "content": "Yes! Interfaces can be embedded in Go. When an interface is embedded in another, the methods of the embedded interface become part of the embedding interface. This allows you to create new, more specialized interfaces that combine the methods of multiple interfaces.\n\n```go\n// Animal interface with a method Speak\ntype Animal interface {\n    Speak() string\n}\n\n// Dog interface embeds Animal and adds its own method\ntype Dog interface {\n    Animal\n    Bark() string\n}\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example of Interface Embedding",
+      "content": "Let's see a working example of embedding an interface:\n\n```go\npackage main\n\nimport \"fmt\"\n\n// Animal interface\ntype Animal interface {\n    Speak() string\n}\n\n// Dog interface embeds Animal\ntype Dog interface {\n    Animal\n    Bark() string\n}\n\n// Concrete type DogImpl implements both methods\ntype DogImpl struct {}\n\nfunc (d DogImpl) Speak() string {\n    return \"Woof!\"\n}\n\nfunc (d DogImpl) Bark() string {\n    return \"Bark!\"\n}\n\nfunc main() {\n    var d Dog = DogImpl{}\n    fmt.Println(d.Speak())  // Output: Woof!\n    fmt.Println(d.Bark())   // Output: Bark!\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Benefits of Interface Embedding",
+      "content": "Interface embedding brings several benefits:\n\n- **Code Reusability**: You can combine multiple interfaces, creating new ones that reuse existing functionality.\n- **Simplified Design**: Embedding interfaces simplifies designs by allowing you to compose interfaces from smaller, more specific ones.\n- **Flexibility**: Embedded interfaces allow types to satisfy multiple interfaces without having to define new methods.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Limitations of Interface Embedding",
+      "content": "While interface embedding is powerful, there are a few limitations:\n\n- **Method Ambiguity**: If multiple embedded interfaces have methods with the same name, Go will not know which method to call, resulting in a compile-time error.\n- **Inheritance Limitations**: Go does not support classic inheritance. Instead, embedding provides composition-based reuse.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Interface Embedding and Polymorphism",
+      "content": "Interface embedding is commonly used to achieve polymorphism in Go. By embedding interfaces, you can write functions that accept any type that satisfies a particular interface, allowing for greater flexibility and abstraction.\n\nExample:\n```go\npackage main\n\nimport \"fmt\"\n\ntype Animal interface {\n    Speak() string\n}\n\ntype Dog struct {}\n\nfunc (d Dog) Speak() string {\n    return \"Woof\"\n}\n\nfunc greet(a Animal) {\n    fmt.Println(a.Speak())\n}\n\nfunc main() {\n    d := Dog{}\n    greet(d)  // Output: Woof\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common Use Cases for Interface Embedding",
+      "content": "- **Service Layer Composition**: Embed smaller service interfaces into a larger one.\n- **Mocking in Tests**: Combine interfaces to create mockable dependencies in unit tests.\n- **Domain-Specific Compositions**: Build domain-specific interfaces that combine general-purpose interfaces.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n1. What is the main benefit of interface embedding in Go?\n2. How does Go handle method ambiguity in embedded interfaces?\n3. Can a type implement multiple interfaces in Go? Explain.\n4. Give an example of how you would use interface embedding in a service layer design.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n1. **Benefit of Interface Embedding**: The main benefit is **code reusability** and **flexibility**. Embedding allows one interface to incorporate methods from another interface, helping you compose more complex interfaces from smaller, simpler ones.\n\n2. **Method Ambiguity**: If two embedded interfaces have methods with the same name, Go will raise a compile-time error because it won't know which method to call. To resolve this, you need to explicitly declare which method to use or avoid method name conflicts.\n\n3. **Multiple Interface Implementations**: Yes, a type can implement multiple interfaces in Go. As long as a type satisfies all the methods of an interface, it can implement multiple interfaces.\n\n4. **Example in Service Layer**: You could embed various smaller service interfaces (e.g., `PaymentService`, `ShippingService`) into a larger `OrderService` interface to create a composite service interface that handles multiple actions.\n",
+      "slide_type": "code"
+    }
+  ]
+  

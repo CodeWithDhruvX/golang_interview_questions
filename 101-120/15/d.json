@@ -1,0 +1,80 @@
+[
+    {
+      "title": "Introduction to Clean Architecture",
+      "content": "Clean Architecture separates concerns into layers. Each layer has a clear responsibility and communicates only with its neighbors.\n\n**Core idea**: Make your code **testable**, **independent of frameworks**, and **easy to change**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Layers in Clean Architecture",
+      "content": "- **Entities**: Business rules and core logic.\n- **Use Cases (Interactors)**: Application-specific rules.\n- **Interface Adapters**: Controllers, presenters, gateways.\n- **Frameworks & Drivers**: Web, DB, external interfaces.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Layer Responsibilities Table",
+      "content": [
+        {
+          "Layer": "Entities",
+          "Responsibility": "Encapsulates Enterprise business rules"
+        },
+        {
+          "Layer": "Use Cases",
+          "Responsibility": "Coordinates application logic and flow"
+        },
+        {
+          "Layer": "Interface Adapters",
+          "Responsibility": "Transforms data between layers (e.g., HTTP, DB)"
+        },
+        {
+          "Layer": "Frameworks & Drivers",
+          "Responsibility": "Implements details like database, web server"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Clean Architecture in Go: Folder Structure",
+      "content": "```plaintext\n/project\n|-- /cmd             # Entry point (main.go)\n|-- /internal\n|   |-- /domain      # Entities\n|   |-- /usecase     # Business rules\n|   |-- /interface   # Controllers, presenters\n|   |-- /infra       # Frameworks (DB, Web, etc)\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Entity Example: domain/user.go",
+      "content": "```go\npackage domain\n\ntype User struct {\n    ID    int\n    Name  string\n    Email string\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Use Case Example: usecase/user_usecase.go",
+      "content": "```go\npackage usecase\n\nimport \"project/internal/domain\"\n\ntype UserUsecase interface {\n    GetUser(id int) (*domain.User, error)\n}\n\ntype userUsecase struct {\n    repo domain.UserRepository\n}\n\nfunc (u *userUsecase) GetUser(id int) (*domain.User, error) {\n    return u.repo.FindByID(id)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Interface Adapter Example: interface/controller.go",
+      "content": "```go\npackage controller\n\nimport (\n    \"net/http\"\n    \"strconv\"\n    \"project/internal/usecase\"\n)\n\nfunc GetUserHandler(u usecase.UserUsecase) http.HandlerFunc {\n    return func(w http.ResponseWriter, r *http.Request) {\n        idStr := r.URL.Query().Get(\"id\")\n        id, _ := strconv.Atoi(idStr)\n        user, err := u.GetUser(id)\n        if err != nil {\n            http.Error(w, err.Error(), http.StatusNotFound)\n            return\n        }\n        // Return JSON (omitted for brevity)\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Framework Layer: main.go",
+      "content": "```go\npackage main\n\nimport (\n    \"net/http\"\n    \"project/internal/interface/controller\"\n    \"project/internal/infra/repo\"\n    \"project/internal/usecase\"\n)\n\nfunc main() {\n    userRepo := repo.NewUserRepo()\n    userUC := usecase.NewUserUsecase(userRepo)\n\n    http.HandleFunc(\"/user\", controller.GetUserHandler(userUC))\n    http.ListenAndServe(\":8080\", nil)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Dependency Rule Reminder",
+      "content": "**Rule**: Code dependencies always point **inward**.\n\n- Inner layers (entities/use cases) must not depend on outer layers.\n- Outer layers depend on interfaces defined by inner layers.\n\nThis keeps core logic independent and testable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Benefits of Clean Architecture",
+      "content": "- Independent of frameworks\n- Easily testable\n- UI, DB, and external tools can be swapped\n- Long-term maintainability\n\nClean Architecture encourages separation of concerns and scalability.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions\n\n1. Which layer contains the business logic?\n2. Should the `main` function know about the `domain` package?\n3. Where would you place the code that talks to a PostgreSQL database?\n4. Why do we invert dependencies?\n\nTry answering before checking the next slide!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n1. **Entities / Use Cases layer** contains the business logic.\n2. Yes, `main` can import `domain` indirectly but should not contain domain logic.\n3. PostgreSQL access code belongs in the **infra** layer (Frameworks & Drivers).\n4. We invert dependencies to make the **core logic independent** and **easily testable**.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

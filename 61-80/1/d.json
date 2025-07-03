@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Goroutines",
+      "content": "In Go (Golang), a goroutine is a lightweight thread of execution. Goroutines are used for concurrent programming, enabling you to perform multiple tasks simultaneously. They are cheaper than traditional threads in terms of memory and creation time.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Goroutines Work",
+      "content": "A goroutine runs concurrently with other goroutines in the same address space. They are multiplexed onto a smaller number of operating system threads, allowing efficient multitasking.\n\nYou can start a goroutine by using the `go` keyword before a function call:\n\n```go\n go myFunction() \n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Creating a Goroutine",
+      "content": "To create a goroutine, you simply use the `go` keyword followed by a function call. Here's a simple example:\n\n```go\n package main\n\n import \"fmt\"\n\n func sayHello() {\n    fmt.Println(\"Hello, Goroutine!\")\n }\n\n func main() {\n    go sayHello()\n    fmt.Println(\"Main function\")\n }\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Goroutine vs Thread",
+      "content": "Goroutines are much lighter than threads. You can create thousands of goroutines without consuming significant memory. Threads, on the other hand, are more resource-heavy and less efficient.\n\n| Feature            | Goroutine                     | Thread                        |\n|--------------------|-------------------------------|-------------------------------|\n| Memory Overhead    | Low                           | High                          |\n| Creation Time      | Fast                          | Slow                          |\n| Scheduling         | Managed by Go runtime         | Managed by OS                 |\n| Communication      | Channels                      | Shared memory or mutexes      |",
+      "slide_type": "table"
+    },
+    {
+      "title": "Concurrency with Goroutines",
+      "content": "Goroutines provide an easy way to achieve concurrency in Go. They can work together to complete a task, like downloading multiple files at once. The Go runtime handles the scheduling and execution of goroutines.\n\nTo synchronize or communicate between goroutines, Go provides channels, which are used to send and receive data.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Channels for Communication",
+      "content": "A channel is a conduit for sending and receiving data between goroutines. It helps synchronize the execution of goroutines.\n\n```go\n package main\n\n import \"fmt\"\n\n func greet(c chan string) {\n    c <- \"Hello from Goroutine!\"\n }\n\n func main() {\n    c := make(chan string)\n    go greet(c)\n    fmt.Println(<-c)\n }\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Buffered Channels",
+      "content": "Buffered channels allow you to send a fixed number of values before blocking. This can improve performance when used appropriately.\n\n```go\n package main\n\n import \"fmt\"\n\n func main() {\n    c := make(chan string, 2) // buffered channel\n    c <- \"First\"\n    c <- \"Second\"\n    fmt.Println(<-c)\n    fmt.Println(<-c)\n }\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Goroutine Lifecycle",
+      "content": "A goroutine has three main phases in its lifecycle:\n1. **Created**: A goroutine is created by the `go` keyword.\n2. **Running**: The Go runtime schedules it to run concurrently.\n3. **Terminated**: The goroutine finishes its execution.\n\nWhen a goroutine terminates, it does not return any value directly. Instead, you can use channels to get results.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Goroutine Patterns",
+      "content": "Some common patterns for goroutines include:\n\n- **Fan-out**: Launch multiple goroutines to handle tasks concurrently.\n- **Fan-in**: Merge results from multiple goroutines.\n- **Worker Pool**: Use a fixed number of goroutines to handle a stream of tasks.\n\nThese patterns help in structuring concurrent programs effectively.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- What keyword do you use to create a goroutine?\n- How does a goroutine differ from a traditional thread in terms of resource usage?\n- How do you send data between goroutines?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "- The keyword used to create a goroutine is `go`.\n- Goroutines use less memory and can be created faster than threads, making them more lightweight.\n- Data between goroutines can be sent using channels. Example:\n\n```go\nc <- data\n```",
+      "slide_type": "code"
+    }
+  ]
+  

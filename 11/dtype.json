@@ -1,0 +1,57 @@
+[
+    {
+      "title": "Introduction to defer",
+      "content": "**`defer`** in Go is a keyword used to delay the execution of a function until the surrounding function returns.\n\nIt is often used for cleanup tasks like closing files, unlocking mutexes, or logging.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic defer usage",
+      "content": "```go\npackage main\nimport \"fmt\"\n\nfunc main() {\n    defer fmt.Println(\"World\")\n    fmt.Println(\"Hello\")\n}\n```\n// Output:\n// Hello\n// World",
+      "slide_type": "code"
+    },
+    {
+      "title": "How defer works",
+      "content": "- Deferred functions are pushed onto a **stack**.\n- They execute **in LIFO (Last In, First Out)** order when the surrounding function returns.\n- This makes them useful for reversing actions or cleanup in order.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Multiple defers",
+      "content": "```go\nfunc demo() {\n    defer fmt.Println(\"Third\")\n    defer fmt.Println(\"Second\")\n    defer fmt.Println(\"First\")\n}\n```\n// Output:\n// First\n// Second\n// Third",
+      "slide_type": "code"
+    },
+    {
+      "title": "Common use cases for defer",
+      "content": [
+        { "Use Case": "Closing files", "Example": "`defer file.Close()`" },
+        { "Use Case": "Unlocking a mutex", "Example": "`defer mu.Unlock()`" },
+        { "Use Case": "Logging", "Example": "`defer log.Println(\"Exiting function\")`" },
+        { "Use Case": "Recovering from panic", "Example": "`defer recover()`" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Defer with return values",
+      "content": "```go\nfunc test() (result int) {\n    defer func() {\n        result++\n    }()\n    return 1\n}\n\n// Returns: 2\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Defer in real-world example",
+      "content": "```go\nfunc readFile(filename string) {\n    file, err := os.Open(filename)\n    if err != nil {\n        log.Fatal(err)\n    }\n    defer file.Close()\n\n    // process file...\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Important notes",
+      "content": "- Deferred functions **execute even if a panic occurs**.\n- Avoid deferring inside loops for performance reasons.\n- Parameters to deferred functions are **evaluated immediately**, not at the time of execution.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When not to use defer",
+      "content": [
+        { "Scenario": "High-performance loops", "Why Avoid": "Adds overhead on each iteration" },
+        { "Scenario": "Simple code blocks", "Why Avoid": "May reduce readability if overused" },
+        { "Scenario": "Large files with many operations", "Why Avoid": "Better to manage resources explicitly" }
+      ],
+      "slide_type": "table"
+    }
+  ]
+  

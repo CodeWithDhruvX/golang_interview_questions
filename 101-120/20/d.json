@@ -1,0 +1,58 @@
+[
+    {
+      "title": "What Are Circular Dependencies?",
+      "content": "Circular dependencies happen when two or more packages import each other, either directly or indirectly. This creates a loop and leads to compilation errors in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Circular Dependencies Are a Problem",
+      "content": "- Go doesn't allow circular imports.\n- It leads to tight coupling.\n- Makes code harder to test and maintain.\n- Breaks clean separation of concerns.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Circular Dependency Example",
+      "content": "```go\n// user.go (package user)\nimport \"project/order\"\n\n// order.go (package order)\nimport \"project/user\"\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Technique 1: Refactor to Shared Package",
+      "content": "Move shared types/interfaces into a new package used by both original packages.\n\n```go\n// shared/types.go\npackage shared\n\ntype UserID string\ntype OrderID string\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Technique 2: Use Interfaces to Invert Dependencies",
+      "content": "Define interfaces in the package with higher-level logic. Let lower-level packages implement them.\n\n```go\n// user/service.go\npackage user\n\ntype OrderFetcher interface {\n    GetOrders(userID string) []Order\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Technique 3: Dependency Injection",
+      "content": "Pass dependencies as arguments instead of importing directly.\n\n```go\nfunc NewUserService(orderFetcher OrderFetcher) *UserService {\n    return &UserService{fetcher: orderFetcher}\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Technique 4: Reorganize Packages",
+      "content": "- Consider reorganizing your modules to avoid tight coupling.\n- Group strongly related code together.\n- Keep packages cohesive and focused.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Reference: How to Avoid Circular Dependencies",
+      "content": [
+        { "Technique": "Shared Package", "Use When": "Common types are needed in multiple packages" },
+        { "Technique": "Interfaces", "Use When": "You want to depend on behavior, not implementation" },
+        { "Technique": "Dependency Injection", "Use When": "Passing dependencies at runtime is possible" },
+        { "Technique": "Reorganize Packages", "Use When": "You notice coupling patterns in your imports" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. What is a circular dependency, and why does Go disallow it?\n2. Which technique helps when two packages need to share a type?\n3. How can interfaces help avoid circular dependencies?\n4. True or False: Dependency Injection is a way to *avoid importing* another package directly.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n1. A circular dependency occurs when two packages import each other. Go disallows it to avoid tight coupling and compilation issues.\n\n2. **Shared Package** – Move the shared type to a separate package.\n\n3. **Interfaces** allow a package to define the behavior it needs, letting another package implement it, avoiding direct import.\n\n4. **True** – Dependency injection passes the dependency at runtime, avoiding direct package imports.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

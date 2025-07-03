@@ -1,0 +1,55 @@
+[
+    {
+      "title": "Introduction to var, :=, and const",
+      "content": "In Go, you can declare variables and constants using `var`, `:=`, and `const`. Each has a different use case, and understanding them is essential for clean and correct Go code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using var for Variable Declaration",
+      "content": "The `var` keyword is used for declaring variables. It allows you to specify the type or let the compiler infer it.\n\n```go\nvar age int = 25\nvar name = \"Alice\" // Type inferred\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using := for Short Variable Declaration",
+      "content": "`:=` is a shorthand for declaring and initializing a variable. It can only be used **inside functions**, and the type is inferred automatically.\n\n```go\nage := 25\nname := \"Alice\"\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using const for Constants",
+      "content": "`const` is used to declare constants—values that do not change. Constants must be assigned at the time of declaration.\n\n```go\nconst Pi = 3.14\nconst AppName = \"MyApp\"\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Comparison Table",
+      "content": [
+        {
+          "Keyword": "var",
+          "Can Infer Type": "Yes",
+          "Scope": "Global and Local",
+          "Changeable": "Yes",
+          "Requires Initialization": "No"
+        },
+        {
+          "Keyword": ":=",
+          "Can Infer Type": "Yes",
+          "Scope": "Local (inside functions only)",
+          "Changeable": "Yes",
+          "Requires Initialization": "Yes"
+        },
+        {
+          "Keyword": "const",
+          "Can Infer Type": "Yes",
+          "Scope": "Global and Local",
+          "Changeable": "No",
+          "Requires Initialization": "Yes"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Common Mistakes to Avoid",
+      "content": "- Trying to u se `:=` outside a function.\n- Forgetting to initialize a `const`.\n- Declaring variables with `var` but never using them.",
+      "slide_type": "text"
+    }
+  ]
+  

@@ -1,0 +1,350 @@
+👨‍🏫 “Alright, let’s talk about something interesting in Go called the init() function.
+
+Now, you might be wondering—what exactly is init()?
+
+Well, it’s a special function in Go that runs automatically before the main() function. Yes—before your actual program starts running, Go checks if there’s an init() function, and if it exists, it executes it first.
+
+So, think of init() like that morning routine you follow before starting your day. Just like how you might brush your teeth, check your messages, and get ready—init() prepares your Go program before the real action begins in main().
+
+Now, where do we use this?
+
+There are three main situations:
+
+First, package-level initialization. So let’s say you have some variables or configuration settings at the package level—you want them set up before anything else happens. init() helps you do that.
+
+Second, you might need to set up a database connection, read from a config file, or maybe load some environment variables. These are things you want ready before the main logic of your program runs.
+
+And third, it’s also useful when you want to run some code automatically when the program starts, without needing to call it manually from main().
+
+So in short—init() is like that backstage crew at a theatre show. The audience only sees the main act (main()), but without init(), the show won’t be ready to begin.
+
+And the best part? You don’t even have to call init()—Go will handle it for you.
+
+Pretty neat, right?
+
+Let’s move on and understand how it works with actual code in the next slide.”
+
+
+
+
+
+==============================================================================
+
+
+👨‍🏫 “Okay, now that we know what init() is, let’s understand when exactly it runs.
+
+So here’s the deal—Go takes care of calling init() for you, but the timing of that matters, especially if you're working with multiple packages or setting up some global stuff.
+
+Let’s break it down:
+
+First, init() runs after all the variable declarations in the package. So if you've declared some variables at the top level of your package, Go sets them up first, and then it runs the init() function.
+
+Think of it like this: you first arrange all your tools on your table, and then you start using them.
+
+Second, init() runs before the main() function. This is super important. If you're wondering why your init() logic runs even when you didn't call it from main(), it's because Go is doing it for you—before main() even gets a chance to execute.
+
+Third, each package gets only one run of init(). So even if you import the same package multiple times across your codebase, the init() inside that package runs just once. That’s to avoid duplicate setup and confusion.
+
+And here’s the key thing—there’s an order to all this. If your program imports other packages, Go first runs the init() of those imported packages. Then, it runs the init() of your current package. And finally, it moves on to your main() function.
+
+So it's like: imported packages → your package → main().
+
+📌 Why should you care about this?
+
+Imagine you're building an app that connects to a database. Maybe the connection logic is in another package. You need that to be ready before your main code starts using it. That’s where init() becomes super useful—it makes sure things are set up in the right order.
+
+So yeah, init() gives you a clean and controlled way to handle startup stuff without cluttering your main() function.
+
+In the next slide, we’ll look at how it actually works with code.”
+
+
+
+====================================================================
+
+
+
+
+👨‍🏫 “Alright, let’s see how the init() function actually looks in a real Go program. This example is super simple, and it’ll help you understand how Go runs init() before main().
+
+Let’s walk through the code, line by line:
+
+go
+Copy
+Edit
+package main
+So this line is just saying, ‘Hey, this is the main package’—which is required if you want to run a standalone Go program. Every Go program that starts with main() needs to have this.
+
+go
+Copy
+Edit
+import "fmt"
+Here, we’re importing the fmt package. This is a built-in Go package that helps you print stuff on the screen—like fmt.Println().
+
+Now comes the star of this slide:
+
+go
+Copy
+Edit
+func init() {
+    fmt.Println("Init function is running...")
+}
+This is the init() function. Notice two things: First, you don’t give it any parameters, and second, you don’t call it yourself. Go calls this automatically before it runs main().
+
+Inside the init(), we’re just printing a message: "Init function is running...". That helps you see that this function is being executed even though we never called it manually.
+
+And finally, we have the main() function:
+
+go
+Copy
+Edit
+func main() {
+    fmt.Println("Main function is running...")
+}
+This is the actual entry point of your program—Go always starts here after finishing init().
+
+So when you run this code, the output will be:
+
+vbnet
+Copy
+Edit
+Init function is running...
+Main function is running...
+Even though main() comes after init() in the code, that’s not about position—it’s about execution order. init() always runs first.
+
+This kind of setup is useful when you want to do something like load a config file or check some system settings before the main program starts doing its work.
+
+And by the way, don’t try to call init() yourself—Go won’t stop you, but that’s not how it’s meant to be used.
+
+Let’s move on and explore some more about how init() behaves.”
+
+
+
+
+
+===========================================================
+
+
+👨‍🏫 “Alright—so here’s something a lot of beginners find surprising at first.
+
+In Go, you’re allowed to have multiple init() functions in the same file or even across different files in the same package. And yes, Go will run all of them—one by one—in the order they appear in the file.
+
+So imagine you're in a cooking class. Let’s say there are three chefs, and each one is preparing something different for the same dish. Chef 1 chops the vegetables, Chef 2 boils the water, and Chef 3 adds the spices. Even though they all work on the same dish, they each have a separate role. That’s exactly how multiple init() functions work—they each do their part during program startup.
+
+Now, here’s the important part: Go will not skip any of them. It will call each init() function in the order they appear—top to bottom.
+
+This can be helpful if you're organizing your code into sections. Like maybe one init() handles logging setup, another one loads some config, and a third one connects to a database.
+
+But here’s a small caution—don’t go overboard with too many init() functions. It can make your code hard to read if there’s too much happening behind the scenes. Always make sure it’s clear why each init() is there.
+
+So remember: you can have multiple init()s, and Go will take care of calling all of them—in order.
+
+We’ll see how that looks in code, in the next slide.”
+
+
+
+=============================================================
+
+👨‍🏫 “Now let’s look at a simple example that shows how multiple init() functions work in the same file.
+
+Here’s the code:
+
+go
+Copy
+Edit
+package main
+As always, we start by defining the main package. This is needed for any Go program that runs on its own.
+
+go
+Copy
+Edit
+import "fmt"
+We’re importing the fmt package again—this helps us print messages to the console.
+
+Now comes the interesting part:
+
+go
+Copy
+Edit
+func init() {
+    fmt.Println("Init #1")
+}
+This is our first init() function. When Go starts the program, it’ll run this and print:
+Init #1
+
+Then we have another init() right after:
+
+go
+Copy
+Edit
+func init() {
+    fmt.Println("Init #2")
+}
+Yup, this is totally valid! Go allows multiple init() functions. They will be executed in the order they appear in the file. So first it runs the one that prints Init #1, and then the one that prints Init #2.
+
+And finally, we have our main function:
+
+go
+Copy
+Edit
+func main() {
+    fmt.Println("Main")
+}
+This is the usual main() function—the actual entry point of your Go program.
+
+So when you run this code, here’s the exact output:
+
+less
+Copy
+Edit
+Init #1  
+Init #2  
+Main
+See how both init() functions ran first, and in order? That’s how Go handles multiple init()s in the same file.
+
+This feature is super helpful when you’re doing different types of setup tasks—like one for logging, one for database config, or one for setting default values.
+
+Just remember: don’t write too many init()s unless you really need them—it can get confusing for someone else reading your code.
+
+Alright, let’s keep going!”
+
+
+
+
+================================================================
+
+
+Slide Title: init() vs main()
+
+👨‍🏫 “Now let’s clear up the difference between two very important functions in Go: init() and main().
+
+Both are special. Both are run automatically. But they serve very different purposes.
+
+Let’s walk through this comparison one row at a time:
+
+🟡 Function:
+We’re comparing init() and main().
+
+So init() is used to set things up when your program starts—like preparing ingredients before you start cooking.
+And main() is the actual starting point of your program—this is where the action happens.
+
+🟡 Called By:
+Both init() and main() are called by the Go runtime, which means you don't have to call them yourself.
+
+Go automatically runs init() first, then it runs main().
+
+🟡 Arguments:
+Neither of them takes any arguments.
+You just write them like: func init() and func main()—no parameters needed.
+
+This is one way Go keeps things simple for you.
+
+🟡 Return Type:
+Again, both functions don’t return anything.
+They do their job and exit—no need to send back any result.
+
+This is because they’re meant to do work, not return values.
+
+🟡 Purpose:
+This is the key difference.
+
+init() is there to initialize your package—things like loading config files, setting default values, or preparing a database connection.
+
+main() is the entry point of your application. Whatever the user is supposed to see, or whatever logic you want to run when the app starts—that goes in main().
+
+So just remember:
+
+init() is like setting the stage.
+
+main() is the actual performance.
+
+Both are important, but they serve different roles.
+
+And now that you know the difference, you'll know exactly where to write what—especially in real-world projects where setup and logic often need to be separated.”
+
+
+
+============================================================
+
+
+
+Slide Title: Use Cases of init()
+
+👨‍🏫 “Now you might be wondering—okay, I get what init() does, but when should I actually use it?
+
+Great question. Let’s look at some real-life situations where using init() makes sense:
+
+✅ Loading config files
+Imagine you're building a small Go app that connects to a server or database. You don’t want to hardcode things like the IP address or password, right?
+Instead, you keep those values in a config file—maybe a .json or .env file.
+Now, using init(), you can automatically load that file as soon as the program starts, without writing anything in main().
+
+✅ Registering plugins
+Let’s say your project supports plugins or modules—maybe for a tool, framework, or game engine.
+With init(), each plugin can register itself with the system right when the package is loaded.
+This keeps things modular and clean—you don’t have to manually call register() everywhere.
+
+✅ Validating environment variables
+In a lot of backend projects, we use environment variables—like for database URLs, API keys, or tokens.
+With init(), you can check if these variables are set properly before your main app logic begins.
+That way, if something’s missing, you can show an error and exit early, instead of crashing midway.
+
+✅ Setting default values
+If your program depends on certain global values, init() is a great place to assign safe defaults.
+This helps avoid nil errors or unexpected behavior later in your code.
+
+✅ Establishing initial connections
+For example, if your app connects to a database or opens a log file—why wait till main()?
+Just set up that connection in init(), and your app is ready to go when main() starts.
+
+So in short—init() is perfect for preparing your program to run smoothly. It’s like warming up before the match starts.
+
+But always use it wisely—keep it clean, short, and only for things that really need to happen at startup.
+
+Alright, let's move ahead and wrap things up!”
+
+
+===============================================================
+
+
+
+Slide Title: Best Practices for init()
+
+👨‍🏫 “Alright, before we wrap up, let’s talk about a few best practices when you're working with init() in Go.
+
+Yes, init() is powerful. But with great power comes... well, you know. Let’s use it wisely.
+
+✅ Avoid complex logic in init()
+Try not to write big calculations, loops, or business logic inside init().
+Why? Because init() runs silently, behind the scenes. If something goes wrong there, it's harder to debug.
+Keep it simple—maybe just loading configs or setting flags.
+
+✅ Do not use it for critical business logic
+Don’t put core features of your app inside init().
+Let’s say you’re building an e-commerce site. Things like calculating cart totals or processing payments—those should be in main() or proper functions, not inside init().
+
+Use init() only for startup stuff—like preparing the environment or initializing services.
+
+✅ Keep init() minimal and clear
+Think of init() as a helper, not the main hero.
+Whoever reads your code later (maybe even future-you!) should instantly understand what the init() function is doing.
+
+If it’s more than a few lines, ask yourself: Does this really need to be in init()?
+
+✅ Prefer explicit initialization in main() when possible
+In most cases, it's actually better to initialize things directly inside main() or by calling a clear setup function like setupDatabase() or loadConfig().
+Why? Because then the reader sees everything happening in one place. No surprises.
+
+Use init() when the setup is needed at the package level or has to happen automatically—but don’t overuse it.
+
+So yeah, keep init() clean, short, and purposeful. Think of it like the behind-the-scenes crew—not the star of the show.
+
+Alright, with that, you now know not just how init() works—but also how to use it well in real Go projects.”
+
+
+
+==================================================================
+
+
+
+
+

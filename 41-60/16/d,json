@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Introduction to Types in Go",
+    "content": "In Go, types are used to define the structure and behavior of data. There are two primary categories of types: **Concrete Types** and **Interface Types**. Understanding the difference between these is crucial for mastering Go programming.",
+    "slide_type": "text"
+  },
+  {
+    "title": "What is a Concrete Type?",
+    "content": "A **Concrete Type** is a specific data type that holds actual values. Examples of concrete types include: \n- **int**\n- **float64**\n- **structs**\n\nA concrete type provides all of its methods and has a concrete value that can be manipulated directly.",
+    "slide_type": "text"
+  },
+  {
+    "title": "What is an Interface Type?",
+    "content": "An **Interface Type** is a set of method signatures (behavior) that a concrete type must implement. It does not contain actual data but defines a contract. \nFor example:\n```go\ntype Speaker interface {\n   Speak() string\n}```",
+    "slide_type": "text"
+  },
+  {
+    "title": "Concrete Type vs. Interface Type",
+    "content": "Here’s a breakdown of the differences between concrete and interface types:\n\n| Aspect             | Concrete Type                              | Interface Type                              |\n|--------------------|---------------------------------------------|---------------------------------------------|\n| Definition         | Holds data directly (e.g., int, struct)     | Defines behavior (set of method signatures) |\n| Value              | Can hold values                             | Does not hold values                       |\n| Methods            | Can have methods associated with it         | Methods are implemented by concrete types   |\n| Behavior           | Concrete and specific to its type           | Flexible, can represent many types         |\n| Use Case           | Used for specific values and operations     | Used for polymorphism and abstraction       |",
+    "slide_type": "table"
+  },
+  {
+    "title": "Concrete Types Example",
+    "content": "Let’s look at an example of a concrete type in Go:\n```go\npackage main\nimport \"fmt\"\n\ntype Car struct {\n   Make  string\n   Model string\n}\n\nfunc (c Car) Drive() {\n   fmt.Println(c.Make, c.Model, \"is driving!\")\n}\n\nfunc main() {\n   car := Car{Make: \"Toyota\", Model: \"Corolla\"}\n   car.Drive() // Concrete type method usage\n}```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Interface Types Example",
+    "content": "Now, let’s look at an example of an interface type:\n```go\npackage main\nimport \"fmt\"\n\ntype Speaker interface {\n   Speak() string\n}\n\ntype Person struct {\n   Name string\n}\n\nfunc (p Person) Speak() string {\n   return \"Hello, my name is \" + p.Name\n}\n\nfunc main() {\n   var speaker Speaker\n   person := Person{Name: \"John\"}\n   speaker = person // Assigning concrete type to interface\n   fmt.Println(speaker.Speak())\n}```\nIn this example, the `Speaker` interface defines the behavior, and `Person` implements that behavior.",
+    "slide_type": "code"
+  },
+  {
+    "title": "Concrete Types Can Implement Multiple Interfaces",
+    "content": "A single concrete type can implement multiple interfaces. Here’s an example:\n```go\npackage main\nimport \"fmt\"\n\ntype Speaker interface {\n   Speak() string\n}\n\ntype Runner interface {\n   Run() string\n}\n\ntype Athlete struct {\n   Name string\n}\n\nfunc (a Athlete) Speak() string {\n   return \"I'm an athlete, my name is \" + a.Name\n}\n\nfunc (a Athlete) Run() string {\n   return a.Name + \" is running!\"\n}\n\nfunc main() {\n   athlete := Athlete{Name: \"Alice\"}\n   var speaker Speaker = athlete\n   var runner Runner = athlete\n   fmt.Println(speaker.Speak())\n   fmt.Println(runner.Run())\n}```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Interfaces Enable Polymorphism",
+    "content": "Interfaces allow us to use polymorphism, enabling us to write flexible and reusable code. The interface can represent different concrete types, all while maintaining a common set of behavior.\nFor example:\n```go\nfunc Describe(speaker Speaker) {\n   fmt.Println(speaker.Speak())\n}\n\nfunc main() {\n   person := Person{Name: \"Bob\"}\n   Describe(person)  // Works with any type that implements Speaker\n}```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Quick Challenge: Test Your Understanding",
+    "content": "Answer the following questions:\n\n1. What is the key difference between a concrete type and an interface type in Go?\n2. Can an interface type hold a value directly? Why or why not?\n3. How does Go handle multiple methods from a single concrete type?\n4. Write an interface in Go for a `Flyer` type, then create a concrete type `Bird` that implements it. Show how to use this in main.",
+    "slide_type": "text"
+  },
+  {
+    "title": "Solutions: Quick Challenge",
+    "content": "Here are the answers to the challenge:\n\n1. **Key Difference**: A concrete type holds actual data (e.g., `int`, `struct`), while an interface type defines a set of methods that concrete types must implement.\n\n2. **Interface and Value**: No, an interface type cannot hold a value directly. It only holds a reference to a concrete type that implements the interface methods.\n\n3. **Multiple Methods**: Go allows a concrete type to implement multiple interfaces. A concrete type can have many methods, each corresponding to an interface method.\n\n4. **Flyer Interface and Bird Concrete Type**:\n```go\npackage main\nimport \"fmt\"\n\ntype Flyer interface {\n   Fly() string\n}\n\ntype Bird struct {\n   Name string\n}\n\nfunc (b Bird) Fly() string {\n   return b.Name + \" is flying!\"\n}\n\nfunc main() {\n   bird := Bird{Name: \"Sparrow\"}\n   var flyer Flyer = bird\n   fmt.Println(flyer.Fly())\n}```",
+    "slide_type": "code"
+  }
+]

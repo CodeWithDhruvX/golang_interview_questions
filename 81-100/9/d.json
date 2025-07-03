@@ -1,0 +1,48 @@
+[
+    {
+      "title": "What is Vendoring in Go Modules?",
+      "content": "Vendoring in Go modules refers to the practice of storing a copy of the dependencies your project relies on, inside your project’s repository. This makes it easier to ensure reproducible builds, as the exact versions of dependencies are bundled with your project. It’s a technique used to maintain control over external dependencies and avoid unexpected changes in them.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Vendoring?",
+      "content": "Vendoring provides several key benefits:\n\n- **Reproducible Builds:** Ensures the exact same version of dependencies are used, regardless of external changes.\n- **Reliability:** Reduces dependency on external repositories that may be down or removed.\n- **Faster Builds:** Can speed up builds by using local copies of dependencies instead of fetching them each time.\n- **Version Pinning:** Gives more control over which version of a library your project uses.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How to Enable Vendoring?",
+      "content": "To enable vendoring in Go, use the following steps:\n\n1. **Initialize your Go module (if not already done):**\n   ```bash\n   go mod init <module-name>\n   ```\n2. **Add dependencies:**\n   ```bash\n   go get <dependency-name>\n   ```\n3. **Create the vendor directory:**\n   ```bash\n   go mod vendor\n   ```\n4. **Use the vendored dependencies:**\n   Go will automatically use the dependencies in the vendor folder when building the project.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Structure of a Vendored Project",
+      "content": "When vendoring is enabled, a `vendor/` directory is created in the root of the project. Inside the `vendor/` directory, you will find subdirectories corresponding to each dependency. The structure looks like this:\n\n```\n<project-name>/\n  ├── go.mod\n  ├── go.sum\n  ├── vendor/\n  │   ├── github.com/\n  │   ├── golang.org/\n  │   └── ...\n```\nThis structure ensures that the dependencies are bundled within the project.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How Vendoring Affects `go get`",
+      "content": "Once vendoring is enabled, Go will prioritize the vendored dependencies when running commands like `go build`, `go test`, or `go run`. It will not download dependencies from external repositories unless they are missing from the `vendor/` directory. This means that even if a dependency is removed from an external repository, your build can still work.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go Commands with Vendoring",
+      "content": "A few useful Go commands when working with vendoring:\n\n- **`go mod vendor`**: Creates or updates the `vendor/` directory.\n- **`go build`**: Builds the project, using vendored dependencies if available.\n- **`go test`**: Runs tests, using vendored dependencies.\n- **`go mod tidy`**: Cleans up unused dependencies, even in the `vendor/` directory.\n\nThese commands help manage and ensure that vendored dependencies are properly utilized in your project.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Avoid Vendoring",
+      "content": "While vendoring can be beneficial, there are scenarios where it might not be the best choice:\n\n- **Large dependencies:** Vendoring large dependencies can increase the size of your project.\n- **Frequent updates:** If your dependencies are updated frequently, manually managing vendored copies can become cumbersome.\n- **Lack of disk space:** In some environments, storing copies of all dependencies locally might consume too much disk space.\n\nIn these cases, relying on Go's default module system might be preferable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Here are some questions to test your understanding of vendoring in Go!\n\n1. What is the purpose of the `vendor/` directory in a Go project?\n2. What happens when you run `go mod vendor`?\n3. Does Go prioritize vendored dependencies over fetching from external repositories? Why?\n4. When might you decide **not** to use vendoring in a project?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the solutions to the challenge questions:\n\n1. **The `vendor/` directory** stores a copy of all the dependencies used in your Go project, ensuring reproducible builds.\n2. **Running `go mod vendor`** creates or updates the `vendor/` directory with all the dependencies the project requires, based on the `go.mod` file.\n3. Yes, **Go prioritizes vendored dependencies**. If dependencies are found in the `vendor/` directory, Go will use them instead of downloading them from external repositories.\n4. **Avoid vendoring** if your project has large dependencies, frequently updated dependencies, or disk space limitations that make it impractical.",
+      "slide_type": "code"
+    }
+  ]
+  

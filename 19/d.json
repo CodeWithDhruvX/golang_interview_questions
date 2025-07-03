@@ -1,0 +1,73 @@
+[
+  {
+    "title": "Introduction to Blank Identifiers",
+    "content": "In Go, a **blank identifier** is represented by an underscore (`_`). It acts as a **placeholder** for a value that you want to ignore. This is particularly useful when a function returns multiple values but you only care about some of them.\n\nGo is a statically typed language that enforces the usage of all declared variables. If you declare a variable and don't use it, the compiler throws an error. The blank identifier helps bypass this restriction by allowing you to ignore specific values intentionally without causing compilation errors.",
+    "slide_type": "text"
+  },
+  {
+    "title": "Syntax of Blank Identifier",
+    "content": "The blank identifier is simply written as `_` and can be used in place of any variable where the value is not required.\n\nExamples:\n```go\nvalue, _ := someFunction()\n_, err := anotherFunction()\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Common Use Cases",
+    "content": "The blank identifier is extremely useful in several practical scenarios:\n\n- **Ignoring return values from functions**: If a function returns multiple values and you're only interested in some, `_` helps discard the rest.\n- **Skipping unused loop variables**: In `for` loops with `range`, if you don't need the index or value, you can ignore it.\n- **Discarding values in assignments**: When a function returns values you don't need, `_` helps in assignments where only a few values are useful.\n- **Interface implementation**: You may need to implement a method from an interface even if you don't use it. `_` allows you to satisfy the interface without using the method.\n- **Importing packages for side-effects only**: Some packages perform initialization in `init()` functions. If you just need these side effects without using any exported functions, you can import the package with `_`.",
+    "slide_type": "text"
+  },
+  {
+    "title": "Ignoring Return Values",
+    "content": "```go\nresult, _ := divide(10, 2) // Ignore error if it's not needed\nfmt.Println(\"Result:\", result)\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Skipping Loop Variables",
+    "content": "```go\nvalues := []int{1, 2, 3}\nfor _, v := range values {\n    fmt.Println(v) // We don't need the index, so we use _\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Discarding Values in Assignments",
+    "content": "```go\nx, _ := getCoordinates() // We only need x, ignore y\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Interface Implementation",
+    "content": "Even if you don’t use all methods in a struct that implements an interface, Go requires them to be defined. Use `_` to avoid compiler errors:\n\n```go\nfunc (_ MyStruct) UnusedMethod() {}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Import for Side Effects",
+    "content": "```go\nimport _ \"net/http/pprof\" // Import only for init() side effects\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Why Blank Identifiers Matter",
+    "content": "Go is strict about unused variables to encourage clean, readable, and maintainable code. However, in many real-world scenarios, you often encounter situations where you don’t need all the values returned by a function or loop.\n\nThis is where blank identifiers shine:\n\n- They let you **opt-out** of values you don’t need.\n- They make your intent **explicit** – you're clearly stating, “I’m aware of this value, but I don’t need it.”\n- They help you comply with Go’s compiler rules without resorting to dummy variables.\n\nThis leads to more concise, elegant, and intentional code that still satisfies the compiler’s constraints and your application logic.",
+    "slide_type": "text"
+  },
+  {
+    "title": "Summary of Blank Identifier Uses",
+    "content": [
+      {
+        "example": "_, err := doSomething()",
+        "use_case": "Ignore return value"
+      },
+      {
+        "example": "for _, val := range items",
+        "use_case": "Ignore loop index"
+      },
+      {
+        "example": "x, _ := getData()",
+        "use_case": "Skip assignment"
+      },
+      {
+        "example": "func (_ T) Unused() {}",
+        "use_case": "Ignore unused method in interface"
+      },
+      {
+        "example": "import _ \"module\"",
+        "use_case": "Import for side-effect"
+      }
+    ],
+    "slide_type": "table"
+  }
+]

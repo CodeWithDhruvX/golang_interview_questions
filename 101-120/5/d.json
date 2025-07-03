@@ -1,0 +1,68 @@
+[
+    {
+      "title": "Introduction to Go Design Patterns",
+      "content": "Design patterns in Go help us solve common problems and improve the structure of our code. Go's simplicity encourages the use of patterns that can lead to more maintainable and readable code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "1. Singleton Pattern",
+      "content": "The Singleton pattern ensures a class has only one instance and provides a global access point to that instance.\n\n**Use case**: When you need to manage a global resource (like a database connection) that should only have a single instance throughout the application lifecycle.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Singleton Pattern Example",
+      "content": "```go\npackage main\n\nimport (\n\t\"sync\"\n)\n\nvar instance *Singleton\nvar once sync.Once\n\ntype Singleton struct {\n\tValue int\n}\n\nfunc GetInstance() *Singleton {\n\tonce.Do(func() {\n\t\tinstance = &Singleton{Value: 42}\n\t})\n\treturn instance\n}\n\nfunc main() {\n\tsingleton := GetInstance()\n\tfmt.Println(singleton.Value)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "2. Factory Pattern",
+      "content": "The Factory pattern allows creating objects without specifying the exact class of the object that will be created. This pattern is useful when the creation process is complex or requires flexibility.\n\n**Use case**: When you want to abstract the instantiation logic from the client code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Factory Pattern Example",
+      "content": "```go\npackage main\n\nimport (\n\t\"fmt\"\n)\n\ntype Animal interface {\n\tSpeak() string\n}\n\ntype Dog struct {}\n\nfunc (d Dog) Speak() string {\n\treturn \"Woof!\"\n}\n\ntype Cat struct {}\n\nfunc (c Cat) Speak() string {\n\treturn \"Meow!\"\n}\n\nfunc GetAnimal(animalType string) Animal {\n\tif animalType == \"dog\" {\n\t\treturn Dog{}\n\t} else if animalType == \"cat\" {\n\t\treturn Cat{}\n\t}\n\treturn nil\n}\n\nfunc main() {\n\tanimal := GetAnimal(\"dog\")\n\tfmt.Println(animal.Speak())\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "3. Observer Pattern",
+      "content": "The Observer pattern allows a subject to notify its observers about changes in its state. It is useful in event-driven systems or scenarios where a state change in one object needs to be communicated to other objects.\n\n**Use case**: When you have multiple components that need to be notified of a change in another component.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Observer Pattern Example",
+      "content": "```go\npackage main\n\nimport (\n\t\"fmt\"\n)\n\ntype Observer interface {\n\tUpdate(message string)\n}\n\ntype ConcreteObserver struct {\n\tname string\n}\n\nfunc (o ConcreteObserver) Update(message string) {\n\tfmt.Printf(\"%s received message: %s\\n\", o.name, message)\n}\n\ntype Subject struct {\n\tobservers []Observer\n}\n\nfunc (s *Subject) Attach(o Observer) {\n\ts.observers = append(s.observers, o)\n}\n\nfunc (s *Subject) Notify(message string) {\n\tfor _, observer := range s.observers {\n\t\tobserver.Update(message)\n\t}\n}\n\nfunc main() {\n\tsubject := &Subject{}\n\tobserver1 := ConcreteObserver{name: \"Observer 1\"}\n\tobserver2 := ConcreteObserver{name: \"Observer 2\"}\n\n\tsubject.Attach(observer1)\n\tsubject.Attach(observer2)\n\n\tsubject.Notify(\"Update 1\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "4. Strategy Pattern",
+      "content": "The Strategy pattern enables selecting an algorithm at runtime. It is particularly useful when different behaviors are needed depending on the context, and you want to keep the client code flexible.\n\n**Use case**: When you want to define a family of algorithms and make them interchangeable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Strategy Pattern Example",
+      "content": "```go\npackage main\n\nimport (\n\t\"fmt\"\n)\n\ntype PaymentStrategy interface {\n\tPay(amount float64)\n}\n\ntype CreditCard struct {}\n\nfunc (c CreditCard) Pay(amount float64) {\n\tfmt.Printf(\"Paid %.2f using Credit Card\\n\", amount)\n}\n\ntype PayPal struct {}\n\nfunc (p PayPal) Pay(amount float64) {\n\tfmt.Printf(\"Paid %.2f using PayPal\\n\", amount)\n}\n\nfunc ProcessPayment(strategy PaymentStrategy, amount float64) {\n\tstrategy.Pay(amount)\n}\n\nfunc main() {\n\tcreditCard := CreditCard{}\n\tpayPal := PayPal{}\n\n\tProcessPayment(creditCard, 100.0)\n\tProcessPayment(payPal, 200.0)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "5. Builder Pattern",
+      "content": "The Builder pattern allows the creation of complex objects step by step. It helps to separate the construction of an object from its representation.\n\n**Use case**: When an object needs to be created with many optional components or configurations.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Builder Pattern Example",
+      "content": "```go\npackage main\n\nimport (\n\t\"fmt\"\n)\n\ntype Car struct {\n\tModel string\n\tColor string\n\tEngine string\n}\n\ntype CarBuilder struct {\n\tcar Car\n}\n\nfunc (b *CarBuilder) SetModel(model string) *CarBuilder {\n\tb.car.Model = model\n\treturn b\n}\n\nfunc (b *CarBuilder) SetColor(color string) *CarBuilder {\n\tb.car.Color = color\n\treturn b\n}\n\nfunc (b *CarBuilder) SetEngine(engine string) *CarBuilder {\n\tb.car.Engine = engine\n\treturn b\n}\n\nfunc (b *CarBuilder) Build() Car {\n\treturn b.car\n}\n\nfunc main() {\n\tbuilder := &CarBuilder{}\n\tcar := builder.SetModel(\"Tesla\").SetColor(\"Red\").SetEngine(\"Electric\").Build()\n\tfmt.Println(car)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Quick Questions:\n1. What is the purpose of the Singleton pattern?\n2. How does the Factory pattern simplify object creation?\n3. What does the Observer pattern help achieve?\n4. Which pattern is useful for selecting an algorithm at runtime?\n5. In the Builder pattern, what is being separated from the object?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n1. The Singleton pattern ensures only one instance of a class exists and provides a global access point.\n2. The Factory pattern abstracts the object creation logic, allowing flexibility and simplicity.\n3. The Observer pattern notifies multiple objects when a state change occurs in another object.\n4. The Strategy pattern allows selecting an algorithm at runtime.\n5. The Builder pattern separates the construction process from the object’s representation.",
+      "slide_type": "code"
+    }
+  ]
+  

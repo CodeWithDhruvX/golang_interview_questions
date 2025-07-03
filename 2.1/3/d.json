@@ -1,0 +1,55 @@
+[
+    {
+      "title": "Understanding Slice Capacity",
+      "content": "In Go, a slice is a descriptor of an array segment. It is not an array itself but provides a convenient, flexible, and powerful view into the array. Each slice has three components:\n\n- **Pointer**: Refers to the first element of the array that is accessible through the slice.\n- **Length**: The number of elements currently in the slice. It determines how many elements can be read or written.\n- **Capacity**: The number of elements in the underlying array starting from the first element in the slice.\n\nWhen we append elements to a slice, Go checks whether the slice has enough capacity to accommodate new elements. If not, internal changes occur which are essential to understand for writing efficient and predictable code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Happens on Append Beyond Capacity?",
+      "content": "When a slice's current length reaches its capacity and an append is attempted:\n\n- Go automatically creates a **new underlying array** with a larger capacity (usually double the original, but this can vary).\n- The existing elements are **copied** into the new array.\n- The result of the append is a **new slice** that points to this new array.\n- The original slice remains pointing to the old array and is unaffected.\n\nThis reallocation means that the **identity and memory address** of the slice change, which is critical to remember when working with multiple references to the same slice.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Slice Append Behavior",
+      "content": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    // Create a slice of int with length 2 and capacity 2\n    s := make([]int, 2, 2)\n    s[0] = 10\n    s[1] = 20\n\n    // Print the slice before append\n    fmt.Println(\"Before append:\", s, \"Length:\", len(s), \"Capacity:\", cap(s))\n\n    // Append an element to the slice.\n    // Since the capacity is full, Go will allocate a new array internally.\n    s = append(s, 30) // Reallocation happens here\n\n    // Print the slice after append\n    fmt.Println(\"After append:\", s, \"Length:\", len(s), \"Capacity:\", cap(s))\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Output of the Example",
+      "content": "Before the append operation, the slice `s` has two elements and a capacity of 2. Since appending `30` exceeds this capacity, Go allocates a new array with a larger size (in this case, 4).\n\nThe new slice now has 3 elements and a new capacity. The original two values `10` and `20` are preserved, and the new value `30` is added to the end.\n\nThis is a simple demonstration of how Go handles dynamic array growth under the hood.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Memory Behavior Explanation",
+      "content": "Understanding memory behavior is key when working with slices. When the capacity is exceeded:\n\n- Go performs a **copy operation** behind the scenes, transferring data from the old array to a newly allocated larger one.\n- The new capacity is typically **twice the old capacity** to reduce the number of reallocations needed over time.\n- After reallocation, any changes to the new slice do **not affect** the old slice, which may still be referenced elsewhere.\n\nThis behavior is particularly important when you have **multiple slices derived from the same base array**, as it can lead to unintended data sharing or independence depending on whether a reallocation occurred.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Visual Table: Slice Append Impact",
+      "content": [
+        {
+          "Capacity": "2",
+          "Length": "2",
+          "Memory Reallocation": "No",
+          "Operation": "make([]int, 2, 2)"
+        },
+        {
+          "Capacity": "4",
+          "Length": "3",
+          "Memory Reallocation": "Yes",
+          "Operation": "append(s, 30)"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Why This Matters",
+      "content": "Understanding how slice reallocation works in Go is essential for several reasons:\n\n- **Performance**: Knowing when Go reallocates memory can help you write efficient code and avoid unnecessary overhead from repeated allocations.\n- **Memory Safety**: It prevents bugs that stem from unintended shared state between slices when no reallocation happens.\n- **Predictability**: Helps in debugging and maintaining code as the internal behavior of slices becomes more transparent.\n\nBy preallocating enough capacity using `make`, you can avoid the cost of reallocation and ensure more consistent performance in critical code paths.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Takeaways",
+      "content": "- Appending beyond the current capacity of a slice triggers **automatic reallocation**.\n- A new array is created, and all existing elements are copied to it.\n- The new slice has a **larger capacity** (often doubled), enabling more future appends without immediate reallocation.\n- Changes made to the new slice **do not affect** the original slice.\n- Always consider **preallocating capacity** using `make([]T, len, cap)` when you expect multiple appends.\n\nBeing aware of these behaviors enables better performance tuning and prevents subtle bugs due to unexpected memory sharing.",
+      "slide_type": "text"
+    }
+  ]

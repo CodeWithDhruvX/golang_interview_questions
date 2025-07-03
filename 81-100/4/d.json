@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Errors in Go",
+      "content": "In Go, errors are categorized into two main types: **compile-time errors** and **runtime errors**. Understanding these errors is crucial for writing efficient and bug-free code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Are Compile-Time Errors?",
+      "content": "Compile-time errors occur **during the compilation** of your code. These errors prevent the program from being compiled successfully. Common causes include:\n- Syntax errors\n- Undefined variables\n- Missing function arguments\n\nThese errors are detected by the Go compiler before the program is executed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Examples of Compile-Time Errors",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(Hello World)\n}\n``` \nThe above code will throw a compile-time error because the string `Hello World` is not enclosed in double quotes.\n\nError: `undefined: Hello World`",
+      "slide_type": "code"
+    },
+    {
+      "title": "What Are Runtime Errors?",
+      "content": "Runtime errors occur **during the execution** of the program. These errors do not prevent the program from compiling, but they cause the program to crash or behave unexpectedly. Common causes include:\n- Division by zero\n- Null pointer dereferencing\n- Array index out of bounds",
+      "slide_type": "text"
+    },
+    {
+      "title": "Examples of Runtime Errors",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    x := 5\n    y := 0\n    fmt.Println(x / y)\n}\n``` \nThe above code will compile but cause a runtime error: `panic: runtime error: integer divide by zero` when executed.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Differences: Compile-Time vs Runtime Errors",
+      "content": "| Aspect                | Compile-Time Error                    | Runtime Error                            |\n|-----------------------|---------------------------------------|------------------------------------------|\n| Detection Time        | Detected by the compiler before running the program | Detected during program execution         |\n| Causes                | Syntax mistakes, undeclared variables, missing imports | Incorrect logic, invalid operations like division by zero  |\n| Example               | `fmt.Println(Hello World)`             | `x / 0`                                   |\n| Prevention            | Correcting code syntax, declaring all variables | Handling edge cases, adding error checks   |",
+      "slide_type": "table"
+    },
+    {
+      "title": "How to Avoid Compile-Time Errors",
+      "content": "To avoid compile-time errors:\n- Follow Go's syntax rules strictly.\n- Declare all variables before use.\n- Import necessary packages.\n- Ensure that function signatures are correct.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How to Avoid Runtime Errors",
+      "content": "To avoid runtime errors:\n- Always check for **nil** before dereferencing pointers.\n- Ensure that arrays and slices are accessed within valid bounds.\n- Add error handling for potential failures (e.g., division by zero).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Quiz Time! Test your understanding of compile-time and runtime errors.\n\n1. Which type of error occurs when you try to divide a number by zero in Go?\n2. What will happen if you try to use an undefined variable in Go?\n3. How do you prevent compile-time errors related to undefined variables?\n4. What is the difference between compile-time and runtime errors?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Quiz Solutions\n\n1. **Runtime error**: Division by zero will cause a runtime error in Go.\n2. **Compile-time error**: Using an undefined variable will result in a compile-time error.\n3. **Prevention**: To avoid compile-time errors related to undefined variables, ensure all variables are declared before use.\n4. **Difference**: Compile-time errors are detected before execution (e.g., syntax errors), while runtime errors occur while the program is running (e.g., division by zero).",
+      "slide_type": "code"
+    }
+  ]
+  

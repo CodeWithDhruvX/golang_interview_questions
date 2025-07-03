@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Intro to Go Anti-Patterns",
+      "content": "Go (Golang) promotes simplicity and clarity, but there are still common **anti-patterns** developers fall into. Recognizing these can help you write better, more idiomatic Go code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "1. Overusing Goroutines",
+      "content": "Spawning too many goroutines without proper control can lead to:\n- Memory leaks\n- Goroutine leaks\n- Hard-to-debug concurrency issues\n\n**Tip**: Always consider whether you truly need a goroutine and ensure proper synchronization (e.g., using WaitGroups, channels).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Overusing Goroutines Example",
+      "content": "```go\nfor i := 0; i < 1000000; i++ {\n    go doWork(i) // ⚠️ Too many goroutines!\n}\n\n// Better approach:\nvar wg sync.WaitGroup\nfor i := 0; i < 100; i++ {\n    wg.Add(1)\n    go func(i int) {\n        defer wg.Done()\n        doWork(i)\n    }(i)\n}\nwg.Wait()\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "2. Ignoring Error Handling",
+      "content": "Skipping error checks leads to hidden bugs and unreliable software.\n\n**Bad Practice**:\n```go\nval, _ := someFunc() // Silently ignoring errors\n```\n\n**Good Practice**:\n```go\nval, err := someFunc()\nif err != nil {\n    log.Fatal(err)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "3. Using Panic for Error Handling",
+      "content": "Using `panic` instead of returning an error is generally discouraged in Go (except for truly unrecoverable conditions).\n\n**Prefer** returning errors over panicking:\n```go\nfunc divide(a, b int) (int, error) {\n    if b == 0 {\n        return 0, errors.New(\"division by zero\")\n    }\n    return a / b, nil\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "4. Using Interfaces Unnecessarily",
+      "content": "Avoid creating interfaces just for the sake of it. Interfaces should represent behavior shared across types.\n\n**Bad**:\n```go\ntype Fooer interface {\n    Foo() string\n}\n\nfunc doSomething(f Fooer) {\n    fmt.Println(f.Foo())\n}\n```\n\n**Good**: Use concrete types unless abstraction is needed for testing or extensibility.",
+      "slide_type": "code"
+    },
+    {
+      "title": "5. Poor Naming Conventions",
+      "content": "Go favors short, descriptive names.\n\n| Bad Name        | Better Name    |\n|-----------------|----------------|\n| `calculateValue`| `calcVal`      |\n| `myStructThing` | `user`         |\n| `DoSomethingNow`| `process`      |",
+      "slide_type": "table",
+      "content": [
+        { "Bad Name": "calculateValue", "Better Name": "calcVal" },
+        { "Bad Name": "myStructThing", "Better Name": "user" },
+        { "Bad Name": "DoSomethingNow", "Better Name": "process" }
+      ]
+    },
+    {
+      "title": "6. Reinventing the Wheel",
+      "content": "Go’s standard library is rich. Avoid writing your own versions of:\n- HTTP servers\n- Sorting algorithms\n- Concurrency primitives\n\n**Tip**: Learn and use the standard library before creating custom tools.",
+      "slide_type": "text"
+    },
+    {
+      "title": "7. Not Using Context",
+      "content": "`context.Context` helps with cancellation and deadlines.\n\n**Anti-pattern**: Ignoring context in long-running operations or HTTP handlers.\n\n**Pattern**:\n```go\nfunc handle(ctx context.Context) {\n    select {\n    case <-time.After(5 * time.Second):\n        fmt.Println(\"done\")\n    case <-ctx.Done():\n        fmt.Println(\"cancelled\")\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### What’s wrong with this code?\n\n```go\nfunc risky() {\n    panic(\"something went wrong\")\n}\n```\n\n**Question 1:** Why is using `panic` here considered an anti-pattern?\n\n**Question 2:** Which Go feature should you use to avoid spawning uncontrolled goroutines?\n\n**Question 3:** Why should we not ignore returned errors in Go?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```go\n// Answer 1:\n// Using panic for expected errors is discouraged. It's better to return an error.\n\n// Answer 2:\n// Use sync.WaitGroup or worker pools to control concurrency and avoid leaks.\n\n// Answer 3:\n// Ignoring errors can hide bugs. Always check and handle them properly.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

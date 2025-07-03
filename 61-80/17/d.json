@@ -1,0 +1,57 @@
+[
+    {
+      "title": "Introduction to GOMAXPROCS",
+      "content": "In Go, **`runtime.GOMAXPROCS()`** sets the number of **OS threads** that can run Go code simultaneously.\n\nIt's part of the `runtime` package and influences how the Go scheduler utilizes your CPU cores.\n\nThis function is essential when working with **concurrency** and **performance tuning**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax of GOMAXPROCS",
+      "content": "```go\nfunc GOMAXPROCS(n int) int\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Parameters and Return Value",
+      "content": [
+        {
+          "Parameter": "n",
+          "Description": "Number of CPU cores to use. If 0, it returns the current setting without changing it."
+        },
+        {
+          "Return Value": "int",
+          "Description": "The previous setting of GOMAXPROCS."
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Default Behavior",
+      "content": "By default, Go sets GOMAXPROCS to the number of **available CPU cores** on your machine.\n\nYou typically don't need to change it, unless you're optimizing for **specific workloads**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Getting and Setting GOMAXPROCS",
+      "content": "```go\npackage main\n\nimport (\n    \"fmt\"\n    \"runtime\"\n)\n\nfunc main() {\n    prev := runtime.GOMAXPROCS(2) // Set max procs to 2\n    fmt.Println(\"Previous setting:\", prev)\n    fmt.Println(\"Current setting:\", runtime.GOMAXPROCS(0)) // Just read\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Visual: GOMAXPROCS Effect",
+      "content": "Imagine you have 4 CPU cores:\n- If GOMAXPROCS = 1: Only one goroutine runs at a time, even if others are ready.\n- If GOMAXPROCS = 4: Up to four goroutines run **in parallel**, boosting performance on multi-core systems.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Best Practices",
+      "content": "- Leave GOMAXPROCS at default unless profiling suggests otherwise.\n- Avoid setting it higher than available CPU cores.\n- Changing it dynamically can affect performance and should be profiled.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n\n1. What does `runtime.GOMAXPROCS(0)` do?\n2. If your CPU has 8 cores, what does setting GOMAXPROCS to 4 mean?\n3. True or False: GOMAXPROCS limits the number of goroutines you can create.\n4. Why might changing GOMAXPROCS improve performance?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```go\n// 1. Returns the current GOMAXPROCS value without changing it.\nruntime.GOMAXPROCS(0)\n\n// 2. Only 4 OS threads will execute Go code concurrently, even if 8 cores are available.\n\n// 3. False. It limits concurrent execution, not creation.\n\n// 4. It can optimize CPU utilization for specific workloads or reduce contention.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

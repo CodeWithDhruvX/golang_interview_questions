@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Introduction to Struct Comparison",
+    "content": "**Structs** in Go are user-defined types that group related data. When comparing two structs, Go allows the use of the `==` operator, but only if all fields within the struct are themselves comparable. Comparable types include basic types like `int`, `float`, `string`, and other structs composed of only comparable types. Attempting to compare structs with non-comparable fields like slices or maps will result in a compilation error.",
+    "slide_type": "text"
+  },
+  {
+    "title": "Basic Struct Comparison",
+    "content": "```go\npackage main\nimport \"fmt\"\n\ntype Person struct {\n    Name string\n    Age  int\n}\n\nfunc main() {\n    p1 := Person{\"Alice\", 30}\n    p2 := Person{\"Alice\", 30}\n    fmt.Println(p1 == p2) // true\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Non-Comparable Fields",
+    "content": "Go strictly enforces type safety. If a struct contains a field that is a **slice, map, or function**, the entire struct becomes **non-comparable** using the `==` operator. This is because Go doesn’t define equality for these types. Attempting a direct comparison results in a compile-time error, which helps prevent unintended runtime behavior. This is why developers often need to implement custom comparison logic when dealing with complex data structures.",
+    "slide_type": "text"
+  },
+  {
+    "title": "Example: Invalid Comparison",
+    "content": "```go\ntype Person struct {\n    Name string\n    Tags []string // slices are not comparable\n}\n\nfunc main() {\n    p1 := Person{\"Bob\", []string{\"tag1\"}}\n    p2 := Person{\"Bob\", []string{\"tag1\"}}\n    fmt.Println(p1 == p2) // compile-time error\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Workaround: Custom Comparison",
+    "content": "When a struct contains fields that cannot be directly compared, a manual or **custom comparison function** is necessary. This approach involves writing logic to check each field individually. For comparable fields, direct comparison is fine. For slices, arrays, or maps, developers must iterate through the values and compare each one manually. This is more verbose but ensures precise control over the comparison process.",
+    "slide_type": "text"
+  },
+  {
+    "title": "Custom Comparison Function",
+    "content": "```go\nfunc equal(p1, p2 Person) bool {\n    if p1.Name != p2.Name {\n        return false\n    }\n    if len(p1.Tags) != len(p2.Tags) {\n        return false\n    }\n    for i := range p1.Tags {\n        if p1.Tags[i] != p2.Tags[i] {\n            return false\n        }\n    }\n    return true\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Comparison Rules Summary",
+    "content": [
+      {
+        "CanBeCompared": "Yes, using ==",
+        "Rule": "Structs with all comparable fields"
+      },
+      {
+        "CanBeCompared": "No, manual comparison required",
+        "Rule": "Structs with slices, maps, or functions"
+      },
+      {
+        "CanBeCompared": "Yes, but slower and includes nil checks",
+        "Rule": "Reflect.DeepEqual()"
+      }
+    ],
+    "slide_type": "table"
+  },
+  {
+    "title": "Using reflect.DeepEqual",
+    "content": "Go's `reflect` package provides the `DeepEqual` function, which allows comparison of complex or nested data types, including those with slices, maps, and interfaces. `reflect.DeepEqual()` checks for deep equality recursively, which makes it a convenient tool for comparing structs that are otherwise non-comparable. However, it comes at the cost of performance and should not be used in performance-critical applications. It’s mainly suited for testing or debugging purposes.",
+    "slide_type": "text"
+  },
+  {
+    "title": "reflect.DeepEqual Example",
+    "content": "```go\nimport (\n    \"fmt\"\n    \"reflect\"\n)\n\ntype Person struct {\n    Name string\n    Tags []string\n}\n\nfunc main() {\n    p1 := Person{\"Bob\", []string{\"go\", \"dev\"}}\n    p2 := Person{\"Bob\", []string{\"go\", \"dev\"}}\n    fmt.Println(reflect.DeepEqual(p1, p2)) // true\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "Key Takeaways",
+    "content": "- The `==` operator is only valid for structs with fully comparable fields.\n- For structs with slices or maps, write custom comparison functions to avoid compilation errors.\n- `reflect.DeepEqual()` can handle complex comparisons but should be used sparingly due to its slower performance.\n- Understanding how struct comparison works is essential for writing reliable equality checks in Go programs, especially when working with configuration objects, data models, or test cases.",
+    "slide_type": "text"
+  }
+]

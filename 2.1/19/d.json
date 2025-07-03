@@ -1,0 +1,68 @@
+[
+    {
+      "title": "Introduction to Copying in Go",
+      "content": "In Go, when working with structs, it's crucial to understand how copying works. The way you copy a struct can affect how data is shared or isolated between the original and the copy. There are two main types of copying: \n\n- **Shallow Copy**: This creates a new instance of the struct but only copies the top-level data. It does not copy the contents of any reference types (such as pointers, slices, or maps) inside the struct. Instead, it simply copies the references. This means that both the original and the copy will point to the same underlying data. Any modifications made to the referenced data in one struct will reflect in the other. \n\n- **Deep Copy**: This creates a completely independent copy of the struct, including all of its nested data. When performing a deep copy, all reference types inside the struct, such as slices and pointers, are also copied, ensuring that changes made to the copied struct do not affect the original struct. Deep copying is essential when working with complex or mutable reference types to prevent unwanted side effects.\n\nThese two types of copying affect how data is stored, accessed, and shared, especially when structs contain nested or reference types. The choice between shallow and deep copy can have significant performance implications and impact the behavior of your program, particularly in concurrent or multi-threaded applications.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is a Shallow Copy?",
+      "content": "A **shallow copy** creates a duplicate of the struct but does not copy the data contained within the reference types like pointers, slices, or maps. Instead, the references to these elements are copied. This means that the original and the shallow copy will share the same underlying data. Any changes made to the referenced data in one struct will be reflected in the other. \n\nFor instance, consider a struct that contains a pointer to an array or a slice. When performing a shallow copy, only the pointer to the array or slice is copied, not the array or slice itself. Consequently, both structs will reference the same underlying array. This behavior can lead to unexpected side effects if both the original and the copy modify the data they share. \n\nShallow copies are useful when you need a quick duplication of a struct but are not concerned with the potential for shared references, such as when dealing with immutable data or read-only data. However, care must be taken when working with mutable reference types to avoid unintended consequences.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Shallow Copy Example",
+      "content": "```go\npackage main\nimport \"fmt\"\n\ntype Person struct {\n    Name string\n    Tags *[]string\n}\n\nfunc main() {\n    tags := []string{\"Go\", \"Dev\"}\n    p1 := Person{\"Alice\", \u0026tags}\n    p2 := p1 // shallow copy\n\n    (*p2.Tags)[0] = \"Golang\"\n\n    fmt.Println(p1.Tags) // [Golang Dev]\n    fmt.Println(p2.Tags) // [Golang Dev]\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "What is a Deep Copy?",
+      "content": "A **deep copy** creates an entirely new, independent copy of the struct, along with independent copies of any reference types (like slices, maps, or pointers) inside the struct. This ensures that changes made to the copied struct do not affect the original struct. Deep copying is particularly important when you want to ensure that the original and the copy are completely isolated from each other, especially when the struct contains mutable reference types. \n\nIn Go, deep copying requires creating new instances of the data that the original struct references. For instance, if the struct contains a slice or a pointer, the deep copy function will create a new slice or pointer with the same data as the original. This process ensures that the copy and the original are entirely independent, and modifications to one do not affect the other. \n\nTo perform deep copying in Go, you typically need to write custom copy functions for each type of reference data, or use external libraries designed for deep copying. Deep copying can be more time-consuming and memory-intensive compared to shallow copying, especially when dealing with large or complex structs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Deep Copy Example",
+      "content": "```go\npackage main\nimport \"fmt\"\n\ntype Person struct {\n    Name string\n    Tags *[]string\n}\n\nfunc deepCopy(p Person) Person {\n    newTags := make([]string, len(*p.Tags))\n    copy(newTags, *p.Tags)\n    return Person{p.Name, \u0026newTags}\n}\n\nfunc main() {\n    tags := []string{\"Go\", \"Dev\"}\n    p1 := Person{\"Alice\", \u0026tags}\n    p2 := deepCopy(p1)\n\n    (*p2.Tags)[0] = \"Golang\"\n\n    fmt.Println(p1.Tags) // [Go Dev]\n    fmt.Println(p2.Tags) // [Golang Dev]\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Shallow vs Deep Copy - Comparison",
+      "content": [
+        {
+          "Aspect": "Definition",
+          "Deep Copy": "Copies entire struct including all referenced data, creating independent copies",
+          "Shallow Copy": "Copies top-level structure only (does not copy the actual data inside references)"
+        },
+        {
+          "Aspect": "Memory Sharing",
+          "Deep Copy": "New memory allocations for nested data ensure no shared references, so changes to the copy do not affect the original",
+          "Shallow Copy": "References to nested data are shared, meaning any changes to referenced data affect both the original and the copy"
+        },
+        {
+          "Aspect": "Performance",
+          "Deep Copy": "Slower, due to the need to create new instances and copy nested data",
+          "Shallow Copy": "Faster, as it only copies the top-level struct and references"
+        },
+        {
+          "Aspect": "Use Case",
+          "Deep Copy": "Used when you need to ensure that changes to the copy do not affect the original, particularly for structs with mutable reference types",
+          "Shallow Copy": "Used when you only need to copy the struct but not the referenced data, typically when the data will not be modified independently"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Common Mistake: Copying Slices",
+      "content": "A common mistake when working with slices in Go is thinking that copying a slice directly will create an independent copy of the data. However, when you copy a slice, you are only copying the slice header—the metadata that includes the length, capacity, and a reference to the underlying array. This means that both the original and the copy will reference the same underlying array. \n\nThis can lead to unexpected behavior, as any changes made to the elements of the slice will affect both the original and the copied slice. For example, if you modify the contents of the copied slice, the changes will be reflected in the original slice as well. \n\nIt’s important to understand that a slice in Go is a reference type, and simply copying a slice does not create a new array. Instead, you need to explicitly copy the underlying data to ensure that the slices are independent. This can be done using the `copy()` function in Go to copy the contents of one slice into another.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Correct Way to Copy Slices",
+      "content": "To correctly copy a slice, you need to allocate a new slice and copy the underlying data into it. This can be done using the `copy` function in Go:\n\n```go\noriginal := []int{1, 2, 3}\ncopy := make([]int, len(original))\ncopy(copy, original)\ncopy[0] = 99\nfmt.Println(original) // [1 2 3] — original is unchanged\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Takeaways",
+      "content": "- Use **shallow copy** when references to the original data are acceptable, and you do not need to modify the referenced data independently. Shallow copy is faster and simpler but carries the risk of unintended side effects if reference types are modified. \n- Use **deep copy** when you need to create completely independent copies of a struct and its data, especially when dealing with mutable reference types like slices, maps, or pointers. Deep copy is slower and more memory-intensive but ensures isolation between the original and the copy. \n- Always be cautious when copying slices, maps, and pointers, as they are reference types and can lead to unintended modifications. It's crucial to understand the behavior of these reference types to avoid bugs. \n- Consider writing utility functions for deep copying complex structs with nested data. By creating reusable deep copy functions, you can avoid errors and make your code cleaner and more maintainable.",
+      "slide_type": "text"
+    }
+  ]

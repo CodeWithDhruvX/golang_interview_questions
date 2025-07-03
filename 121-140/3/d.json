@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Generic Constraints in Go",
+      "content": "In Go, you can restrict generic types using constraints. This allows you to ensure that the types used in your generic functions or types meet specific criteria.\n\nConstraints provide type safety, ensuring that only types that satisfy the constraints can be used. Let’s explore how this works!",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Are Constraints?",
+      "content": "A constraint in Go is a way of specifying the types that a generic function or type can accept. In Go, constraints are defined using interfaces.\n\nConstraints are defined using the `any` type or custom interfaces. The most basic constraint is `any`, which allows any type to be used.\n\nExample:\n```go\nfunc print[T any](value T) {\n    fmt.Println(value)\n}\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defining Custom Constraints",
+      "content": "You can create more specific constraints by defining custom interfaces. This lets you restrict the types to only those that implement the methods defined in the interface.\n\nExample of custom constraint:\n```go\ntype Numeric interface {\n    int | int32 | int64 | float32 | float64\n}\nfunc add[T Numeric](a T, b T) T {\n    return a + b\n}\n}```\nThis function only accepts numeric types.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using Multiple Constraints",
+      "content": "You can combine multiple constraints using `&` (AND) to restrict a generic to types that satisfy more than one interface.\n\nExample:\n```go\ntype ReadWriter interface {\n    io.Reader\n    io.Writer\n}\n\nfunc process[T ReadWriter](rw T) {\n    // Your code to process T\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "The `any` Keyword in Constraints",
+      "content": "`any` is the most flexible constraint in Go. It allows any type to be used in place of a generic type parameter.\n\nThis is useful when you want to work with a wide variety of types but still benefit from the type safety of generics.\n\nExample:\n```go\nfunc print[T any](value T) {\n    fmt.Println(value)\n}```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Working with Built-in Constraints",
+      "content": "Go provides a set of built-in constraints, such as `string`, `int`, and `error`, that you can use to limit the types that can be used in a generic function.\n\nFor example, `comparable` is a constraint that restricts the type to only those that can be compared using `==` and `!=`.\n\nExample:\n```go\nfunc max[T comparable](a T, b T) T {\n    if a > b {\n        return a\n    }\n    return b\n}```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How to Use Constraints in Practice",
+      "content": "Here’s an example where we restrict the generic type to only allow integer types.\n\nExample:\n```go\ntype Integer interface {\n    int | int32 | int64\n}\n\nfunc sum[T Integer](a T, b T) T {\n    return a + b\n}```\nThis ensures that only integer types are passed into the `sum` function.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Recap of Constraints in Go",
+      "content": "To recap, constraints in Go help you limit the types that can be used with generics. You can use built-in constraints, create custom ones, and combine them to enforce more complex rules on the types.\n\nKey points:\n- `any` is the most flexible constraint.\n- You can create custom constraints using interfaces.\n- Built-in constraints like `comparable` can be used for specific functionality.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Let’s test what you’ve learned! Answer these questions:\n\n1. What is the main purpose of using constraints in Go generics?\n2. What type does the constraint `any` allow?\n3. How do you create a custom constraint?\n4. Can you use multiple constraints at once? If so, how?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the answers to the challenge questions:\n\n1. **Purpose of constraints**: Constraints ensure that only types that meet specific criteria can be used with generics, providing type safety.\n\n2. **`any` constraint**: `any` allows any type to be used as a generic type.\n\n3. **Creating custom constraints**: You create custom constraints by defining interfaces that specify the methods the type must implement.\n\n4. **Multiple constraints**: Yes, you can use multiple constraints by combining them using `&`.\n\nExample: `type A interface { Foo() }` and `type B interface { Bar() }` can be combined to create `type AB interface { A; B }`.",
+      "slide_type": "code"
+    }
+  ]
+  

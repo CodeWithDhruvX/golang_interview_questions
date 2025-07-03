@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Introduction to Unit Testing in Go",
+      "content": "In Go, unit testing is an essential part of writing reliable code. The `testing` package allows us to write tests for functions and packages to ensure correctness and functionality.",
+      "slide_type": "text"
+    },
+    {
+      "title": "The Testing Package",
+      "content": "Go's standard library provides the `testing` package, which includes functions to write unit tests, benchmarks, and examples.\n\n- `t *testing.T`: Type used to report test results.\n- `t.Error`, `t.Fail`, `t.Fatal`: Methods to handle failures.\n\nExample of basic usage:",
+      "slide_type": "text"
+    },
+    {
+      "title": "Creating a Simple Test",
+      "content": "You can create a test by writing a function with the signature `func TestX(t *testing.T)`, where `X` is the name of the function being tested.\n\nHere’s a simple test example:\n\n```go\npackage main\n\nimport \"testing\"\n\nfunc Add(a, b int) int {\n  return a + b\n}\n\nfunc TestAdd(t *testing.T) {\n  result := Add(1, 2)\n  if result != 3 {\n    t.Errorf(\"Expected 3, but got %d\", result)\n  }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Running Tests",
+      "content": "To run your tests, use the command:\n\n```bash\ngo test\n```\n\nThis will automatically discover and run any functions starting with `Test` in your project files. It will show a summary of the tests executed and their results.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Test Functions and Assertions",
+      "content": "When writing tests, use assertions to validate expected outcomes. Common methods include:\n\n- `t.Error`: Logs an error but continues running the test.\n- `t.Fail`: Marks the test as failed, but continues.\n- `t.Fatal`: Marks the test as failed and stops the execution.\n\nFor example, `t.Errorf` allows you to print a custom error message.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Testing Multiple Cases",
+      "content": "Go allows you to test multiple cases in a single test function by using a table-driven approach. This is done by defining an array of test cases and iterating over them.\n\nExample:\n\n```go\nfunc TestAdd(t *testing.T) {\n  tests := []struct {\n    a, b, expected int\n  }{\n    {1, 1, 2},\n    {2, 3, 5},\n    {5, 7, 12},\n  }\n\n  for _, tt := range tests {\n    t.Run(fmt.Sprintf(\"%d+%d\", tt.a, tt.b), func(t *testing.T) {\n      result := Add(tt.a, tt.b)\n      if result != tt.expected {\n        t.Errorf(\"Expected %d, but got %d\", tt.expected, result)\n      }\n    })\n  }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Test Coverage",
+      "content": "You can check your test coverage using the `-cover` flag:\n\n```bash\ngo test -cover\n```\n\nThis will show the percentage of code that has been covered by tests. Aim for high coverage to ensure robustness.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Mocking and Stubbing",
+      "content": "For more complex tests that interact with external systems, you can use mocking and stubbing to simulate those interactions. The `mock` package or tools like `github.com/stretchr/testify/mock` can help you create mock objects.\n\nExample of a mock test using `mock` package:\n\n```go\npackage main\nimport (\n  \"testing\"\n  \"github.com/stretchr/testify/mock\"\n)\n\ntype MyMock struct {\n  mock.Mock\n}\n\nfunc (m *MyMock) SomeMethod() int {\n  args := m.Called()\n  return args.Int(0)\n}\n\nfunc TestMock(t *testing.T) {\n  m := new(MyMock)\n  m.On(\"SomeMethod\").Return(10)\n  result := m.SomeMethod()\n  if result != 10 {\n    t.Errorf(\"Expected 10, but got %d\", result)\n  }\n  m.AssertExpectations(t)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Benchmarking Tests",
+      "content": "Go's `testing` package also allows benchmarking tests to measure performance. Benchmark functions should have the signature `func BenchmarkX(b *testing.B)`.\n\nExample:\n\n```go\nfunc BenchmarkAdd(b *testing.B) {\n  for i := 0; i < b.N; i++ {\n    Add(1, 2)\n  }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Writing Examples for Documentation",
+      "content": "Go supports writing examples in test files that are also included in the documentation. These examples are automatically run as tests.\n\nHere’s an example:\n\n```go\n// ExampleAdd demonstrates the Add function\nfunc ExampleAdd() {\n  fmt.Println(Add(1, 2)) // Output: 3\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Quiz:\n\n1. How do you define a test function in Go?\n2. What command do you use to run tests in Go?\n3. What does the `t.Errorf` method do?\n4. How can you test multiple cases in a single test function?\n5. What is the purpose of the `-cover` flag?\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n\n1. A test function is defined with the signature `func TestX(t *testing.T)`.\n2. To run tests, use the command `go test`.\n3. `t.Errorf` logs an error with a custom message, but the test continues to run.\n4. You can use a table-driven approach with an array of test cases, iterating over them.\n5. The `-cover` flag shows the percentage of code covered by tests.\n",
+      "slide_type": "code"
+    }
+  ]
+  

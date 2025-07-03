@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Type Conversion vs Type Assertion",
+      "content": "In Go, type conversion and type assertion are two important concepts to understand. They allow you to manipulate and work with different data types effectively. While both involve handling types, they are used in different situations and have distinct behaviors.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is Type Conversion?",
+      "content": "Type conversion in Go allows you to explicitly convert a variable from one type to another. This is useful when you need to convert between compatible types.\n\nFor example, converting a `float64` to an `int` requires an explicit conversion, like so:\n\n```go\nvar x float64 = 5.6\nvar y int = int(x) // Converts float64 to int\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Conversion Syntax",
+      "content": "The syntax for type conversion is as follows:\n\n```go\nnewType(expression)\n``` \n\nWhere `newType` is the desired type, and `expression` is the value or variable being converted. Type conversion works only with types that are explicitly compatible, like converting between numeric types or from a string to a []byte.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is Type Assertion?",
+      "content": "Type assertion in Go is used to retrieve the dynamic type of an interface. It allows you to extract the underlying value of an interface and assert its specific type.\n\nFor example, when you have an interface, you can assert the concrete type like so:\n\n```go\nvar i interface{} = 42\nval, ok := i.(int)\n// val will be 42, ok will be true\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Assertion Syntax",
+      "content": "The syntax for type assertion is:\n\n```go\nvalue, ok := expression.(Type)\n``` \n\nWhere `expression` is the interface you are asserting, and `Type` is the type you are asserting it to. If the assertion is successful, `value` will hold the underlying value, and `ok` will be true. If not, `ok` will be false.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Differences Between Type Conversion and Type Assertion",
+      "content": "Here is a quick comparison of type conversion and type assertion:\n\n| Feature                  | Type Conversion                 | Type Assertion              |\n|--------------------------|----------------------------------|-----------------------------|\n| Purpose                  | Change type of a value explicitly | Retrieve dynamic type from an interface |\n| Syntax                   | `newType(value)`                | `value, ok := expr.(Type)`  |\n| Use Case                 | Compatible types                | Working with interfaces     |\n| Result on Failure        | Compile-time error              | Returns a second `bool` value indicating success or failure |\n",
+      "slide_type": "table"
+    },
+    {
+      "title": "When to Use Type Conversion?",
+      "content": "Type conversion is used when you need to convert values between compatible types, such as when converting from `float64` to `int`, or from `string` to `[]byte`.\n\nFor example:\n\n```go\nvar f float64 = 3.14\nvar i int = int(f) // valid conversion\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Use Type Assertion?",
+      "content": "Type assertion is typically used when working with interfaces. It allows you to retrieve the concrete type stored inside an interface. You should use type assertion when you want to know the dynamic type of an interface and need to access the value of that type.\n\nFor example:\n\n```go\nvar i interface{} = \"Hello\"\nstr, ok := i.(string)\nif ok {\n    fmt.Println(str)  // Output: Hello\n}\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Type Conversion vs Type Assertion Summary",
+      "content": "To summarize:\n- **Type Conversion** is for converting between compatible types explicitly.\n- **Type Assertion** is for extracting the underlying value of an interface.\n\nType conversion requires the target type to be compatible, while type assertion works specifically with interfaces and provides a way to check the dynamic type.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Answer these simple questions to check your understanding of type conversion and type assertion:\n\n1. What is the syntax for type conversion in Go?\n2. What happens if a type assertion fails?\n3. Can you assert an `int` type from a `string` type directly in Go?\n4. When would you use type assertion in Go?\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the solutions for the challenge:\n\n1. **Type Conversion Syntax:**\n   ```go\n   newType(value)\n   ```\n2. **Failure in Type Assertion:**\n   If a type assertion fails, it returns a second `bool` value, which indicates if the assertion was successful (`true`) or not (`false`).\n   ```go\n   val, ok := i.(Type)\n   ```\n3. **Type Assertion with `int` from `string`:**\n   No, you cannot assert a `string` to an `int` directly in Go. You need to first convert the string to a number using `strconv.Atoi`.\n4. **Use Case for Type Assertion:**\n   Type assertion is used when you need to access the concrete value stored in an `interface{}`.\n   ```go\n   var x interface{} = 42\n   val, ok := x.(int)\n   ```",
+      "slide_type": "code"
+    }
+  ]
+  

@@ -1,0 +1,48 @@
+[
+    {
+      "title": "What is the Factory Pattern?",
+      "content": "The Factory Pattern is a creational design pattern used to create objects without specifying the exact class of object that will be created. It provides an interface for creating objects, but the instantiation is done by subclasses or an external factory class.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use the Factory Pattern?",
+      "content": "The Factory Pattern promotes loose coupling by encapsulating the object creation logic. It helps avoid creating objects directly and instead provides a common interface to manage the creation process. This is particularly useful when the creation process is complex or varies based on different conditions.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Simple Factory in Go",
+      "content": "In Go, a simple factory pattern can be implemented using a function that returns an instance of a specific type. Here's an example of how to implement it in Go:\n\n```go\npackage main\n\nimport (\n\t\"fmt\"\n)\n\n// Shape interface\ntype Shape interface {\n\tDraw() string\n}\n\n// Circle struct\ntype Circle struct {}\nfunc (c *Circle) Draw() string {\n\treturn \"Drawing Circle\"\n}\n\n// Square struct\ntype Square struct {}\nfunc (s *Square) Draw() string {\n\treturn \"Drawing Square\"\n}\n\n// Factory function\nfunc GetShape(shapeType string) Shape {\n\tif shapeType == \"circle\" {\n\t\treturn &Circle{}\n\t} else if shapeType == \"square\" {\n\t\treturn &Square{}\n\t}\n\treturn nil\n}\n\nfunc main() {\n\tshape := GetShape(\"circle\")\n\tfmt.Println(shape.Draw())\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How the Factory Pattern Works",
+      "content": "The factory function `GetShape` takes a string parameter (`shapeType`) to decide which type of object to instantiate. Instead of directly creating a `Circle` or `Square` object, we call `GetShape` with the desired type and it returns an object of that type.\n\nThis method allows us to decouple the object creation from the client code, making it easier to modify or extend the shape types without affecting the rest of the code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Factory Pattern with Interfaces",
+      "content": "In Go, we can use interfaces to define common behavior for different types of objects. Here's an updated example with more types and an interface:\n\n```go\npackage main\n\nimport (\n\t\"fmt\"\n)\n\n// Shape interface\ntype Shape interface {\n\tDraw() string\n}\n\n// Circle struct\ntype Circle struct {}\nfunc (c *Circle) Draw() string {\n\treturn \"Drawing Circle\"\n}\n\n// Square struct\ntype Square struct {}\nfunc (s *Square) Draw() string {\n\treturn \"Drawing Square\"\n}\n\n// Triangle struct\ntype Triangle struct {}\nfunc (t *Triangle) Draw() string {\n\treturn \"Drawing Triangle\"\n}\n\n// Factory function\nfunc GetShape(shapeType string) Shape {\n\tswitch shapeType {\n\tcase \"circle\":\n\t\treturn &Circle{}\n\tcase \"square\":\n\t\treturn &Square{}\n\tcase \"triangle\":\n\t\treturn &Triangle{}\n\tdefault:\n\t\treturn nil\n\t}\n}\n\nfunc main() {\n\tshape := GetShape(\"triangle\")\n\tfmt.Println(shape.Draw())\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Factory Pattern with Variations",
+      "content": "In more complex cases, the Factory Pattern can be extended with multiple factories or different variations based on configuration. This allows you to have a more flexible design where multiple factories can be used to create different types of objects depending on various factors.\n\nExample:\n- Abstract Factory Pattern\n- Factory Method Pattern",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Use the Factory Pattern?",
+      "content": "The Factory Pattern is beneficial when:\n- The exact type of object to create isn't known until runtime.\n- Object creation requires a complex process that shouldn't be handled by the client.\n- You want to centralize the object creation logic in one place for easier management.\n- You need to manage a family of related objects.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "1. What is the main benefit of using the Factory Pattern?\n2. How does the Factory Pattern help in creating objects without exposing the object creation logic?\n3. Can you think of a scenario where using a factory might be useful in a Go program?\n\nWrite your answers below.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "1. **Main Benefit**: The Factory Pattern helps to create objects without specifying the exact class, which allows for flexibility and decouples the object creation from client code.\n\n2. **Encapsulation**: By using a factory function, the client code doesn't need to know about the concrete types of objects. It just asks for an interface type, and the factory provides the appropriate object.\n\n3. **Use Case in Go**: In a game program, if you wanted to create different character types (e.g., Warrior, Mage, Archer), a factory function could be used to generate the right character based on input.\n\nExample solution in Go:\n```go\ncharacter := GetCharacter(\"warrior\")\nfmt.Println(character.Attack())\n```",
+      "slide_type": "code"
+    }
+  ]
+  

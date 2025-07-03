@@ -1,0 +1,64 @@
+[
+    {
+      "title": "Introduction to internal Packages",
+      "content": "In Go, the `internal` package is a special way to **restrict access** to code.\n\nIt prevents other packages outside a specific tree from importing it. Think of it like a private folder for code!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use internal?",
+      "content": "- **Encapsulation**: Hide implementation details from external use.\n- **API Safety**: Prevent others from depending on unstable/internal code.\n- **Code Ownership**: Makes package boundaries clearer within large projects.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How internal Works",
+      "content": "```\nproject/\n├── utils/\n│   └── internal/\n│       └── helper.go\n├── service/\n│   └── main.go\n```\n\nIn this setup:\n- `utils/internal/helper.go` can be imported by packages **within** `utils/`.\n- But `service/` **cannot import** it, even though it’s in the same project.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Code Example: Valid internal Import",
+      "content": "```\n// File: utils/logic.go\npackage utils\n\nimport \"project/utils/internal/helper\"\n\nfunc UseHelper() {\n    helper.DoSomething()\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Code Example: Invalid internal Import",
+      "content": "```\n// File: service/main.go\npackage main\n\nimport \"project/utils/internal/helper\" // ❌ Error: use of internal package not allowed\n\nfunc main() {\n    helper.DoSomething()\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "internal Package Behavior Summary",
+      "content": [
+        {
+          "Rule": "Can import internal package?",
+          "From": "Same parent directory or subdirectory",
+          "Result": "✅ Yes"
+        },
+        {
+          "Rule": "Can import internal package?",
+          "From": "Outside parent directory",
+          "Result": "❌ No"
+        },
+        {
+          "Rule": "Purpose",
+          "From": "Hide implementation details",
+          "Result": "✅ Achieved"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Best Practices Using internal",
+      "content": "- Use `internal` to enforce modular code design.\n- Don't expose unstable or experimental APIs.\n- Use for packages not meant to be reused elsewhere.\n- Helpful in large codebases to reduce accidental dependency.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### 1. What is the main reason to use the `internal` package in Go?\n- A) To write faster code\n- B) To restrict access to certain packages\n- C) To reduce file size\n\n### 2. True or False: Any package in your project can import an `internal` package.\n\n### 3. Which of the following structures **can** import from `internal`?\n```\nA)\nproject/utils/internal/\nproject/utils/logic.go\n\nB)\nproject/internal/\nproject/main.go\n```\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```go\n// 1. Answer: B\n// The internal package restricts access from outside packages to protect internal logic.\n\n// 2. Answer: False\n// Only packages in the same directory tree (up to the parent of internal/) can access it.\n\n// 3. Correct Answer: A\n// 'logic.go' is in 'utils/', which is allowed to import from 'utils/internal/'.\n// In B, 'main.go' is outside 'internal/', so access is denied.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

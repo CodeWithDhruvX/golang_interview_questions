@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Composition and Inheritance in Go",
+      "content": "In Go, composition and inheritance are two key concepts used to achieve code reuse and modularity. Understanding the difference between these two can help you write more maintainable and flexible programs. Let's explore both in detail.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is Inheritance?",
+      "content": "Inheritance is a way of acquiring the properties and methods of another type. In classical object-oriented languages like Java or C++, inheritance is used to create a hierarchy between classes. However, Go does not have traditional inheritance, but it achieves similar behavior using **embedding**.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is Composition?",
+      "content": "Composition refers to the practice of including other types within a structure to provide functionality. In Go, you can compose types using **structs** and **interfaces** to build more complex types by including simpler ones. Composition provides greater flexibility and avoids some issues seen in inheritance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go's Approach: Embedding (Inheritance)",
+      "content": "In Go, you don't have inheritance in the traditional sense. Instead, Go uses **embedding**. This allows a struct to include another struct, thereby inheriting its methods and properties.\n\n```go\npackage main\n\ntype Animal struct {\n    Name string\n}\n\nfunc (a *Animal) Speak() {\n    fmt.Println(a.Name + \" says hello!\")\n}\n\ntype Dog struct {\n    Animal\n}\n\nfunc main() {\n    d := Dog{Animal{Name: \"Buddy\"}}\n    d.Speak() // Buddy says hello!\n}\n```\nHere, the `Dog` struct embeds the `Animal` struct, inheriting its `Speak` method.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Go's Approach: Composition",
+      "content": "In Go, composition is done by including one or more structs within a struct. This allows for greater flexibility and avoids problems like tight coupling that can occur with inheritance.\n\n```go\npackage main\n\ntype Engine struct {\n    Power int\n}\n\ntype Car struct {\n    Engine\n    Wheels int\n}\n\nfunc main() {\n    c := Car{Engine{Power: 150}, 4}\n    fmt.Println(c.Power) // 150\n}\n```\nHere, the `Car` struct uses composition to include the `Engine` struct.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Inheritance vs Composition Comparison",
+      "content": "| Feature               | Inheritance                       | Composition                     |\n|-----------------------|-----------------------------------|---------------------------------|\n| Code Reusability       | Achieved by subclassing           | Achieved by embedding or struct inclusion |\n| Flexibility            | Less flexible, can lead to tight coupling | More flexible, promotes loose coupling |\n| Complexity             | Can introduce complex hierarchies | Simpler, avoids deep hierarchies |\n| Go's Support           | No traditional inheritance, uses embedding | Directly supported via struct embedding or interfaces |",
+      "slide_type": "table"
+    },
+    {
+      "title": "Advantages of Composition in Go",
+      "content": "Composition in Go provides several benefits:\n- **Loose Coupling**: Components are less tightly bound, allowing for easier maintenance and modification.\n- **Flexibility**: You can combine different types to create complex structures without being restricted to a hierarchy.\n- **Better Code Organization**: Composition promotes a cleaner, modular approach to organizing code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Use Composition vs Inheritance",
+      "content": "Use **composition** when you need flexibility and modularity, such as when combining different behaviors without creating a deep class hierarchy. Use **embedding (inheritance)** when you need to reuse a small set of shared methods from a base struct.\n\nIn Go, it's generally encouraged to prefer composition over inheritance due to its simplicity and maintainability.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### 1. What is the main difference between inheritance and composition in Go?\n### 2. Which one provides more flexibility and avoids deep hierarchies: inheritance or composition?\n### 3. What does Go use to achieve inheritance-like behavior?\n\nTry answering these questions to check your understanding!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### 1. The main difference is that inheritance relies on a hierarchy and subclassing, while composition involves including other types within a struct.\n\n### 2. Composition provides more flexibility and avoids deep hierarchies, which is one reason it's preferred in Go.\n\n### 3. Go uses **embedding** to achieve inheritance-like behavior.\n\nEmbedding allows one struct to include another, making its methods available to the embedding struct.",
+      "slide_type": "code"
+    }
+  ]
+  

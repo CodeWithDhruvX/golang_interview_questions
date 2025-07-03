@@ -1,0 +1,117 @@
+**[Slide 1: Introduction to Named Return Values]**
+
+Hey there! Welcome to today’s video, where we’re diving into a cool feature of Go: **Named Return Values**. Now, Go’s syntax can be a bit minimalistic, but don’t worry, named return values make it a lot clearer and easier to follow. 
+
+So, what exactly are they? Well, when you define a function in Go, you usually specify what it returns in the function signature. Normally, you’d just list the return types, but with **named return values**, you can actually give the returned values names, right in the signature. This way, when you use these values, it's immediately clear what each one represents without having to look outside the function.
+
+Imagine you’re writing a function to calculate the area of a rectangle. Instead of returning just a number and leaving people guessing what it means, you could explicitly return something like `area`, and everyone knows what that number represents. Named return values just add that clarity!
+
+---
+
+**[Slide 2: Syntax of Named Return Values]**
+
+Alright, let's see how we can actually declare these named return values in code. Here's a simple example:
+
+```go
+func divide(a, b int) (result int, err error) {
+  if b == 0 {
+    err = fmt.Errorf("division by zero")
+    return
+  }
+  result = a / b
+  return
+}
+```
+
+Notice that in the function signature, we declare two named return values: `result` and `err`. `result` will hold the division result, and `err` will hold any potential errors. 
+
+The important part here is that we define these names **in the function signature** itself, right alongside their types. So when the function finishes, Go knows exactly what to return without us having to explicitly mention `result` and `err` in the `return` statement. We’ll get to that in a bit!
+
+One key thing to notice is how the code handles division by zero. Instead of just returning an error and having to manually specify the return values, we simply assign to `err` and **let Go automatically return these named values**. Cool, right?
+
+---
+
+**[Slide 3: How Named Return Values Work]**
+
+Now, let’s talk about how these named return values actually work. 
+
+When you use them, the return statement can be much simpler. You **don’t need to mention the names** of the return values again. Go knows what to return based on the names you gave in the function signature. So, in our example, we don’t need to write `return result, err` explicitly. We just say `return` and Go does the rest. 
+
+Also, here’s a cool trick: if the function exits **early**, say, because there was an error, Go will automatically return whatever is in the named variables at that point. So, in case of division by zero, `result` would remain its zero value (since we didn’t assign it), and `err` would contain the error message. This automatic handling of return values is super handy and reduces boilerplate code.
+
+---
+
+**[Slide 4: Example of Named Return Values]**
+
+Let’s take another quick look at the code example from earlier:
+
+```go
+func divide(a, b int) (result int, err error) {
+  if b == 0 {
+    err = fmt.Errorf("division by zero")
+    return
+  }
+  result = a / b
+  return
+}
+```
+
+Here’s how the flow goes:
+- The function accepts two integers `a` and `b`.
+- If `b` is zero, we assign an error to `err` and return immediately. **Notice we don’t need to write `return result, err`**, Go automatically returns the current state of `result` (which is zero) and `err` (which contains the error).
+- If `b` isn’t zero, we calculate the division and store the result in `result`. Then, we just call `return`—no need to mention the variables.
+
+This simplicity is super handy when you have multiple return values because it cuts down on repetitive code!
+
+---
+
+**[Slide 5: Benefits of Named Return Values]**
+
+Named return values have a few big benefits:
+
+1. **Readability**: The biggest win is that your code becomes easier to read. You don’t have to track what each return value means because you’ve already named them in the function signature.
+   
+2. **Simplified code**: Named return values let you simplify your return statement. No more repeating `result, err` at the end of the function. You just use `return`, and Go handles it.
+
+3. **Consistency**: Once you name your return values, it’s a lot easier to maintain consistency throughout your code. Every function has clearly labeled outputs that everyone can understand, which helps reduce mistakes when reading or modifying the code.
+
+---
+
+**[Slide 6: When to Use Named Return Values]**
+
+So, when should you use named return values? Here are a few scenarios where they really shine:
+
+- **Multiple return values**: If your function needs to return more than one value, naming them can make the code much clearer. For example, in our `divide` function, naming `result` and `err` makes it obvious what each value means.
+  
+- **Clear output labels**: If you want to make sure anyone reading your function knows exactly what each return value represents, named return values are a great tool.
+
+- **Conciseness**: If you want to make your return statements more concise, named return values can help you avoid having to repeat variable names.
+
+---
+
+**[Slide 7: Common Pitfalls to Avoid]**
+
+Of course, with great power comes great responsibility! Here are a couple of common pitfalls to watch out for:
+
+1. **Returning without setting values**: If you declare named return values but forget to assign them a value before returning, Go will automatically return their zero values. This can lead to confusing bugs, especially if the return value is important to the caller.
+
+2. **Unintentional modifications**: Because these values are named and declared in the function signature, you might accidentally modify them, even outside the intended logic. Make sure you carefully control where and how these values are set.
+
+---
+
+**[Slide 8: Summary Table of Named Return Values]**
+
+Let’s quickly wrap up with a summary table:
+
+| **Concept**             | **Description**                                                                 |
+|-------------------------|---------------------------------------------------------------------------------|
+| **What are they?**       | Named return values are explicitly declared return values in the function signature. |
+| **Benefit**              | Improves code readability and simplifies return statements.                     |
+| **Use case**             | Useful when functions return multiple values or need clear output labels.      |
+| **Common pitfall**       | Failing to assign values to named return variables leads to default zero values. |
+
+This table sums up the key takeaways: named return values make your code more readable, simplify the return process, and help avoid bugs with clearer function output.
+
+---
+
+That’s a wrap for today! I hope you now have a good understanding of named return values in Go. They’re a super useful feature, especially when dealing with multiple return values or when you want to make your functions really clear. Thanks for watching, and I’ll see you in the next video!

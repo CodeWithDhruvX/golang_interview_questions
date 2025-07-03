@@ -1,0 +1,48 @@
+[
+    {
+      "title": "Introduction to Goroutines",
+      "content": "Goroutines are lightweight, concurrent functions in Go that allow you to perform multiple tasks at once. They are managed by Go's runtime and are designed to be very efficient compared to traditional threads.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Starting a Goroutine",
+      "content": "To start a goroutine, you use the `go` keyword followed by a function call. This will execute the function concurrently with the rest of your program.\n\nExample:\n\n```go\ngo myFunction()\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Basic Goroutine Example",
+      "content": "Here's a simple example of how to use a goroutine in Go. In this example, `myFunction` is run concurrently with the main function.\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc myFunction() {\n    fmt.Println(\"This is running in a goroutine.\")\n}\n\nfunc main() {\n    go myFunction()\n    fmt.Println(\"Main function is running.\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Goroutines and Synchronization",
+      "content": "When using goroutines, you'll often need to ensure that your program doesn't exit before all goroutines have completed their work. You can use `sync.WaitGroup` to wait for all goroutines to finish.\n\nExample:\n\n```go\npackage main\n\nimport (\n    \"fmt\"\n    \"sync\"\n)\n\nfunc myFunction(wg *sync.WaitGroup) {\n    defer wg.Done()\n    fmt.Println(\"This is running in a goroutine.\")\n}\n\nfunc main() {\n    var wg sync.WaitGroup\n    wg.Add(1)\n    go myFunction(&wg)\n    wg.Wait()\n    fmt.Println(\"Main function is done.\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Goroutine vs Thread",
+      "content": "Goroutines are much lighter than threads. While threads are tied to the operating system, goroutines are scheduled and managed by Go's runtime. This allows you to create thousands or even millions of goroutines in a program without running into resource limitations like with threads.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using Goroutines Efficiently",
+      "content": "1. **Start with `go` keyword**: Begin a function call with `go`.\n2. **Synchronization**: Use `sync.WaitGroup` or channels to ensure your program waits for goroutines to finish.\n3. **Avoid blocking**: Goroutines work best when non-blocking tasks are executed in parallel.\n4. **Don't overuse goroutines**: Creating too many goroutines can cause overhead and inefficiencies.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Common Errors with Goroutines",
+      "content": "1. **Race Conditions**: Multiple goroutines accessing shared data can lead to unexpected behavior. Use synchronization mechanisms like mutexes to avoid this.\n2. **Premature program exit**: The program may exit before all goroutines finish. Always ensure proper synchronization (e.g., `sync.WaitGroup` or channels).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Answer the following questions to test your understanding of goroutines:\n\n1. What keyword is used to start a goroutine in Go?\n2. How can you ensure that your program waits for a goroutine to finish?\n3. What happens if you don’t use synchronization with goroutines?\n\nTry to answer these questions and check the solution in the next slide!",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the answers to the challenge questions:\n\n1. **The keyword is `go`.** You use the `go` keyword followed by a function call to start a goroutine.\n2. **You can use `sync.WaitGroup` to wait for a goroutine to finish.** It allows you to block the main function until all goroutines have completed.\n3. **If you don't use synchronization, your program may exit before the goroutine finishes, causing incomplete execution or errors.** You should always ensure proper synchronization when using goroutines.\n\nExample Solution Code:\n\n```go\npackage main\n\nimport (\n    \"fmt\"\n    \"sync\"\n)\n\nfunc myFunction(wg *sync.WaitGroup) {\n    defer wg.Done()\n    fmt.Println(\"This is running in a goroutine.\")\n}\n\nfunc main() {\n    var wg sync.WaitGroup\n    wg.Add(1)\n    go myFunction(&wg)\n    wg.Wait() // Ensure the program waits for goroutine to finish\n    fmt.Println(\"Main function is done.\")\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

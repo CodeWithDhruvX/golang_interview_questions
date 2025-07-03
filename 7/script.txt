@@ -1,0 +1,178 @@
+📘 [Slide 1: What is a Constant?]
+
+Okay, let’s start from the top: What exactly is a constant in Go?
+
+Imagine you’re writing down the value of Pi — you know, 3.14159... It never changes, right? So why would you allow your code to accidentally modify it?
+
+That’s where constants come in. In Go, a constant is just a value that never changes once it's defined. It’s read-only.
+
+And here’s the key part: Constants are evaluated at compile time — which means Go locks them in before the program even starts running. It’s like printing them in stone before the show begins.
+
+Why does this matter? Because it makes your code faster, safer, and more predictable.
+
+🧠 [Mini FAQ break]
+
+❓ Why not just use a variable and promise not to change it?
+
+Haha, good question! Well, a variable can accidentally get changed. A constant can’t. Go’s compiler won’t even let you compile the program if you try to modify a constant. It’s like a helpful bodyguard saying, “Nope, you’re not touching that.”
+
+👨‍💻 [Slide 2: Syntax of Constant Declaration]
+
+Let’s look at the basic syntax.
+
+go
+Copy
+Edit
+const identifier type = value
+Pretty clean, right?
+
+const is the keyword.
+
+identifier is just the name you give to your constant, like Pi.
+
+Then comes the type, like float64.
+
+And finally, the value itself.
+
+It’s a lot like a variable declaration — but with a big difference: It never changes.
+
+👨‍💻 [Slide 3: Simple Constant Example]
+
+Now let’s see it in action:
+
+go
+Copy
+Edit
+const Pi float64 = 3.14159
+fmt.Println(Pi) // Output: 3.14159
+So here, we’re declaring a constant called Pi, giving it a type of float64, and assigning it the value 3.14159.
+
+Then we print it — and as expected, it gives us the value back.
+
+Simple? Yep.
+
+But again, if you try to do something like Pi = 4, Go will throw a tantrum and say, “Nope. You made a promise.”
+
+💡 [Slide 4: Implicit Typing with Constants]
+
+Now here’s something cool about Go — it’s pretty smart.
+
+You don’t always have to declare the type. If Go can figure it out from the value, it’ll do it for you.
+
+Check this out:
+
+go
+Copy
+Edit
+const Pi = 3.14159
+fmt.Printf("%T", Pi) // Output: float64
+Even though we didn’t say float64, Go looked at 3.14159 and went, “Ah, I know what you mean.”
+
+This is called type inference, and it helps keep your code clean and less repetitive. But don’t worry — Go won’t guess unless it’s 100% sure.
+
+🧑‍💻 [Slide 5: Multiple Constants Declaration]
+
+Alright — next up, what if you have a bunch of constants?
+
+Instead of writing them one by one, you can group them like this:
+
+go
+Copy
+Edit
+const (
+  A = 1
+  B = 2
+  C = 3
+)
+Think of it like organizing your socks in a drawer. Cleaner, right?
+
+This is especially helpful when you're working with related constants — like HTTP status codes or user roles.
+
+🔍 [Slide 6: Untyped vs Typed Constants]
+
+Let’s dig a bit deeper.
+
+There are typed and untyped constants.
+
+Typed constants have a specific type you declare — like const Pi float64 = 3.14.
+
+Untyped constants don’t — they let Go decide based on context. And that gives them a superpower: flexibility.
+
+For example, if you have:
+
+go
+Copy
+Edit
+const x = 42
+That x can act like an int, a float64, or even a complex — depending on where you use it.
+
+But if you typed it like int32, and tried to use it with an int64 variable, you’d hit a type mismatch. So — unless you really need a fixed type, go untyped!
+
+📊 [Slide 7: Constant Declaration Table]
+
+Alright, let’s recap the different ways you can declare constants.
+
+
+Form	Syntax
+Single	const name = value
+Typed	const name type = value
+Grouped	const ( name1 = v1; name2 = v2 )
+So you’ve got flexibility here. Whether you want to go minimal, strict, or organized — Go has your back.
+
+Grouped declarations especially shine when you’ve got related constants, like user access levels or app modes — you can keep them all in one tidy block.
+
+🆚 [Slide 8: Constants vs Variables]
+
+Let’s clear something up: What’s the difference between constants and variables?
+
+Here’s a quick breakdown:
+
+
+Aspect	Constant	Variable
+Mutability	Immutable	Mutable
+Declaration	const	var or :=
+Eval Time	Compile-time	Run-time
+👉 Constants are like rules — set in stone.
+👉 Variables are like containers — they can be emptied and refilled.
+
+A good example is a tax rate. That’s usually fixed — perfect for a constant.
+
+But a user’s age? That can change — so you use a variable.
+
+📌 [Slide 9: When to Use Constants]
+
+So… when should you use constants?
+
+Here’s the golden rule: Use constants for values that never change.
+
+✅ Mathematical values: Pi, gravity
+✅ Business logic: TAX_RATE, MAX_RETRIES
+✅ App settings: AppName, PortNumber
+
+They also help your code make sense. Like, instead of seeing 3.14 everywhere, you see Pi. Much easier to read, and even easier to maintain.
+
+Plus — they eliminate “magic numbers.” You know, random numbers that appear in code with no explanation. Constants give those numbers names, and names tell stories.
+
+🔁 [Slide 10: Recap: Defining Constants in Go]
+
+Alright — let’s wrap this up with a quick recap.
+
+Use const to define constants.
+
+Constants are immutable and evaluated at compile time.
+
+You can use typed or untyped constants.
+
+Grouping constants keeps things clean and readable.
+
+Once you start using constants smartly, your code becomes more readable, reliable, and robust. It’s a small habit that pays off big time in the long run.
+
+🎤 [OUTRO: Call to Action]
+
+And that’s it for today, folks! 🎉
+
+If this helped clear up constants for you, drop a 👍 and let me know in the comments what you’d like to learn next in Go!
+
+And hey — if you’re serious about leveling up your Go skills, don’t forget to subscribe and hit that bell 🔔 because we’ve got more bite-sized, beginner-friendly Go content coming your way every week.
+
+Until next time — happy coding! 🚀

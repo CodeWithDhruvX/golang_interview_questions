@@ -1,0 +1,66 @@
+[
+    {
+      "title": "Introduction to Timeouts in Go",
+      "content": "In Go, timeouts are essential when you want to prevent your program from waiting forever for an operation to complete.\n\nYou can use the `select` statement in combination with `time.After` to implement timeouts.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Understanding the `select` Statement",
+      "content": "The `select` statement in Go allows a goroutine to wait on multiple communication operations.\n\nIt executes the first case that is ready, making it ideal for handling timeouts by racing communication vs. a timeout.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Timeout Example",
+      "content": "package main\n\nimport (\n    \"fmt\"\n    \"time\"\n)\n\nfunc main() {\n    c := make(chan string)\n\n    go func() {\n        time.Sleep(2 * time.Second)\n        c <- \"result\"\n    }()\n\n    select {\n    case res := <-c:\n        fmt.Println(res)\n    case <-time.After(1 * time.Second):\n        fmt.Println(\"timeout\")\n    }\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "How It Works",
+      "content": "- A goroutine is simulating a delayed operation.\n- The `select` listens on both:\n  - `c <- result` (the real work)\n  - `time.After` (a timeout channel)\n- Whichever happens first determines the outcome.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Practical Use Cases",
+      "content": "- Waiting for API responses\n- Reading from slow network connections\n- Avoiding deadlocks in concurrent systems",
+      "slide_type": "text"
+    },
+    {
+      "title": "Timeout with Looping Select",
+      "content": "package main\n\nimport (\n    \"fmt\"\n    \"time\"\n)\n\nfunc main() {\n    timeout := time.After(3 * time.Second)\n    tick := time.Tick(500 * time.Millisecond)\n\n    for {\n        select {\n        case <-tick:\n            fmt.Println(\"tick\")\n        case <-timeout:\n            fmt.Println(\"timeout\")\n            return\n        }\n    }\n}",
+      "slide_type": "code"
+    },
+    {
+      "title": "Comparison: Without vs With Timeout",
+      "content": [
+        {
+          "With Timeout": "Prevents hanging",
+          "Without Timeout": "May block forever"
+        },
+        {
+          "With Timeout": "Graceful degradation",
+          "Without Timeout": "Poor UX or crash"
+        },
+        {
+          "With Timeout": "More control",
+          "Without Timeout": "Harder to manage"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Best Practices",
+      "content": "- Always timeout long-running goroutines.\n- Avoid `time.After` in loops without cleanup—it can cause leaks.\n- Use `context.WithTimeout` for more advanced needs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions\n\n1. What happens if neither the real operation nor the timeout channel fires in a `select` block?\n2. Modify this snippet to timeout after 2 seconds:\n\n```go\nselect {\ncase res := <-resultChan:\n    fmt.Println(res)\n}\n```\n\n3. Why is it better to use `context.WithTimeout` in large systems?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "// 1. The `select` blocks and waits if no case is ready.\n\n// 2. Modified version with timeout:\nselect {\ncase res := <-resultChan:\n    fmt.Println(res)\ncase <-time.After(2 * time.Second):\n    fmt.Println(\"timeout\")\n}\n\n// 3. `context.WithTimeout` is preferred in large systems because:\n// - It propagates deadlines and cancellations across goroutines.\n// - It helps clean up resources when a timeout occurs.\n// - It's composable and integrates well with APIs.",
+      "slide_type": "code"
+    }
+  ]
+  

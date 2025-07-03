@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Interfaces in Go",
+      "content": "In Go, interfaces are a powerful feature that allows you to define behaviors without specifying the concrete types. They are essential for writing **mockable code**, especially in unit testing.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is an Interface?",
+      "content": "An **interface** in Go defines a set of methods that a type must implement. Unlike many other languages, Go does not require explicit declaration of implementing an interface.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defining an Interface",
+      "content": "Here is how you define an interface in Go:\n\n```go\ntype Speaker interface {\n    Speak() string\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Implementing an Interface",
+      "content": "In Go, a type implicitly implements an interface by implementing all the methods defined in the interface. No need for explicit declaration:\n\n```go\ntype Person struct {\n    Name string\n}\n\nfunc (p Person) Speak() string {\n    return \"Hello, I'm \" + p.Name\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using Interfaces in Functions",
+      "content": "Interfaces are useful in functions for **abstraction**. Functions can accept any type that implements a particular interface.\n\n```go\nfunc greet(speaker Speaker) {\n    fmt.Println(speaker.Speak())\n}\n\np := Person{Name: \"John\"}\ngreet(p) // Output: Hello, I'm John\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Mocking Interfaces for Testing",
+      "content": "Interfaces are crucial for mocking in tests. You can create mock implementations of interfaces to isolate units of code for testing.\n\nFor example, you might use a mock database interface in unit tests.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Mocking an Interface",
+      "content": "Here’s an example of mocking an interface for unit testing. Assume you have a `Database` interface.\n\n```go\ntype Database interface {\n    Save(data string) error\n}\n\n// Mock implementation for testing\ntype MockDatabase struct {}\n\nfunc (m MockDatabase) Save(data string) error {\n    return nil // Mock behavior\n}\n\nfunc testSave(db Database) {\n    err := db.Save(\"test data\")\n    if err != nil {\n        fmt.Println(\"Test failed!\")\n    } else {\n        fmt.Println(\"Test passed!\")\n    }\n}\n\n// Using the mock in test\nfunc main() {\n    mockDB := MockDatabase{}\n    testSave(mockDB)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Benefits of Interfaces for Mocking",
+      "content": "Using interfaces allows you to decouple your code from specific implementations, making it easier to swap real dependencies with mocks for unit tests. This leads to:\n\n- Better test isolation\n- Easier testability\n- More flexible code",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Points to Remember",
+      "content": "- Interfaces in Go are satisfied implicitly\n- Use interfaces to define **behavior**, not concrete implementations\n- Mock interfaces for easier unit testing and isolated code\n- Functions can accept any type that implements an interface",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Answer the following questions to test your understanding of Go interfaces.\n\n1. What does an interface in Go define?\n2. How does Go know if a type implements an interface?\n3. Why are interfaces useful for unit testing?\n4. Write a simple Go interface and a struct that implements it.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the solutions to the challenge questions:\n\n1. **What does an interface in Go define?**\n   - An interface defines a set of methods that a type must implement.\n\n2. **How does Go know if a type implements an interface?**\n   - Go determines this implicitly by checking if the type implements all the methods defined by the interface.\n\n3. **Why are interfaces useful for unit testing?**\n   - Interfaces allow you to create mock implementations for dependencies, making testing easier and more isolated.\n\n4. **Write a simple Go interface and a struct that implements it.**\n   ```go\n   type Greeter interface {\n       Greet() string\n   }\n\n   type Person struct {\n       Name string\n   }\n\n   func (p Person) Greet() string {\n       return \"Hello, \" + p.Name\n   }\n   ```",
+      "slide_type": "code"
+    }
+  ]
+  

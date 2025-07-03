@@ -1,0 +1,43 @@
+[
+    {
+      "title": "What is an Interface?",
+      "content": "An **interface** in object-oriented programming is a contract that defines a set of methods that a class must implement. It acts as a blueprint for the class.\n\nHowever, interfaces can also exist without any methods, which can serve other purposes in certain scenarios.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Can an Interface Have No Methods?",
+      "content": "Yes, an interface **can** have no methods. An interface with no methods is often used as a **marker interface**. Marker interfaces are used to signal to the system that a class possesses some special property or behavior.\n\nExample: `Serializable` in Java is an interface without any methods, but its presence indicates that a class can be serialized.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use Interfaces with No Methods?",
+      "content": "An interface with no methods can serve various purposes:\n\n- **Marker Interface:** Used for tagging a class with some behavior.\n- **Type Safety:** Ensures that a class adheres to a certain category, even without implementing specific methods.\n- **Runtime Behavior:** Allows the system to check for special properties dynamically.\n\nExample: A marker interface might tell a framework to apply a specific set of rules or configurations.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example of a Marker Interface",
+      "content": "Here's a simple example of a marker interface in Java:\n\n```java\npublic interface Serializable {}\n\npublic class MyClass implements Serializable {\n    // No methods to implement\n}\n```\n\nIn this case, `Serializable` is a marker interface with no methods. It doesn't force `MyClass` to implement any methods but simply marks it as **serializable**.",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example Use Case for Marker Interface",
+      "content": "Imagine a framework that handles serialization. It checks if a class implements the `Serializable` marker interface before performing actions like saving or sending data.\n\n```java\nif (obj instanceof Serializable) {\n    // Perform serialization\n} else {\n    // Handle accordingly\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Points About Interfaces with No Methods",
+      "content": "- Interfaces without methods do not require any specific behavior to be implemented.\n- They are often used as **marker interfaces** for tagging or categorizing classes.\n- Such interfaces can be leveraged in type checks and runtime behavior.\n- Marker interfaces provide a flexible way to extend the functionality of a class without changing its design.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Quiz:\n\n1. Can an interface in Java have no methods?\n   - A) Yes\n   - B) No\n\n2. What is a marker interface?\n   - A) An interface that requires methods\n   - B) An interface that does not require any methods but marks classes for special behavior\n\n3. How might a system use a marker interface?\n   - A) By checking if a class implements the interface to perform special actions\n   - B) By forcing the class to implement methods",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solutions:\n\n1. **A) Yes** – Interfaces can have no methods, and they can still be useful for other purposes, such as marking a class.\n\n2. **B) An interface that does not require any methods but marks classes for special behavior** – This is the definition of a marker interface.\n\n3. **A) By checking if a class implements the interface to perform special actions** – Systems use marker interfaces in type checks to determine specific behavior or functionality.\n\nExample:\n```java\nif (obj instanceof Serializable) {\n    // Special handling for serializable classes\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

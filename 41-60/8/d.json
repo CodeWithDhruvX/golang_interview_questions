@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Interfaces in Go",
+      "content": "In Go, **interfaces** are a way to define behavior. A type implements an interface if it provides all the methods that the interface requires. Go uses **implicit interface implementation**, which means you don't need to explicitly declare that a type implements an interface.",
+      "slide_type": "text"
+    },
+    {
+      "title": "How to Check if a Type Implements an Interface",
+      "content": "To check if a type implements an interface, Go offers the **comma ok idiom**. This allows you to check if a variable of one type can be assigned to a variable of an interface type.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Checking Interface Implementation",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\n// Define an interface\ntype Speaker interface {\n    Speak() string\n}\n\n// Define a type\ntype Person struct {}\n\n// Method for Person\nfunc (p Person) Speak() string {\n    return \"Hello!\"\n}\n\nfunc main() {\n    var s Speaker\n    p := Person{}\n\n    // Checking if p implements Speaker\n    if _, ok := interface{}(p).(Speaker); ok {\n        fmt.Println(\"Person implements Speaker!\")\n    } else {\n        fmt.Println(\"Person does not implement Speaker.\")\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Explanation of the Code",
+      "content": "In this code example:\n\n1. We define an interface `Speaker` with a method `Speak`.\n2. We create a `Person` type with a method `Speak`.\n3. We use `interface{}(p)` to convert `Person` into an empty interface, and then check if it can be asserted as the `Speaker` interface.\n4. The check is done using the `comma ok idiom` (`ok`) to determine if the assertion is valid.",
+      "slide_type": "text"
+    },
+    {
+      "title": "The Comma Ok Idiom",
+      "content": "The **comma ok idiom** is used when attempting to assert that a type implements an interface. The result is two values:\n\n- The first is the value of the assertion (if successful).\n- The second is a boolean (`true` or `false`) indicating whether the assertion succeeded.\n\nThis allows you to safely check if a type implements an interface without causing a runtime panic.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example with the Comma Ok Idiom",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\ntype Greetable interface {\n    Greet() string\n}\n\ntype Person struct {\n    Name string\n}\n\nfunc (p Person) Greet() string {\n    return \"Hello, \" + p.Name\n}\n\nfunc main() {\n    var g Greetable\n    p := Person{Name: \"Alice\"}\n\n    if greetable, ok := interface{}(p).(Greetable); ok {\n        fmt.Println(greetable.Greet())\n    } else {\n        fmt.Println(\"Person does not implement Greetable.\")\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "When the Type Doesn't Implement the Interface",
+      "content": "If a type does not implement an interface, the check will return `false` in the comma ok idiom.\n\nThis is helpful in scenarios where you need to validate whether a type supports a particular set of methods before attempting to call them.\n\nThis is particularly useful when working with various libraries or when designing flexible functions that accept multiple types.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Key Points to Remember",
+      "content": "- Go uses implicit interface implementation: no need to declare that a type implements an interface.\n- The comma ok idiom is a safe way to check if a type implements an interface.\n- The check does not cause a runtime panic.\n- The result is a boolean (`true` or `false`) indicating if the type implements the interface.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "- Does Go require explicit declarations to implement an interface?\n- How do you check if a type implements an interface in Go?\n- What does the comma ok idiom return when the type doesn't implement the interface?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```go\n// Answer 1: No, Go does not require explicit declarations.\n// Answer 2: You can check using the comma ok idiom: '_, ok := interface{}(p).(Speaker)'\n// Answer 3: If the type doesn't implement the interface, the comma ok idiom will return 'false'.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

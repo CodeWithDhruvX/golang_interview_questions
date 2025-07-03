@@ -1,0 +1,53 @@
+[
+    {
+      "title": "Introduction to Deadlocks in Go",
+      "content": "Deadlocks occur when two or more goroutines are waiting for each other to release resources, creating an infinite waiting cycle. Understanding how to detect and avoid deadlocks is crucial in concurrent programming in Go.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Causes Deadlocks?",
+      "content": "A deadlock in Go typically happens when:\n\n- Two goroutines are waiting on each other to release locks.\n- Goroutines are waiting on channels and neither can proceed.\n- There's improper use of mutexes or channels that causes cyclic dependencies.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go's Built-in Deadlock Detection",
+      "content": "Go itself does not have built-in deadlock detection in most cases. However, it provides tools such as the `runtime` package and the `go run -race` command for detecting issues related to concurrency, including potential deadlocks.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Detecting Deadlocks with the `-race` Flag",
+      "content": "The `-race` flag detects race conditions, but it can also help identify some deadlocks indirectly, especially when goroutines are blocked indefinitely.\n\nTo use the `-race` flag, run:\n\n```bash\ngo run -race your_program.go\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using Goroutine Dumps",
+      "content": "A goroutine dump is a useful tool in detecting deadlocks. It shows the stack traces of all goroutines, including any that are blocked.\n\nTo get a goroutine dump, use:\n\n```go\nruntime.Stack(buf []byte, all bool) string\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example of Deadlock in Go",
+      "content": "Here's an example of a basic deadlock:\n\n```go\npackage main\n\nimport (\n  \"fmt\"\n  \"sync\"\n)\n\nfunc main() {\n  var mu1, mu2 sync.Mutex\n  go func() {\n    mu1.Lock()\n    mu2.Lock()\n    fmt.Println(\"Goroutine 1\")\n    mu2.Unlock()\n    mu1.Unlock()\n  }()\n  go func() {\n    mu2.Lock()\n    mu1.Lock()\n    fmt.Println(\"Goroutine 2\")\n    mu2.Unlock()\n    mu1.Unlock()\n  }()\n  fmt.Scanln()\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Deadlock Detection with `select` Statement",
+      "content": "The `select` statement can be used to detect deadlocks in channel-based communication.\n\nHere's a simple example of a deadlock using `select`:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n  ch1 := make(chan int)\n  ch2 := make(chan int)\n\n  select {\n  case v := <-ch1:\n    fmt.Println(v)\n  case v := <-ch2:\n    fmt.Println(v)\n  default:\n    fmt.Println(\"Deadlock detected!\")\n  }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Best Practices to Avoid Deadlocks",
+      "content": "To prevent deadlocks in Go, follow these best practices:\n\n- Always lock mutexes in a consistent order.\n- Use `select` statements with timeouts to prevent indefinite waiting.\n- Avoid nested locks and complex dependencies.\n- Regularly analyze code using `go run -race` and goroutine dumps.\n- Use channels effectively and avoid circular dependencies.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "Let's test your understanding of deadlocks in Go!\n\n1. What does a deadlock mean in the context of Go programming?\n2. How can the `-race` flag help with deadlock detection?\n3. In the given example of deadlock, what is the cause?\n4. How can `select` be used to detect deadlocks in channel communication?",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "Here are the solutions to the challenge:\n\n1. **What does a deadlock mean in the context of Go programming?**\n   - A deadlock occurs when two or more goroutines are waiting on each other to release resources, resulting in a cycle of waiting with no progress.\n\n2. **How can the `-race` flag help with deadlock detection?**\n   - The `-race` flag detects race conditions and can indirectly help identify deadlocks by flagging potential blocking issues in goroutines.\n\n3. **In the given example of deadlock, what is the cause?**\n   - The cause is that goroutine 1 locks `mu1` and then tries to lock `mu2`, while goroutine 2 locks `mu2` and tries to lock `mu1`, creating a circular dependency and causing both goroutines to block.\n\n4. **How can `select` be used to detect deadlocks in channel communication?**\n   - The `select` statement's `default` case can be used to detect deadlocks in channel communication by running the default case when no channels are ready, indicating a blocked state.\n",
+      "slide_type": "code"
+    }
+  ]
+  

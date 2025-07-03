@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to sync.Once",
+      "content": "**`sync.Once`** is a type in Go's `sync` package that ensures a piece of code is executed **only once**, no matter how many times it is called—even from multiple goroutines.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Use sync.Once?",
+      "content": "- Guarantees single execution\n- Helps in initializing shared resources safely\n- Prevents race conditions in concurrent programs",
+      "slide_type": "text"
+    },
+    {
+      "title": "Basic Syntax",
+      "content": "```go\nvar once sync.Once\nonce.Do(func() {\n    fmt.Println(\"This will run only once\")\n})\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How sync.Once Works",
+      "content": "- `once.Do(func)` executes the function only once\n- Even if `Do` is called multiple times, the function runs just one time\n- Ideal for one-time initialization logic",
+      "slide_type": "text"
+    },
+    {
+      "title": "Thread-Safe Initialization Example",
+      "content": "```go\npackage main\n\nimport (\n    \"fmt\"\n    \"sync\"\n)\n\nvar once sync.Once\nvar config string\n\nfunc loadConfig() {\n    fmt.Println(\"Loading config...\")\n    config = \"AppConfigLoaded\"\n}\n\nfunc main() {\n    for i := 0; i < 5; i++ {\n        go func() {\n            once.Do(loadConfig)\n            fmt.Println(config)\n        }()\n    }\n\n    // Give goroutines time to finish\n    time.Sleep(1 * time.Second)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Properties of sync.Once",
+      "content": [
+        { "Property": "Method", "Description": "`Do(f func())`" },
+        { "Property": "Thread-Safety", "Description": "Safe to call from multiple goroutines" },
+        { "Property": "Repeat Calls", "Description": "Function runs only once, even if Do is called repeatedly" },
+        { "Property": "Common Use", "Description": "One-time initialization" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Common Mistake to Avoid",
+      "content": "- **Do not pass different functions to `once.Do`** expecting each to run\n- Only the first call’s function will be executed\n\n```go\nonce.Do(func() { fmt.Println(\"Init A\") })\nonce.Do(func() { fmt.Println(\"Init B\") }) // Won’t run\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Real-World Use Cases",
+      "content": "- Initializing configuration files\n- Setting up database connections\n- Registering global resources or logging setups\n- Creating singleton objects",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Question 1:\nWhat happens if `once.Do()` is called from 10 goroutines?\n\n### Question 2:\nWhere would you use `sync.Once` in a web server setup?\n\n### Question 3:\nTrue or False: `sync.Once` can execute multiple different functions if passed at different times.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "```markdown\n### Answer 1:\nOnly the first function passed to `once.Do()` will execute, even if called from 10 goroutines.\n\n### Answer 2:\nYou might use `sync.Once` to initialize a config loader or database connection, ensuring it's done only once.\n\n### Answer 3:\nFalse. `sync.Once` executes only the first function passed; others are ignored.\n```",
+      "slide_type": "code"
+    }
+  ]
+  

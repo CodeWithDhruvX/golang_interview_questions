@@ -1,0 +1,57 @@
+[
+    {
+      "title": "Introduction to Methods in Go",
+      "content": "In Go, **methods** are functions that are associated with a particular type.\n\nThey allow you to define behavior specific to types, similar to methods in classes in other languages.\n\n> **Key Point:** Methods are functions with a *receiver*.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defining a Method",
+      "content": "To define a method, you specify a **receiver** between the `func` keyword and the method name.\n\nSyntax:\n```go\nfunc (receiver Type) MethodName(params) ReturnType {\n    // method body\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Example: Simple Method",
+      "content": "```go\ntype Person struct {\n    name string\n}\n\nfunc (p Person) greet() {\n    fmt.Println(\"Hello, my name is\", p.name)\n}\n\nfunc main() {\n    p := Person{name: \"Alice\"}\n    p.greet()\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Pointer vs Value Receivers",
+      "content": "- **Value Receiver:** The method gets a copy of the receiver.\n- **Pointer Receiver:** The method can modify the original receiver.\n\n**Tip:** Use pointer receivers if the method needs to modify the receiver or to avoid copying large structs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Pointer Receiver",
+      "content": "```go\ntype Counter struct {\n    count int\n}\n\nfunc (c *Counter) increment() {\n    c.count++\n}\n\nfunc main() {\n    c := Counter{}\n    c.increment()\n    fmt.Println(c.count) // Output: 1\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Methods vs Functions",
+      "content": "- **Functions** are independent.\n- **Methods** are tied to a specific type via a receiver.\n\n| Aspect        | Function | Method  |\n|---------------|----------|---------|\n| Has Receiver? | No       | Yes     |\n| Called on?    | Any      | Specific type instance |",
+      "slide_type": "table"
+    },
+    {
+      "title": "Table: Quick Comparison",
+      "content": [
+        { "Aspect": "Has Receiver?", "Function": "No", "Method": "Yes" },
+        { "Aspect": "Called On?", "Function": "Any", "Method": "Specific type instance" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Challenge: Create Your Own Method",
+      "content": "- **Task:**\n  - Create a `Book` struct with `title` and `author` fields.\n  - Write a method `display()` that prints the book details.\n\n*Tip: Start simple!*",
+      "slide_type": "text"
+    },
+    {
+        "title": "Quick Challenge: Practice Methods",
+        "content": "- **Question:** How do you define a method `drive()` for a `Car` struct that prints \"Driving\"?\n- **Question:** Should you use a value or pointer receiver if the method needs to update the `mileage` field of the `Car`?\n\n*Tip: Think about when you want to modify the original data!*",
+        "slide_type": "text"
+      },
+      {
+        "title": "Solutions: Practice Methods",
+        "content": "- **Answer 1:** Define the method with a value receiver if it only prints, or a pointer receiver if it changes the struct.\n\nExample (printing only):\n```go\ntype Car struct {\n    brand string\n}\n\nfunc (c Car) drive() {\n    fmt.Println(\"Driving\")\n}\n```\n\n- **Answer 2:** Use a **pointer receiver** if you need to update the `mileage` field because you want to modify the original `Car` instance.\n\nExample (updating mileage):\n```go\ntype Car struct {\n    brand   string\n    mileage int\n}\n\nfunc (c *Car) addMiles(miles int) {\n    c.mileage += miles\n}\n```",
+        "slide_type": "code"
+      }
+      
+  ]
+  

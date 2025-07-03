@@ -1,0 +1,64 @@
+[
+    {
+      "title": "Introduction to Variadic Functions",
+      "content": "In Go, a **variadic function** is a function that can accept **zero or more arguments** of a specified type. This is useful when you don’t know how many arguments will be passed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Syntax of Variadic Function",
+      "content": "To define a variadic function in Go, use the syntax: `func functionName(args ...Type)`.\n\nThe `...Type` means it can accept multiple arguments of that type.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Sum of Integers",
+      "content": "```go\npackage main\nimport \"fmt\"\n\nfunc sum(numbers ...int) int {\n    total := 0\n    for _, num := range numbers {\n        total += num\n    }\n    return total\n}\n\nfunc main() {\n    fmt.Println(sum(1, 2, 3)) // Output: 6\n    fmt.Println(sum())        // Output: 0\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How Variadic Arguments Work",
+      "content": "Inside a variadic function, the arguments are available as a **slice**. In the example `numbers ...int`, inside the function `numbers` is of type `[]int`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Passing a Slice to Variadic Function",
+      "content": "You can pass a slice to a variadic function using the `...` operator.\n\nExample: `sum([]int{1, 2, 3}...)`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Passing a Slice",
+      "content": "```go\nfunc main() {\n    nums := []int{4, 5, 6}\n    fmt.Println(sum(nums...)) // Output: 15\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Mixing Fixed and Variadic Parameters",
+      "content": "You can have fixed parameters before the variadic one. The variadic parameter must always be the **last** in the function definition.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Greeting with Names",
+      "content": "```go\nfunc greet(greeting string, names ...string) {\n    for _, name := range names {\n        fmt.Println(greeting, name)\n    }\n}\n\nfunc main() {\n    greet(\"Hello\", \"Alice\", \"Bob\")\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Rules of Variadic Functions",
+      "content": [
+        { "Rule": "Only one variadic parameter allowed" },
+        { "Rule": "It must be the last parameter" },
+        { "Rule": "Acts as a slice inside the function" },
+        { "Rule": "Can be called with zero or more values" },
+        { "Rule": "Slices can be expanded using `...`" }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Use Cases of Variadic Functions",
+      "content": "- Logging multiple messages\n- Aggregation operations (sum, average, etc.)\n- Formatting functions (like `fmt.Println` and `fmt.Printf`)",
+      "slide_type": "text"
+    },
+    {
+      "title": "Conclusion",
+      "content": "Variadic functions in Go provide **flexibility** when dealing with an **unknown number of arguments**. They're useful, simple to implement, and widely used in Go's standard library.",
+      "slide_type": "text"
+    }
+  ]
+  

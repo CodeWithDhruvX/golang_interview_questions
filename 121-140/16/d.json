@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Structural Typing in Go",
+      "content": "In Go, structural typing is a concept where types are considered compatible based on their structure rather than their explicit names. This means that two types can be used interchangeably if they have the same fields and methods, even if they are defined differently.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Structural Typing vs. Nominal Typing",
+      "content": "In nominal typing, types are considered compatible only if they have the same name or explicitly declared as the same type. Structural typing focuses on the type's structure (its fields and methods) rather than the name of the type.\n\n**Go uses structural typing**, meaning if two structs have the same fields, they can be used interchangeably, even if they have different names.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Go Interfaces and Structural Typing",
+      "content": "In Go, the primary way structural typing is used is through **interfaces**. A type is said to implement an interface if it has methods that match the interface's method set, regardless of whether the type explicitly declares that it implements the interface.\n\nFor example, if a type has the same methods as an interface, it is considered to implement that interface automatically.\n",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Using Interfaces in Go",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\ntype Speaker interface {\n    Speak() string\n}\n\ntype Person struct {\n    Name string\n}\n\nfunc (p Person) Speak() string {\n    return \"Hello, my name is \" + p.Name\n}\n\nfunc greet(s Speaker) {\n    fmt.Println(s.Speak())\n}\n\nfunc main() {\n    p := Person{Name: \"Alice\"}\n    greet(p) // Person implements Speaker interface implicitly\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How Go Implements Structural Typing",
+      "content": "Go doesn't require explicit declarations to state that a type implements an interface. As long as a type has all the methods required by the interface, it is considered to implement that interface.\n\nThis automatic behavior is key to Go’s structural typing approach, allowing for more flexibility and cleaner code.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Implicit Interface Implementation",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\ntype Walker interface {\n    Walk() string\n}\n\ntype Robot struct {}\n\nfunc (r Robot) Walk() string {\n    return \"I am walking\"\n}\n\nfunc main() {\n    r := Robot{}\n    // Robot automatically implements Walker interface\n    var w Walker = r\n    fmt.Println(w.Walk())\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Key Benefits of Structural Typing in Go",
+      "content": "1. **Flexibility**: No need for explicit interface declarations.\n2. **Loose Coupling**: Types don't have to know about each other, reducing dependencies.\n3. **Ease of Use**: Less boilerplate code is needed when implementing interfaces.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Limitations of Structural Typing in Go",
+      "content": "1. **Unintended Interface Implementations**: A type may accidentally implement an interface if its methods match the interface.\n2. **Lack of Explicit Type Intent**: The programmer does not explicitly declare that a type implements an interface, making it harder to understand the code at a glance.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Use Structural Typing in Go",
+      "content": "Use structural typing in Go when:\n- You need loose coupling between different types.\n- You want flexibility in how different types can be used interchangeably.\n- The interface's methods are central to the behavior of the types, rather than the names of the types themselves.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Questions:\n1. What is the main difference between structural typing and nominal typing?\n2. How does Go determine if a type implements an interface?\n3. What is a potential drawback of Go's approach to structural typing?\n\n**Try to answer before moving to the solution slide!**",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Answers:\n1. **Structural typing** focuses on the fields and methods of a type, while **nominal typing** focuses on the type's name.\n\n2. In Go, a type implements an interface if it has all the methods declared by that interface. No explicit declaration is needed.\n\n3. A potential drawback of Go's structural typing is that types might accidentally implement an interface if their methods match, leading to unintended behavior.",
+      "slide_type": "code"
+    }
+  ]
+  

@@ -1,0 +1,79 @@
+[
+    {
+      "title": "Introduction to Go Code Quality Tools",
+      "content": "Go provides several tools to ensure your code is correct, readable, and efficient. These tools help detect bugs, enforce best practices, and maintain consistency.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Code Quality Matters in Go",
+      "content": "- **Fewer bugs**: Early detection of mistakes\n- **Better readability**: More maintainable code\n- **Standardization**: Keeps code consistent across teams\n- **Performance**: Identifies potential inefficiencies",
+      "slide_type": "text"
+    },
+    {
+      "title": "What is `go vet`?",
+      "content": "`go vet` is a tool that checks Go source code for suspicious constructs.\n\nIt focuses on catching likely mistakes such as:\n- Printf format mismatches\n- Misuse of `struct` tags\n- Redundant or incorrect code logic",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using `go vet`",
+      "content": "go vet ./...",
+      "slide_type": "code"
+    },
+    {
+      "title": "What is `golint`?",
+      "content": "`golint` checks your code for style mistakes, not correctness. It ensures your code follows Go conventions.\n\nIt catches things like:\n- Inconsistent naming\n- Missing comments on exported symbols",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using `golint`",
+      "content": "golint ./...",
+      "slide_type": "code"
+    },
+    {
+      "title": "What is `staticcheck`?",
+      "content": "`staticcheck` is a more powerful linter that combines style checks, performance issues, and correctness.\n\nIt includes checks from `go vet`, `golint`, and more advanced custom rules.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Using `staticcheck`",
+      "content": "staticcheck ./...",
+      "slide_type": "code"
+    },
+    {
+      "title": "Comparison Table of Go Quality Tools",
+      "content": [
+        {
+          "Tool": "go vet",
+          "Focus": "Correctness",
+          "Highlights": "Detects bugs like printf mismatches"
+        },
+        {
+          "Tool": "golint",
+          "Focus": "Style",
+          "Highlights": "Checks naming and documentation"
+        },
+        {
+          "Tool": "staticcheck",
+          "Focus": "Correctness + Style + Performance",
+          "Highlights": "Combines vet, lint, and custom checks"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Mini Challenge: Spot the Issue",
+      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    name := \"Gopher\"\n    fmt.Printf(\"Hello %d!\\n\", name)\n}\n```\n\nCan you spot the problem in the code above?\n(Hint: Think about format specifiers)",
+      "slide_type": "code"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Multiple Choice:\n\n**1. Which tool checks for print format mismatches?**\n- A) golint\n- B) go vet\n- C) staticcheck\n\n**2. Which tool focuses mainly on style and naming?**\n- A) staticcheck\n- B) go vet\n- C) golint\n\n**3. Which tool provides the most comprehensive set of checks?**\n- A) golint\n- B) go vet\n- C) staticcheck",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "// Answer 1: B) go vet\n// Explanation: go vet catches formatting issues like %d used for a string.\n\n// Answer 2: C) golint\n// Explanation: golint helps enforce Go style, such as naming and documentation.\n\n// Answer 3: C) staticcheck\n// Explanation: staticcheck includes checks from both vet and lint, plus more advanced rules.",
+      "slide_type": "code"
+    }
+  ]
+  

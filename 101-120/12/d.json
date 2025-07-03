@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Type Parameters",
+      "content": "Type parameters allow you to write **generic code** that works with any data type. They were introduced in Go 1.18 and provide a way to define functions, methods, or types that can operate on any type, making your code more flexible and reusable.",
+      "slide_type": "text"
+    },
+    {
+      "title": "What Are Type Parameters?",
+      "content": "A **type parameter** is a placeholder for a type that will be specified later when the function, method, or type is used. It allows you to define generic functionality that can operate on any type that satisfies certain constraints.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Declaring Type Parameters",
+      "content": "You declare type parameters in Go using **brackets (`[]`)** after the function or type name.\n\nExample:\n```go\nfunc Print[T any](value T) {\n    fmt.Println(value)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Using the `any` Constraint",
+      "content": "`any` is a special constraint that means the type parameter can be any type. This is useful when you don't want to restrict the function to a specific set of types.\n\nExample:\n```go\nfunc Print[T any](value T) {\n    fmt.Println(value)\n}\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Type Constraints in Go",
+      "content": "You can restrict type parameters to specific types using **constraints**. For example, you can constrain a type parameter to only accept numbers.\n\nExample:\n```go\nfunc Add[T int | float64](a, b T) T {\n    return a + b\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Generic Types in Go",
+      "content": "In addition to functions, you can create **generic types** with type parameters. For instance, you can define a generic `Box` type that can hold any type of value.\n\nExample:\n```go\ntype Box[T any] struct {\n    value T\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Type Parameters and Interfaces",
+      "content": "Type parameters can be used with interfaces to create more flexible and reusable code.\n\nExample:\n```go\nfunc PrintValues[T any](values []T) {\n    for _, v := range values {\n        fmt.Println(v)\n    }\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Why Use Type Parameters?",
+      "content": "Type parameters help reduce **code duplication** and make your programs more reusable. Instead of writing separate functions or types for each type, you can write one generic version that works with any compatible type.",
+      "slide_type": "text"
+    },
+    {
+      "title": "When to Use Type Parameters?",
+      "content": "Use type parameters when you need **generic behavior** that applies to multiple types, like in data structures, utility functions, or algorithms.\n\nExamples:\n- Generic containers (lists, maps)\n- Mathematical functions (like `Add` or `Multiply`)",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "1. What is the purpose of type parameters in Go?\n2. How do you define a function with a type parameter?\n3. What is the `any` constraint in Go?\n4. Provide an example of a function that uses a type constraint.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "1. **Type parameters** allow you to write functions or types that work with any type.\n\n2. To define a function with a type parameter:\n```go\nfunc Print[T any](value T) {\n    fmt.Println(value)\n}\n```\n\n3. The `any` constraint means the type parameter can be any type.\n\n4. Example of a function with a type constraint:\n```go\nfunc Add[T int | float64](a, b T) T {\n    return a + b\n}\n```",
+      "slide_type": "code"
+    }
+  ]
+  

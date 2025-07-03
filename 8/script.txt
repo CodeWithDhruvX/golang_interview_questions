@@ -1,0 +1,260 @@
+In Go, we use three things to do this: var, :=, and const.
+
+Now if you're coming from a different programming background — like maybe you’ve tried Python or Java — this might look a little different. But don’t worry, once you get the hang of it, it’s actually pretty clean and easy.
+
+So here’s what you need to know:
+
+var is the traditional way to declare a variable.
+
+:= is a shortcut — very commonly used in Go — especially inside functions.
+
+And const is for values that should never change — like fixed values in your code.
+
+Think of it like this:
+
+If you're building a small Go program, maybe a basic calculator, you'll need variables to store user input or results. That’s where var or := comes in.
+
+But if you have something like pi = 3.14, which should never change anywhere in your code, that’s where const is perfect.
+
+So learning when to use each of these is super important — it helps you write cleaner, more efficient Go code and also makes your code easier to understand for others.
+
+Trust me, if you're planning to build any real-world project in Go — whether it's a web app, a tool, or even for a coding interview — this is one of the first things you'll need to get comfortable with.
+
+
+
+===========================================
+
+
+
+Now let’s look at how to declare variables in Go using the var keyword.
+
+In simple words, var is like telling Go,
+"Hey, I want to create a variable. Here’s the name, and maybe the type too."
+
+Let’s look at the first line:
+
+go
+Copy
+Edit
+var age int = 25
+Here, we’re creating a variable called age.
+We’re telling Go: the name is age, the type is int, which means integer, and the value is 25.
+
+So basically —
+Name: age
+Type: int
+Value: 25
+
+Now the next line:
+
+go
+Copy
+Edit
+var name = "Alice" // Type inferred
+Here’s something cool — we didn’t mention the type. But Go is smart enough to figure it out. Since we gave "Alice" as the value, Go automatically understands, "Okay, this must be a string."
+
+This is called type inference — Go figures out the type from the value.
+
+Now, when should you use var?
+
+Let’s say you’re writing a slightly bigger program, maybe a backend app or a student marksheet system, and you want to declare variables outside of functions — var is your go-to.
+
+Also, if you ever want to declare a variable without giving a value immediately, you’ll have to use var. You can’t use := for that — we’ll come to that soon.
+
+So, just remember:
+var gives you more control — you can mention the type if needed, or leave it for Go to decide.
+
+And for beginners, this is a good place to start — it’s clear, readable, and easy to understand.
+
+
+
+
+==============================================
+
+
+
+Okay, now let’s talk about this shorthand way of declaring variables in Go — using :=.
+
+This is one of the things that makes Go feel nice and simple once you get used to it.
+
+So what’s happening here?
+
+When you write something like:
+
+go
+Copy
+Edit
+age := 25
+Go is doing two things at once:
+It’s creating a variable called age, and it’s assigning the value 25 to it — all in one line.
+
+And guess what? You don’t even need to mention the type.
+Go will look at the value and automatically figure out that 25 is an integer.
+
+Same with the next line:
+
+go
+Copy
+Edit
+name := "Alice"
+Here, name is a new variable, and since the value is "Alice", Go understands it’s a string.
+
+So this := syntax saves time, keeps your code short, and is very commonly used in Go programs — especially inside functions.
+
+Now, a very important thing to remember — and this trips up a lot of beginners —
+You can only use := inside a function.
+
+You can’t use it at the top level of your Go file, outside the main() function or any other function. If you try it there, Go will give you an error.
+
+So think of := as a shortcut that works only inside functions, like your main() function or any custom function you write.
+
+In most real-world coding, like writing small tools, handling user input, or doing calculations inside functions — you’ll be using := a lot. It keeps things clean and readable.
+
+So as a beginner, you’ll probably find yourself using := more often than var, at least in the beginning. Just make sure you're inside a function when you do.
+
+
+
+================================================
+
+Now let’s talk about const — this is used when you want to create a constant, which means a value that never changes.
+
+So unlike variables, where the value can be updated later, a constant stays fixed throughout your program.
+
+Let’s look at the first line:
+
+go
+Copy
+Edit
+const Pi = 3.14
+Here, we’re declaring a constant called Pi. The value is 3.14, and that’s it — you cannot change it later.
+
+So imagine you’re building a program that needs to do some math — and you’re using 3.14 for Pi again and again. Instead of typing the number everywhere, you can just use Pi, and your code becomes cleaner.
+
+Plus, because it’s a constant, you don’t have to worry about it accidentally changing somewhere.
+
+Next line:
+
+go
+Copy
+Edit
+const AppName = "MyApp"
+Here we have another constant called AppName. This could be the name of your website, your service, or maybe your mobile app.
+
+Again, the key idea is — once it’s set, it can’t be changed.
+
+Now one important thing:
+In Go, when you declare a constant, you must assign a value right there. You can’t leave it empty and assign it later — that’s not allowed.
+
+So just remember: if something in your code should stay fixed — like tax rates, version numbers, app names — use const. It’s a good habit and also shows other developers that this value is not supposed to change.
+
+And in interviews too, if you're asked to write clean code or handle config values — constants are the right way to do it.
+
+
+
+===================================================================
+
+Alright, now let’s do a quick side-by-side comparison of var, :=, and const.
+
+This table helps you clearly see the differences — which one to use, when, and why.
+
+Let’s start with the first row — the keyword itself.
+
+We’ve got three options: var, :=, and const.
+All of them are used to declare something — either a variable or a constant.
+
+Next column — “Can Infer Type”:
+This just means — can Go automatically figure out the type for you?
+
+And the answer is yes for all three.
+So whether you use var, :=, or const, you can skip writing the type if you give an initial value.
+
+Now — “Scope”:
+
+This is important.
+
+var works both globally and locally.
+That means you can declare it outside functions or inside them.
+
+:= works only locally — that means inside functions.
+You can’t use := outside the main() function, or it’ll give an error.
+
+const is flexible — just like var, it can be used globally or locally.
+
+So if you’re declaring something at the top of your file, like a global setting or config, avoid :=.
+
+Next up — “Changeable”:
+
+This tells you whether you can change the value later.
+
+var — yes, totally. You can update the value anytime.
+
+:= — same. It behaves like var, just shorter.
+
+const — nope. Once you set a constant, it stays the same forever.
+
+So if you need a fixed value — like a tax rate, API version, or an app name — always go with const.
+
+Last column — “Requires Initialization”:
+
+This means — do you need to give a value when you declare it?
+
+var — no, you can just say var age int, and give the value later.
+
+:= — yes, always. You can’t use := without giving a value.
+
+const — also yes. You have to assign a value when you declare it.
+
+So to summarise —
+If you're declaring something fixed, use const.
+If you want a variable and you're inside a function, := is quick and easy.
+But if you’re outside a function, or you want more flexibility, go with var.
+
+This table is something you'll keep coming back to — especially in early projects or coding interviews. So it’s good to get comfortable with these differences.
+
+
+
+=============================================================
+
+Now before we wrap up, let’s look at a few common mistakes that beginners — especially new Go programmers — often make. If you can avoid these early on, it’ll save you a lot of frustration later.
+
+First one — Trying to use := outside a function.
+
+This is a very common mistake.
+
+You might write something like name := "Alice" right at the top of your Go file, outside the main() function — and it’ll give you an error.
+
+Why? Because := only works inside functions.
+So always remember: := is not allowed globally — only within functions like main() or any other custom ones.
+
+Second — Forgetting to initialize a const.
+
+This one’s simple: if you're using const, you must give it a value right when you declare it.
+
+For example, writing just const Pi float64 won’t work.
+Go needs to know the value immediately. Otherwise, the compiler will throw an error.
+
+And finally — Declaring variables with var but never using them.
+
+Now this might sound harmless, but in Go, if you declare a variable and don’t use it — even once — Go will complain. It doesn’t allow unused variables.
+
+So let’s say you write:
+
+go
+Copy
+Edit
+var age int
+But then you don’t use age anywhere in your program — boom, you’ll get an error.
+This is different from many other languages where unused variables are just ignored.
+
+So just remember — if you declare it, use it. Otherwise, remove it.
+
+These might sound small, but these little mistakes are often what slow down beginners.
+So keep them in mind while writing code, and you’ll have a much smoother experience learning Go.
+
+
+
+
+
+
+
+

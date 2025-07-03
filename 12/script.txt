@@ -1,0 +1,331 @@
+Alright, let’s talk about “Defer with named return value.”
+
+So what does that even mean?
+
+In Go, sometimes when we write a function, we give a name to the return value right in the function signature. This is called a named return value. And when we use defer in such a function, it actually gets a chance to change that return value before it’s finally returned.
+
+Sounds a bit technical? Don’t worry, let me break it down.
+
+Imagine you're submitting a college assignment. You finish writing it, but just before handing it in, your friend says, “Hey, you made a small spelling mistake — fix it before submitting!” You quickly correct it and then submit. That final correction is like what defer does — it runs at the end, just before your work is officially turned in.
+
+In Go, if you’ve named your return value, the defer block can directly update it right before it goes out of the function. This is super useful when you want to log something, clean up, or even tweak the final result in one last step.
+
+It’s a powerful feature — but only works when you’ve named that return value.
+
+We’ll look at some code examples next, but for now just remember:
+
+With named return values, defer is like your final chance to polish the result before it leaves the function.
+
+
+
+
+==============================================================================
+
+
+
+Here’s a simple Go function:
+
+go
+Copy
+Edit
+func getNumber() (result int) {
+    defer func() {
+        result += 1
+    }()
+    return 5
+}
+Now let’s go through it step by step.
+
+The function is called getNumber, and it’s returning an int.
+But notice this — the return value is named. It’s called result.
+
+This is important. Since we’ve given a name to the return value, Go treats result like a normal variable inside the function.
+
+Then, we have a defer statement.
+
+Inside that deferred function, we write result += 1.
+
+So what’s happening here?
+We’re saying:
+“After everything else in the function is done — just before it returns — please add 1 to result.”
+
+Now look at the return line.
+We’re returning 5.
+
+But remember, before the function ends, the defer block runs. So result becomes 6.
+
+That means this function will finally return 6, not 5.
+
+💡 This is a small but powerful concept.
+If you’re doing things like error handling, logging, or adjusting the result — this trick can be super handy.
+
+But again, this only works because we named the return value.
+
+If the return value didn’t have a name, the deferred function wouldn’t be able to modify it.
+
+So the key takeaway?
+Defer can tweak the result — but only if it knows the name.
+
+
+
+
+===================================================================================================
+
+
+Let’s now understand what actually happened in that previous example — step by step.
+
+So first, we had a return value called result, and it was named right in the function signature.
+This means that inside the function, result behaves just like a regular variable — it’s already declared and ready to use.
+
+Then comes the key part — we used a defer statement.
+Now here’s the interesting bit: even though we wrote return 5, the defer block still runs after that line, but before the function actually finishes.
+
+It’s like telling Go:
+“Hey, return 5 — but before you walk out, just run this last-minute line of code.”
+
+And in that last-minute line, we said: result += 1.
+So 5 becomes 6.
+
+That’s why the final return value is not 5, but 6.
+
+💡 This small trick is really handy when you want to adjust or clean up something right before returning — especially when working with logs, errors, counters, or closing resources.
+
+Just remember:
+For defer to change the return value, that return value must be named.
+
+Otherwise, Go won’t know what variable to update.
+
+
+
+
+=================================================================================
+
+
+
+Now let’s look at the opposite case — what happens when we don’t use a named return value.
+
+The slide says:
+
+If no named return value is used, deferred functions cannot change the returned value directly.
+
+So what does that mean in simple terms?
+
+Let’s say you're writing a function and you're just returning a value like this — return 5. But you didn’t give that return value a name like result.
+
+Now even if you use a defer inside that function, it cannot reach or change that return value. Why? Because Go doesn’t have a variable to modify. There's no “label” on that returned value.
+
+It’s kind of like trying to change a train ticket that doesn't have your name on it. If the ticket isn’t assigned to anyone, no one knows who it belongs to — so you can’t update it.
+
+So the key thing to remember here is:
+
+If you don’t name the return value, defer can still run, but it won’t be able to affect the final result.
+
+This matters a lot when you’re doing cleanup, adjusting return values, or writing functions where the result depends on what happens in defer.
+
+So just be careful — if you want defer to have any control over the return value, make sure to name it.
+
+
+
+
+===============================================================================================
+
+
+Alright, let’s look at this example — Unnamed return value with defer.
+
+go
+Copy
+Edit
+func getNumber() int {
+    result := 5
+    defer func() {
+        result += 1
+    }()
+    return result
+}
+Okay, so here’s what’s happening.
+
+We’ve got a simple function called getNumber. It returns an int, right?
+
+Inside the function, we create a variable called result and assign it the value 5.
+
+Now comes the interesting part — we use defer.
+
+We’re deferring a function. This small anonymous function — you see this func() block? — it says result += 1, which means it's trying to add 1 to result.
+
+And then, we return result.
+
+Now here’s the key thing: this result is not a named return value. That’s why we call it unnamed return.
+
+So when the return result line runs, Go prepares the return value — but before actually returning it, the defer block runs.
+
+But here’s the catch: this defer is modifying a local variable, not a named return value. So it does change result inside the function, but this change doesn’t affect what’s returned.
+
+Why? Because Go already grabbed the return value before the defer function modified it.
+
+So in this case, even though we do result += 1, the function still returns 5, not 6.
+
+This is a common confusion for beginners. You might think — “Hey, I changed the value in defer, why didn’t it reflect?” — and this is why understanding named vs unnamed returns matters.
+
+Especially in real-world Go code — maybe you're doing cleanup, logging, or adjusting the result — you need to know when those deferred changes actually affect the return value.
+
+So remember: if you want your defer function to change the return value, use a named return.
+
+We’ll see that in the next example.
+
+
+
+
+=============================================================================
+
+
+So, what actually happens in that previous example?
+
+Let’s break it down.
+
+The return value is 5, not 6.
+
+Now you might be wondering — “But didn’t we do result += 1 in the defer?” Yes, we did!
+
+But here’s the thing — in Go, the return value is decided first, before the defer statement actually runs.
+
+So even though the deferred function adds 1 to result, it happens after Go has already prepared the value to return.
+
+It’s like if you’re giving your exam paper to the teacher — once you've handed it over, even if you quickly fix a mistake in your copy, it won’t affect the marks. The teacher has already taken the version that counts.
+
+That’s what happens here too — Go already "locks in" the return value, and then runs the deferred function. So the updated value doesn't reach the caller.
+
+This is super important to understand when you're writing real code — especially when you're trying to log something, do a final update, or cleanup before the function ends.
+
+If you forget this behavior, you might think you're changing the return value, but you're actually not — and that can lead to tricky bugs.
+
+So just remember: if your function is returning an unnamed value, any changes inside defer won’t affect what gets returned.
+
+In the next slide, we’ll see how using a named return value changes that.
+
+
+
+
+
+
+======================================================================================================
+
+
+
+
+Now this one's a bit more interesting — it’s about using defer with a pointer return.
+
+Let’s walk through the code step by step.
+
+go
+Copy
+Edit
+func getPointer() (p *int) {
+    result := 5
+    defer func() {
+        result++
+    }()
+    p = &result
+    return
+}
+So we have a function called getPointer, and it returns a pointer to an int. That’s what p *int means.
+
+Inside the function, we start by declaring a variable called result and set it to 5.
+
+Next, we have a defer block again — just like before. But this time, it’s doing result++, which means we’re incrementing result by 1.
+
+Then we assign p = &result. So now p is pointing to the memory address of result.
+
+Finally, we return — and notice, there's no value after the return statement, because we’re using a named return value here. That’s why p is in the function signature.
+
+Now here’s the twist: the deferred function runs after we hit the return statement — but before the function actually completes.
+
+So by the time the function returns, the result variable has already been incremented.
+
+Which means, if someone uses this returned pointer and reads the value, they’ll see 6, not 5.
+
+That’s because the pointer p is pointing to the same memory location, and that memory got updated in the defer.
+
+This is super useful when you want to modify values through a pointer or want to return something that gets updated just before returning — like some final calculation, status update, or cleanup work.
+
+But at the same time, it can also be confusing if you're not careful. So just make sure you’re clear on when defer runs, and how pointers work in Go.
+
+Alright, let’s move on to the next concept!
+
+
+
+
+
+===================================================================================================
+
+
+
+Alright, so let’s understand what’s really happening when we return a pointer — and we use defer in the same function.
+
+First point — the pointer p is pointing to the variable result. So whatever value is inside result, that’s what p will show when we use it outside the function.
+
+Now, the second point says — defer runs after we assign the pointer. That’s super important.
+
+Think of it like this: first, we tell Go, “Hey, return the address of result.” And Go is like, “Cool, I’ve stored that pointer.”
+
+But just before actually leaving the function, Go says, “Wait! There’s a defer — let me run that first.”
+
+So that deferred function runs, and it updates result from 5 to 6.
+
+Now, since p is still pointing to result, and result got updated in the defer, whoever uses that pointer will now see 6, not 5.
+
+So even though we didn’t directly change the pointer after returning it, the value it points to got changed in defer. And that’s what makes this pattern really powerful — and a bit tricky for beginners.
+
+In real-world Go programs, this can be useful when you want to make sure some final update happens just before a function returns — like increasing a counter, closing a connection, or adjusting a result.
+
+But always be careful when working with pointers and defer, because things can silently change and that might lead to bugs if you're not paying attention.
+
+Let’s move on to the next concept!
+
+
+
+
+
+
+=======================================================================================================
+
+
+
+Alright, let’s quickly summarize what we’ve learned so far about how defer works with return values.
+
+We’ve got three different cases in this table, and each one behaves a little differently.
+
+Let’s go row by row.
+
+First, we have the case: Named return variable.
+
+This just means that in the function signature, we give a name to the return value — like func getNumber() (result int).
+
+Now if we use defer in that function, we can update the result inside the deferred block — and that updated value will be returned. So defer can actually affect the final output.
+
+Second, we have: Unnamed return variable.
+
+Here, we don’t name the return value — we just use return someValue.
+
+In this case, Go evaluates and copies the return value before it runs the defer. So even if you change a variable inside defer, it won’t affect what gets returned. This is something that often surprises beginners, so it’s really important to get this right.
+
+Third, we have: Pointer return.
+
+Now this is where things get a bit more advanced. If you return a pointer — like *int — and inside defer, you change the value that the pointer is pointing to, that change will be visible outside the function.
+
+Why? Because the pointer is still pointing to the same memory. So even though the return has already been prepared, the value at that memory location can still be changed by defer.
+
+So overall, this table helps you understand when defer can actually affect your return values — and when it doesn’t.
+
+Knowing this can save you from a lot of confusion and silly bugs — especially in real projects or interviews where you're expected to explain such behavior clearly.
+
+Alright, let’s head to the next part!
+
+
+
+
+
+=========================================================================================
+
+
+
+

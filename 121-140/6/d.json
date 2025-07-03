@@ -1,0 +1,58 @@
+[
+    {
+      "title": "Introduction to Constraints in Go Generics",
+      "content": "In Go, generics allow you to write functions and data types that work with any data type. Constraints are used to limit what types can be used with a generic type parameter.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Understanding Constraints",
+      "content": "A constraint in Go is a type or set of types that restrict the values that a type parameter can take. These constraints are defined using interfaces.\n\nFor example:\n\n```go\ntype Number interface { int | float64 }\n```",
+      "slide_type": "text"
+    },
+    {
+      "title": "Multiple Constraints in a Generic Function",
+      "content": "Yes, you can have multiple constraints in a generic function in Go. You can use `type` parameters with multiple constraints by combining them with the `&` operator.\n\nExample:\n\n```go\ntype Adder[T int | float64] interface {\n    Add(a, b T) T\n}\n\nfunc sum[T Adder[T]](a, b T) T {\n    return a.Add(a, b)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How Multiple Constraints Work",
+      "content": "When you define multiple constraints, Go ensures that all conditions are met. This allows you to write functions that can operate on types meeting any combination of the constraints.\n\nExample: You can define constraints for both `int` and `float64` types, as seen in the previous example, or create more complex interfaces with multiple methods.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Combining Constraints",
+      "content": "In Go 1.18 and later, you can combine multiple constraints using `&` to ensure that the type meets both (or all) conditions.\n\nExample:\n\n```go\ntype Number interface { int | float64 }\ntype Adder interface { Add(a, b Number) Number }\n\nfunc add[T Adder](a, b T) T {\n    return a.Add(a, b)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Limitations of Multiple Constraints",
+      "content": "While you can combine constraints, Go's generics system doesn't support all combinations of complex constraints like in some other languages. Each type constraint must be an interface, and the Go syntax has some restrictions.\n\nFor example, you can't create constraints that have completely independent behavior without using interfaces.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Practical Example with Multiple Constraints",
+      "content": "Let's say you want to define a function that works for types which can be added and multiplied. You can combine `Adder` and `Multiplier` constraints.\n\n```go\ntype Multiplier[T any] interface {\n    Multiply(a, b T) T\n}\n\ntype AdderMultiplier[T any] interface {\n    Adder[T]\n    Multiplier[T]\n}\n\nfunc addAndMultiply[T AdderMultiplier[T]](a, b T) (T, T) {\n    return a.Add(a, b), a.Multiply(a, b)\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Limitations in Combining Constraints",
+      "content": "Some constraints may not be combinable as simply as you might want. Go's generics system is evolving, but it has some limitations compared to languages like C++ and Rust.\n\nFor example, you might face issues with constraints that have conflicting methods or require completely different functionalities.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Summary of Multiple Constraints",
+      "content": "To summarize:\n- You can combine multiple constraints using the `&` operator in Go.\n- Constraints help you create more flexible and reusable code.\n- However, Go generics have limitations compared to other languages with more complex generic systems.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Quick Challenge: Test Your Understanding",
+      "content": "### Question 1: Can you have multiple constraints in Go generics?\n- True or False?\n\n### Question 2: How do you combine constraints in Go generics?\n- Write a small snippet that uses two constraints in a generic function.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Solutions: Quick Challenge",
+      "content": "### Solution to Question 1: True\nYes, Go allows you to have multiple constraints in generics using the `&` operator.\n\n### Solution to Question 2:\n\n```go\ntype Number interface { int | float64 }\ntype Adder interface { Add(a, b Number) Number }\n\nfunc add[T Adder](a, b T) T {\n    return a.Add(a, b)\n}\n```\nThis function combines the `Adder` constraint to ensure the type can be added together.",
+      "slide_type": "code"
+    }
+  ]
+  

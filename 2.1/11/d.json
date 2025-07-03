@@ -1,0 +1,63 @@
+[
+    {
+      "title": "Understanding Go Maps",
+      "content": "In Go, a **map** is a powerful built-in data type used to associate keys with values. It provides fast lookups, additions, and deletions. The key must be a comparable type (like string, int, etc.), and the value can be any type.\n\nMaps are commonly used for representing dictionaries, counters, and lookups.\n\nExample:\n```go\nm := map[string]int{\"apple\": 2, \"banana\": 3}\n```\nHere, the map holds string keys (fruit names) and integer values (quantities).",
+      "slide_type": "text"
+    },
+    {
+      "title": "Comparison Limitation",
+      "content": "Unlike other data types in Go, **maps cannot be directly compared** using equality operators like `==` or `!=`.\n\nThe only valid comparison is checking if a map is `nil`, which tells you whether it has been initialized. Trying to compare two maps directly will result in a compile-time error.\n\nThis limitation exists to prevent ambiguity and performance issues in large or nested maps.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Why Maps Can't Be Compared",
+      "content": "Maps in Go are **reference types**, meaning they internally point to data structures stored elsewhere in memory. Comparing two maps would require checking not just the pointer reference, but also recursively verifying all key-value pairs.\n\nThis is complex and can lead to inconsistent or expensive operations, especially when dealing with large maps. For this reason, Go avoids automatic deep equality checks and enforces manual comparison when needed.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Allowed Comparison: Map == nil",
+      "content": "```go\nvar m map[string]int\nfmt.Println(m == nil) // true\n\nm2 := map[string]int{}\nfmt.Println(m2 == nil) // false\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Attempting Direct Comparison",
+      "content": "```go\nmap1 := map[string]int{\"a\": 1}\nmap2 := map[string]int{\"a\": 1}\n\nfmt.Println(map1 == map2) // ❌ Compilation error: invalid operation\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "How to Compare Two Maps",
+      "content": "Since Go doesn’t allow direct comparison between maps, the usual way to check if two maps are equal is to manually:\n\n1. Check if they have the same length.\n2. Loop over each key-value pair in one map.\n3. Check if the other map contains the same key and value.\n\nThis approach gives you full control and can be adjusted for custom comparison needs, such as ignoring certain keys or supporting nested structures.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Manual Map Comparison Function",
+      "content": "```go\nfunc areMapsEqual(a, b map[string]int) bool {\n    if len(a) != len(b) {\n        return false\n    }\n    for k, v := range a {\n        if bv, ok := b[k]; !ok || bv != v {\n            return false\n        }\n    }\n    return true\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Map Comparison Summary",
+      "content": [
+        {
+          "Allowed?": "No",
+          "Comparison Type": "map == map",
+          "Description": "Direct comparison not supported"
+        },
+        {
+          "Allowed?": "Yes",
+          "Comparison Type": "map == nil",
+          "Description": "Checks if map is uninitialized"
+        },
+        {
+          "Allowed?": "Yes",
+          "Comparison Type": "Manual Key/Value",
+          "Description": "Requires custom comparison logic"
+        }
+      ],
+      "slide_type": "table"
+    },
+    {
+      "title": "Key Takeaway",
+      "content": "🚫 Go does **not** allow direct comparison of two maps using `==` because maps are reference types and can hold dynamic, unordered data.\n\n✅ You can safely check if a map is `nil` to determine if it has been initialized.\n\n🔁 For comparing map contents, always write a **custom function** that compares length, keys, and values. This ensures accuracy, performance, and flexibility in your logic.",
+      "slide_type": "text"
+    }
+  ]
