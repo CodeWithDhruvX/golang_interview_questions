@@ -1,0 +1,78 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/4/subscribe/3.5_final_subtitled_merged.mp4",
+      "title": "Go Channel Type",
+      "description": "Channels in Go are used for communication between goroutines. #golang #channel #concurrency",
+      "tags": [
+        "go",
+        "golang",
+        "channel",
+        "concurrency"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "/path/to/go_channel_type_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-12 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/4/subscribe/3.6_final_subtitled_merged.mp4",
+      "title": "Communication Between Goroutines",
+      "description": "This video shows how to create a channel and communicate between goroutines in Go. Example: make a channel, send a value from a goroutine, and receive it in main. #golang #channelexample #codeexample",
+      "tags": [
+        "go",
+        "golang",
+        "channel example",
+        "code example"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "/path/to/go_channel_example_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-13 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/4/subscribe/3.7_final_subtitled_merged.mp4",
+      "title": "Rune and Byte in Golang",
+      "description": "In Go, rune is an alias for int32 and represents Unicode characters. Byte is an alias for uint8 and represents ASCII or binary data. These types help with string and data manipulation. #golang #rune #byte #unicode",
+      "tags": [
+        "go",
+        "golang",
+        "rune",
+        "byte",
+        "unicode"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "/path/to/go_rune_byte_types_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-14 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/4/subscribe/3.8_final_subtitled_merged.mp4",
+      "title": "Rune and Byte Values Example",
+      "description": "This video shows how to declare and print rune and byte variables in Go. For example: a rune for a currency symbol and a byte for a letter. #golang #runeexample #byteexample #codeexample",
+      "tags": [
+        "go",
+        "golang",
+        "rune example",
+        "byte example",
+        "code example"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "/path/to/go_rune_byte_example_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-15 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}

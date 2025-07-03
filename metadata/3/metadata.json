@@ -1,0 +1,30 @@
+{
+    "videos": [
+        {
+            "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/3/3_main.mp4",
+            "title": "🧠 Go Variable Declarations for Interviews 💼 | Zero Values, Constants & More!",
+            "description": "🚀 Master Go (Golang) Variable Declarations for Interviews!\nWhether you're prepping for your next tech interview or just getting started with Go, this video covers everything you need to know about variables in Go:\n\n📌 Topics Covered:\n- ✅ What is a variable in Go?\n- 📖 Declaration syntax (basic to grouped)\n- 💡 Type inference & short declarations (:=)\n- 🧪 Zero values explained\n- 🔁 Constants vs Variables\n- 📦 Variable scope in Go\n- 🛠 Best practices for clean code\n\n👨‍💻 Real-world examples and best practices\n📈 Learn fast, remember forever\n\n🔔 Subscribe for more Go tutorials!\n\n#GoLang #GoProgramming #VariablesInGo #CodingInterview #GoTutorial #LearnToCode #BackendDev #ProgrammingBasics #TechInterviews #GolangTips",
+            "tags": [
+                "GoLang",
+                "Go Programming",
+                "Go variables",
+                "Go constants",
+                "Go scope",
+                "Go interview questions",
+                "Golang tutorial",
+                "Golang basics",
+                "Backend development",
+                "Coding interview prep",
+                "Type inference",
+                "Short variable declaration",
+                "Zero values in Go"
+            ],
+            "categoryName": "Education",
+            "privacyStatus": "public",
+            "playlistName": "Top Golang Interview Questions & Answers 🔥 | 1000+ Q&A Series | Crack Go Interviews",
+            "publishAt": "2025-04-25 12:00:00",
+            "madeForKids": false,
+            "ageRestriction": false
+        }
+    ]
+}

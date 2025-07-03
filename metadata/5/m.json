@@ -1,0 +1,28 @@
+{
+    "videos": [
+        {
+            "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/merged_output2.mp4",
+            "title": "🎯 Go Zero Values Explained for Interviews! | Master Key Concepts in Minutes",
+            "description": "📌 **In this video, you'll learn everything about Go's Zero Values — a crucial topic for interviews!**\n\n✅ What you'll learn:\n- What is the Zero Value in Go?\n- Why it's essential for writing safe, bug-free code\n- Real-world benefits in interviews & practical development\n- Handy reference table of zero values for common Go types\n\n📊 **Zero Value Examples Covered:**\n- `int` → `0`\n- `float64` → `0.0`\n- `bool` → `false`\n- `string` → `\"\"`\n- `pointer`, `slice`, `map`, `channel`, `interface`, `function` → `nil`\n\n🧠 Perfect for:\n- Go language beginners\n- Developers preparing for coding interviews\n- Anyone aiming to write clean, predictable Go code\n\n📚 Don't forget to like, comment, and subscribe for more Go interview prep content!\n\n#GoLang #ZeroValue #CodingInterview #GoProgramming #TechInterview #GolangBasics #LearnGo #GoTips",
+            "tags": [
+                "golang",
+                "zero value",
+                "go language",
+                "go programming",
+                "go interview questions",
+                "golang for beginners",
+                "go tutorials",
+                "coding interview",
+                "go basics",
+                "golang zero value explained"
+            ],
+            "categoryName": "Education",
+            "privacyStatus": "public",
+            "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/thumbnail.png",
+            "playlistName": "GoLang Interview Prep",
+            "publishAt": "2025-06-24 12:00:00",
+            "madeForKids": false,
+            "ageRestriction": false
+        }
+    ]
+}

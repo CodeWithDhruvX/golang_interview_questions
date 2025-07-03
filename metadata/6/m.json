@@ -1,0 +1,28 @@
+{
+    "videos": [
+        {
+            "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/6/final/merged_video.mp4",
+            "title": "🔍 Master Constants in GoLang for Interviews | Full Deep Dive 💡",
+            "description": "🧠 Master the concept of *Constants* in Go (Golang) with this **comprehensive interview-focused video**. Whether you're preparing for your next backend developer interview or brushing up on Go fundamentals, this video covers everything you need:\n\n📌 **Topics Covered:**\n- ✅ What is a Constant?\n- 📜 Syntax and Declaration\n- 🧠 Typed vs Untyped Constants\n- 🧩 Constant Grouping & Best Practices\n- 🔄 Constants vs Variables\n- 💬 Real-world examples and interview tips\n\n👨‍💻 Perfect For:\n- GoLang Interview Preparation\n- CS Students & Backend Engineers\n- Developers Revising Go Fundamentals\n\n⏱️ Stay till the end for bonus **interview tricks** and **common mistakes to avoid**.\n\n🔔 Subscribe for more:\n#GoLang #BackendDeveloper #ProgrammingInterview #GolangConstants #CodingTips #GoProgramming #TechCareers #SoftwareEngineer #DeveloperInterview #CodeWithDhruv",
+            "tags": [
+                "GoLang",
+                "GoLang interview questions",
+                "Constants in Go",
+                "Typed vs Untyped constants",
+                "Go tutorial",
+                "GoLang full course",
+                "Programming interview",
+                "Backend developer",
+                "Tech interview preparation",
+                "Software engineering"
+            ],
+            "categoryName": "Education",
+            "privacyStatus": "public",
+            "thumbnail": "C:/Users/YourName/Videos/constants_thumbnail.png",
+            "playlistName": "Top Golang Interview Questions & Answers 🔥 | 1000+ Q&A Series | Crack Go Interviews",
+            "publishAt": "2025-07-04 12:00:00",
+            "madeForKids": false,
+            "ageRestriction": false
+        }
+    ]
+}

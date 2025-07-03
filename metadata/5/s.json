@@ -1,0 +1,196 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 09-27-14_final_subtitled_merged.mp4",
+      "title": "🤔 What is Zero Value in Golang? | Go Interview Prep #shorts",
+      "description": "📌 Learn about the concept of **Zero Value** in Golang - a common interview question!\n\n✅ Go automatically assigns a default (zero) value to every variable\n✅ Helps avoid undefined or garbage values\n✅ Promotes code safety, readability, and bug prevention\n✅ Ideal for structs, arrays, and large-scale apps\n\n🎯 Perfect for beginners & interview preparation!\n\n📚 Topics Covered:\n- Go Zero Value Explained\n- Why it's useful in production code\n- Interview tip for Golang developers\n\n📅 Don't forget to like, comment & subscribe!\n\n#golang #goprogramming #interviewquestions #codingtips #learnprogramming #godeveloper #shorts",
+      "tags": [
+        "golang",
+        "go language",
+        "golang interview questions",
+        "zero value in go",
+        "go basics",
+        "learn golang",
+        "golang for beginners",
+        "go programming language",
+        "developer interview prep",
+        "programming shorts"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/zero-value-thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-25 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 09-30-22_final_subtitled_merged.mp4",
+      "title": "🛡️ Why Zero Value in Go is a Game-Changer! | Golang Tips #shorts",
+      "description": "🔍 Discover why the **Zero Value** concept in Go matters!\n\n💡 Key Benefits:\n- Prevents bugs from uninitialized variables\n- Guarantees safe default states\n- Encourages clean, readable code\n- Aligns with Go’s simplicity and safety philosophy\n- Critical for large apps & structs\n\n🔥 Boost your Go interview answers with this core concept!\n\n📚 Ideal for:\n- New Go developers\n- Job interview prep\n- Clean coding advocates\n\n📌 Like, Share & Subscribe for more Golang Tips!\n\n#golangtips #gointerviewprep #cleanCode #zeroValue #golanginterview #learnGo #developerlife #shorts",
+      "tags": [
+        "golang",
+        "zero value golang",
+        "why zero value matters",
+        "go language interview",
+        "go best practices",
+        "golang shorts",
+        "go programming",
+        "interview tips golang",
+        "developer interview",
+        "programming best practices"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/why-zero-value-thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-26 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 09-44-16_final_subtitled_merged.mp4",
+      "title": "🧱 Zero Value in Structs in Go Explained! | Golang Interview Prep #shorts",
+      "description": "📘 Ever wondered what happens to a struct in Go when you don't initialize its fields?\n\n✨ In this video, we explain **Zero Value in Structs** - a key Golang concept and a common interview question!\n\n🧩 What you'll learn:\n- How struct fields are assigned zero values by default\n- Why this makes Go safer and bug-free\n- How it helps write cleaner, reliable code\n\n🔑 Interview Tip: Be ready to explain this behavior in Go!\n\n📌 Like, share & subscribe for more Golang insights!\n\n#golang #golanginterview #zerovalue #gostructs #golangshorts #interviewprep #codingtips #shorts",
+      "tags": [
+        "golang",
+        "go structs",
+        "zero value structs",
+        "golang interview questions",
+        "go programming",
+        "zero value",
+        "go for beginners",
+        "struct initialization go",
+        "golang best practices",
+        "golang shorts"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/zero-value-structs-thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-27 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 10-46-31_final_subtitled_merged.mp4",
+      "title": "🧠 GoLang Quiz: What’s the Zero Value of `bool`? 🤔 #Shorts",
+      "description": "🚀 Test your GoLang skills in 30 seconds!\n\n🧐 Question: What is the zero value of a `bool` variable in Go?\n\nOptions:\nA. true\nB. false ✅\nC. 0\nD. nil\n\nPerfect for:\n✅ Go developers\n✅ Interview prep\n✅ Daily coding challenge\n\n👉 Drop your answer in the comments!\n\n#golang #gointerview #zerovalue #codingquiz #shorts #programming",
+      "tags": [
+        "golang",
+        "bool zero value",
+        "go interview",
+        "golang quiz",
+        "golang shorts",
+        "programming"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/q1_bool_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-28 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 10-47-01_final_subtitled_merged.mp4",
+      "title": "Answer 🧠 GoLang Quiz: What’s the Zero Value of `bool`? 🤔 #Shorts",
+      "description": "🚀 Test your GoLang skills in 30 seconds!\n\n🧐 Question: What is the zero value of a `bool` variable in Go?\n\nOptions:\nA. true\nB. false ✅\nC. 0\nD. nil\n\nPerfect for:\n✅ Go developers\n✅ Interview prep\n✅ Daily coding challenge\n\n👉 Drop your answer in the comments!\n\n#golang #gointerview #zerovalue #codingquiz #shorts #programming",
+      "tags": [
+        "golang",
+        "bool zero value",
+        "go interview",
+        "golang quiz",
+        "golang shorts",
+        "programming"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/q1_bool_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-29 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 10-48-30_final_subtitled_merged.mp4",
+      "title": "💭 GoLang: What Does `fmt.Println(s)` Print? 🤯 #Shorts",
+      "description": "🧪 Quick GoLang Interview Challenge!\n\n🤔 What will be printed?\n```go\nvar s string\nfmt.Println(s)\n```\nOptions:\nA. nil\nB. empty string ✅\nC. undefined\nD. error\n\n🧠 Think you know the answer? Comment below!\n\n#golang #gointerview #stringzero #codingquiz #devshorts #shorts",
+      "tags": [
+        "golang",
+        "go string zero",
+        "fmt.Println",
+        "go quiz",
+        "golang shorts",
+        "interview prep"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/q2_string_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-06-30 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 10-49-16_final_subtitled_merged.mp4",
+      "title": "Answer 💭 GoLang: What Does `fmt.Println(s)` Print? 🤯 #Shorts",
+      "description": "🧪 Quick GoLang Interview Challenge!\n\n🤔 What will be printed?\n```go\nvar s string\nfmt.Println(s)\n```\nOptions:\nA. nil\nB. empty string ✅\nC. undefined\nD. error\n\n🧠 Think you know the answer? Comment below!\n\n#golang #gointerview #stringzero #codingquiz #devshorts #shorts",
+      "tags": [
+        "golang",
+        "go string zero",
+        "fmt.Println",
+        "go quiz",
+        "golang shorts",
+        "interview prep"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/q2_string_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-01 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 10-53-12_final_subtitled_merged.mp4",
+      "title": "🌀 GoLang Slice Mystery: Is `nums == nil` True? 🤨 #Shorts",
+      "description": "📌 Slice Comparison in GoLang:\n\n🤔 What will be printed?\n```go\nvar nums []int\nfmt.Println(nums == nil)\n```\nOptions:\nA. true ✅\nB. false\nC. error\nD. []\n\n🧠 Test your interview skills in 30 seconds!\n\n#golang #slicenil #gointerview #programming #shorts #developerlife",
+      "tags": [
+        "golang",
+        "slice nil",
+        "nil comparison",
+        "go interview quiz",
+        "golang shorts",
+        "coding challenge"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/q4_slice_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-02 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/5/shorts/short_final/2025-06-20 10-55-38_final_subtitled_merged.mp4",
+      "title": "Answer 🌀 GoLang Slice Mystery: Is `nums == nil` True? 🤨 #Shorts",
+      "description": "📌 Slice Comparison in GoLang:\n\n🤔 What will be printed?\n```go\nvar nums []int\nfmt.Println(nums == nil)\n```\nOptions:\nA. true ✅\nB. false\nC. error\nD. []\n\n🧠 Test your interview skills in 30 seconds!\n\n#golang #slicenil #gointerview #programming #shorts #developerlife",
+      "tags": [
+        "golang",
+        "slice nil",
+        "nil comparison",
+        "go interview quiz",
+        "golang shorts",
+        "coding challenge"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/q4_slice_thumbnail.png",
+      "playlistName": "Golang Interview Shorts | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-03 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}

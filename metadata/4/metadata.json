@@ -1,0 +1,38 @@
+{
+    "videos": [
+        {
+            "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/4/video/4_main.mp4",
+            "title": "💼 Crack Go Interviews: Master Go Data Types Fast! ⚡",
+            "description": "🚀 Ready to ace your Go (Golang) interviews? This video is your one-stop guide to all essential Go data types explained clearly with examples!\n\n🔍 Here's what you'll learn:\n- ✅ Primitive, Composite & Special Types\n- 🔢 Integer & Floating-Point Insights\n- 🔄 Type Conversion Made Easy\n- 🧠 Pointers, Interfaces, Functions & Channels\n- 💡 Real code examples for clarity\n\n📌 Perfect for:\n- Aspiring Go Developers\n- Interview Candidates\n- CS Students & Backend Engineers\n\n💬 Have questions? Drop them in the comments!\n🔥 Don’t forget to Like 👍, Share 📤, and Subscribe 🔔 for more programming insights!\n\n#Golang #GoLangInterview #GoProgramming #GoDataTypes #BackendDevelopment #CodingInterview #LearnGo #GoLanguage #DevTips #TechInterviews #CodeWithMe #GoForBeginners #GoTips #SoftwareEngineering #GoLangForInterviews #TechCareers #100DaysOfCode #GoLangBasics",
+            "tags": [
+                "golang",
+                "go programming",
+                "go data types",
+                "golang tutorial",
+                "go interview questions",
+                "learn go",
+                "software engineer interview",
+                "coding interview prep",
+                "backend development",
+                "go developer",
+                "go language tutorial",
+                "go language for beginners",
+                "programming tutorials",
+                "go pointers",
+                "golang slices",
+                "golang map type",
+                "go structs",
+                "golang interfaces",
+                "golang channels",
+                "type conversion in go"
+            ],
+            "categoryName": "Education",
+            "privacyStatus": "public",
+            "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/4/video/thubnial.png",
+            "playlistName": "Top Golang Interview Questions & Answers 🔥 | 1000+ Q&A Series | Crack Go Interviews",
+            "publishAt": "2025-05-02 12:00:00",
+            "madeForKids": false,
+            "ageRestriction": false
+        }
+    ]
+}
