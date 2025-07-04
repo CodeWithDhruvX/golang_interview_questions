@@ -60,12 +60,13 @@ Timer: 100.0000
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,Arial,16,&H00FFFF,&H40000000,-1,0,0,0,100,100,0,0,1,1,0,2,20,20,65,1
+Style: Default,Impact,18,&H00FFFFFF,&H40000000,-1,0,0,0,100,100,0,0,1,3,0,2,20,20,65,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 """)
+
 
         line = []
         max_words_per_line = 3
@@ -80,7 +81,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             text = ""
             for i, w in enumerate(line):
                 k_dur = int((w.end - w.start) * 100)
-                text += f"{{\\fad(200,200)\\k{k_dur}}}{w.word} "
+                # First word = white (FFFFFF), rest = yellow (00FFFF)
+                color = "\\c&HFFFFFF&" if i == 0 else "\\c&H00FFFF&"
+                text += f"{{\\fad(200,200)\\k{k_dur}{color}}}{w.word} "
             f.write(f"Dialogue: 0,{format_time(start)},{format_time(end)},Default,,0,0,0,,{text.strip()}\n")
             line = []
 
