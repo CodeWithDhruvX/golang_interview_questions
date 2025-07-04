@@ -54,18 +54,19 @@ def transcribe_audio(audio_path):
 def generate_ass(words, ass_path):
     with open(ass_path, "w", encoding="utf-8") as f:
         f.write("""[Script Info]
-Title: Animated Subs
-ScriptType: v4.00+
-Timer: 100.0000
+        Title: Animated Subs
+        ScriptType: v4.00+
+        Timer: 100.0000
 
-[V4+ Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,Impact,18,&H00FFFFFF,&H40000000,-1,0,0,0,100,100,0,0,1,3,0,2,20,20,65,1
+        [V4+ Styles]
+        Format: Name, Fontname, Fontsize, PrimaryColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+        Style: Default,Impact,18,&H00FFFFFF,&H64000000,-1,0,0,0,100,100,0,0,1,2,1,2,20,20,65,1
 
-[Events]
-Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+        [Events]
+        Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
-""")
+        """)
+
 
 
         line = []
@@ -83,7 +84,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 k_dur = int((w.end - w.start) * 100)
                 # First word = white (FFFFFF), rest = yellow (00FFFF)
                 color = "\\c&HFFFFFF&" if i == 0 else "\\c&H00FFFF&"
-                text += f"{{\\fad(200,200)\\k{k_dur}{color}}}{w.word} "
+                text += f"{{\\fad(200,200)\\k{k_dur}{color}}}{w.word.upper()} "
             f.write(f"Dialogue: 0,{format_time(start)},{format_time(end)},Default,,0,0,0,,{text.strip()}\n")
             line = []
 
