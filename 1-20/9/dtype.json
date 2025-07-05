@@ -11,6 +11,7 @@
     },
     {
       "title": "init() Syntax Example",
+      
       "content": "package main\n\nimport \"fmt\"\n\nfunc init() {\n    fmt.Println(\"Init function is running...\")\n}\n\nfunc main() {\n    fmt.Println(\"Main function is running...\")\n}",
       "slide_type": "code"
     },
