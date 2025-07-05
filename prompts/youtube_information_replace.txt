@@ -1,0 +1,42 @@
+I have two JSON inputs:
+
+json1 – A list of objects, each containing a "videoFile" path.
+
+json2 – A list of video metadata objects under the "videos" key. Each object has keys like "videoFile", "title", "description", "tags", "publishAt", etc.
+
+🔄 Task:
+
+Replace only the "videoFile" values in json2["videos"] with those from json1, in order.
+
+Keep all other fields like title, description, tags, etc., unchanged.
+
+🗓️ Additional Requirement:
+
+Ask me for a starting date in format YYYY-MM-DD and playlist name.
+
+Starting from that date, update the "publishAt" field for each video to be one per day, using fixed time 12:00:00.
+
+Example: If I enter 2025-07-06, then:
+
+First video → "publishAt": "2025-07-06 12:00:00"
+
+Second video → "publishAt": "2025-07-07 12:00:00"
+
+Third video → "publishAt": "2025-07-08 12:00:00"
+
+…and so on.
+
+⚠️ Rules:
+
+If json1 has fewer items than json2["videos"], only replace what's available.
+
+If json1 has more items, ignore the extra ones.
+
+✅ Output:
+Return the updated json2 JSON object with:
+
+Replaced "videoFile" values
+
+Updated "publishAt" values starting from the input date
+
+All other properties preserved as-is
