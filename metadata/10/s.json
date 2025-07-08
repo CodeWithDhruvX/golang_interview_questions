@@ -1,0 +1,82 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/10/Audio/final/shorts/susbscribe/2025-07-03 22-23-51_output_final_subtitled_merged.mp4",
+      "title": "🔁 While Loop in Go? Use This Trick!",
+      "description": "Go doesn’t have a while loop but you can simulate it using a for loop. Simple and powerful",
+      "tags": ["golang", "while loop in go", "go loop trick", "golang syntax", "coding interview", "shorts", "developer", "godeveloper", "loop simulation", "golang interview tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang_interview_questions/shorts/thumbnails/4_while_loop.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-16 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/10/Audio/final/shorts/susbscribe/2025-07-03 22-31-29_output_final_subtitled_merged.mp4",
+      "title": "♾️ Create Infinite Loop in Golang (Safely)",
+      "description": "Want an infinite loop in Go Use break to avoid runaway loops",
+      "tags": ["golang", "infinite loop go", "golang loop", "for loop tricks", "programming logic", "shorts", "golang interview", "loop control", "godeveloper", "go tutorial"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang_interview_questions/shorts/thumbnails/5_infinite_loop.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-17 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/10/Audio/final/shorts/susbscribe/2025-07-03 22-37-01_output_final_subtitled_merged.mp4",
+      "title": "🛑 break & continue in Go For Loop | Use It Right!",
+      "description": "Learn how to control loops in Go Continue to skip Break to exit early",
+      "tags": ["golang", "break continue go", "golang loop control", "interview loop", "godeveloper", "shorts", "programming tricks", "for loop go", "go language basics"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang_interview_questions/shorts/thumbnails/6_break_continue.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-18 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/10/Audio/final/shorts/susbscribe/2025-07-03 22-39-55_output_final_subtitled_merged.mp4",
+      "title": "🌀 All Loop Types in Go | One For Loop, Many Uses!",
+      "description": "Go has only for loop but it replaces everything Traditional While-style Infinite",
+      "tags": ["golang", "loop types go", "for vs while", "golang interview", "go loop", "shorts", "programming logic", "looping techniques", "for loop variations", "developer short"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang_interview_questions/shorts/thumbnails/7_loop_types.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-19 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/10/Audio/final/shorts/susbscribe/2025-07-03 22-42-16_output_final_subtitled_merged.mp4",
+      "title": "📊 Go For Loop Variants in Table Format | Visual Recap!",
+      "description": "See all Golang for loop variants Type Traditional While Infinite Quick memory boost",
+      "tags": ["golang", "loop summary", "golang table format", "for loop comparison", "code summary", "go interview prep", "developer tips", "shorts", "godeveloper"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang_interview_questions/shorts/thumbnails/8_table_summary.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-20 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/10/Audio/final/shorts/susbscribe/2025-07-03 22-45-28_output_final_subtitled_merged.mp4",
+      "title": "🎓 Master Go's For Loop | Final Takeaway in 60s!",
+      "description": "Final thoughts Only for loop in Go very flexible Replace while infinite do while loops Master it for clean efficient code Interviews love this topic",
+      "tags": ["golang", "for loop final", "golang wrap up", "golang interview final", "loop mastery", "go language tips", "shorts", "developer learning", "golang recap"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang_interview_questions/shorts/thumbnails/9_takeaway.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-21 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}

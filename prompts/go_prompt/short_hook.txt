@@ -1,0 +1,36 @@
+🎥 Generic Prompt for YouTube Developer Content (Shorts or Long-form)
+**"Act like a top-tier content creator for a coding YouTube channel. Create a complete content package based on the following tech interview scenario:
+
+Technology: Golang
+Level: [Beginner / Intermediate / Advanced]
+Concept: [Insert Concept Here]
+Role-Based Category: [e.g., Backend Engineer, DevOps]
+Real-World Scenario: [Describe real scenario here]
+Interview Question: [Insert interview question here]
+
+Generate:
+
+A 10-second viral hook to grab attention
+
+A short, clear explanation of the concept (no jargon)
+
+A beginner-friendly Go code example with comments
+
+A 60-second voiceover script for a YouTube short
+
+3-slide bullet-point version for visuals
+
+One common mistake or misconception
+
+An interactive quiz question for audience engagement
+
+A CTA (call to action) for the end of the video
+Keep the tone engaging, clear, and developer-friendly."**
+
+✅ Example (already filled):
+Technology: Golang
+Level: Beginner
+Concept: Goroutines & Channels
+Role-Based Category: Backend Engineer
+Real-World Scenario: A team is building a web scraper that fetches data from multiple websites in parallel.
+Interview Question: How would you use goroutines and channels to concurrently fetch data from multiple websites?

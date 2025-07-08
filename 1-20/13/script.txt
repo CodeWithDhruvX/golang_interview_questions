@@ -20,7 +20,7 @@ And don't worry — we’ll see how it looks in code in the next slide. But for 
 
 go
 Copy
-Edit
+Editz
 func(a int, b int) int {
     return a + b
 }

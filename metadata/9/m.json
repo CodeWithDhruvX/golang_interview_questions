@@ -1,0 +1,30 @@
+{
+    "videos": [
+        {
+            "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/merged_video.mp4",
+            "title": "🧠 Go init() Function Explained for Interviews! | Golang Masterclass 💻",
+            "description": "📘 Learn everything about the `init()` function in Go (Golang) — perfect for interviews, beginner to advanced levels!\n\n🔹 Topics Covered:\n- What is `init()` in Go?\n- When and how is `init()` executed?\n- Syntax & multiple `init()` examples\n- Differences between `init()` and `main()`\n- Real-world use cases\n- Best practices for using `init()`\n\n💡 This video is part of the *Golang Interview Series*.\n\n🚀 Boost your preparation for top tech interviews with clear examples and expert tips.\n\n✅ Great for:\n- Software Developers learning Go\n- Backend Engineers\n- Tech Interviews prep\n\n#golang #initFunction #gointerview #golangtutorial #softwareengineering #codinginterview #backenddevelopment #programming #golanginterview #initmain #gobyexample",
+            "tags": [
+                "golang",
+                "init function golang",
+                "go interview questions",
+                "golang interview series",
+                "golang for beginners",
+                "golang main vs init",
+                "golang tutorial",
+                "backend development",
+                "software engineering",
+                "go programming",
+                "init function explained",
+                "golang best practices"
+            ],
+            "categoryName": "Education",
+            "privacyStatus": "public",
+            "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final//thumbnail.png",
+            "playlistName": "Top Golang Interview Questions & Answers 🔥 | 1000+ Q&A Series | Crack Go Interviews",
+            "publishAt": "2025-07-22 12:00:00",
+            "madeForKids": false,
+            "ageRestriction": false
+        }
+    ]
+}

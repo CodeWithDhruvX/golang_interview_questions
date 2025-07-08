@@ -1,0 +1,65 @@
+[
+    {
+      "title": "Introduction to defer",
+      "content": "In Go, `defer` is used to schedule a function call to run after the surrounding function completes. It is commonly used for cleanup tasks like closing files or unlocking mutexes.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defer with named return value",
+      "content": "When using **named return values**, deferred functions can modify the result **before** it is returned.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Named return value with defer",
+      "content": "```go\nfunc getNumber() (result int) {\n    defer func() {\n        result += 1\n    }()\n    return 5\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Explanation of named return defer",
+      "content": "- `result` is declared as a named return value.\n- `defer` modifies `result` **after** `return 5` but **before** the function exits.\n- Final return value becomes `6`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defer with unnamed return value",
+      "content": "If no named return value is used, deferred functions **cannot** change the returned value directly.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Example: Unnamed return value with defer",
+      "content": "```go\nfunc getNumber() int {\n    result := 5\n    defer func() {\n        result += 1\n    }()\n    return result\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Result of unnamed return value",
+      "content": "- Return value is `5`, not `6`.\n- `defer` updates `result`, but the returned value is evaluated **before** `defer` runs.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defer with pointer return",
+      "content": "```go\nfunc getPointer() (p *int) {\n    result := 5\n    defer func() {\n        result++\n    }()\n    p = &result\n    return\n}\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Effect of defer on pointer return",
+      "content": "- The pointer `p` points to `result`.\n- `defer` runs after setting the pointer.\n- So the returned value pointed to by `p` is updated to `6`.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Defer and return timing summary",
+      "content": [
+        { "case": "Named return variable", "effect": "Can be modified by defer" },
+        { "case": "Unnamed return variable", "effect": "Value copied before defer runs" },
+        { "case": "Pointer return", "effect": "Can affect what the pointer points to" }
+      ],
+      "slide_type": "table"
+    }
+  ]
+  
+
+I have a list of slide objects in JSON format. After each slide, I will say "yes" to move to the next one.
+
+Please generate the YouTube script (explainer format, in a natural, conversational tone for beginner programmers in India) for each object one by one.
+
+After completing the all slide generate End with a warm, motivational outro encouraging viewers to subscribe.
+
+Start with the first slide. Wait for me to say "yes" before moving to the next one.

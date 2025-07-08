@@ -46,7 +46,7 @@ def get_video_duration(file_path):
 def transcribe_audio(audio_path):
     logging.info(f"🧠 Transcribing: {audio_path}")
     model = WhisperModel("medium", device="cpu", compute_type="int8")
-    segments, _ = model.transcribe(audio_path, beam_size=5, word_timestamps=True)
+    segments, _ = model.transcribe(audio_path, beam_size=5, word_timestamps=True,language="en")
     words = []
     for segment in segments:
         for w in segment.words:

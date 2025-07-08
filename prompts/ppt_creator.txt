@@ -1,0 +1,29 @@
+Generate structured JSON data for above content with well-formatted content, including titles, descriptions, and relevant code snippets where necessary. Format it like this:
+
+json
+[  
+    {  
+        "title": "Constructor Injection - Definition",
+        "content": "### When to Use Constructor Injection:\n- Dependencies are **mandatory**.\n- Promotes **immutability** (dependencies can't be changed after creation).\n- Ensures **testability** and **better readability**.",
+        "slide_type": "text",
+    },
+    {  
+        "title": "Constructor Injection - Definition",
+        "content": "var b byte = 'A'",
+        "slide_type": "code",
+    },
+    [
+    {
+        "title": "Sales Report",
+        "slide_type": "table",
+        "content": [
+            {"Product": "Laptop", "Sales": 150, "Revenue": "$75,000"},
+            {"Product": "Tablet", "Sales": 200, "Revenue": "$50,000"},
+            {"Product": "Smartphone", "Sales": 300, "Revenue": "$90,000"},
+            {"Product": "Smartwatch", "Sales": 120, "Revenue": "$18,000"}
+        ]
+    }
+]
+
+make sure that 
+use as a reference above obejct and it's slide_type are only text,code,table 

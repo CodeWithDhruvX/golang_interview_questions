@@ -1,0 +1,96 @@
+{ "videos": 
+[
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/subtitles/subscribe/2025-07-03 20-20-07_output_final_subtitled_merged.mp4",
+    "title": "⚙️ What is init() in Go? | Master Package Initialization!",
+    "description": "📌 In this GoLang interview short:\n\n✅ Learn what init does in Go\n✅ Why it runs before main\n✅ Common use cases like config setup & resource allocation\n\n#golang #interviewprep #gointerview #golanginit #programmingtips #godev #shorts",
+    "tags": ["golang", "go interview", "init function", "golang tips", "package initialization", "godev", "go programming", "golang short"],
+    "categoryName": "Education",
+    "privacyStatus": "public",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/init/thumbnails/intro_init.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-23 12:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/subtitles/subscribe/2025-07-03 20-26-18_output_final_subtitled_merged.mp4",
+    "title": "⏱️ When Does init() Run in Go? | Golang Short",
+    "description": "🚀 Understand the execution flow in Go:\n\n🔹 init runs after var declarations\n🔹 Before main\n🔹 Order: Imported packages → Current init → Main\n\nPerfect for interviews! 💡\n\n#golang #initfunction #goexecution #techshorts #interviewquestion #golanginterview",
+    "tags": ["golang", "init execution", "go interview", "init function", "golang runtime", "godev", "golang short"],
+    "categoryName": "Education",
+    "privacyStatus": "public",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/init/thumbnails/init_execution_order.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-24 12:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/subtitles/subscribe/2025-07-03 20-41-30_output_final_subtitled_merged.mp4",
+    "title": "👨‍💻 Go init() Function Example | Must-Know Syntax!",
+    "description": "🔧 GoLang developers! Here's a simple init example:\n\n📦 Setup logic before main\n💡 Useful for config & pre-processing\n📌 Shown with clean, beginner-friendly code\n\n#golang #codeexample #initfunction #goexample #gointerviewprep #techshorts",
+    "tags": ["golang", "go init example", "go code", "init syntax", "go interview question", "godev", "golang short"],
+    "categoryName": "Education",
+    "privacyStatus": "public",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/init/thumbnails/init_example_code.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-25 12:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/subtitles/subscribe/2025-07-03 21-13-21_output_final_subtitled_merged.mp4",
+    "title": "📚 Can You Have Multiple init() Functions in Go?",
+    "description": "🤯 Yes, Go allows multiple init functions per file!\n\n✅ They're executed in order of appearance\n✅ Useful in large codebases\n✅ Handy in package-level setups\n\n#golang #goinit #gointerview #multipleshort #codingfacts #devshorts",
+    "tags": ["golang", "init function", "multiple init", "go interview", "go trivia", "godev", "golang short"],
+    "categoryName": "Education",
+    "privacyStatus": "public",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/init/thumbnails/multiple_init.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-26 12:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/subtitles/subscribe/2025-07-03 21-15-19_final_subtitled_merged.mp4",
+    "title": "⚔️ init() vs main() in Go | Know the Difference!",
+    "description": "📌 init vs main: What's the difference?\n\n🟢 init – Auto-called by Go runtime, used for setup\n🔵 main – Program entry point\n🔍 Great for interview prep & code clarity\n\n#golang #initvsmain #gointerview #devshorts #goprogramming #shorts",
+    "tags": ["golang", "init vs main", "go function order", "go interview", "godev", "golang short", "go runtime"],
+    "categoryName": "Education",
+    "privacyStatus": "public",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/init/thumbnails/init_vs_main.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-27 12:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/subtitles/subscribe/2025-07-03 21-15-20_final_subtitled_merged.mp4",
+    "title": "🛠️ Real-World Uses of init() in Go!",
+    "description": "🔍 init is not just for show!\n\n✅ Load config files\n✅ Set defaults\n✅ Register plugins\n✅ Validate environment variables\n\n🎯 Know when & how to use it effectively!\n\n#golang #initfunction #gointerview #gopractical #devshorts #godev #goinsights",
+    "tags": ["golang", "init use cases", "go interview", "golang dev", "init real world", "godev", "golang short"],
+    "categoryName": "Education",
+    "privacyStatus": "public",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/init/thumbnails/init_use_cases.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-28 12:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/subtitles/subscribe/2025-07-03 21-40-44_output_final_subtitled_merged.mp4",
+    "title": "✅ Best Practices for init() in Go | Avoid These Mistakes!",
+    "description": "⚠️ Stop misusing init in Go!\n\n💡 Keep it minimal\n💡 Avoid business logic\n💡 Prefer main for core setup\n📚 Follow clean code principles\n\n#golang #gobestpractices #initfunction #interviewprep #golangshort #cleancode",
+    "tags": ["golang", "init best practices", "go interview", "golang short", "godev", "clean code"],
+    "categoryName": "Education",
+    "privacyStatus": "public",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/init/thumbnails/init_best_practices.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-29 12:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  }
+]
+
+}

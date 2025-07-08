@@ -1,79 +1,79 @@
-[
-    {
-      "title": "Introduction to For Loop in Go",
-      "content": "In Go, a `for` loop is the only loop construct available. It is versatile and can be used in a variety of ways: as a traditional for loop, as a while loop, or as an infinite loop. Let's explore its usage in different formats.",
-      "slide_type": "text"
-    },
-    {
-      "title": "Basic For Loop Syntax",
-      "content": "The basic syntax of a for loop in Go is:\n\n```go\nfor initialization; condition; post {\n    // code to execute\n}\n```",
-      "slide_type": "code"
-    },
-    {
-      "title": "For Loop Example 1: Counting from 1 to 5",
-      "content": "Here is a simple example that counts from 1 to 5:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    for i := 1; i <= 5; i++ {\n        fmt.Println(i)\n    }\n}\n```",
-      "slide_type": "code"
-    },
-    {
-      "title": "For Loop as a While Loop",
-      "content": "You can also use a for loop as a while loop in Go. Here's an example where the loop runs while the condition is true:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    i := 1\n    for i <= 5 {\n        fmt.Println(i)\n        i++\n    }\n}\n```",
-      "slide_type": "code"
-    },
-    {
-      "title": "Infinite For Loop",
-      "content": "An infinite for loop can be created by omitting the condition part. This loop will continue indefinitely until it is explicitly broken out of:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    for {\n        fmt.Println(\"This is an infinite loop\")\n        break\n    }\n}\n```",
-      "slide_type": "code"
-    },
-    {
-      "title": "Breaking and Continuing a For Loop",
-      "content": "You can control the flow of a for loop using `break` (to exit the loop) or `continue` (to skip to the next iteration). Here’s an example:\n\n```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n    for i := 1; i <= 5; i++ {\n        if i == 3 {\n            continue\n        }\n        if i == 5 {\n            break\n        }\n        fmt.Println(i)\n    }\n}\n```",
-      "slide_type": "code"
-    },
-    {
-      "title": "For Loop vs Other Loops",
-      "content": "Unlike many other languages, Go has only one looping construct: the `for` loop. In Go, there's no `while` or `do-while`. This makes the `for` loop highly flexible and adaptable.\n\n- `for` (initialization; condition; post)\n- `for condition`\n- `for` (infinite loop)",
-      "slide_type": "text"
-    },
-    {
-      "title": "For Loop in Table Format",
-      "content": [
-        {
-          "type": "Traditional For Loop",
-          "example": "```go\nfor i := 1; i <= 5; i++ {\n    fmt.Println(i)\n}```"
-        },
-        {
-          "type": "While Loop",
-          "example": "```go\ni := 1\nfor i <= 5 {\n    fmt.Println(i)\n    i++\n}```"
-        },
-        {
-          "type": "Infinite Loop",
-          "example": "```go\nfor {\n    fmt.Println(\"Infinite loop\")\n    break\n}```"
-        }
-      ],
-      "slide_type": "table"
-    },
-    {
-      "title": "Takeaway",
-      "content": "The `for` loop in Go is simple yet powerful, and by understanding its flexibility, you can use it for a wide variety of tasks in your code. Mastering the `for` loop is essential for writing efficient Go code.",
-      "slide_type": "text"
-    }
-  ]
-  
+  [
+      {
+        "title": "Introduction to init() in Go",
+        "content": "**`init()`** is a special function in Go that runs **before the `main()` function**.\n\nIt is commonly used for:\n\n- Package-level initialization\n- Setting up resources or configurations\n- Running code automatically during program startup",
+        "slide_type": "text"
+      },
+      {
+        "title": "When is init() Executed?",
+        "content": "The `init()` function is automatically executed:\n\n- **After all variable declarations** in the package\n- **Before the `main()` function**\n- For each package, **`init()` runs once**\n- Order of execution: **imported packages' `init()` → current package `init()` → `main()`**",
+        "slide_type": "text"
+      },
+      {
+        "title": "init() Syntax Example",
+        
+        "content": "package main\n\nimport \"fmt\"\n\nfunc init() {\n    fmt.Println(\"Init function is running...\")\n}\n\nfunc main() {\n    fmt.Println(\"Main function is running...\")\n}",
+        "slide_type": "code"
+      },
+      {
+        "title": "Multiple init() Functions",
+        "content": "A single Go file or package **can have multiple `init()` functions**. They are executed in the order they appear in the file.",
+        "slide_type": "text"
+      },
+      {
+        "title": "Multiple init() Example",
+        "content": "package main\n\nimport \"fmt\"\n\nfunc init() {\n    fmt.Println(\"Init #1\")\n}\n\nfunc init() {\n    fmt.Println(\"Init #2\")\n}\n\nfunc main() {\n    fmt.Println(\"Main\")\n}",
+        "slide_type": "code"
+      },
+      {
+        "title": "init() vs main()",
+        "content": [
+          {
+            "Function": "init()",
+            "Called By": "Go runtime",
+            "Arguments": "None",
+            "Return Type": "None",
+            "Purpose": "Initialize the package"
+          },
+          {
+            "Function": "main()",
+            "Called By": "Go runtime",
+            "Arguments": "None",
+            "Return Type": "None",
+            "Purpose": "Entry point of the application"
+          }
+        ],
+        "slide_type": "table"
+      },
+      {
+        "title": "Use Cases of init()",
+        "content": "- Loading config files\n- Registering plugins\n- Validating environment variables\n- Setting default values\n- Establishing initial connections",
+        "slide_type": "text"
+      },
+      {
+        "title": "Best Practices for init()",
+        "content": "- Avoid complex logic in `init()`\n- Do not use it for critical business logic\n- Keep `init()` minimal and clear\n- Prefer explicit initialization in `main()` when possible",
+        "slide_type": "text"
+      }
+    ]
+    
+    
 
 
-You are given a JSON array of slide objects. Each object contains:
-- "title": which may have markdown formatting (like **bold**)
-- "content": which may include markdown headers (like ###, ##)
+  You are given a JSON array of slide objects. Each object contains:
+  - "title": which may have markdown formatting (like **bold**)
+  - "content": which may include markdown headers (like ###, ##)
 
-Your task is to:
-1. Strip all markdown formatting (such as **, *, ###, etc.) from both fields.
-2. From the "content" field, extract plain text and assign it to "slide_topic".
-3. From the "title" field, extract plain text and assign it to "title_text".
-4. In "title_text", remove all non-alphabetic characters (keep only letters A–Z and a–z, and allow spaces).
-5. Discard the rest of the fields.
+  Your task is to:
+  1. Strip all markdown formatting (such as **, *, ###, etc.) from both fields.
+  2. From the "content" field, extract plain text and assign it to "slide_topic".
+  3. From the "title" field, extract plain text and assign it to "title_text".
+  4. In "title_text", remove all non-alphabetic characters (keep only letters A–Z and a–z, and allow spaces).
+  5. Discard the rest of the fields.
 
-Return a new JSON array where each object has only:
-- "slide_topic": Use the first column (from content field)
-- "title_text": Use the second column (from title field, alphabets and spaces only).
+  Return a new JSON array where each object has only:
+  - "slide_topic": Use the first column (from content field)
+  - "title_text": Use the second column (from title field, alphabets and spaces only).
 
-The result should be clean, plain-text only, and formatted as a JSON array.
+  The result should be clean, plain-text only, and formatted as a JSON array.
+  please make sure that it's seo optimized and become viral

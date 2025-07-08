@@ -1,0 +1,30 @@
+"Generate 9 structured interview questions for the technology: golang
+
+
+For each of the following levels:
+
+Beginner (3 questions)
+
+Intermediate (3 questions)
+
+Advanced (3 questions)
+
+Each question must include:
+
+Technology
+
+Level (Beginner, Intermediate, or Advanced)
+
+Concept (technical concept being tested)
+
+Role-Based Category (DevOps, Backend Engineer, SDE, Architect, product manager etc....)
+
+Real-World Scenario (practical industry use case)
+
+Interview Question (based on concept and scenario)
+
+Present the output in a table with these columns:
+Technology | Level | Concept | Role-Based Category | Real-World Scenario | Interview Question
+
+Ensure all questions are unique, practical, and relevant to industry roles."
+

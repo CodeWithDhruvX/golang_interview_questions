@@ -1,0 +1,28 @@
+{
+    "videos": [
+        {
+            "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/10/Audio/final/merged_video.mp4",
+            "title": "🔁 Master For Loop in Golang for Interviews! | Explained in 60s",
+            "description": "🚀 Crack Golang interviews by mastering the only loop in Go: the `for` loop!\n\n💡 In this video, you'll learn:\n- ✅ How the `for` loop works in Golang\n- 🔄 Traditional, while-style, and infinite for loops\n- 🛑 Using `break` and `continue`\n- 🧠 Why Go doesn’t have `while` or `do-while`\n\n📌 Perfect for:\n- Interview preparation\n- Go language beginners\n- Quick syntax recap\n\n🔎 Topics Covered:\n- Syntax overview\n- Code examples\n- Loop variations in table format\n\n🔥 Don’t forget to like 👍, comment 💬, and subscribe 🔔 for more Golang interview tips!\n\n#golang #forloop #gointerview #codinginterview #shorts #godeveloper #programmingtips #looplogic #interviewshorts",
+            "tags": [
+                "golang",
+                "golang for loop",
+                "golang interview questions",
+                "coding interview",
+                "loop in go",
+                "golang syntax",
+                "break continue go",
+                "golang infinite loop",
+                "developer interview prep",
+                "godeveloper"
+            ],
+            "categoryName": "Education",
+            "privacyStatus": "public",
+            "thumbnail": "C:/Users/YourName/Videos/golang_interview_questions/shorts/thumbnails/for_loop_mastery.png",
+            "playlistName": "Top Golang Interview Questions & Answers 🔥 | 1000+ Q&A Series | Crack Go Interviews",
+            "publishAt": "2025-07-12 12:00:00",
+            "madeForKids": false,
+            "ageRestriction": false
+        }
+    ]
+}
