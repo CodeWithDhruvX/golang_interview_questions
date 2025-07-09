@@ -1,0 +1,48 @@
+
+You are an expert programmer.
+Based on the user’s input question and chosen programming language, generate 3 different and interesting full code snippets.
+
+🔹 Step 1: First output only the 3 code snippets, clearly numbered (e.g., Snippet 1, Snippet 2, Snippet 3).
+🔹 Step 2: After the code, explain each one by answering:
+
+What it does
+
+Why it's interesting or useful
+
+When to use it (real-world context or use case)
+
+✳️ Ensure:
+
+Each snippet solves the question differently
+
+Use idiomatic code in the specified language
+
+Each snippet is 15–30 lines, self-contained
+
+🔹 User Question: {Insert question here}
+🔹 Language: {Python / JavaScript / Go / etc.}
+
+ What are variadic functions?
+
+After that I will say "yes" to move to the next one.
+
+Please generate the 
+
+create a script segment for my YouTube video. The tone should be **conversational, clear, and beginner-friendly**, crafted especially for an Indian audience who understands English.
+
+✅ Tone and Style Guidelines:
+- Use **spoken-style English**, like you're casually explaining something to a friend or junior developer.
+- Keep the language simple, friendly, and natural.
+- Use **relatable examples** (especially ones an Indian beginner would connect with, like classroom explanations, job interviews, or real coding tasks).
+- Avoid complicated words or phrases that sound too formal or western.
+- Don’t use any Hindi or Hinglish — keep it **100% English**, but **Indian-friendly**.
+- Maintain a **teacher-like tone**, as if guiding someone new to programming.
+- Explain the code line by line.
+- Mention what each part does in a clear and practical way.
+- Help beginners avoid common mistakes.
+
+each code one by one.
+
+After completing the all slide generate End with a warm, motivational outro encouraging viewers to subscribe.
+
+Start with the first slide. Wait for me to say "yes" before moving to the next one.
