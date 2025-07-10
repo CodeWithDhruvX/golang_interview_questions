@@ -1,34 +1,6 @@
 [
     {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/2025-07-03 20-20-07_output_final.mp4",
+        "slide_topic": "C:/Users/dhruv/Videos/2025-07-10 10-52-10.mkv",
         "title_text": "Introduction to init in Go"
-    },
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/2025-07-03 20-26-18_output_final.mp4",
-        "title_text": "When is init Executed"
-    },
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/2025-07-03 20-41-30_output_final.mp4",
-        "title_text": "init Syntax Example"
-    },
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/2025-07-03 21-13-21_output_final.mp4",
-        "title_text": "Multiple init Functions"
-    },
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/2025-07-03 21-15-19_final.mp4",
-        "title_text": "Multiple init Example"
-    },
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/2025-07-03 21-15-20_final.mp4",
-        "title_text": "init vs main"
-    },
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/2025-07-03 21-40-44_output_final.mp4",
-        "title_text": "Use Cases of init"
-    },
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/9/videos/final/shorts/2025-07-03 21-44-06_output_final.mp4",
-        "title_text": "Best Practices for init"
     }
 ]

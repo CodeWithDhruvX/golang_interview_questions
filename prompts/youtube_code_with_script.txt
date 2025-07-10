@@ -5,7 +5,7 @@ Based on the user’s input question and chosen programming language, generate 3
 🔹 Step 1: First output only the 3 code snippets, clearly numbered (e.g., Snippet 1, Snippet 2, Snippet 3).
 🔹 Step 2: After the code, explain each one by answering:
 
-What it does
+What it doess
 
 Why it's interesting or useful
 
@@ -22,7 +22,7 @@ Each snippet is 15–30 lines, self-contained
 🔹 User Question: {Insert question here}
 🔹 Language: {Python / JavaScript / Go / etc.}
 
- What are variadic functions?
+What are Go frameworks for web APIs (Gin, Echo)?
 
 After that I will say "yes" to move to the next one.
 
@@ -46,3 +46,47 @@ each code one by one.
 After completing the all slide generate End with a warm, motivational outro encouraging viewers to subscribe.
 
 Start with the first slide. Wait for me to say "yes" before moving to the next one.
+
+After that I will say "yes" to move to the next one.
+
+
+"Generate a structured JSON Array for the 3 Singleton Code Snippets. The object should contain the following fields:
+
+videoFile: Absolute file path of the video (e.g., "C:/Users/YourName/Videos/video.mp4").
+
+title: A catchy title with emojis and keywords (e.g., "🚀 Master YouTube Automation with Python! (Step-by-Step Guide)") Don't add the snippet keyword.
+
+description: A detailed video description with bullet points, emojis, and hashtags. make sure that it will follow youtube description box length
+
+tags: A list of relevant tags related to the content.
+
+categoryName: The category of the video (e.g., "Education").
+
+privacyStatus: Either "private", "public", or "unlisted".
+
+thumbnail: Absolute file path of the thumbnail image (e.g., "C:/Users/YourName/Videos/thumbnail.png").
+
+playlistName: The playlist where this video should be added.
+
+publishAt: Scheduled date and time in "YYYY-MM-DD HH:MM:SS" format.
+
+madeForKids: Boolean value (true or false).
+
+ageRestriction: Boolean value (true or false).
+
+✅ Ensure:
+
+Title is ≤100 characters.
+
+seo optimized title and description
+
+this is a short video
+
+please conisder that this is interview questions and long video
+
+
+
+=================================================================================================================
+
+
+give me the three objects for the three code snippet

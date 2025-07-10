@@ -2,33 +2,26 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
 
-type DemoStruct struct {
-	IntField       int
-	FloatField     float64
-	BoolField      bool
-	StringField    string
-	PointerField   *int
-	SliceField     []string
-	MapField       map[string]int
-	ChannelField   chan int
-	InterfaceField interface{}
-	FuncField      func()
+type singleton struct {
+	value string
+}
+
+var instance *singleton
+var once sync.Once
+
+func GetInstance() *singleton {
+	once.Do(func() {
+		fmt.Println("Creating singleton instance...")
+		instance = &singleton{value: "Go Singleton"}
+	})
+	return instance
 }
 
 func main() {
-	var d DemoStruct // declared but not initialized
-
-	fmt.Println("Zero Value Table for DemoStruct fields:")
-	fmt.Printf("IntField:       %v\n", d.IntField)
-	fmt.Printf("FloatField:     %v\n", d.FloatField)
-	fmt.Printf("BoolField:      %v\n", d.BoolField)
-	fmt.Printf("StringField:    %q\n", d.StringField)
-	fmt.Printf("PointerField:   %v\n", d.PointerField)
-	fmt.Printf("SliceField:     %v\n", d.SliceField)
-	fmt.Printf("MapField:       %v\n", d.MapField)
-	fmt.Printf("ChannelField:   %v\n", d.ChannelField)
-	fmt.Printf("InterfaceField: %v\n", d.InterfaceField)
-	fmt.Printf("FuncField:      %v\n", d.FuncField)
+	s1 := GetInstance()
+	s2 := GetInstance()
+	fmt.Println("Are both instances same?", s1 == s2)
 }
