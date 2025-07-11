@@ -42,6 +42,8 @@ def transcribe_audio(audio_path):
     logging.info(f"🧠 Transcribing: {audio_path}")
     model = WhisperModel("medium", device="cpu", compute_type="int8")
     segments, _ = model.transcribe(audio_path, beam_size=5, word_timestamps=True, language="en")
+    # hindi to english version
+    # segments, _ = model.transcribe(audio_path,task="translate", beam_size=5, word_timestamps=True, language=hi")
     words = []
     for segment in segments:
         for w in segment.words:

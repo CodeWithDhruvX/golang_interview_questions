@@ -1,6 +1,10 @@
 [
     {
-        "slide_topic": "C:/Users/dhruv/Videos/2025-07-10 10-52-10.mkv",
-        "title_text": "Introduction to init in Go"
+        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+        "title_text": "Go Defer Usecase"
+    },
+    {
+        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-11 09-36-52_output.mp4",
+        "title_text": "Go Defer & Recover Explained"
     }
 ]

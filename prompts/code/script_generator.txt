@@ -1,0 +1,72 @@
+package main
+
+import "fmt"
+
+func main() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered from panic:", r)
+		}
+	}()
+
+	fmt.Println("Before panic")
+	panic("Something went wrong!") // Simulating a crash
+	fmt.Println("This will not print")
+}
+
+
+
+✅ Tone and Style Guidelines:
+
+Use spoken-style English, like you're casually explaining something to a friend or junior developer.
+
+Keep the language simple, friendly, and natural.
+
+Use relatable examples (especially ones an Indian beginner would connect with, like classroom explanations, job interviews, or real coding tasks).
+
+Avoid complicated words or phrases that sound too formal or western.
+
+Don’t use any Hindi or Hinglish — keep it 100% English, but Indian-friendly.
+
+Maintain a teacher-like tone, as if guiding someone new to programming.
+
+🎯 Instructions:
+
+Start with the first script:
+
+Read the title and content and explain what it means.
+
+Use simple, real-life or beginner-level programming examples.
+
+Highlight why this topic matters, especially in real-world coding scenarios.
+
+📘 For code slides:
+
+Explain the code line by line.
+
+Mention what each part does in a clear and practical way.
+
+Help beginners avoid common mistakes.
+
+📊 For table slides:
+
+Walk through each row and column clearly.
+
+Compare values or concepts simply.
+
+Help the viewer understand how to use this information in actual development work.
+
+✍️ For text slides:
+
+Only explain the theory part.
+
+Do not include any code.
+
+⛔ Rules:
+
+youtbe scipt include intro or outro.
+
+Do not explain multiple slides at once — only one script per explanation.
+
+Assume the viewer is new to Topic and programming.
+

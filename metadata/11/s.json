@@ -1,19 +1,7 @@
-[
-    {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/subscribes/2025-07-10 22-02-26_output_final.mp4" 
-    },
-    {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/subscribes/2025-07-11 09-16-45_output (2)_final.mp4"
-    },
-    {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/subscribes/2025-07-11 09-36-52_output_final.mp4" 
-    }
-]
-
-
-[
+{
+"videos": [  
   {
-    "videoFile": "C:/Users/YourName/Videos/go_defer_file_closing.mp4",
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/subscribes/2025-07-10 22-02-26_output_final.mp4",
     "title": "🧠 Go Interview Q: How to Close Files Properly using `defer` 🔐",
     "description": "📌 In this Go interview prep video, learn how to use the `defer` statement to handle file closing like a pro!\n\n👨‍💻 What you'll learn:\n- Real-world use of `defer` for resource cleanup\n- Why closing files is essential in Go\n- Common mistakes to avoid during file handling\n\n📂 Code Example: `os.Open()` + `defer file.Close()`\n\n📚 Perfect for: Beginners, Job Seekers, Go Developers\n\n#golang #interviewprep #goprogramming #defer #filehandling #codeexample #learnprogramming",
     "tags": [
@@ -31,13 +19,13 @@
     "categoryName": "Education",
     "privacyStatus": "public",
     "thumbnail": "C:/Users/YourName/Videos/thumbnails/defer_file_close.png",
-    "playlistName": "Go Interview Questions - Long Form",
-    "publishAt": "2025-07-11 20:00:00",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-12 18:00:00",
     "madeForKids": false,
     "ageRestriction": false
   },
   {
-    "videoFile": "C:/Users/YourName/Videos/go_defer_execution_order.mp4",
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/subscribes/2025-07-11 09-16-45_output (2)_final.mp4",
     "title": "🔁 Go Defer Execution Order Explained with Fun Example 🧩",
     "description": "💡 Learn how Go executes deferred statements in reverse order — a common topic in interviews!\n\n🛠️ What’s covered:\n- Multiple `defer` usage\n- Stack-like behavior of `defer`\n- Step-by-step printed output\n\n✅ Real-life analogy + code walkthrough included\n\n📌 Example Output:\n- Now in main function\n- Third\n- Second\n- First\n\n#golang #gointerview #deferorder #programmingtips #stackbehavior #golangtricks #devlife",
     "tags": [
@@ -55,13 +43,13 @@
     "categoryName": "Education",
     "privacyStatus": "public",
     "thumbnail": "C:/Users/YourName/Videos/thumbnails/defer_order.png",
-    "playlistName": "Go Interview Questions - Long Form",
-    "publishAt": "2025-07-12 20:00:00",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-13 18:00:00",
     "madeForKids": false,
     "ageRestriction": false
   },
   {
-    "videoFile": "C:/Users/YourName/Videos/go_defer_panic_recovery.mp4",
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/subscribes/2025-07-11 09-36-52_output_final.mp4",
     "title": "💥 Recover from Panic in Go using `defer`! | Must-Know for Interviews ⚠️",
     "description": "🚨 Ever seen a Go program crash? Learn how to recover gracefully from panic using `defer` and `recover()`.\n\n🔥 In this video:\n- `panic()` vs `recover()`\n- Why deferred functions are perfect for recovery\n- How to avoid crashing your Go apps\n\n🧪 Example used: Simulating a crash and recovering from it\n\n✅ Ideal for backend devs & job interviews\n\n#golang #panic #recover #defer #golanginterview #errorhandling #backenddeveloper #goquestions #goprogramming",
     "tags": [
@@ -79,56 +67,10 @@
     "categoryName": "Education",
     "privacyStatus": "public",
     "thumbnail": "C:/Users/YourName/Videos/thumbnails/defer_panic_recovery.png",
-    "playlistName": "Go Interview Questions - Long Form",
-    "publishAt": "2025-07-13 20:00:00",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-14 18:00:00",
     "madeForKids": false,
     "ageRestriction": false
   }
 ]
-
-
-
-
-
-I have two JSON inputs:
-
-json1 – A list of objects, each containing a "videoFile" path.
-
-json2 – A list of video metadata objects under the "videos" key. Each object has keys like "videoFile", "title", "description", "tags", "publishAt", etc.
-
-🔄 Task:
-
-Replace only the "videoFile" values in json2["videos"] with those from json1, in order.
-
-Keep all other fields like title, description, tags, etc., unchanged.
-
-🗓️ Additional Requirement:
-
-Ask me for a starting date in format YYYY-MM-DD and playlist name.
-
-Starting from that date, update the "publishAt" field for each video to be one per day, using fixed time 12:00:00.
-
-Example: If I enter 2025-07-06, then:
-
-First video → "publishAt": "2025-07-06 12:00:00"
-
-Second video → "publishAt": "2025-07-07 12:00:00"
-
-Third video → "publishAt": "2025-07-08 12:00:00"
-
-…and so on.
-
-⚠️ Rules:
-
-If json1 has fewer items than json2["videos"], only replace what's available.
-
-If json1 has more items, ignore the extra ones.
-
-✅ Output:
-Return the updated json2 JSON object with:
-
-Replaced "videoFile" values
-
-Updated "publishAt" values starting from the input date
-
-All other properties preserved as-is
+}

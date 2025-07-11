@@ -22,7 +22,7 @@ Each snippet is 15–30 lines, self-contained
 🔹 User Question: {Insert question here}
 🔹 Language: {Python / JavaScript / Go / etc.}
 
-What are Go frameworks for web APIs (Gin, Echo)?
+What is a `defer` statement in go?
 
 After that I will say "yes" to move to the next one.
 
