@@ -1,4 +1,3 @@
-
 You are an expert programmer.
 Based on the user’s input question and chosen programming language, generate 3 different and interesting full code snippets.
 
@@ -22,15 +21,16 @@ Each snippet is 15–30 lines, self-contained
 🔹 User Question: {Insert question here}
 🔹 Language: {Python / JavaScript / Go / etc.}
 
- What is the difference between `new()` and `make()`?    in golang?
+What are named return values in golang?
 
 After that I will say "yes" to move to the next one.
 
-Please generate the 
+Please generate the
 
 create a script segment for my YouTube video. The tone should be **conversational, clear, and beginner-friendly**, crafted especially for an Indian audience who understands English.
 
 ✅ Tone and Style Guidelines:
+
 - Use **spoken-style English**, like you're casually explaining something to a friend or junior developer.
 - Keep the language simple, friendly, and natural.
 - Use **relatable examples** (especially ones an Indian beginner would connect with, like classroom explanations, job interviews, or real coding tasks).
@@ -49,10 +49,7 @@ Start with the first slide. Wait for me to say "yes" before moving to the next o
 
 After that I will say "yes" to move to the next one.
 
-
-"Generate a structured JSON Array for the 3 Singleton Code Snippets.
-{ "videos": [ <put here all objects>]}
-   The object should contain the following fields:
+"Generate a structured JSON Array for the 3 Singleton Code Snippets. The object should contain the following fields:
 
 videoFile: Absolute file path of the video (e.g., "C:/Users/YourName/Videos/video.mp4").
 
@@ -89,7 +86,7 @@ please conisder that this is interview questions and long video
 ==================================================================================
 After that I will say "yes" to move to the next one.
 
-Please generate the 
+Please generate the
 
 [
     {
@@ -98,11 +95,8 @@ Please generate the
     }
 ]
 
-
-
 generate the thumbnail titles for the abov three code snippet for this format. please don't use the any speacial charcaters and emojis
 
 =================================================================================================================
-
 
 give me the three objects for the three code snippet

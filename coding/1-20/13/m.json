@@ -1,0 +1,68 @@
+[
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+    "title": "Master Named Return in Go 🔁 Clean & Idiomatic Coding",
+    "description": "✅ Learn what Named Return Values are in Golang with this easy, beginner-friendly explanation!\n\n👨‍🏫 In this short, we cover:\n- What are named return values?\n- How they make your Go code cleaner\n- Real-world use cases (like backend microservices)\n- A line-by-line walkthrough of a simple function\n\n🎯 Perfect for:\n- Golang interview preparation\n- Backend developers\n- Students learning Go\n\n📌 Don't miss the upcoming videos in this Golang Interview Series!\n\n#golang #golanginterview #go #namedreturn #golangshorts #backenddeveloper #interviewprep",
+    "tags": [
+      "golang",
+      "go programming",
+      "named return values",
+      "golang for beginners",
+      "golang interview questions",
+      "backend development",
+      "go function return",
+      "clean go code"
+    ],
+    "categoryName": "Education",
+    "privacyStatus": "private",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnail_named_return.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-20 09:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+    "title": "Golang Interview Prep 🎯 Named Returns + Error Handling Explained!",
+    "description": "🚨 Learn how Named Return Values work with Error Handling in Golang — a real-world and interview-worthy pattern!\n\n👨‍🏫 In this short video:\n- How to return both result and error using named values\n- Common Go idioms in real apps (API, file, math)\n- Step-by-step breakdown of a divide function\n- Error check for divide-by-zero\n\n💼 Perfect for:\n- Backend developers\n- Go interview candidates\n- Anyone building real-world Go code\n\n#golang #errorhandling #golanginterview #namedreturn #backenddeveloper #go #golangtips",
+    "tags": [
+      "golang",
+      "go language",
+      "error handling",
+      "named return in go",
+      "golang for backend",
+      "golang interview questions",
+      "go function return",
+      "go idioms"
+    ],
+    "categoryName": "Education",
+    "privacyStatus": "private",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnail_named_return_error.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-21 09:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  {
+    "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+    "title": "Golang Named Return 📘 Use If-Else Like a Pro",
+    "description": "🎓 Understand how to use Named Return Values in Golang with clean if-else logic — just like real-life grading systems!\n\n📚 In this short tutorial:\n- How to return based on conditions using named values\n- Distinction, Pass, Fail example\n- Clean Go coding with no repetition\n- Practical Go for interviews and backend apps\n\n💡 Use this for:\n- Scoring logic\n- Role levels\n- Status labels in APIs\n\n#golang #go #golanginterview #namedreturn #goifelse #interviewprep #golangshorts #goconditional",
+    "tags": [
+      "golang",
+      "go programming",
+      "named return",
+      "if else golang",
+      "golang short video",
+      "golang interview",
+      "backend logic go",
+      "golang patterns"
+    ],
+    "categoryName": "Education",
+    "privacyStatus": "private",
+    "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnail_named_return_conditional.png",
+    "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+    "publishAt": "2025-07-22 09:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  }
+]

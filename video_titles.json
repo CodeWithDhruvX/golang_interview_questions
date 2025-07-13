@@ -1,10 +1,14 @@
 [
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
-        "title_text": "Go Defer Usecase"
-    },
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-11 09-36-52_output.mp4",
-        "title_text": "Go Defer & Recover Explained"
-    }
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/12/coding_shorts/audio/replace/2025-07-12 08-59-35_output.mp4",
+    "title_text": "Go Defer Modify Return Value"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/12/coding_shorts/audio/replace/2025-07-12 09-11-40_output.mp4",
+    "title_text": "Go Defer Does Not Affect Return"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/12/coding_shorts/audio/replace/2025-07-12 09-20-24_output.mp4",
+    "title_text": "Go Defer With Panic And Recover"
+  }
 ]

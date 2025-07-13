@@ -1,0 +1,78 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/12/coding_shorts/audio/replace/final/2025-07-12 08-59-35_output_final.mp4",
+      "title": "🧠 GoLang Defer Magic: Modify Return Values Like a Pro!",
+      "description": "📌 Learn how Go's `defer` works with named return values in this short but powerful snippet.\n\n💡 What you'll learn:\n- How `defer` runs *after* the return statement\n- Why named return values matter\n- Beginner-friendly breakdown with examples\n\n👨‍💻 Perfect for GoLang interviews and real-world coding!\n\n#golang #defer #interviewprep #coding #shorts #goprogramming #golangtips #returnvalues\n\nDon't forget to 👍 Like, 🔔 Subscribe, and 📝 Comment below if this helped you!",
+      "tags": [
+        "golang",
+        "go programming",
+        "defer in golang",
+        "golang return values",
+        "golang interview questions",
+        "golang beginner",
+        "golang india",
+        "go language tips",
+        "defer return",
+        "golang tutorial",
+        "shorts",
+        "golang short"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "private",
+      "thumbnail": "C:/Users/Dhruv/Videos/defer_return1_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-20 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/12/coding_shorts/audio/replace/final/2025-07-12 09-11-40_output_final.mp4",
+      "title": "😲 Why `defer` Doesn't Change Your Return in Go (Unless You Do THIS)",
+      "description": "⚠️ Many Go beginners get confused by this!\n\n📌 In this video, learn:\n- Why `defer` may NOT change the return value\n- The difference between named vs unnamed returns\n- How pointers behave with deferred functions\n\n💡 Real-world example explained line-by-line for beginners\n\n🧠 Perfect for Golang interviews and debugging tricky behavior.\n\n#golang #defer #returnvalue #gointerview #golangshorts #pointers #golangtutorial #goprogramming\n\nHit ❤️ Like, 🔔 Subscribe, and 💬 Comment your thoughts!",
+      "tags": [
+        "golang",
+        "go defer",
+        "golang interview",
+        "go return values",
+        "pointers in go",
+        "go tips",
+        "golang short",
+        "defer return gotcha",
+        "golang tricks",
+        "defer with pointer"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "private",
+      "thumbnail": "C:/Users/Dhruv/Videos/defer_return2_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-21 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/12/coding_shorts/audio/replace/final/2025-07-12 09-20-24_output_final.mp4",
+      "title": "🛡️ GoLang `defer` + `recover`: Control Panics Like a Pro!",
+      "description": "🔥 Learn how to use `defer` and `recover` to gracefully handle panics in Go.\n\n💥 What you'll discover:\n- Using `defer` to recover from a panic\n- Modifying return values even after a crash\n- Why named return values are powerful during recovery\n\n📌 Perfect for backend devs, Go interview prep, and real-world system handling.\n\n#golang #panic #recover #golangtips #goerrorhandling #golanginterview #defer #shorts\n\nHit 👍 Like, 🔔 Subscribe, and let us know in the comments how YOU use `defer` in your Go projects!",
+      "tags": [
+        "golang",
+        "defer",
+        "recover",
+        "panic",
+        "golang panic handling",
+        "go interview",
+        "golang tips",
+        "go backend",
+        "golang short",
+        "golang tutorial"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "private",
+      "thumbnail": "C:/Users/Dhruv/Videos/defer_return3_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
