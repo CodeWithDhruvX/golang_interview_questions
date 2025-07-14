@@ -1,40 +1,27 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
-func reverseList(head *ListNode) *ListNode {
-	var prev *ListNode
-	curr := head
-
-	for curr != nil {
-		nextTemp := curr.Next
-		curr.Next = prev
-		prev = curr
-		curr = nextTemp
+// Variadic function to calculate average of float64 values
+func average(nums ...float64) float64 {
+	if len(nums) == 0 {
+		return 0.0
 	}
-	return prev
-}
-
-// Helper to print the list
-func printList(head *ListNode) {
-	for head != nil {
-		fmt.Print(head.Val, " -> ")
-		head = head.Next
+	total := 0.0
+	for _, num := range nums {
+		total += num
 	}
-	fmt.Println("nil")
+	return total / float64(len(nums))
 }
 
 func main() {
-	head := &ListNode{1, &ListNode{2, &ListNode{3, nil}}}
-	printList(head)
-	newHead := reverseList(head)
-	printList(newHead)
+	fmt.Println("Average 1:", average(10.5, 20.0, 30.5))
+	fmt.Println("Average 2:", average())
 }
+
+
 
 
 
