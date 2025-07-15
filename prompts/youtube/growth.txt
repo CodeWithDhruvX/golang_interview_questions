@@ -1,0 +1,86 @@
+You are a high-performing YouTube growth strategist and title-copywriting expert.
+
+👉 Task:
+For each of the following YouTube video titles or topics, generate:
+- 1️⃣ A reworked, high-CTR YouTube **Title**
+- 2️⃣ A **Thumbnail Text Hook** (2–4 words max, designed for visual impact)
+- 3️⃣ An optional **Question-style Opening Hook** to use in video intro or caption.
+
+🎯 Use these rules:
+- Titles must create curiosity or tension. Use words like: “Why”, “How”, “Stop”, “Mistake”, “Breaks”, “Fix”, “Hidden”, etc.
+- Use power emojis to enhance clarity (🔥, ❌, 🤯, 🧠, 🛑, etc.)
+- Thumbnail text should be bold, visual, and minimal — as if it will be shown over a video image.
+
+---
+
+🎬 INPUT TOPICS:
+package main
+1.
+package main
+
+import "fmt"
+
+// A variadic function to calculate sum
+func sum(nums ...int) int {
+	total := 0
+	for _, num := range nums {
+		total += num
+	}
+	return total
+}
+
+func main() {
+	fmt.Println("Sum:", sum(1, 2, 3, 4, 5))
+}
+
+
+
+Give the output in a table format.
+
+=============
+
+2.
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+// Variadic function to join strings
+func joinStrings(sep string, words ...string) string {
+	return strings.Join(words, sep)
+}
+
+func main() {
+	result := joinStrings("-", "go", "is", "fun")
+	fmt.Println("Joined:", result)
+}
+
+
+
+==============
+3.
+package main
+
+import (
+	"fmt"
+)
+
+// Variadic function to calculate average of float64 values
+func average(nums ...float64) float64 {
+	if len(nums) == 0 {
+		return 0.0
+	}
+	total := 0.0
+	for _, num := range nums {
+		total += num
+	}
+	return total / float64(len(nums))
+}
+
+func main() {
+	fmt.Println("Average 1:", average(10.5, 20.0, 30.5))
+	fmt.Println("Average 2:", average())
+}
+

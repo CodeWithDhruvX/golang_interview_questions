@@ -84,16 +84,9 @@ this is a short video
 please conisder that this is interview questions and long video
 
 ==================================================================================
-After that I will say "yes" to move to the next one.
 
-Please generate the
+    
 
-[
-    {
-        "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
-        "title_text": "Go Defer Usecase"
-    }
-]
 
 generate the thumbnail titles for the abov three code snippet for this format. please don't use the any speacial charcaters and emojis
 
