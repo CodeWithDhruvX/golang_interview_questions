@@ -14,7 +14,6 @@ For each of the following YouTube video titles or topics, generate:
 ---
 
 🎬 INPUT TOPICS:
-package main
 1.
 package main
 
@@ -32,6 +31,7 @@ func sum(nums ...int) int {
 func main() {
 	fmt.Println("Sum:", sum(1, 2, 3, 4, 5))
 }
+
 
 
 
@@ -59,6 +59,7 @@ func main() {
 
 
 
+
 ==============
 3.
 package main
@@ -83,4 +84,5 @@ func main() {
 	fmt.Println("Average 1:", average(10.5, 20.0, 30.5))
 	fmt.Println("Average 2:", average())
 }
+
 

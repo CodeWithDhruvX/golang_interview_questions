@@ -1,0 +1,4 @@
+SelectAll:
+OpenvinoNoiseSuppression:Use_Preset="<Current Settings>"
+RepeatLastEffect:
+Normalize:ApplyVolume="1" PeakLevel="-1" RemoveDcOffset="1" StereoIndependent="0"

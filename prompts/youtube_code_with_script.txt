@@ -77,14 +77,18 @@ madeForKids: Boolean value (true or false).
 ageRestriction: Boolean value (true or false).
 
 ✅ Ensure:
+For each of the following YouTube video titles or topics, generate:
+- 1️⃣ A reworked, high-CTR YouTube **Title**
+- 2️⃣ A **Thumbnail Text Hook** (2–4 words max, designed for visual impact)
+- 3️⃣ An optional **Question-style Opening Hook** to use in video intro or caption.
 
-Title is ≤100 characters.
-
-seo optimized title and description
-
-this is a short video
-
-please conisder that this is interview questions and long video
+🎯 Use these rules:
+- Titles must create curiosity or tension. Use words like: “Why”, “How”, “Stop”, “Mistake”, “Breaks”, “Fix”, “Hidden”, etc.
+- Use power emojis to enhance clarity (🔥, ❌, 🤯, 🧠, 🛑, etc.)
+- Thumbnail text should be bold, visual, and minimal — as if it will be shown over a video image.
+- Title is ≤100 characters.
+- seo optimized title and description
+- this is a short video
 
 ==================================================================================
 After that I will say "yes" to move to the next one.
@@ -101,6 +105,18 @@ Please generate the
 
 
 generate the thumbnail titles for the abov three code snippet for this format. please don't use the any speacial charcaters and emojis
+and make sure that this below things
+👉 Task:
+For each of the following YouTube video title_text:
+- 1️⃣ A reworked, high-CTR YouTube **Title**
+- 2️⃣ A **Thumbnail Text Hook** (2–4 words max, designed for visual impact)
+- 3️⃣ An optional **Question-style Opening Hook** to use in video intro or caption.
+
+🎯 Use these rules:
+- Titles must create curiosity or tension. Use words like: “Why”, “How”, “Stop”, “Mistake”, “Breaks”, “Fix”, “Hidden”, etc.
+- Use power emojis to enhance clarity (🔥, ❌, 🤯, 🧠, 🛑, etc.)
+- Thumbnail text should be bold, visual, and minimal — as if it will be shown over a video image.
+
 
 =================================================================================================================
 
