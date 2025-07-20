@@ -1,0 +1,69 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/14/subscribe/2025-07-14 21-36-00_output_final.mp4",
+      "title": "🔢 Go Variadic Function: Add Any Number of Integers (Explained with Example)",
+      "description": "In this Golang short, learn how to use variadic functions to add any number of integers!\n\n📌 What you'll learn:\n- Go variadic syntax: `...int`\n- Real-world example: sum of numbers\n- Line-by-line explanation for beginners\n\nPerfect for Golang interview prep! 🇮🇳\n\n#golang #variadicfunctions #gointerview #golangshorts #codinginterview",
+      "tags": [
+        "golang",
+        "variadic function",
+        "go tutorial",
+        "go interview",
+        "golang sum",
+        "go syntax"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "private",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbnails/snippet1.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-30 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/14/subscribe/2025-07-14 21-41-34_output_final.mp4",
+      "title": "🧩 Join Strings with Variadic Function in Golang (Separator Example)",
+      "description": "Learn how to use variadic functions in Go to join strings with a custom separator!\n\n📌 Key highlights:\n- Mixing fixed and variadic parameters\n- Real-world example using strings.Join\n- Use case for building tags, paths, and more\n\nGreat for coding interviews and beginner Go devs 🇮🇳\n\n#golang #strings #variadic #goexample #interviewprep #goshorts",
+      "tags": [
+        "golang",
+        "go strings",
+        "variadic parameters",
+        "golang tutorial",
+        "join strings",
+        "golang interview"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "private",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbnails/snippet2.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-07-31 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/14/subscribe/2025-07-14 21-49-46_output_final.mp4",
+      "title": "📊 GoLang Interview: Master Variadic Functions for Averages! 💡",
+      "description": "🚀 Unlock the power of Variadic Functions in GoLang for your next interview!\n\nIn this video:\n\n✅ Understand how to calculate average using variadic functions\n✅ Learn Go best practices for handling float64 data types\n✅ Interview-ready explanation of real Go code\n\n💬 Great for:\n- GoLang developers\n- Interview preparation\n- Backend engineers\n\n🎯 Key Concepts:\n• Variadic functions in Go\n• Float64 precision handling\n• Real-world use cases\n\n📌 Stay tuned till the end to learn how to handle edge cases like empty input!\n\n👇 Comment your doubts below & don’t forget to:\n👍 Like\n🔔 Subscribe\n📢 Share it with your dev friends!\n\n#GoLang #InterviewPrep #BackendEngineering #GoProgramming #CodingInterview #TechCareers #DeveloperTips #GoTips #Shorts #CodingShorts #GoLangShorts",
+      "tags": [
+        "GoLang",
+        "variadic functions",
+        "golang interview questions",
+        "coding interview",
+        "average in golang",
+        "float64 in go",
+        "golang tutorial",
+        "golang shorts",
+        "go programming",
+        "backend interview",
+        "developer interview prep"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/go_variadic_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-01 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}

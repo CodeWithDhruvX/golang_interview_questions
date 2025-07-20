@@ -1,27 +1,23 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-// Variadic function to calculate average of float64 values
-func average(nums ...float64) float64 {
-	if len(nums) == 0 {
-		return 0.0
-	}
-	total := 0.0
-	for _, num := range nums {
-		total += num
-	}
-	return total / float64(len(nums))
+type Writer interface {
+	Write([]byte) (int, error)
+}
+
+type Dummy struct{}
+
+// We’re required to implement Writer but don’t actually use the return values
+func (d Dummy) Write(p []byte) (int, error) {
+	_, _ = fmt.Println("Pretend writing:", string(p))
+	return 0, nil
 }
 
 func main() {
-	fmt.Println("Average 1:", average(10.5, 20.0, 30.5))
-	fmt.Println("Average 2:", average())
+	var w Writer = Dummy{}
+	w.Write([]byte("Hello Golang"))
 }
-
-
 
 
 

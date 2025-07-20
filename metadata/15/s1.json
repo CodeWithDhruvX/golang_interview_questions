@@ -1,0 +1,76 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/15/final/subscribe/2025-07-15 21-37-53_output_final.mp4",
+      "title": "🔍 Go Type Alias Explained with Kilometers Example (Beginner-Friendly)",
+      "description": "✅ Learn what a Type Alias is in Golang using a real-world Kilometers example!\n\nIn this video:\n- What is a Type Alias in Go?\n- Why use aliases instead of built-in types?\n- Line-by-line walkthrough of using Kilometers as alias for int\n\n📌 Perfect for:\n- Go beginners\n- College students\n- Interview prep\n\n🚀 Boost your code readability and ace Go interviews with confidence!\n\n#golang #typealias #gointerview #gobasics #learngolang #indiandevs",
+      "tags": [
+        "golang",
+        "go programming",
+        "type alias golang",
+        "golang for beginners",
+        "golang interview questions",
+        "go type alias vs new type",
+        "go type alias example",
+        "learn golang india",
+        "golang int alias",
+        "kilometers type golang"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "private",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/type_alias/1_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-01 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/15/final/subscribe/2025-07-15 21-43-17_output_final.mp4",
+      "title": "⏱️ Go Type Alias for time.Duration Made Easy!",
+      "description": "✨ Simplify your Go code by using a type alias for time.Duration!\n\nIn this short video:\n- Why aliasing imported types like time.Duration helps\n- Cleaner function signatures\n- Real-life example with MyDuration alias\n\n👨‍💻 Great for:\n- Developers using Go timers\n- Writing reusable libraries\n- Improving code clarity\n\n💡 Watch and learn how to write readable and professional-level Go code!\n\n#golang #gointerview #gobasics #typealias #timepackage #goimportalias #indiandevs #backenddev",
+      "tags": [
+        "golang",
+        "go programming",
+        "go time package",
+        "type alias go",
+        "golang time.Duration",
+        "go import alias",
+        "golang code clarity",
+        "golang best practices",
+        "myduration alias go",
+        "golang short videos"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "private",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/type_alias/2_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-02 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/15/final/subscribe/2025-07-15 21-55-26_output_final.mp4",
+      "title": "🚫 Type Alias vs New Type in Go (Avoid This Mistake!)",
+      "description": "🔥 Go interviewers LOVE this question: What’s the difference between a Type Alias and a New Type?\n\nIn this video:\n- Key difference between type alias and new type\n- When to use each in real-world Go projects\n- Hands-on example with AgeAlias vs AgeNew\n\n🎯 Must-watch for:\n- Golang interview prep\n- Backend engineers\n- Developers learning type safety in Go\n\n📌 Save this and avoid common beginner mistakes!\n\n#golang #interviewquestions #gointerview #typealias #newtype #golangtips #golangtypealias #backendinterview",
+      "tags": [
+        "golang",
+        "go programming",
+        "golang interview",
+        "type alias vs new type",
+        "golang beginner mistake",
+        "golang data types",
+        "go type conversion",
+        "backend interview",
+        "golang tutorials",
+        "agealias agenew go"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "private",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/type_alias/3_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-03 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}

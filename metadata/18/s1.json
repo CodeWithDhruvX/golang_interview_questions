@@ -1,20 +1,7 @@
-[
-    {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 20-59-32_output_final.mp4"
-    },
-    {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 21-07-49_output_final.mp4"
-    },
-    {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 21-13-45_output_final.mp4"
-    }
-]
-
-
 {
   "videos": [
     {
-      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-14_blank_identifier_1.mp4",
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 20-59-32_output_final.mp4",
       "title": "Golang Blank Identifier Explained with Atoi Example",
       "description": "📘 In this video, we explore how to use the blank identifier (_) in Go to ignore return values from functions!\n\n🔍 What you'll learn:\n- Why strconv.Atoi returns two values\n- How to safely ignore errors using _\n- Real-world use case for beginners\n\n🎯 Perfect for:\n- Go interview prep\n- Beginners learning multiple return values\n- Clean coding in production\n\n#golang #interviewquestions #coding #goprogramming #learnprogramming\n",
       "tags": [
@@ -31,13 +18,13 @@
       "categoryName": "Education",
       "privacyStatus": "public",
       "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/blank_identifier_1.png",
-      "playlistName": "GoLang Interview Questions",
-      "publishAt": "2025-07-14 18:00:00",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-04 12:00:00",
       "madeForKids": false,
       "ageRestriction": false
     },
     {
-      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-14_blank_identifier_2.mp4",
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 21-07-49_output_final.mp4",
       "title": "Golang Blank Identifier in For Loops",
       "description": "🔁 Learn how to skip loop indexes using blank identifiers (_) in Go!\n\n🧠 Topics covered:\n- Using range to loop over slices\n- When to ignore the index\n- Cleaner and readable Go code\n\n💼 Great for:\n- Freshers learning Go loops\n- Developers preparing for Go interviews\n- Writing idiomatic Go code\n\n#golang #forloop #range #go #learnprogramming #gointerview\n",
       "tags": [
@@ -54,13 +41,13 @@
       "categoryName": "Education",
       "privacyStatus": "public",
       "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/blank_identifier_2.png",
-      "playlistName": "GoLang Interview Questions",
-      "publishAt": "2025-07-14 18:15:00",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-05 12:00:00",
       "madeForKids": false,
       "ageRestriction": false
     },
     {
-      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-14_blank_identifier_3.mp4",
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 21-13-45_output_final.mp4",
       "title": "Golang Interface Implementation using Blank Identifier",
       "description": "📄 Implementing Go interfaces but don’t need the return values? Use blank identifiers like a pro!\n\n✅ In this video:\n- What is the Writer interface in Go\n- How to ignore Println return values\n- Clean interface implementation for mocks or logs\n\n🔥 Must-know for Go interview rounds and real-world testing setups!\n\n#golang #interface #mocking #gointerview #writerinterface #goprogramming\n",
       "tags": [
@@ -77,59 +64,10 @@
       "categoryName": "Education",
       "privacyStatus": "public",
       "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/blank_identifier_3.png",
-      "playlistName": "GoLang Interview Questions",
-      "publishAt": "2025-07-14 18:30:00",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-06 12:00:00",
       "madeForKids": false,
       "ageRestriction": false
     }
   ]
 }
-
-
-
-
-
-
-
-I have two JSON inputs:
-
-json1 – A list of objects, each containing a "videoFile" path.
-
-json2 – A list of video metadata objects under the "videos" key. Each object has keys like "videoFile", "title", "description", "tags", "publishAt", etc.
-
-🔄 Task:
-
-Replace only the "videoFile" values in json2["videos"] with those from json1, in order.
-
-Keep all other fields like title, description, tags, etc., unchanged.
-
-🗓️ Additional Requirement:
-
-Ask me for a starting date in format YYYY-MM-DD and playlist name.
-
-Starting from that date, update the "publishAt" field for each video to be one per day, using fixed time 12:00:00.
-
-Example: If I enter 2025-07-06, then:
-
-First video → "publishAt": "2025-07-06 12:00:00"
-
-Second video → "publishAt": "2025-07-07 12:00:00"
-
-Third video → "publishAt": "2025-07-08 12:00:00"
-
-…and so on.
-
-⚠️ Rules:
-
-If json1 has fewer items than json2["videos"], only replace what's available.
-
-If json1 has more items, ignore the extra ones.
-
-✅ Output:
-Return the updated json2 JSON object with:
-
-Replaced "videoFile" values
-
-Updated "publishAt" values starting from the input date
-
-All other properties preserved as-is
