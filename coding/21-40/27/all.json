@@ -1,0 +1,64 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/YourName/Videos/golang/multislice/snippet1.mp4",
+      "title": "🧠 How to Create Multi-Dimensional Slices in Go the Right Way!",
+      "description": "Learn how to create and manage multi-dimensional slices in Golang efficiently! 🧩\n\n🔥 In this short:\n- Learn idiomatic Go syntax\n- Use `make()` for safe initialization\n- Build grid-like data structures\n\n👨‍💻 Ideal for:\n- Game boards\n- Matrix manipulation\n- Spreadsheet data\n\n#golang #programming #shorts #gocoding #matrix #2dslice #developer #techskills",
+      "tags": ["golang", "slices", "2d array", "matrix", "golang tips", "programming", "golang tutorial"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang/multislice/thumb1.png",
+      "playlistName": "Golang Interview Snippets",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/golang/multislice/snippet2.mp4",
+      "title": "🔄 Why Dynamic Slices in Go Break Most Code (and How to Fix It)",
+      "description": "Stop making mistakes with dynamic multi-dimensional slices in Golang! ⛔\n\n💡 In this Go short:\n- See how to use append() properly\n- Handle rows of varying length\n- Build slices on the fly 🔄\n\n📌 Best for:\n- CSV parsing\n- Dynamic table structures\n- Handling unknown data sizes\n\n#golang #shorts #goslices #append #gotips #dynamicarray #codingtricks",
+      "tags": ["golang", "go slices", "dynamic slice", "2d arrays", "golang append", "short video"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang/multislice/thumb2.png",
+      "playlistName": "Golang Interview Snippets",
+      "publishAt": "2025-07-22 11:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/golang/multislice/snippet3.mp4",
+      "title": "📦 Hidden Power of Structs in Go Multi-Dimensional Slices!",
+      "description": "Discover how structs unlock new possibilities in Go 2D slices! 🧠\n\n🚀 What you’ll learn:\n- Using structs in slices\n- Adding metadata to rows\n- More flexible & clean code\n\n💼 Use in:\n- Logs and time-series data\n- Labeled datasets\n- Complex matrix models\n\n#golang #goslices #structs #developer #matrix #cleancode #goprogramming #shorts",
+      "tags": ["golang", "structs", "2d slice", "go advanced", "golang tutorial", "goprogramming", "developer tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/golang/multislice/thumb3.png",
+      "playlistName": "Golang Interview Snippets",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+ {
+    "slide_topic": "C:/Users/YourName/Videos/golang/multislice/snippet1.mp4",
+    "title_text": "Multi-Dimensional Slice Using make",
+    "reworked_title": "Why Most Devs Break 2D Slices in Go",
+    "thumbnail_text_hook": "Go 2D Slice Fix",
+    "opening_hook": "Think you know how to build 2D slices in Go?"
+  },
+  {
+    "slide_topic": "C:/Users/YourName/Videos/golang/multislice/snippet2.mp4",
+    "title_text": "Dynamic Multi-Dimensional Slice in Go",
+    "reworked_title": "How Dynamic Slices Break Your Go Code (And Fix It)",
+    "thumbnail_text_hook": "Dynamic Slice Error",
+    "opening_hook": "Dynamic slice issues in Go? Here's how to fix them."
+  },
+  {
+    "slide_topic": "C:/Users/YourName/Videos/golang/multislice/snippet3.mp4",
+    "title_text": "Multi-Dimensional Slice Using Structs",
+    "reworked_title": "Hidden Trick Using Structs in Go Multi-Dimensional Slices",
+    "thumbnail_text_hook": "Struct Power Trick",
+    "opening_hook": "What if your Go slice had superpowers?"
+  }

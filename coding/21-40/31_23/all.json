@@ -1,0 +1,65 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/YourName/Videos/compare_maps_go_snippet1.mp4",
+      "title": "🧠 How to Compare Maps in Go the Right Way (No Reflect!)",
+      "description": "In this quick GoLang short, you'll learn:\n\n✅ Why Go doesn't allow direct map comparison\n🔁 How to compare maps manually using idiomatic Go\n🛠️ Best use cases for this approach\n\n💡 This method is great for performance-focused applications and full control over map comparison.\n\n#golang #maps #codingtips #goprogramming #interviewprep #developer\n\n➡️ Subscribe for more GoLang shorts!\n➡️ Like & Comment if this helped you!\n\n📌 Master map comparison logic now!",
+      "tags": [
+        "golang",
+        "go maps",
+        "compare maps in go",
+        "golang tips",
+        "golang short",
+        "go coding",
+        "golang interview"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnails/map_compare_loop.png",
+      "playlistName": "GoLang Shorts",
+      "publishAt": "2025-07-23 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/compare_maps_go_snippet2.mp4",
+      "title": "🤯 DeepEqual in Go: Easy Map Comparison Trick!",
+      "description": "Learn a powerful trick to compare maps in Go using `reflect.DeepEqual` 🔍\n\n🚀 Compare any data structures instantly\n💡 Great for quick validations and testing\n🧪 Idiomatic, fast, and test-friendly\n\n#golang #go #coding #deepequal #golangtesting #learncode\n\n👍 Like • 🔔 Subscribe • 💬 Comment\n\nPerfect for Go devs writing unit tests or comparing complex structures.",
+      "tags": [
+        "golang",
+        "deep equal in go",
+        "reflect golang",
+        "go map comparison",
+        "golang tips",
+        "golang unit testing"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnails/map_compare_reflect.png",
+      "playlistName": "GoLang Shorts",
+      "publishAt": "2025-07-23 10:10:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/compare_maps_go_snippet3.mp4",
+      "title": "🔥 Compare Go Maps Using JSON (Surprising Hack!)",
+      "description": "Here’s a unique way to compare maps in Go using JSON encoding!\n\n📦 Marshal maps into JSON\n🟰 Compare the strings safely\n✨ Ensures key order doesn't matter\n\nPerfect for:\n- API response comparison\n- Snapshot testing\n- Data integrity checks\n\n#golang #json #comparemaps #goprogramming #devtips\n\n👉 Watch this if you want a clean and simple way to compare maps.",
+      "tags": [
+        "golang",
+        "compare maps json",
+        "golang json",
+        "golang tricks",
+        "golang interview questions",
+        "map comparison go"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnails/map_compare_json.png",
+      "playlistName": "GoLang Shorts",
+      "publishAt": "2025-07-23 10:20:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}

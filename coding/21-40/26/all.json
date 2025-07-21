@@ -1,0 +1,94 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/len_vs_cap_snippet1.mp4",
+      "title": "🔍 Go Slice Memory Secrets: Understand len() vs cap() in 60 Seconds!",
+      "description": "📌 In this short and sharp Go tutorial, learn the key differences between `len()` and `cap()` in slices:\n\n💡 What you’ll learn:\n- ✅ What `len()` really measures\n- ✅ What `cap()` means for memory allocation\n- 🔄 How appending changes slice capacity\n- ⚡ Visual examples with step-by-step explanations\n\n💼 Perfect for:\n- Beginners mastering Go slices\n- Devs preparing for Go interviews\n- Performance-focused coding\n\n#golang #goprogramming #slices #shorts #coding #devtips",
+      "tags": [
+        "golang",
+        "goprogramming",
+        "len vs cap",
+        "go slices",
+        "golang tutorial",
+        "interview prep",
+        "coding shorts"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet1.png",
+      "playlistName": "GoLang Interview Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/len_vs_cap_snippet2.mp4",
+      "title": "📈 How Go Slices Grow: Watch cap() Evolve in Real Time! 💥",
+      "description": "🔥 Ever wondered how Go handles slice memory behind the scenes? In this short video:\n\n🔍 See how len() and cap() change dynamically\n📊 Track slice capacity as elements are added\n🧠 Understand the strategy behind Go's slice growth\n\n💼 Useful for:\n- Building scalable Go programs\n- Avoiding memory pitfalls\n- Preparing for Go interviews\n\n#golang #goprogramming #slice #len #cap #interviewquestions #techshorts",
+      "tags": [
+        "golang",
+        "go slices",
+        "len cap difference",
+        "dynamic slice growth",
+        "golang memory",
+        "coding interviews",
+        "golang shorts"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet2.png",
+      "playlistName": "GoLang Interview Shorts",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/len_vs_cap_snippet3.mp4",
+      "title": "🔀 Hidden Trap: Slice vs Array in Go (len vs cap Explained!)",
+      "description": "🧠 Confused between arrays and slices in Go?\nThis short video clears it up with a real example of len() and cap():\n\n🎯 Key Highlights:\n- Arrays vs Slices: Memory structure\n- Slicing impact on cap()\n- Real Go interview insights\n\n💼 For:\n- Go beginners\n- Developers facing slice confusion\n- Interview prep made visual\n\n#golang #arrays #slices #gointerview #codingtips #golangshorts",
+      "tags": [
+        "golang",
+        "arrays vs slices",
+        "len vs cap",
+        "golang interview",
+        "slice behavior",
+        "go memory",
+        "golang shorts"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet3.png",
+      "playlistName": "GoLang Interview Shorts",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+{
+  "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/len_vs_cap_snippet1.mp4",
+  "title_text": "Go Slice Memory Secrets",
+  "thumbnail_title": {
+    "title": "Stop Misusing len and cap in Go",
+    "hook": "len vs cap",
+    "opening_question": "Are you using Go slices the wrong way?"
+  }
+}
+{
+  "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/len_vs_cap_snippet2.mp4",
+  "title_text": "How Go Slices Grow",
+  "thumbnail_title": {
+    "title": "Why Go Slices Grow Like This",
+    "hook": "Dynamic Slice Growth",
+    "opening_question": "Ever tracked cap in a loop?"
+  }
+}
+{
+  "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/len_vs_cap_snippet3.mp4",
+  "title_text": "Hidden Trap Slice vs Array",
+  "thumbnail_title": {
+    "title": "Mistake Devs Make with Arrays and Slices",
+    "hook": "Array Slice Trap",
+    "opening_question": "Do you know how slicing affects cap?"
+  }
+}

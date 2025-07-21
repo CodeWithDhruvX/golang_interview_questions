@@ -1,0 +1,72 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/copy_slice_builtin.mp4",
+      "title": "⚡ Stop Copying Slices the Wrong Way in Go! Use This Trick Instead",
+      "description": "Learn how to properly copy slices in Golang using the built-in `copy()` function!\n\n✅ In this short:\n- Avoid common mistakes with slice memory\n- See how Go handles slice copying internally\n- Boost your Go interview answers\n\n🔥 Perfect for beginners and intermediate developers!\n\n#golang #shorts #goprogramming #devtips #codingtricks #interviewprep",
+      "tags": ["golang", "go programming", "copy slices", "golang tutorial", "go interview questions", "golang tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/copy_builtin.png",
+      "playlistName": "Go Interview Questions",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/copy_slice_append.mp4",
+      "title": "🔥 Hidden Go Trick: Copy Slices Using Append Like a Pro!",
+      "description": "Ever wondered how to copy slices in Golang using `append()`? Here's a cool trick that's idiomatic and fast.\n\n🔍 In this Go short:\n- Smart use of append to create a safe copy\n- Why this idiom is loved by experienced Gophers\n- Clear difference between shallow vs deep copy\n\n🎯 Don’t just learn Go — master its shortcuts.\n\n#golang #goprogramming #devshorts #copyingdata #golangtricks #goappend",
+      "tags": ["golang", "append slice", "copy slices", "golang short", "go language", "golang coding"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/copy_append.png",
+      "playlistName": "Go Interview Questions",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/copy_slice_manual.mp4",
+      "title": "🛠️ Why Manual Slice Copying in Go Still Matters (Real Example)",
+      "description": "Manual copying in Go? Here's why it matters when dealing with complex data.\n\n🔧 In this Go coding short:\n- Manual slice copying explained\n- When `copy()` and `append()` aren't enough\n- Use cases for nested structs or transformations\n\n👨‍💻 Understand deeper slice behavior in Golang for real-world apps.\n\n#golang #deepcopy #goslices #goprogramming #codingtips #devshorts",
+      "tags": ["golang", "manual slice copy", "deep copy go", "golang interview", "coding in go", "slice management"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/copy_manual.png",
+      "playlistName": "Go Interview Questions",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/copy_slice_builtin.mp4",
+    "title_text": "Go Builtin Copy Slice",
+    "thumbnail_title": {
+      "title": "Stop Copying Slices Wrong in Go ⚠️",
+      "thumbnail_text_hook": "Fix Slice Copy",
+      "opening_hook": "Are you copying slices wrong in Go?"
+    }
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/copy_slice_append.mp4",
+    "title_text": "Go Append Copy Slice",
+    "thumbnail_title": {
+      "title": "This Go Append Trick Will Blow Your Mind 🤯",
+      "thumbnail_text_hook": "Append Copy Hack",
+      "opening_hook": "What if you could copy a slice with just one line?"
+    }
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/copy_slice_manual.mp4",
+    "title_text": "Go Manual Slice Copy",
+    "thumbnail_title": {
+      "title": "Why Manual Slice Copying Still Matters in Go 🛠️",
+      "thumbnail_text_hook": "Manual Deep Copy",
+      "opening_hook": "Ever needed full control while copying slices?"
+    }
+  }
+]

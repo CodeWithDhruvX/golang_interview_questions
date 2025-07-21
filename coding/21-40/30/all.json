@@ -1,0 +1,85 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet1.mp4",
+      "title": "✅ How to Check If a Key Exists in Go Maps (Go Idioms Explained!)",
+      "description": "🔍 Learn how to check if a key exists in a map in Go!\n\nIn this short but powerful coding snippet, you'll discover:\n\n👉 The idiomatic 'comma ok' trick in Go 🧠\n👉 How to safely retrieve values from maps\n👉 Why Go makes key checking so clean and safe\n\n📌 Code Walkthrough\n📌 Real-World Usage\n📌 Interview-Ready Explanation\n\n#golang #gocoding #interviewprep #maplookup #golangbasics",
+      "tags": [
+        "golang",
+        "golang maps",
+        "map key exists go",
+        "go map lookup",
+        "comma ok idiom",
+        "golang interview",
+        "go tips"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet1_thumbnail.png",
+      "playlistName": "Go Coding Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet2.mp4",
+      "title": "🔄 Stop Repeating Yourself! Abstract Key Checks in Go Like a Pro",
+      "description": "📦 Encapsulate map key checking in Go with clean, reusable code!\n\nHere's what you'll gain from this short video:\n\n✅ How to write reusable key-checking functions in Go\n✅ When and why to abstract logic into functions\n✅ Better practices for clean and testable Go code\n\nThis is a must-know for interviews and clean coding!\n\n#golang #dryprinciple #gocoding #golangtips #cleancode",
+      "tags": [
+        "golang",
+        "key check go",
+        "map lookup function",
+        "golang clean code",
+        "reusable go function",
+        "dry go principle"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet2_thumbnail.png",
+      "playlistName": "Go Coding Shorts",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet3.mp4",
+      "title": "🚨 Handle Missing Map Keys in Go Like an API Engineer!",
+      "description": "💡 Learn how to handle missing keys with custom errors in Go.\n\nIn this video you'll explore:\n\n⚙️ Structured error handling with maps\n⚙️ Go's philosophy of returning errors explicitly\n⚙️ When to use error-based lookups in real systems (APIs, DBs, etc.)\n\nPerfect for developers building serious Go applications!\n\n#golang #errorhandling #gobasics #gointerview #goapi",
+      "tags": [
+        "golang",
+        "map error handling",
+        "go map key not found",
+        "golang api errors",
+        "golang error return",
+        "gointerview questions"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet3_thumbnail.png",
+      "playlistName": "Go Coding Shorts",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet1.mp4",
+    "title_text": "Go Map Key Exists",
+    "thumbnail_text_hook": "Check Key Fast",
+    "opening_hook": "Did you know Go has a special way to check if a key exists?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet2.mp4",
+    "title_text": "Reusable Map Key Check in Go",
+    "thumbnail_text_hook": "Stop Repeating Code",
+    "opening_hook": "Tired of writing the same key check logic over and over?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/check_key_map/snippet3.mp4",
+    "title_text": "Error Handling on Map Keys in Go",
+    "thumbnail_text_hook": "Fix Missing Keys",
+    "opening_hook": "What happens when your Go map key is missing—and your app crashes?"
+  }
+]

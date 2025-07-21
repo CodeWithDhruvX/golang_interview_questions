@@ -1,0 +1,63 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+      "title": "🧠 Go Slice Mutation Trick You Should Know! (Pass By Reference Explained)",
+      "description": "Learn how Go slices behave when passed to functions! ✅\n\nIn this short:\n- Watch how modifying a slice element changes the original\n- Understand the reference semantics of slices in Go\n- Master the difference between pointer vs value behavior 💡\n\n#golang #goprogramming #gointerview #slices #codingtricks #shorts #gocoding #learnprogramming #developer\n\n🔥 Don't miss this core Golang concept!\n📌 Subscribe for more Go coding shorts!",
+      "tags": ["golang", "slices", "reference", "mutation", "go basics", "golang interview", "coding shorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbnail1.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-23 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+      "title": "🤯 Why Go Slice Append Doesn't Change the Original",
+      "description": "Appending to a slice inside a function in Go? 🧐\n\nIn this video:\n- See why your appended elements don't reflect back in main()\n- Discover Go's copy-on-append behavior\n- Understand slice headers and memory tricks 🧠\n\n#golang #slice #append #gocoding #shorts #gointerview #developerlife #gotutorials\n\n🚀 Perfect for beginners and pros debugging Go apps!\n📌 Like and subscribe for more Go dev tips!",
+      "tags": ["golang", "slice append", "function parameters", "go programming", "coding patterns", "gointerview"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbnail2.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-24 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+      "title": "📌 Go Slice Gotcha: How to Safely Append Inside Functions",
+      "description": "Want to grow a slice from a function in Go? Here’s the right way! ✅\n\nIn this video:\n- Use pointers to update slice length from a function\n- Avoid the common append trap\n- Deep dive into Go's slice internals 🛠️\n\n#golang #slices #append #pointers #codingtips #golangtricks #gotutorial #shorts #devshorts\n\n🧠 A must-know for Go developers!\n🎯 Hit subscribe for daily Go coding gems!",
+      "tags": ["golang", "go slice pointer", "extend slice", "golang internals", "developer tips", "gointerview"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbnail3.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-25 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "title_text": "Go Slice Mutation Trick You Should Know",
+    "title": "Stop Making This Go Slice Mistake",
+    "thumbnail_text_hook": "Reference Trap",
+    "opening_hook": "Are Go slices passed by reference or not?"
+  },
+  {
+    "title_text": "Why Go Slice Append Doesn't Change the Original",
+    "title": "Go Slice Append Breaks Your Logic",
+    "thumbnail_text_hook": "Silent Failure",
+    "opening_hook": "Ever appended to a slice but saw no change?"
+  },
+  {
+    "title_text": "Go Slice Gotcha How to Safely Append Inside Functions",
+    "title": "Fix Slice Append in Go the Right Way",
+    "thumbnail_text_hook": "Fix This Bug",
+    "opening_hook": "Do your slice changes disappear after append?"
+  }
+]

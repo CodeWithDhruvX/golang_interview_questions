@@ -1,0 +1,63 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_capacity_behavior.mp4",
+      "title": "🤯 Why Appending to a Go Slice May Break Your Code!",
+      "description": "Understand what REALLY happens when you append to a slice beyond its capacity in Golang!\n\n✅ In this short video:\n- Learn how Go handles slice memory 📦\n- See what happens to the original slice 🔍\n- Catch a common mistake that silently breaks logic 💥\n\n🔧 Perfect for Go beginners and interview prep!\n\n#golang #slices #gointerview #golangtips #golangshorts #backenddevelopment #techshorts #memorymanagement",
+      "tags": ["golang", "slice", "append", "golang interview", "memory", "slice capacity", "golang short", "backend tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_capacity_behavior_thumbnail.png",
+      "playlistName": "Golang Interview Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_memory_address.mp4",
+      "title": "🧠 How Go Slices Change Memory on Append (Mind-blowing!)",
+      "description": "Track Go slice memory addresses to reveal hidden behavior 🧬\n\n💡 In this bite-sized demo:\n- Understand Go slice internals 👨‍💻\n- Learn when and why Go reallocates memory 📊\n- Avoid hidden performance costs 🚨\n\n👀 A must-watch for Go learners and performance tweakers!\n\n#golang #memory #slicereallocation #gointerview #goperformance #shorts #programmingtips",
+      "tags": ["golang", "memory", "slice", "reallocation", "golang interview", "go internals", "performance", "golangshorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_memory_address_thumbnail.png",
+      "playlistName": "Golang Interview Shorts",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_append_function.mp4",
+      "title": "❗ Go Slice Append Inside Functions — Gotcha You Must Know!",
+      "description": "Appending to slices inside functions isn't as simple as it looks in Go ⚠️\n\n📹 In this short:\n- Learn why your slice doesn't change outside a function 🙅‍♂️\n- Understand Go's pass-by-value behavior 🔄\n- Fix subtle bugs in your code ✅\n\n🎯 Essential for Go devs doing functional refactoring!\n\n#golang #functions #slicebehavior #codinggotchas #gointerview #golangshorts #refactoring #backend",
+      "tags": ["golang", "function", "slice", "append", "gotchas", "golang interview", "backend", "golangshorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_append_function_thumbnail.png",
+      "playlistName": "Golang Interview Shorts",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_capacity_behavior.mp4",
+    "title_text": "Stop Trusting Slice Appends in Go",
+    "thumbnail_text_hook": "Slice Append Trap",
+    "opening_hook": "Did you know appending to a slice can silently break your code?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_memory_address.mp4",
+    "title_text": "How Go Slices Break Memory Rules",
+    "thumbnail_text_hook": "Hidden Reallocation",
+    "opening_hook": "Can appending really change your memory layout?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_append_function.mp4",
+    "title_text": "The Slice Append Mistake You’re Still Making",
+    "thumbnail_text_hook": "Function Append Bug",
+    "opening_hook": "Why didn’t your slice change after append?"
+  }
+]

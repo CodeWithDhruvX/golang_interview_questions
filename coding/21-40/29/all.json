@@ -1,0 +1,63 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_maps/1_basic_map_operations.mp4",
+      "title": "🧠 Stop Ignoring Go Maps: The Most Important Feature Explained!",
+      "description": "🚀 Learn how to master Go maps with this beginner-friendly guide!\n\n✅ In this short video:\n- Add, update, and delete key-value pairs\n- Check key existence like a pro\n- Loop through map data efficiently\n\n💡 Essential for every Go developer!\n\n#golang #programming #maps #gotips #developerlife #shorts",
+      "tags": ["golang", "go maps", "golang beginner", "learn go", "map tutorial", "golang shorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/thumbnails/map_snippet1.png",
+      "playlistName": "Golang Maps Explained",
+      "publishAt": "2025-07-25 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_maps/2_map_with_slices.mp4",
+      "title": "🧠 How Go Maps Handle Multiple Values (Hidden Pattern)",
+      "description": "🤯 Did you know Go maps can store slices? Let's build grouped data like a pro!\n\n✅ What you'll learn:\n- How to group data using slices inside maps\n- Append data safely and idiomatically\n- Print complex maps cleanly\n\n📌 Perfect for organizing category-based data.\n\n#golang #maps #golangtips #gotutorial #programming #shorts",
+      "tags": ["golang", "map of slices", "go tips", "golang tutorial", "shorts", "category mapping"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/thumbnails/map_snippet2.png",
+      "playlistName": "Golang Maps Explained",
+      "publishAt": "2025-07-26 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_maps/3_map_word_counter.mp4",
+      "title": "🔥 Fix This Golang Mistake: Word Counters Done Right!",
+      "description": "⚡ Unlock the power of maps in Golang for counting word frequencies!\n\n💬 This quick tutorial covers:\n- Creating a frequency map in Go\n- Splitting text and counting words\n- Avoiding common beginner mistakes\n\n🎯 Great for NLP, log analysis, and more!\n\n#golang #wordcounter #maps #godev #goexamples #shorts",
+      "tags": ["golang", "go word counter", "map usage", "golang tips", "go tutorial", "shorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/thumbnails/map_snippet3.png",
+      "playlistName": "Golang Maps Explained",
+      "publishAt": "2025-07-27 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_maps/1_basic_map_operations.mp4",
+    "title_text": "Why Most Devs Use Go Maps Wrong Without Realizing",
+    "thumbnail_text_hook": "Fix Map Mistakes",
+    "opening_hook": "Are you silently misusing maps in Go?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_maps/2_map_with_slices.mp4",
+    "title_text": "How Go Handles Multiple Values in a Map And Why It Works",
+    "thumbnail_text_hook": "Hidden Map Pattern",
+    "opening_hook": "Can a map store multiple values in Go?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_maps/3_map_word_counter.mp4",
+    "title_text": "Stop Counting Words Like This in Golang",
+    "thumbnail_text_hook": "Word Counter Fix",
+    "opening_hook": "Counting words? Most Go devs do this wrong."
+  }
+]
