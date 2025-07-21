@@ -1,0 +1,55 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/YourName/Videos/struct_tags/json_struct_tags.mp4",
+      "title": "🔥 How to Use JSON Struct Tags in Go (The RIGHT Way!)",
+      "description": "Learn how to use struct tags in Golang to encode and decode JSON effectively!\n\n📌 What You'll Learn:\n- How struct tags work in Go\n- Using `json:\"field\"` tags\n- Marshalling and Unmarshalling JSON\n- Best practices for clean code\n\n🧠 Perfect for beginners and pros alike!\n\n#golang #json #structtags #webdev #backend #programming",
+      "tags": ["golang", "json", "struct tags", "go language", "backend", "marshalling", "unmarshalling", "go tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnails/json_struct_tags_thumb.png",
+      "playlistName": "GoLang Essentials",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/struct_tags/xml_struct_tags.mp4",
+      "title": "📦 Struct Tags in Go for XML Encoding – Stop Doing It Wrong!",
+      "description": "Unlock the full power of XML encoding in Go using struct tags.\n\n🚀 Key Highlights:\n- Defining `xml:\"tag\"` in structs\n- MarshalIndent for pretty XML output\n- Real-world example with Product struct\n- Why struct tags matter in serialization\n\n#golang #xml #structtags #softwareengineering #encoding #goprogramming",
+      "tags": ["golang", "xml", "struct tags", "go encoding", "xml marshal", "serialization", "backend"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnails/xml_struct_tags_thumb.png",
+      "playlistName": "GoLang Essentials",
+      "publishAt": "2025-07-23 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/struct_tags/reflect_struct_tags.mp4",
+      "title": "🧠 Reflect & Reveal Go Struct Tags at Runtime!",
+      "description": "Discover how to introspect struct tags at runtime in Go using the `reflect` package.\n\n🔍 In this video:\n- Using `reflect.TypeOf` and `Field.Tag`\n- Retrieving custom tags like `env`\n- Practical example with a Config struct\n- Debugging and automation insights\n\n🎯 Ideal for those building CLIs and config-driven apps.\n\n#golang #reflection #structtags #go #devtools #softwareengineering",
+      "tags": ["golang", "reflect", "go struct tags", "go reflection", "env tags", "cli tools", "config"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnails/reflect_struct_tags_thumb.png",
+      "playlistName": "GoLang Essentials",
+      "publishAt": "2025-07-24 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+ {
+    "slide_topic": "C:/Users/YourName/Videos/struct_tags/json_struct_tags.mp4",
+    "title_text": "JSON Struct Tags"
+  },
+  {
+    "slide_topic": "C:/Users/YourName/Videos/struct_tags/xml_struct_tags.mp4",
+    "title_text": "XML Struct Tags"
+  },
+  {
+    "slide_topic": "C:/Users/YourName/Videos/struct_tags/reflect_struct_tags.mp4",
+    "title_text": "Reflect Struct Tags"
+  }

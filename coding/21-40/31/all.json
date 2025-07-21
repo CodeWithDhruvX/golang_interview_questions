@@ -1,0 +1,83 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet1.mp4",
+      "title": "🧠 What Happens When You Delete a Missing Key in Go Maps? (Safe or Crash?)",
+      "description": "💡 In this short Go tutorial:\n\n- Learn what happens when you delete a non-existent key from a Go map\n- See how `delete()` behaves safely without causing panic\n- Real example using strings and ints\n\n✅ Perfect for beginners and interview prep!\n\n#golang #goprogramming #codingtips #devshorts #golangmap #programmingfacts #techshorts #softwareengineering",
+      "tags": [
+        "golang",
+        "golang map",
+        "delete key in map go",
+        "golang coding interview",
+        "go programming",
+        "golang tips",
+        "coding shorts",
+        "developer shorts"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet1.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet2.mp4",
+      "title": "❌ Should You Check Before Deleting a Key in Go Maps?",
+      "description": "⚠️ Don't assume Go maps throw errors!\n\n- Understand how to check for a key before deletion\n- Avoid unnecessary operations with a key check\n- Great for writing robust, clean Go code\n\n📌 Must-watch if you're preparing for Go interviews!\n\n#golanginterview #golangmap #deleteinkey #goprogramming #codebetter #devshorts #gocoding #mapdelete",
+      "tags": [
+        "golang",
+        "golang maps",
+        "delete non-existent key",
+        "check before delete",
+        "goprogramming",
+        "go interview prep",
+        "golang coding tips"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet2.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet3.mp4",
+      "title": "🔥 Will Go Panic if You Delete from an Empty Map?",
+      "description": "🤯 Go is smarter than you think!\n\n- Learn how `delete()` works on an empty map\n- See why Go won’t panic or crash\n- Write confident, defensive Go code\n\n🧠 Great for Go devs brushing up fundamentals!\n\n#golang #panic #emptyMap #goprogramming #gocoding #golangtips #devshorts #maphandling",
+      "tags": [
+        "golang",
+        "golang empty map",
+        "delete from empty map",
+        "golang panic",
+        "golang map delete",
+        "go development",
+        "software engineering",
+        "golang interview"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet3.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet1.mp4",
+    "title_text": "Stop Worrying About Missing Keys in Go Maps"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet2.mp4",
+    "title_text": "Why You Might Be Deleting Keys in Go the Wrong Way"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet3.mp4",
+    "title_text": "Does Deleting from an Empty Go Map Break Your Code"
+  }
+]

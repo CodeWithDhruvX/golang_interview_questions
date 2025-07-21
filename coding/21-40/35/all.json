@@ -1,0 +1,61 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/YourName/Videos/structs_in_go/snippet1_basic_struct.mp4",
+      "title": "🧠 How Go Structs Work with Methods (Must-Know Trick!)",
+      "description": "🔍 Learn how Go's struct types work with method receivers in this powerful short tutorial!\n\n✨ What you'll learn:\n- What is a struct in Go\n- How to define and instantiate a struct\n- Using method receivers to add behavior\n\n📌 Perfect for beginners and intermediate Go developers looking to understand Go OOP-style coding.\n\n✅ Stay tuned for more Golang coding shorts!\n\n#golang #programming #godeveloper #shorts #learncode #structs #go #backend #techshorts #devlife",
+      "tags": [
+        "golang", "go programming", "structs in go", "golang tutorial", "golang structs", "go methods", "learn golang", "go struct receiver"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/structs_in_go/snippet1_thumbnail.png",
+      "playlistName": "Golang Coding Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/structs_in_go/snippet2_anonymous_struct.mp4",
+      "title": "🔥 Hidden Power of Anonymous Structs in Go (Simplify Your Code!)",
+      "description": "🚀 Discover the magic of anonymous structs in Go with this concise tutorial!\n\n💡 You'll see:\n- How to create anonymous structs\n- When and why to use them\n- Cleaner alternatives to full struct declarations\n\n💼 Great for writing compact, testable, and expressive Go code!\n\n#golang #gostructs #anonymousstructs #gocode #backenddev #codingtricks #goprogramming #techshorts #devtips",
+      "tags": [
+        "go structs", "anonymous structs", "golang", "golang tips", "struct tricks", "go anonymous struct", "go programming", "developer"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/structs_in_go/snippet2_thumbnail.png",
+      "playlistName": "Golang Coding Shorts",
+      "publishAt": "2025-07-22 10:30:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/structs_in_go/snippet3_nested_structs.mp4",
+      "title": "🏗️ Nesting Structs in Go Like a Pro (Clean Code Design)",
+      "description": "🎯 Unlock the power of composition in Go by nesting structs!\n\n📦 In this short video you'll learn:\n- How to define and use nested structs\n- Composition over inheritance in Go\n- Clean and maintainable struct-based design\n\n🚀 Use this technique for scalable Go applications.\n\n#golang #gostructs #composition #nestingstructs #backend #learnprogramming #shorts #techskills #cleanarchitecture",
+      "tags": [
+        "go composition", "golang structs", "nested structs", "go architecture", "clean code", "golang tutorial", "backend dev", "learn golang"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/structs_in_go/snippet3_thumbnail.png",
+      "playlistName": "Golang Coding Shorts",
+      "publishAt": "2025-07-22 11:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+ {
+    "slide_topic": "C:/Users/YourName/Videos/structs_in_go/snippet1_basic_struct.mp4",
+    "title_text": "Stop Using Go Structs Wrong Learn This Method Trick"
+  },
+  {
+    "slide_topic": "C:/Users/YourName/Videos/structs_in_go/snippet2_anonymous_struct.mp4",
+    "title_text": "Hidden Go Trick Use Anonymous Structs Like This"
+  },
+  {
+    "slide_topic": "C:/Users/YourName/Videos/structs_in_go/snippet3_nested_structs.mp4",
+    "title_text": "How Nested Structs Fix Go Code Design Mistakes"
+  }

@@ -1,0 +1,85 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/embedded_structs/embedded_structs_1.mp4",
+      "title": "🛠️ How to Embed Structs in Go (Simple & Clean Technique)",
+      "description": "Learn how to embed structs in Go using simple and clean syntax! 💡\n\nIn this short video, you'll learn:\n\n✅ How to define embedded structs in Go\n✅ How to access fields directly from the parent struct\n✅ Use cases for struct composition in clean Go code\n\nPerfect for Go beginners and intermediates looking to write idiomatic code!\n\n📌 #golang #structs #composition #goprogramming #coding #goembed #learnprogramming #goshorts\n\n🔔 Don't forget to subscribe for more Go coding tips!",
+      "tags": [
+        "golang",
+        "go structs",
+        "embed struct go",
+        "go composition",
+        "go programming",
+        "golang tutorial",
+        "struct embedding",
+        "golang short",
+        "go language"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbnails/embed_struct_1.png",
+      "playlistName": "Go Lang Interview Shorts",
+      "publishAt": "2025-07-23 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/embedded_structs/embedded_structs_2.mp4",
+      "title": "🔍 Why Go's Struct Embedding Boosts Reusability (Method Promotion!)",
+      "description": "Want cleaner and more modular Go code? Struct embedding helps! 💥\n\n🎯 What you'll learn:\n- How to embed a Logger into another struct\n- Automatic method promotion in Go\n- Cleaner design patterns using composition\n\n✅ Ideal for devs learning best Go practices!\n\n#golang #goprogramming #structembedding #methodpromotion #golangdesign #cleancode #goshorts #goembed",
+      "tags": [
+        "golang",
+        "go struct embedding",
+        "method promotion go",
+        "golang patterns",
+        "go composition",
+        "logger go",
+        "golang short",
+        "go best practices"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbnails/embed_struct_2.png",
+      "playlistName": "Go Lang Interview Shorts",
+      "publishAt": "2025-07-24 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/embedded_structs/embedded_structs_3.mp4",
+      "title": "🧠 Stop Nesting! Use Go Embedding for Clean, Modular Structs",
+      "description": "Say goodbye to deeply nested structs! 👋 Learn how Go's embedding feature helps build cleaner, modular types with multiple behaviors.\n\nThis short explains:\n✅ How to compose a `Customer` with `Address` and `Contact`\n✅ Field promotion across multiple embedded structs\n✅ Cleaner code without boilerplate\n\n#golang #goembedding #structs #composition #golanginterview #golangshorts #goprogramming #cleancode",
+      "tags": [
+        "golang",
+        "go embedding",
+        "struct composition",
+        "golang clean code",
+        "customer struct go",
+        "modular design go",
+        "golang best practices",
+        "go struct nesting"
+      ],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbnails/embed_struct_3.png",
+      "playlistName": "Go Lang Interview Shorts",
+      "publishAt": "2025-07-25 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/embedded_structs_1.mp4",
+    "title_text": "Clean Go Structs"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/embedded_structs_2.mp4",
+    "title_text": "Boost Code Reuse"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/embedded_structs_3.mp4",
+    "title_text": "No More Nesting"
+  }
+]

@@ -3,13 +3,6 @@ You are an expert programmer.
 Based on the user’s input question and chosen programming language, generate 3 different and interesting full code snippets.
 
 🔹 Step 1: First output only the 3 code snippets, clearly numbered (e.g., Snippet 1, Snippet 2, Snippet 3).
-🔹 Step 2: After the code, explain each one by answering:
-
-What it doess
-
-Why it's interesting or useful
-
-When to use it (real-world context or use case)
 
 ✳️ Ensure:
 
@@ -22,7 +15,7 @@ Each snippet is 15–30 lines, self-contained
 🔹 User Question: {Insert question here}
 🔹 Language: {Python / JavaScript / Go / etc.}
 
-Can maps be compared directly in Go?
+How do you compare two structs Go?
 
 After that I will say "yes" to move to the next one.
 
@@ -70,7 +63,7 @@ For each of the following YouTube video titles or topics, generate:
 ==================================================================================
 After that I will say "yes" to move to the next one.
 
-Please generate the 
+Please generate the (don't give me in return, use as a refrence)
 
 [
     {

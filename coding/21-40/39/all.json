@@ -1,0 +1,66 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_copy_types/1/shallow_copy_assignment.mp4",
+      "title": "⚠️ Why Shallow Copy in Go Can Break Your Code! (Go Struct Secrets)",
+      "description": "🎯 Learn the hidden behavior of shallow copy in Go structs:\n\n🚨 Why slice fields are dangerous to copy directly\n👀 See how changing the copy affects the original\n💡 Master Go struct assignment the right way\n\n#golang #goprogramming #shallowcopy #structs #gocoding #developer #shorts\n\n🔍 Perfect for Go beginners and intermediates!\n💥 Watch till the end to avoid common pitfalls!",
+      "tags": ["golang", "shallow copy", "go struct", "slice mutation", "go tips", "coding shorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_copy_types/1/thumb_shallow.png",
+      "playlistName": "Go Interview Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_copy_types/2/manual_deep_copy.mp4",
+      "title": "🛑 Stop Using Shallow Copy! Use This Deep Copy Method in Go!",
+      "description": "🧠 Understand deep copy in Go like a pro:\n\n🔧 Manual deep copy of slices in structs\n🔥 Prevent bugs caused by shared memory\n✅ Safer struct duplication method in real-world apps\n\n#golang #deepcopy #goprogramming #structcopy #codingbestpractices #goshorts #codefix\n\n🚀 A must-watch for Go learners and engineers!",
+      "tags": ["golang", "deep copy", "manual copy", "go slices", "coding tips", "golang tutorial"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_copy_types/2/thumb_deep_manual.png",
+      "playlistName": "Go Interview Shorts",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_copy_types/3/json_deep_copy.mp4",
+      "title": "🤯 Deep Copy Go Structs with JSON! (Easiest Hack)",
+      "description": "⚡ Unlock deep copy in Go using JSON!\n\n📦 Marshal + Unmarshal trick for struct duplication\n🔒 Ensures independence from original reference\n💡 Ideal for nested struct copying in Go\n\n#golang #jsonhack #goprogramming #deepcopy #structs #gotips #shorts\n\n✅ Short & powerful — use this in your Go projects today!",
+      "tags": ["golang", "json deep copy", "marshal", "unmarshal", "go structs", "copy hack", "goshorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_copy_types/3/thumb_jsoncopy.png",
+      "playlistName": "Go Interview Shorts",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_copy_types/1/shallow_copy_assignment.mp4",
+    "title_text": "Shallow Copy Assignment",
+    "reworked_title": "This Go Copy Mistake Breaks Your Structs! Fix It Now",
+    "thumbnail_text_hook": "Shallow Copy DANGER",
+    "opening_hook": "Are your Go structs breaking after assignment? Here's why…"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_copy_types/2/manual_deep_copy.mp4",
+    "title_text": "Manual Deep Copy",
+    "reworked_title": "Stop Shallow Copying! Deep Copy Structs the RIGHT Way in Go",
+    "thumbnail_text_hook": "Fix Struct Copy",
+    "opening_hook": "Is your Go copy still linked to the original? Let’s fix that manually."
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_copy_types/3/json_deep_copy.mp4",
+    "title_text": "JSON Deep Copy",
+    "reworked_title": "The Hidden JSON Hack to Deep Copy Any Go Struct Instantly",
+    "thumbnail_text_hook": "Copy with JSON",
+    "opening_hook": "Want a 1-liner to deep copy Go structs? This JSON trick is gold."
+  }
+]

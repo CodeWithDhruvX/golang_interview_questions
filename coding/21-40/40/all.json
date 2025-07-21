@@ -1,0 +1,63 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/YourName/Videos/snippet1_basic_json_marshal.mp4",
+      "title": "🔍 How to Convert Struct to JSON in Go (Fast & Easy!)",
+      "description": "Learn how to convert a Go struct into JSON in the simplest way using the `encoding/json` package:\n\n✅ Perfect for beginners\n✅ Demonstrates simple struct conversion\n✅ Error handling included\n✅ Clean and readable code\n\n#golang #json #programming #coding #shorts #godev #softwareengineering",
+      "tags": ["golang", "json", "golang struct", "marshal", "go programming", "golang tutorial", "golang json marshal"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnail_snippet1.png",
+      "playlistName": "Go Programming Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/snippet2_json_tags.mp4",
+      "title": "🎯 Fix This Common JSON Mistake in Go! (Struct Tags Explained)",
+      "description": "Are your JSON outputs ugly or incorrect? 🤯\nLearn how to fix your Go struct output with JSON tags!:\n\n🔹 Customize JSON keys with struct tags\n🔹 Use `json.MarshalIndent` for pretty print\n🔹 Avoid beginner formatting pitfalls\n🔹 Improve API integration clarity\n\n#golang #json #structtags #marshaling #goprogramming #godev #shorts",
+      "tags": ["go json tags", "golang tutorial", "marshalindent", "pretty json golang", "golang mistakes", "golang tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnail_snippet2.png",
+      "playlistName": "Go Programming Shorts",
+      "publishAt": "2025-07-23 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/snippet3_nested_struct_json.mp4",
+      "title": "🧠 Nested Struct to JSON in Go – Simplified!",
+      "description": "Ever wondered how to convert nested Go structs into JSON? Here's how!:\n\n🧱 Nesting made simple\n🧩 Clean `MarshalIndent` usage\n🔧 Ideal for complex data modeling\n🚀 Great for REST API devs\n\n#golang #json #nestedstruct #coding #godev #golangshorts #softwaredev",
+      "tags": ["go nested struct", "golang json", "golang tutorial", "nested json golang", "godev", "golang tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnail_snippet3.png",
+      "playlistName": "Go Programming Shorts",
+      "publishAt": "2025-07-24 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+    "title_text": "Stop Doing JSON the Hard Way in Go 🛑 (Here’s the Easy Fix!)",
+    "thumbnail_text_hook": "JSON the Easy Way",
+    "opening_hook": "Still copying struct data manually into JSON? Let me show you a better way…"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-27_output.mp4",
+    "title_text": "Fix This Hidden Go JSON Mistake ⚠️ (Struct Tags Explained!)",
+    "thumbnail_text_hook": "Fix Your JSON!",
+    "opening_hook": "Why is your Go struct not producing clean JSON? The answer is tags…"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-28_output.mp4",
+    "title_text": "How Nested Structs Break Your JSON Output in Go 🤯 (And How to Fix It!)",
+    "thumbnail_text_hook": "Nested Struct Fix",
+    "opening_hook": "Ever struggled converting nested structs to JSON in Go? Here's your fix…"
+  }
+]

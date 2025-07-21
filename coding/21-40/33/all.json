@@ -1,0 +1,63 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet1.mp4",
+      "title": "🧠 How to Iterate Over a Map in Go (Simple & Effective!)",
+      "description": "🔥 Learn how to iterate over maps in Go the RIGHT way!\n\n📌 In this short video, you'll discover:\n- The simplest way to use `for range` in Go 🌀\n- How to extract key-value pairs from maps 🔑\n- A must-know Go technique for developers!\n\n💡 Don't miss this Go tip that many overlook!\n\n#golang #goprogramming #mapiteration #gocoding #golangtutorial #shorts #techshorts",
+      "tags": ["golang", "go map", "iterate map", "go tutorial", "coding shorts", "golang tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet1.png",
+      "playlistName": "Golang Coding Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet2.mp4",
+      "title": "⚠️ Go Map Iteration Mistake Devs Make (And How to Fix It)",
+      "description": "🚫 Are you iterating over maps in Go the wrong way?\n\n👨‍💻 In this video:\n- How to use only keys when looping over Go maps 🧩\n- Why accessing values inside the loop is better sometimes 💡\n- Real-world examples from Go applications 🧪\n\n✅ Watch now and clean up your Go code!\n\n#golang #goerrors #gocodingtips #devshorts #techmistakes #goshorts",
+      "tags": ["go map", "map iteration", "golang dev tips", "coding mistake", "goshorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet2.png",
+      "playlistName": "Golang Coding Shorts",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet3.mp4",
+      "title": "🔍 Why Sorted Map Iteration in Go Is a Game-Changer!",
+      "description": "🧠 Want deterministic output from Go maps?\n\n📊 Here's how to:\n- Sort keys of a Go map using `sort.Strings()` 📚\n- Iterate maps with predictable order 🔁\n- Use slices with map keys for controlled access ✅\n\nDon't leave Go randomness to chance—watch now!\n\n#golang #gosortedmap #gocoding #golangtutorial #devtips #shorts",
+      "tags": ["golang", "sorted map", "go iteration", "map keys", "gocoding", "techshorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/snippet3.png",
+      "playlistName": "Golang Coding Shorts",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet1.mp4",
+    "title_text": "Stop Ignoring This Go Map Trick Beginners Miss",
+    "thumbnail_text_hook": "Loop Go Maps",
+    "opening_hook": "Are you using the most efficient way to loop over maps in Go?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet2.mp4",
+    "title_text": "Why This Go Map Pattern Breaks Clean Code",
+    "thumbnail_text_hook": "Key Access Only",
+    "opening_hook": "Do you really need both key and value in every loop?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/snippet3.mp4",
+    "title_text": "How Sorted Map Iteration Fixes Random Output in Go",
+    "thumbnail_text_hook": "Fix Map Order",
+    "opening_hook": "Frustrated by unpredictable map output in Go? Try this!"
+  }
+]

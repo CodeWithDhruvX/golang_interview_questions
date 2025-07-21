@@ -1,0 +1,72 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/YourName/Videos/video_snippet_1.mp4",
+      "title": "❌ Why You Can't Use Slices as Map Keys in Go!",
+      "description": "🚫 Did you know slices can't be used as map keys in Go? Here's why:\n\n👉 Compilation fails with 'invalid map key type'\n👉 Slices are not comparable in Go\n👉 Learn what happens when you try it\n\nThis video shows a real-world example and explains the error clearly.\n\n🧠 What you'll learn:\n- Why slices are not valid map keys\n- Common Go pitfalls\n- Tips to avoid compile-time errors\n\n#GoLang #GoTips #CodingShorts #GoProgramming #TechExplained",
+      "tags": ["golang", "go language", "map keys", "golang errors", "golang tips", "golang slice"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnail_snippet_1.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/video_snippet_2.mp4",
+      "title": "✅ Fix Slice Map Key Error in Go with This Trick!",
+      "description": "💡 You can't use slices as keys in Go maps — but there's a workaround!\n\n🔐 Convert slices to strings using `strconv` + `strings.Join`\n🔁 Works for comparing and storing slices as map keys\n✅ Idiomatic and clean Go code\n\n🚀 In this short video, learn how to:\n- Use hash-based keys for slices\n- Avoid compile-time errors\n- Improve Go map handling\n\n#golang #mapkey #gohacks #gotips #godev #learncoding",
+      "tags": ["golang", "map workaround", "go tricks", "slice to string", "golang tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnail_snippet_2.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/YourName/Videos/video_snippet_3.mp4",
+      "title": "🧠 Use Struct or Array Instead of Slice as Map Key in Go!",
+      "description": "🔥 Stop using slices as map keys! There's a better solution:\n\n✅ Use fixed-length arrays or structs instead\n🔐 Arrays are comparable, slices aren't\n📦 Cleaner and idiomatic Go design\n\nIn this video:\n- Learn the difference between arrays and slices in map usage\n- Implement a struct or array key alternative\n- Boost your Go programming fluency\n\n#golang #gohacks #structkey #gocoding #arraysinmap #mapdesign",
+      "tags": ["golang", "go structs", "map key workaround", "golang interview", "golang best practice"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/YourName/Videos/thumbnail_snippet_3.png",
+      "playlistName": "Golang Interview Questions",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+    "title_text": "Go Defer Usecase",
+    "thumbnail_title": {
+      "title": "Stop Using Slices as Map Keys in Go",
+      "thumbnailTextHook": "Slice Key Error",
+      "questionHook": "Why do slices break maps in Go?"
+    }
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+    "title_text": "Go Defer Usecase",
+    "thumbnail_title": {
+      "title": "Fix Slice Map Key Errors with This Go Trick",
+      "thumbnailTextHook": "Fix Slice Keys",
+      "questionHook": "How can you convert slices for map keys?"
+    }
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-10 22-02-26_output.mp4",
+    "title_text": "Go Defer Usecase",
+    "thumbnail_title": {
+      "title": "Use Arrays or Structs Instead of Slices in Go Maps",
+      "thumbnailTextHook": "Struct Key Fix",
+      "questionHook": "What’s the safe way to use keys in Go maps?"
+    }
+  }
+]

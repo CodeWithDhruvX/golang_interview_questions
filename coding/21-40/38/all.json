@@ -1,0 +1,63 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-21 09-00-00_output.mp4",
+      "title": "🤯 Why `reflect.DeepEqual` Can Surprise You in Go! | Struct Comparison Uncovered",
+      "description": "🔍 In this quick GoLang coding short:\n\n✅ Learn how to compare two structs using `reflect.DeepEqual`\n✅ See when it works and when it might mislead you\n✅ Perfect for Go interview prep and clean code insights\n\n📌 Key Takeaways:\n- Deep structural comparison\n- Reflect package use cases\n- Idiomatic Go practices\n\n#golang #shorts #coding #programming #interviewtips #reflect #gocoding\n\n🔥 Subscribe for more GoLang tips!",
+      "tags": ["golang", "go programming", "struct comparison", "reflect deepequal", "golang interview", "go coding short", "golang shorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/thumbnails/reflect_deepequal.png",
+      "playlistName": "GoLang Interview Questions 2025",
+      "publishAt": "2025-07-21 09:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-21 09-15-00_output.mp4",
+      "title": "✅ Manual Struct Comparison in Go: The Safest Method You’re Ignoring!",
+      "description": "🛠️ In this GoLang short video:\n\n👉 Discover the most reliable way to compare structs in Go\n👉 No dependencies — just pure idiomatic Go code\n👉 Why manual comparison is often the best solution\n\n📌 Key Highlights:\n- Field-by-field safety\n- No external packages\n- Interview-ready Go skills\n\n#golang #gointerview #structcomparison #cleanCode #goshorts #go2025\n\n🎯 Subscribe for more GoLang mastery!",
+      "tags": ["golang", "go programming", "manual struct comparison", "idiomatic go", "golang interview questions", "golang shorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/thumbnails/manual_compare.png",
+      "playlistName": "GoLang Interview Questions 2025",
+      "publishAt": "2025-07-21 09:15:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-21 09-30-00_output.mp4",
+      "title": "🧠 Struct Comparison Hack in Go with JSON! (But Should You?)",
+      "description": "🚨 In this clever GoLang tip video:\n\n💡 Learn how to compare two structs using JSON encoding\n⚠️ Find out the pitfalls and when NOT to use this method\n🤓 Great for exploring alternate techniques and quick hacks\n\n📌 You’ll Learn:\n- JSON-based struct equality\n- When it works well\n- Serialization gotchas in Go\n\n#golang #gohack #json #golangtips #structcomparison #golangshorts\n\n💡 Subscribe for more 60-sec Go nuggets!",
+      "tags": ["golang", "json struct comparison", "golang hack", "go encoding", "golang interview", "golang shorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/thumbnails/json_compare.png",
+      "playlistName": "GoLang Interview Questions 2025",
+      "publishAt": "2025-07-21 09:30:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-21 09-00-00_output.mp4",
+    "title_text": "Why Reflect DeepEqual Breaks Struct Comparison",
+    "thumbnail_text_hook": "DeepEqual Fails?",
+    "question_hook": "Did you know DeepEqual might not work as expected in Go?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-21 09-15-00_output.mp4",
+    "title_text": "The Safer Way to Compare Structs in Go",
+    "thumbnail_text_hook": "Use This Instead",
+    "question_hook": "What's the safest and most Go-idiomatic way to compare structs?"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-21 09-30-00_output.mp4",
+    "title_text": "The JSON Trick That Breaks Go Struct Comparison",
+    "thumbnail_text_hook": "This Trick Breaks",
+    "question_hook": "Should you really be using JSON to compare Go structs?"
+  }
+]

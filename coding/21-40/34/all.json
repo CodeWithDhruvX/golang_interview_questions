@@ -1,0 +1,57 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/sort_map_by_key.mp4",
+      "title": "🧠 How to Sort a Map by Key in Go (The Clean Way!)",
+      "description": "Learn how to sort a map by key in Golang in this quick and efficient coding short! 🔥\n\n🔹 Highlights:\n- Use `sort.Strings` on map keys\n- Idiomatic Go style\n- Beginner-friendly explanation\n\n✅ Ideal for:\n- Go beginners and intermediates\n- Interview prep & coding bootcamps\n\n💡 Boost your Go skills in just 1 minute!\n\n#golang #shorts #programming #gocoding #gointerview #techshorts",
+      "tags": ["golang", "go map sort", "sort map key", "golang tutorial", "gointerview", "coding shorts", "programming"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/sort_map_by_key.png",
+      "playlistName": "Golang Interview Coding Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/sort_map_by_value.mp4",
+      "title": "📊 Sorting Maps by Value in Go (The Smart Way!)",
+      "description": "Learn how to sort a map by value in Golang using custom structs and `sort.Slice` 🔧\n\n🔹 What you'll learn:\n- Sorting maps by values (ascending)\n- Using structs for key-value pairs\n- Idiomatic Go techniques\n\n📌 Great for:\n- Developers prepping for interviews\n- Improving Go map handling skills\n\n#golang #gosorting #mapvalue #coding #devshorts #learncode",
+      "tags": ["golang", "sort map value", "go map sorting", "golang interview", "code shorts", "sort slice", "programming"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/sort_map_by_value.png",
+      "playlistName": "Golang Interview Coding Shorts",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/sort_map_desc.mp4",
+      "title": "🔁 Sort Map by Value Descending in Go (Don't Miss This Trick!)",
+      "description": "Master descending value sort in Go maps using `sort.SliceStable` and structs 🧠\n\n🔹 Covered in this short:\n- Sorting maps by value (descending)\n- Stable sorting for predictable output\n- Useful in real-world data processing\n\n💥 Perfect for:\n- Backend devs\n- Coding interviews\n- Golang learners\n\n#golang #mapdescending #gosort #backend #interviewprep #devshorts",
+      "tags": ["golang", "descending map sort", "go slice sort", "gocoding", "programming", "interview prep"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/sort_map_desc.png",
+      "playlistName": "Golang Interview Coding Shorts",
+      "publishAt": "2025-07-22 14:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/sort_map_by_key.mp4",
+    "title_text": "Stop Sorting Maps Wrong in Go Learn This Key Trick"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/sort_map_by_value.mp4",
+    "title_text": "Hidden Way to Sort Map by Value in Go"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/sort_map_desc.mp4",
+    "title_text": "Fix This Common Go Map Sorting Mistake"
+  }
+]
