@@ -1,0 +1,63 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/snippet1.mp4",
+      "title": "🤯 How Go Pointers Work in 60 Seconds! (No Fluff Guide)",
+      "description": "Master the basics of Go pointers in under 1 minute! 🚀\n\n🔹 Learn how memory addresses work\n🔹 Understand what * and & mean in Go\n🔹 See how updating variables with pointers works\n\nPerfect for beginners looking to understand how Go manages memory.\n\n#golang #shorts #gopointers #programming #tech\n#coderlife #goprogramming #golangbasics",
+      "tags": ["golang", "go pointers", "learn go", "golang memory", "golang tutorial", "shorts", "coding"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbs/snippet1.png",
+      "playlistName": "GoLang Interview Shorts",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/snippet2.mp4",
+      "title": "🔍 Why Go Functions Break Without Pointers! (Hidden Mistake)",
+      "description": "See how Go handles function parameters with pointers! 🧠\n\n💥 What happens when you pass by value vs pointer\n🔧 Fixing a common mistake in Go functions\n⚙️ How to use *int in parameters\n\nEssential tip for any Go developer working with reusable functions.\n\n#golang #programmingtips #go #softwaredev #gopointers #shorts",
+      "tags": ["go", "golang functions", "pointers", "golang bug", "pass by value", "golang fix", "dev tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbs/snippet2.png",
+      "playlistName": "GoLang Interview Shorts",
+      "publishAt": "2025-07-22 11:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/snippet3.mp4",
+      "title": "🧠 Stop Ignoring Go Struct Pointers! (Huge Benefit)",
+      "description": "Pointers + Structs in Go = 🔥 Power Move\n\n📌 Learn how to use pointers with structs\n🔁 Mutate struct values without copying\n🚀 Cleaner and efficient Go code in 1 minute\n\nUnderstand how Go handles reference types with custom data structures.\n\n#golang #structs #coding #gopointers #go #golangshorts #developerlife",
+      "tags": ["golang", "structs", "go pointers", "go tutorial", "golang code", "golang developer", "shorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/thumbs/snippet3.png",
+      "playlistName": "GoLang Interview Shorts",
+      "publishAt": "2025-07-22 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "title_text": "Go Pointer Basics",
+    "title": "Why Beginners Break Go Code Without Understanding Pointers",
+    "thumbnail_hook": "Go Pointer Crash",
+    "opening_hook": "Do you really know what * and & mean in Go?"
+  },
+  {
+    "title_text": "Pointer Function Fix",
+    "title": "This One Pointer Mistake Breaks Your Go Functions",
+    "thumbnail_hook": "Function Error Fix",
+    "opening_hook": "Why isn't your Go function updating the variable?"
+  },
+  {
+    "title_text": "Pointer Struct Power",
+    "title": "How Go Struct Pointers Fix Hidden Data Bugs",
+    "thumbnail_hook": "Struct Bug Fix",
+    "opening_hook": "Are you accidentally copying your structs in Go?"
+  }
+]

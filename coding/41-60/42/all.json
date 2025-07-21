@@ -1,0 +1,57 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_pointers/01/basic_pointer_usage.mp4",
+      "title": "🔍 How Go Pointers Really Work! (Beginner-Friendly Explained)",
+      "description": "Unlock the power of pointers in Go! 🔧\n\nIn this short video, you'll learn:\n- How to declare a pointer in Go\n- How to dereference and access values\n- Why pointers help avoid copying data\n\nPerfect for Go beginners 👶 or anyone brushing up on core concepts.\n\n#golang #pointers #programmingtips #goshorts #coding\n#developerlife #golangtutorial",
+      "tags": ["golang", "pointers", "go language", "golang basics", "go tutorial", "golang pointers", "learn go"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_pointers/thumbnails/basic_pointer_usage.png",
+      "playlistName": "Golang Pointers Explained",
+      "publishAt": "2025-07-22 10:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_pointers/02/pointer_function_argument.mp4",
+      "title": "⚡ Why Passing by Pointer in Go Changes Everything!",
+      "description": "Learn how passing pointers to functions in Go can save memory and directly modify values! 🧠\n\nWatch this short to:\n- Understand pointer arguments in Go functions\n- See side effects of pointer-based changes\n- Improve your Go skills with efficient coding\n\n#golang #functionpointers #gopointers #golangtips #coding",
+      "tags": ["go language", "golang", "pointers", "pass by reference", "golang function pointers", "golang programming"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_pointers/thumbnails/pointer_function_argument.png",
+      "playlistName": "Golang Pointers Explained",
+      "publishAt": "2025-07-22 13:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_pointers/03/struct_pointer_methods.mp4",
+      "title": "💥 Hidden Power of Struct Pointers in Go! (Must Know)",
+      "description": "Discover how Go struct pointers unlock advanced behavior! 🧱\n\nIn this video:\n- Create and use struct pointers\n- Define methods with pointer receivers\n- Modify struct fields efficiently\n\nLearn this pattern to write cleaner and faster Go code! 🚀\n\n#golang #structs #goStructPointers #goprogramming #devtips",
+      "tags": ["golang", "go structs", "pointer receivers", "golang programming", "go tutorials", "advanced go"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_pointers/thumbnails/struct_pointer_methods.png",
+      "playlistName": "Golang Pointers Explained",
+      "publishAt": "2025-07-22 16:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}
+[
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_pointers/01/basic_pointer_usage.mp4",
+    "title_text": "Why You Need to Learn Pointers in Go"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_pointers/02/pointer_function_argument.mp4",
+    "title_text": "How Pointer Arguments Fix Hidden Go Bugs"
+  },
+  {
+    "slide_topic": "C:/Users/dhruv/Videos/2025/golang_pointers/03/struct_pointer_methods.mp4",
+    "title_text": "Stop Using Structs Wrong in Go"
+  }
+]
