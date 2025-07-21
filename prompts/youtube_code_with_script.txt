@@ -15,7 +15,7 @@ Each snippet is 15–30 lines, self-contained
 🔹 User Question: {Insert question here}
 🔹 Language: {Python / JavaScript / Go / etc.}
 
-How do you compare two structs Go?
+How do you convert a struct to JSON Go?
 
 After that I will say "yes" to move to the next one.
 
