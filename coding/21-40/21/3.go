@@ -10,7 +10,8 @@ func main() {
 	slice := arr[1:4]
 	fmt.Println("Original Array:", arr)
 	fmt.Println("Slice:", slice)
-	fmt.Printf("Slice len: %d, cap: %d\n", len(slice), cap(slice))
+	fmt.Printf("Slice len: %d, cap: %d\n",
+		len(slice), cap(slice))
 
 	// Append to slice
 	slice = append(slice, "z")

@@ -1,0 +1,95 @@
+🎬 0:00–0:15 — Hook
+"Ever tried merging two lists in Go and wondered — why do we need these three dots? What does extra... even mean? 🤯
+Today, I’ll show you a powerful little trick in Go — the spread operator — that’ll save you tons of headache when working with slices!"
+
+🎙️ 0:15–0:45 — Intro
+Hey everyone, welcome back to the channel!
+If you're learning Go or working on coding assignments, you’ve probably used append() — but did you know there's a smart way to combine two slices with just three dots?
+
+In this video, I’ll explain what the spread operator ... does, why it’s used in append(), and how you can avoid a very common mistake that beginners make.
+
+Let’s break it down step by step with a simple real-world example.
+💻 0:45–2:30 — Code Walkthrough
+go
+Copy
+Edit
+package main
+
+import "fmt"
+
+func main() {
+	base := []int{1, 2, 3}
+	extra := []int{4, 5, 6}
+
+	// Use spread operator to append all elements from extra
+	base = append(base, extra...)
+
+	fmt.Println("Combined slice:", base)
+}
+🧠 Let's break this down line by line:
+Line 1: package main
+
+This tells Go that we’re writing a standalone program — kind of like saying “this is the main dish, not a side dish.”
+
+Line 3: import "fmt"
+
+We’re importing the fmt package — short for "format" — which helps us print stuff to the terminal.
+Think of it as Go’s built-in speaker to talk to the user.
+
+Line 5: func main() {
+
+The main() function is where the party starts. This is the entry point — the first thing that runs in your program.
+
+Line 6: base := []int{1, 2, 3}
+
+Here we’re creating a slice called base.
+Imagine this as your base plate in a buffet — it already has 3 items: 1, 2, and 3.
+
+Line 7: extra := []int{4, 5, 6}
+
+This is another slice — extra. Think of this like a second plate of food that we want to combine with the first one.
+
+Line 9: base = append(base, extra...)
+
+Here’s where the magic happens 👇
+
+The append() function is used to add items to a slice.
+
+But you can’t just write append(base, extra) — that would treat extra as one item, not a list of items.
+
+That’s why we use extra... — this spreads out the slice so that 4, 5, 6 get added individually, not as a single block.
+
+In simple words:
+extra... means “take all the values inside extra and pass them one by one.”
+
+Line 11: fmt.Println("Combined slice:", base)
+
+Now we print the result. The output will be:
+
+less
+Copy
+Edit
+Combined slice: [1 2 3 4 5 6]
+Perfectly combined!
+
+🚫 Common Beginner Mistake
+If you forget those three dots and just write append(base, extra), Go will give you an error:
+
+"cannot use extra (type []int) as type int in append"
+
+So always remember:
+When you want to merge two slices in Go, you need to spread the second one with ...
+
+📌 Real-World Example
+Imagine you’re building a feature where you load a list of default users and then want to add more from a config file — this trick helps you merge both lists cleanly.
+
+It’s super useful in API data processing, JSON parsing, and even building simple CLI apps.
+
+👋 2:30–2:45 — Outro
+And that’s it! 🎉
+You now understand how the spread operator works in Go with append() — and why those three dots are more powerful than they look.
+
+If you found this helpful, hit the like button, subscribe, and let me know in the comments:
+👉 What Go topic should I break down next?
+
+See you in the next one — and happy coding! 💻🚀
