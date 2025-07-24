@@ -2,20 +2,20 @@ package main
 
 import "fmt"
 
+type Person struct {
+	Name string
+	Age  int
+}
+
+func areEqual(p1, p2 Person) bool {
+	return p1.Name == p2.Name && p1.Age == p2.Age
+}
+
 func main() {
-	// Array occupies exact space for 5 elements
-	arr := [5]string{"a", "b", "c", "d", "e"}
+	a := Person{Name: "Bob", Age: 25}
+	b := Person{Name: "Bob", Age: 25}
 
-	// Slice from index 1 to 3 (excluding 4)
-	slice := arr[1:4]
-	fmt.Println("Original Array:", arr)
-	fmt.Println("Slice:", slice)
-	fmt.Printf("Slice len: %d, cap: %d\n",
-		len(slice), cap(slice))
-
-	// Append to slice
-	slice = append(slice, "z")
-	fmt.Println("After Append:", slice)
+	fmt.Println("Structs equal:", areEqual(a, b))
 }
 
 
@@ -23,57 +23,53 @@ func main() {
 
 
 
-✅ Tone and Style Guidelines:
 
-Use spoken-style English, like you're casually explaining something to a friend or junior developer.
+📽️ youtube-script SCRIPT STRUCTURE
 
-Keep the language simple, friendly, and natural.
+(Code snippets, walkthroughs, demos)
 
-Use relatable examples (especially ones an Indian beginner would connect with, like classroom explanations, job interviews, or real coding tasks).
+🎙 Format:
+- Go **line by line**, explaining what each part does.
+- Avoid reading the code word-for-word — instead, explain the **intention** behind each part.
+- Use phrases like:
+  - “Here we’re creating a function that...”
+  - “This line connects to the DB and checks if...”
+- Relate to real-world examples:
+  - “This is exactly how login validation works in a MERN app.”
+  - “In a freelance project, you'd use this to format form data before submission.”
 
-Avoid complicated words or phrases that sound too formal or western.
+🚩 Bonus:
+- Point out 1 common beginner mistake or confusion here — and clarify it.
 
-Don’t use any Hindi or Hinglish — keep it 100% English, but Indian-friendly.
+📌 End with:
+> “You’ll see this pattern again and again in interviews and projects — so make sure this part is crystal clear.”
 
-Maintain a teacher-like tone, as if guiding someone new to programming.
+---
 
-🎯 Instructions:
+🎬 OUTRO SLIDE (Recap + Retention Trigger)
+🎙 Use this for the **final slide** of the video:
 
-Start with the first script:
+1. **Quick recap** of what they just learned:
+   - “So now you understand what [topic] is, how it works, and how to use it in real-world code.”
 
-Read the title and content and explain what it means.
+2. **Trigger curiosity** for the next video:
+   - “In the next video, we’ll build a real feature using this — like an actual signup system.”
 
-Use simple, real-life or beginner-level programming examples.
+3. **Reassure and encourage**:
+   - “If you understood this, you’re already ahead of most beginners. Keep going — you’re doing great!”
 
-Highlight why this topic matters, especially in real-world coding scenarios.
+---
 
-📘 For code slides:
+⚠️ IMPORTANT RULES (Apply to All Slides)
+- No robotic tone — speak naturally, like you're mentoring someone 1-on-1.
+- No unnecessary intros or outros outside of the first/last slide.
+- Don’t assume prior knowledge — explain everything like it’s Day 1.
+- End each slide with a **clear takeaway**.
+- Keep your energy up — your confidence = their attention.
+- add engaging the outro for the like, subscribe the video
+---
 
-Explain the code line by line.
-
-Mention what each part does in a clear and practical way.
-
-Help beginners avoid common mistakes.
-
-📊 For table slides:
-
-Walk through each row and column clearly.
-
-Compare values or concepts simply.
-
-Help the viewer understand how to use this information in actual development work.
-
-✍️ For text slides:
-
-Only explain the theory part.
-
-Do not include any code.
-
-⛔ Rules:
-
-youtbe scipt include intro or outro.
-
-Do not explain multiple slides at once — only one script per explanation.
-
-Assume the viewer is new to Topic and programming.
+🎯 GOAL: 
+Make your viewer feel like:
+> “Now I *finally* get it... and I can actually use this in real code.”
 
