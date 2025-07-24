@@ -19,18 +19,21 @@ package main
 
 import "fmt"
 
-// A variadic function to calculate sum
-func sum(nums ...int) int {
-	total := 0
-	for _, num := range nums {
-		total += num
-	}
-	return total
+func main() {
+	// Array with fixed size
+	var arr = [3]int{1, 2, 3}
+	fmt.Println("Array:", arr)
+
+	// Slice derived from array
+	slice := arr[:]
+	fmt.Println("Slice:", slice)
+
+	// Modify array and see impact on slice
+	arr[0] = 100
+	fmt.Println("Modified Array:", arr)
+	fmt.Println("Slice reflects change:", slice)
 }
 
-func main() {
-	fmt.Println("Sum:", sum(1, 2, 3, 4, 5))
-}
 
 
 
@@ -42,20 +45,20 @@ Give the output in a table format.
 2.
 package main
 
-import (
-	"fmt"
-	"strings"
-)
-
-// Variadic function to join strings
-func joinStrings(sep string, words ...string) string {
-	return strings.Join(words, sep)
-}
+import "fmt"
 
 func main() {
-	result := joinStrings("-", "go", "is", "fun")
-	fmt.Println("Joined:", result)
+	// Declare a slice using shorthand
+	numbers := []int{10, 20}
+	fmt.Println("Initial Slice:", numbers)
+
+	// Append new elements dynamically
+	numbers = append(numbers, 30, 40)
+	fmt.Println("After Append:", numbers)
+
+	// Slices grow dynamically; arrays cannot
 }
+
 
 
 
@@ -64,25 +67,23 @@ func main() {
 3.
 package main
 
-import (
-	"fmt"
-)
-
-// Variadic function to calculate average of float64 values
-func average(nums ...float64) float64 {
-	if len(nums) == 0 {
-		return 0.0
-	}
-	total := 0.0
-	for _, num := range nums {
-		total += num
-	}
-	return total / float64(len(nums))
-}
+import "fmt"
 
 func main() {
-	fmt.Println("Average 1:", average(10.5, 20.0, 30.5))
-	fmt.Println("Average 2:", average())
+	// Array occupies exact space for 5 elements
+	arr := [5]string{"a", "b", "c", "d", "e"}
+
+	// Slice from index 1 to 3 (excluding 4)
+	slice := arr[1:4]
+	fmt.Println("Original Array:", arr)
+	fmt.Println("Slice:", slice)
+	fmt.Printf("Slice len: %d, cap: %d\n",
+		len(slice), cap(slice))
+
+	// Append to slice
+	slice = append(slice, "z")
+	fmt.Println("After Append:", slice)
 }
+
 
 

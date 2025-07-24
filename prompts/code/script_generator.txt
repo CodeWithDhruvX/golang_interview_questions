@@ -1,55 +1,22 @@
-import os
-from langchain.agents import initialize_agent, Tool
-from langchain.llms import OpenAI
-from langchain.agents.agent_types import AgentType
-from dotenv import load_dotenv
+package main
 
-load_dotenv()
+import "fmt"
 
-# Step 1: Define the meeting booking function (simulated backend)
-def book_meeting(date: str, time: str, participant: str) -> str:
-    return f"📅 Meeting booked with {participant} on {date} at {time}."
+func main() {
+	// Array occupies exact space for 5 elements
+	arr := [5]string{"a", "b", "c", "d", "e"}
 
-# Step 2: Define a wrapper that parses natural language into arguments
-def booking_tool(input_text: str) -> str:
-    """
-    A simple parser that extracts time, date, and participant from input text.
-    (In production, use a better parser like LLM or dateparser)
-    """
-    # For demo purposes, this is hardcoded. You should replace it with actual NLP or LLM parsing.
-    # Assume fixed format: "Schedule a meeting with NAME on DATE at TIME"
-    import re
-    match = re.search(r"with ([\w\s]+) (on|for) (\w+day) at ([\d:apm\s]+)", input_text, re.IGNORECASE)
-    if not match:
-        return "❌ Could not parse meeting info."
-    
-    participant = match.group(1).strip()
-    date = match.group(3).strip()
-    time = match.group(4).strip()
-    return book_meeting(date, time, participant)
+	// Slice from index 1 to 3 (excluding 4)
+	slice := arr[1:4]
+	fmt.Println("Original Array:", arr)
+	fmt.Println("Slice:", slice)
+	fmt.Printf("Slice len: %d, cap: %d\n",
+		len(slice), cap(slice))
 
-# Step 3: Register the tool for the agent
-tools = [
-    Tool(
-        name="MeetingScheduler",
-        func=booking_tool,
-        description="Schedules a meeting given a natural language input like 'Schedule meeting with John on Friday at 2pm.'",
-    )
-]
-
-# Step 4: Initialize the LLM and agent
-llm = OpenAI(temperature=0)
-
-agent = initialize_agent(
-    tools=tools,
-    llm=llm,
-    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True,
-)
-
-# Step 5: Test the agent
-response = agent.run("Please schedule a meeting with Alice for Thursday at 10am.")
-print(response)
+	// Append to slice
+	slice = append(slice, "z")
+	fmt.Println("After Append:", slice)
+}
 
 
 
