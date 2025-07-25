@@ -9,7 +9,7 @@ func main() {
 	fruits = append(fruits, "cherry")
 
 	// Append multiple elements
-	fruits = append(fruits, "date", "elderberry")
+	append(fruits, "date", "elderberry")
 
 	fmt.Println("Updated slice:", fruits)
 }

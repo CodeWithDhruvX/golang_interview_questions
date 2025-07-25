@@ -2,21 +2,17 @@ package main
 
 import "fmt"
 
-type Person struct {
-	Name string
-	Age  int
-}
-
-func areEqual(p1, p2 Person) bool {
-	return p1.Name == p2.Name && p1.Age == p2.Age
-}
-
 func main() {
-	a := Person{Name: "Bob", Age: 25}
-	b := Person{Name: "Bob", Age: 25}
+	var numbers []int
 
-	fmt.Println("Structs equal:", areEqual(a, b))
+	for i := 1; i <= 5; i++ {
+		numbers = append(numbers, i*i) // appending squares
+	}
+
+	fmt.Println("Dynamic slice:", numbers)
 }
+
+
 
 
 
@@ -60,7 +56,7 @@ func main() {
 
 ---
 
-⚠️ IMPORTANT RULES (Apply to All Slides)
+⚠️ IMPORTANT RULES 
 - No robotic tone — speak naturally, like you're mentoring someone 1-on-1.
 - No unnecessary intros or outros outside of the first/last slide.
 - Don’t assume prior knowledge — explain everything like it’s Day 1.
