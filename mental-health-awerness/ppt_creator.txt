@@ -1,4 +1,4 @@
-Generate structured JSON data for the topic: "Do you believe schools should teach emotional intelligence?"
+Generate structured JSON data for the topic: "Do you allow yourself to leave conversations early when overwhelmed?"
 
 Use the following format for each slide:
 
