@@ -1,0 +1,19 @@
+Generate structured JSON data for the topic: "Do you believe schools should teach emotional intelligence?"
+
+Use the following format for each slide:
+
+[
+  {
+    "title": "<Slide Title>",
+    "content": "<Formatted content in markdown if text >",
+    "slide_type": "text"
+  }
+]
+
+Rules:
+1. Use slide_type as one of text or table.
+2. Use Markdown formatting in content for text slides.
+3. For table slides, provide a JSON array of objects representing rows.
+4. Keep titles concise and meaningful.
+5. Each JSON object should represent one slide.
+6. Ensure content is beginner-friendly, structured, and informative.

@@ -6,7 +6,7 @@ Use the following format for each slide:
   {
     "title": "<Slide Title>",
     "content": "<Formatted content in markdown if text or raw if code>",
-    "slide_type": "text | code | table"
+    "slide_type": "text"
   }
 ]
 
