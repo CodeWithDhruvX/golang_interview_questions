@@ -24,3 +24,24 @@ You are a **YouTube content strategist + technical educator**.
 
 🚀 OUTPUT FORMAT:
 Use clear bullet points and headers. Make sure playlists are scrollable and identifiable at a glance.
+
+🔹 General Mental Health Awareness
+What does mental health mean to you?
+
+Do you think mental health is as important as physical health?
+
+At what age did you first learn about mental health?
+
+How would you rate your current mental health?
+
+Have you ever talked to anyone about your mental health?
+
+Do you know how to recognize symptoms of anxiety or depression?
+
+Do you believe your generation is more open about mental health than previous ones?
+
+Have you ever researched mental health topics on your own?
+
+Do you feel educated about mental health issues in school?
+
+Would you know how to support a friend experiencing a mental health crisis?

@@ -1,0 +1,104 @@
+Ask the user:
+👉 “What should be the static interview question number? (e.g., 101)”
+
+Input format:
+
+vbnet
+Copy
+Edit
+Short #1: “<Title of Short 1>”
+Slides:
+
+<Slide Title 1>
+<Slide Title 2>
+...
+
+Short #2: “<Title of Short 2>”
+Slides:
+
+...
+
+Short #3: “<Title of Short 3>”
+Slides:
+
+...
+✍️ What to Do:
+
+Create exactly 3 SEO YouTube titles (one per Short)
+
+Prefix each with: Interview Q #<static number>
+
+Add dynamic part tag: [#p1], [#p2], [#p3]
+
+Optimize titles with clear keywords (e.g., Go, GoLang, backend dev, features, syntax, etc.)
+
+Keep each title ≤100 characters
+
+Add an emoji (🧠, ⚙️, 🔥, 🚀, 💡, etc.)
+
+Each title should work as a standalone short or long-form section title
+
+📥 Example Input:
+
+Static Question Number: 88
+
+makefile
+Copy
+Edit
+Short #1: “Why Go is Taking Over Backend”
+Slides:
+What is Go?
+Why Google Created Go?
+
+Short #2: “Go Features Devs Must Know”
+Slides:
+Concurrency, Simplicity, Compilation
+
+Short #3: “Syntax of Go in 30 Seconds”
+Slides:
+Hello World, Syntax Table
+📤 Expected Output:
+
+less
+Copy
+Edit
+Interview Q #88 [#p1]: Why Go (Golang) Is Taking Over Backend Development in 2025 🔥  
+Interview Q #88 [#p2]: Must-Know GoLang Features: Concurrency, Simplicity & Speed ⚙️  
+Interview Q #88 [#p3]: Go Syntax in 30 Seconds: Hello World + Clean Syntax Table 🧠  
+✅ Use this prompt when you want just 3 titles, all with a static question number, but tagged with dynamic parts per Short, written for maximum YouTube clarity and SEO.
+
+Let me know if you want a variation for Shorts, long-form chapters, or auto-hashtags too!
+
+
+
+=============================================================================================================================
+
+questions:
+
+
+🔹 Short #1: “Go Channels Made Simple! 🧠”
+Slides Included:
+
+Introduction to Channels in Go
+
+Unbuffered Channels
+
+Unbuffered Channel Code Example
+
+🔹 Short #2: “Buffered Channels in Go Explained 🚀”
+Slides Included:
+4. Buffered Channels
+5. Buffered Channel Code Example
+6. Key Differences: Buffered vs Unbuffered
+
+🔹 Short #3: “Buffered vs Unbuffered: When to Use What? 🔄”
+Slides Included:
+7. Comparison Table
+8. When to Use Buffered vs Unbuffered Channels
+9. Quick Challenge
+10. Solutions: Quick Challenge
+
+numbers:
+
+51
+
