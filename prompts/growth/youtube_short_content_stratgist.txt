@@ -29,70 +29,74 @@ Wait for my confirmation before generating the scripts.
 
 [
     {
-      "title": "Introduction to Channels in Go",
-      "content": "In Go, channels are a way to communicate between goroutines, allowing them to send and receive values. There are two types of channels: buffered and unbuffered. Let's explore the difference between them.",
+      "title": "Introduction to Arrays and Slices",
+      "content": "In Go, **arrays** and **slices** are fundamental data structures used to store collections of elements of the same type. Although they appear similar, they have different behaviors and use cases. Understanding their differences is crucial for writing efficient and idiomatic Go code. Arrays are simple and fixed in size, while slices are more powerful and flexible, built on top of arrays but with additional functionality for dynamic growth and memory management.",
       "slide_type": "text"
     },
     {
-      "title": "Unbuffered Channels",
-      "content": "An **unbuffered channel** is one where data can only be sent and received if there is another goroutine ready to receive or send the data. This means that the sender will block until the receiver is ready, and the receiver will block until the sender has sent a value.",
-      "slide_type": "text"
-    },
-    {
-      "title": "Unbuffered Channel Code Example",
-      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n  ch := make(chan string)\n\n  go func() {\n    ch <- \"Hello, Go!\"\n  }()\n\n  msg := <- ch\n  fmt.Println(msg)\n}\n```",
+      "title": "What is an Array?",
+      "content": "An array in Go has a **fixed length**, and its size is part of its type. This means `[3]int` and `[4]int` are entirely different types.\n\nArrays are stored in **contiguous memory**, and when passed to functions, they are **copied**.\n\n```go\nvar a [3]int = [3]int{1, 2, 3} // Declare and initialize an array of 3 integers\nfmt.Println(a) // Output: [1 2 3]\n\n// Note: Changing 'a' inside a function won't affect the original array\n```",
       "slide_type": "code"
     },
     {
-      "title": "Buffered Channels",
-      "content": "A **buffered channel** allows sending and receiving data without blocking until the buffer is full or empty. The sender can send data into the channel without waiting for the receiver if there is space in the buffer, and similarly, the receiver can receive data without waiting until the buffer is not empty.",
-      "slide_type": "text"
-    },
-    {
-      "title": "Buffered Channel Code Example",
-      "content": "```go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n  ch := make(chan string, 2)\n\n  ch <- \"Hello\"\n  ch <- \"Go\"\n\n  fmt.Println(<-ch)\n  fmt.Println(<-ch)\n}\n```",
+      "title": "What is a Slice?",
+      "content": "A slice is built **on top of an array**, but it is dynamically sized. It contains a pointer to the underlying array, its length, and its capacity.\n\nSlices are more commonly used in Go due to their **flexibility** and ability to grow dynamically.\n\n```go\ns := []int{1, 2, 3} // A slice with length 3 and capacity 3\nfmt.Println(s)      // Output: [1 2 3]\n\n// Slices can grow dynamically using append\ns = append(s, 4)\nfmt.Println(s)      // Output: [1 2 3 4]\n```",
       "slide_type": "code"
     },
     {
-      "title": "Key Differences: Buffered vs Unbuffered",
-      "content": "The key differences between buffered and unbuffered channels are:\n\n1. **Blocking Behavior**: Unbuffered channels block until both sender and receiver are ready, whereas buffered channels allow sending and receiving without blocking until the buffer is full or empty.\n\n2. **Channel Capacity**: Unbuffered channels have no capacity to store data, while buffered channels have a defined capacity that can hold multiple values.",
-      "slide_type": "text"
-    },
-    {
-      "title": "Comparison Table",
+      "title": "Key Differences",
       "content": [
         {
-          "Attribute": "Blocking Behavior",
-          "Unbuffered Channel": "Blocks until both sender and receiver are ready",
-          "Buffered Channel": "Blocks only when the buffer is full or empty"
+          "Array": "Fixed-length sequence of elements",
+          "Feature": "Definition",
+          "Slice": "Dynamic-length, reference to an array"
         },
         {
-          "Attribute": "Channel Capacity",
-          "Unbuffered Channel": "No capacity to store data",
-          "Buffered Channel": "Has a fixed capacity to store data"
+          "Array": "Size is part of the type",
+          "Feature": "Size",
+          "Slice": "Size can change at runtime"
         },
         {
-          "Attribute": "Use Case",
-          "Unbuffered Channel": "Used for synchronization between goroutines",
-          "Buffered Channel": "Used when you want to decouple sender and receiver to avoid blocking"
+          "Array": "Stored directly in memory",
+          "Feature": "Memory",
+          "Slice": "References an underlying array"
+        },
+        {
+          "Array": "Less common in practice",
+          "Feature": "Use Case",
+          "Slice": "Preferred for flexibility"
+        },
+        {
+          "Array": "Passed by value (copies entire array)",
+          "Feature": "Function Passing",
+          "Slice": "Passed by reference (points to underlying array)"
         }
       ],
       "slide_type": "table"
     },
     {
-      "title": "When to Use Buffered vs Unbuffered Channels",
-      "content": "1. **Use Unbuffered Channels**: When you need synchronization between goroutines, such as ensuring that data is exchanged only when both sender and receiver are ready.\n\n2. **Use Buffered Channels**: When you want to decouple the sender and receiver and avoid blocking until the buffer is full or empty. This can improve performance when the sender and receiver operate at different speeds.",
-      "slide_type": "text"
-    },
-    {
-      "title": "Quick Challenge: Test Your Understanding",
-      "content": "- What happens when you try to send data into an unbuffered channel if no receiver is ready?\n- When would you prefer using a buffered channel over an unbuffered channel?\n- What is the key difference between unbuffered and buffered channels?",
-      "slide_type": "text"
-    },
-    {
-      "title": "Solutions: Quick Challenge",
-      "content": "1. **Unbuffered Channel Blocking**: If no receiver is ready, the sender will block until a receiver is available.\n\n2. **Use of Buffered Channels**: Buffered channels are preferred when the sender and receiver operate at different speeds and you want to avoid blocking each other.\n\n3. **Key Difference**: The key difference is that unbuffered channels require both sender and receiver to be ready at the same time, while buffered channels allow sending and receiving without immediate blocking until the buffer is full or empty.",
+      "title": "Array Declaration Example",
+      "content": "This example demonstrates how to declare and access individual elements in an array.\n\nArrays are **indexed starting at 0**, and uninitialized elements default to zero values (for `int`, it's 0).\n\n```go\nvar arr [5]int         // Declare an array of 5 integers\narr[0] = 10            // Assign value to the first element\nfmt.Println(arr)       // Output: [10 0 0 0 0]\n```",
       "slide_type": "code"
+    },
+    {
+      "title": "Slice Creation Example",
+      "content": "This example shows how to declare a slice and use the `append` function to add elements.\n\nSlices grow automatically, and appending returns a new slice (may point to a new array if capacity is exceeded).\n\n```go\nslice := []int{1, 2, 3, 4, 5} // Create a slice with initial elements\nslice = append(slice, 6)      // Append an element; underlying array may grow\nfmt.Println(slice)            // Output: [1 2 3 4 5 6]\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "Slicing an Array",
+      "content": "You can create slices **from existing arrays** by slicing syntax `[start:end]`, which includes `start` and excludes `end`.\n\nThe resulting slice shares the same underlying array, so changes to the slice affect the array and vice versa.\n\n```go\narr := [5]int{10, 20, 30, 40, 50} // Define an array\nslice := arr[1:4]                 // Create a slice from index 1 to 3 (not 4)\nfmt.Println(slice)                // Output: [20 30 40]\n```",
+      "slide_type": "code"
+    },
+    {
+      "title": "When to Use What?",
+      "content": "- Use **arrays** when the size is known at compile time and performance optimizations (like avoiding memory allocations) are necessary. They're also helpful when working with low-level system code where control over memory layout is important.\n\n- Use **slices** in most real-world applications due to their flexibility. They allow appending, slicing, and sharing data without unnecessary copying, making them suitable for dynamic datasets like input streams, collections, and API responses.\n\n👉 In idiomatic Go, **slices are favored** because they offer a balance between performance, flexibility, and ease of use. They are used in almost all standard libraries and data processing patterns.",
+      "slide_type": "text"
+    },
+    {
+      "title": "Conclusion",
+      "content": "✅ **Arrays** are fixed-size, value-type collections best suited for specific performance-critical or low-level use cases.\n\n✅ **Slices** are dynamically-sized, reference-type views into arrays that provide powerful tools for managing collections, making them the go-to choice for most Go developers.\n\nUnderstanding the mechanics behind slices — such as how they manage capacity and share underlying arrays — is key to mastering Go and writing high-performance, idiomatic code.",
+      "slide_type": "text"
     }
   ]
-  

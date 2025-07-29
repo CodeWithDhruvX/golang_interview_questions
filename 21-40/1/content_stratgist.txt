@@ -1,0 +1,49 @@
+🎬 Short 1: Arrays vs. Slices – What’s the Difference?
+Slides:
+
+Introduction to Arrays and Slices
+
+What is an Array?
+
+What is a Slice?
+
+Title:
+➡️ "Go Arrays vs. Slices: What’s the Difference?"
+
+🎬 Short 2: Arrays Deep Dive
+Slides:
+
+Key Differences
+
+Array Declaration Example
+
+Title:
+➡️ "Mastering Arrays in Go (with Examples!)"
+
+🎬 Short 3: Go Slices Explained
+Slides:
+
+Slice Creation Example
+
+Slicing an Array
+
+Title:
+➡️ "Go Slices Made Easy (Grow & Slice Like a Pro)"
+
+🎬 Short 4: When to Use Arrays vs. Slices
+Slides:
+
+When to Use What?
+
+Conclusion
+
+Title:
+➡️ "When to Use Arrays vs. Slices in Go (Best Practices)"
+
+
+
+titles:
+
+Interview Q #1 [#p1]: Go Arrays vs. Slices: What’s the Real Difference? 🔍
+Interview Q #1 [#p2]: Mastering Arrays in GoLang with Clear Code Examples ⚙️
+Interview Q #1 [#p3]: Go Slices Made Easy: Grow, Slice, and Master Like a Pro 🚀
