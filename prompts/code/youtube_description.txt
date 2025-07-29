@@ -4,21 +4,25 @@ Copy
 Edit
 package main
 
-import (
-	"fmt"
-	"os"
-)
+package main
+
+import "fmt"
 
 func main() {
-	file, err := os.Open("data.txt")
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return
-	}
-	defer file.Close() // Ensures file is closed when function ends
+	// Array with fixed size
+	var arr = [3]int{1, 2, 3}
+	fmt.Println("Array:", arr)
 
-	fmt.Println("Reading file... (Imagine logic here)")
+	// Slice derived from array
+	slice := arr[:]
+	fmt.Println("Slice:", slice)
+
+	// Modify array and see impact on slice
+	arr[0] = 100
+	fmt.Println("Modified Array:", arr)
+	fmt.Println("Slice reflects change:", slice)
 }
+
 ✅ Snippet 2: Deferred Execution Order
 go
 Copy
@@ -28,12 +32,17 @@ package main
 import "fmt"
 
 func main() {
-	defer fmt.Println("First")
-	defer fmt.Println("Second")
-	defer fmt.Println("Third")
+	// Declare a slice using shorthand
+	numbers := []int{10, 20}
+	fmt.Println("Initial Slice:", numbers)
 
-	fmt.Println("Now in main function")
+	// Append new elements dynamically
+	numbers = append(numbers, 30, 40)
+	fmt.Println("After Append:", numbers)
+
+	// Slices grow dynamically; arrays cannot
 }
+
 
 
 ✅ Snippet 3: Defer with Panic Recovery
@@ -45,16 +54,21 @@ package main
 import "fmt"
 
 func main() {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Println("Recovered from panic:", r)
-		}
-	}()
+	// Array occupies exact space for 5 elements
+	arr := [5]string{"a", "b", "c", "d", "e"}
 
-	fmt.Println("Before panic")
-	panic("Something went wrong!") // Simulating a crash
-	fmt.Println("This will not print")
+	// Slice from index 1 to 3 (excluding 4)
+	slice := arr[1:4]
+	fmt.Println("Original Array:", arr)
+	fmt.Println("Slice:", slice)
+	fmt.Printf("Slice len: %d, cap: %d\n",
+		len(slice), cap(slice))
+
+	// Append to slice
+	slice = append(slice, "z")
+	fmt.Println("After Append:", slice)
 }
+
 
 
 
@@ -77,7 +91,7 @@ privacyStatus: Either "private", "public", or "unlisted".
 
 thumbnail: Absolute file path of the thumbnail image (e.g., "C:/Users/YourName/Videos/thumbnail.png").
 
-playlistName: The playlist where this video should be added.
+playlistName: The playlist where this video should be added.it's has array values
 
 publishAt: Scheduled date and time in "YYYY-MM-DD HH:MM:SS" format.
 

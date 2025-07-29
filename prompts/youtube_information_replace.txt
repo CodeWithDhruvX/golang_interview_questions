@@ -1,12 +1,12 @@
 [
     {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 20-59-32_output_final.mp4"
+        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/21-40/22/subscribe/2025-07-24 21-13-36_output_final.mp4" 
     },
     {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 21-07-49_output_final.mp4"
+        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/21-40/22/subscribe/2025-07-24 21-30-28_output_final.mp4" 
     },
     {
-        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/17/subscribe/2025-07-18 21-13-45_output_final.mp4"
+        "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/21-40/22/subscribe/2025-07-24 21-54-34_output_final.mp4" 
     }
 ]
 
@@ -14,76 +14,47 @@
 {
   "videos": [
     {
-      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-14_blank_identifier_1.mp4",
-      "title": "Golang Blank Identifier Explained with Atoi Example",
-      "description": "📘 In this video, we explore how to use the blank identifier (_) in Go to ignore return values from functions!\n\n🔍 What you'll learn:\n- Why strconv.Atoi returns two values\n- How to safely ignore errors using _\n- Real-world use case for beginners\n\n🎯 Perfect for:\n- Go interview prep\n- Beginners learning multiple return values\n- Clean coding in production\n\n#golang #interviewquestions #coding #goprogramming #learnprogramming\n",
-      "tags": [
-        "golang",
-        "go language",
-        "blank identifier go",
-        "go interview question",
-        "golang beginner",
-        "go tutorials",
-        "multiple return values",
-        "atoi golang",
-        "error handling"
-      ],
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/append_snippet_1.mp4",
+      "title": "🔥 Stop Misusing append() in Go! (Single vs Multiple Elements Explained)",
+      "description": "Learn how to use Go's append() function like a pro!\n\n🔍 In this short video:\n- Append single values ✅\n- Add multiple elements at once 🚀\n- Understand slice growth in Go 🧠\n\n📌 Whether you're a beginner or prepping for Go interviews, this is essential!\n\n#golang #goslices #golangtips #appendfunction #programmingtips #golanginterview #techshorts",
+      "tags": ["golang", "append", "slice", "golang tips", "golang append", "golang tutorial", "go interview"],
       "categoryName": "Education",
       "privacyStatus": "public",
-      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/blank_identifier_1.png",
-      "playlistName": "GoLang Interview Questions",
-      "publishAt": "2025-07-14 18:00:00",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/append_snippet_1.png",
+      "playlistName": "Golang Interview Shorts",
+      "publishAt": "2025-07-22 12:00:00",
       "madeForKids": false,
       "ageRestriction": false
     },
     {
-      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-14_blank_identifier_2.mp4",
-      "title": "Golang Blank Identifier in For Loops",
-      "description": "🔁 Learn how to skip loop indexes using blank identifiers (_) in Go!\n\n🧠 Topics covered:\n- Using range to loop over slices\n- When to ignore the index\n- Cleaner and readable Go code\n\n💼 Great for:\n- Freshers learning Go loops\n- Developers preparing for Go interviews\n- Writing idiomatic Go code\n\n#golang #forloop #range #go #learnprogramming #gointerview\n",
-      "tags": [
-        "golang",
-        "go language",
-        "go range loop",
-        "blank identifier",
-        "golang loops",
-        "interview prep go",
-        "go tutorials",
-        "learn golang",
-        "idiomatic go"
-      ],
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/append_snippet_2.mp4",
+      "title": "💡 Hidden Trick to Merge Slices in Go with append(...)", 
+      "description": "Quick Go tip! Learn how to merge two slices in Golang using the powerful spread syntax.\n\n✨ Covered in this short:\n- Combining two slices effortlessly 💡\n- Using the ellipsis (...) correctly\n- Clean and idiomatic Go code\n\nPerfect for interview prep or Go project work!\n\n#golang #goslices #goappend #gotutorial #golangtricks #mergearrays #techshorts",
+      "tags": ["golang", "merge slices", "append spread", "golang tricks", "append operator", "go developer", "slice handling"],
       "categoryName": "Education",
       "privacyStatus": "public",
-      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/blank_identifier_2.png",
-      "playlistName": "GoLang Interview Questions",
-      "publishAt": "2025-07-14 18:15:00",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/append_snippet_2.png",
+      "playlistName": "Golang Interview Shorts",
+      "publishAt": "2025-07-22 13:00:00",
       "madeForKids": false,
       "ageRestriction": false
     },
     {
-      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/2025-07-14_blank_identifier_3.mp4",
-      "title": "Golang Interface Implementation using Blank Identifier",
-      "description": "📄 Implementing Go interfaces but don’t need the return values? Use blank identifiers like a pro!\n\n✅ In this video:\n- What is the Writer interface in Go\n- How to ignore Println return values\n- Clean interface implementation for mocks or logs\n\n🔥 Must-know for Go interview rounds and real-world testing setups!\n\n#golang #interface #mocking #gointerview #writerinterface #goprogramming\n",
-      "tags": [
-        "golang",
-        "go interface",
-        "blank identifier",
-        "go return values",
-        "go mocking",
-        "golang interview",
-        "interface implementation",
-        "writer interface",
-        "unit testing go"
-      ],
+      "videoFile": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/coding_shorts/audio/append_snippet_3.mp4",
+      "title": "🤯 Build Slices Dynamically in Go Using append() + Loops!",
+      "description": "Watch how to dynamically build slices in Go using a loop and append()!\n\n🎯 What you'll learn:\n- Creating a slice with a loop\n- Dynamically growing arrays\n- Idiomatic Go code for data processing\n\nSuper useful for data generation, algorithms, and real-time systems!\n\n#golang #appendloop #goprogramming #goslice #golangshorts #techshorts #algorithm",
+      "tags": ["golang", "append", "loop in go", "build slice", "go tips", "dynamic slice", "golang short"],
       "categoryName": "Education",
       "privacyStatus": "public",
-      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/blank_identifier_3.png",
-      "playlistName": "GoLang Interview Questions",
-      "publishAt": "2025-07-14 18:30:00",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/append_snippet_3.png",
+      "playlistName": "Golang Interview Shorts",
+      "publishAt": "2025-07-22 14:00:00",
       "madeForKids": false,
       "ageRestriction": false
     }
   ]
 }
+
 
 
 
