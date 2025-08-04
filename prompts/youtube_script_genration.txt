@@ -291,22 +291,24 @@ Here’s what you MUST follow:
 11. don't use the any western or jargon words in the script
 12. please stratight to the point. don't predict anything and dont say "i know" and "feeling like home"
 13. add the outro at the end of the slide and don't say anything in upcoming video
+14. please include human emotion in the script
+15. please grab the attention in the first 30 second. this will must apply in the script
 
 Input slide title or topic:
     {
-      "title": "Introduction to Arrays and Slices",
-      "content": "In Go, **arrays** and **slices** are fundamental data structures used to store collections of elements of the same type. Although they appear similar, they have different behaviors and use cases. Understanding their differences is crucial for writing efficient and idiomatic Go code. Arrays are simple and fixed in size, while slices are more powerful and flexible, built on top of arrays but with additional functionality for dynamic growth and memory management.",
+      "title": "Introduction to Generics in Go",
+      "content": "Generics in Go allow you to write functions, types, and data structures that can work with any data type, without sacrificing type safety. With the introduction of generics in Go 1.18, you can write more flexible and reusable code.",
       "slide_type": "text"
     },
     {
-      "title": "What is an Array?",
-      "content": "An array in Go has a **fixed length**, and its size is part of its type. This means `[3]int` and `[4]int` are entirely different types.\n\nArrays are stored in **contiguous memory**, and when passed to functions, they are **copied**.\n\n```go\nvar a [3]int = [3]int{1, 2, 3} // Declare and initialize an array of 3 integers\nfmt.Println(a) // Output: [1 2 3]\n\n// Note: Changing 'a' inside a function won't affect the original array\n```",
-      "slide_type": "code"
+      "title": "What Are Structs in Go?",
+      "content": "A struct in Go is a composite data type that groups variables (fields) together. Structs are used to represent real-world entities and store multiple related data points.",
+      "slide_type": "text"
     },
     {
-      "title": "What is a Slice?",
-      "content": "A slice is built **on top of an array**, but it is dynamically sized. It contains a pointer to the underlying array, its length, and its capacity.\n\nSlices are more commonly used in Go due to their **flexibility** and ability to grow dynamically.\n\n```go\ns := []int{1, 2, 3} // A slice with length 3 and capacity 3\nfmt.Println(s)      // Output: [1 2 3]\n\n// Slices can grow dynamically using append\ns = append(s, 4)\nfmt.Println(s)      // Output: [1 2 3 4]\n```",
-      "slide_type": "code"
+      "title": "Generics with Structs",
+      "content": "Generics can be used with structs in Go to create data structures that can hold any type of value, providing more flexibility. You can define a generic struct that accepts any type as a type parameter.",
+      "slide_type": "text"
     }
 
 Now generate the full voiceover script with all of the above elements.
@@ -320,4 +322,4 @@ After completing the all slide generate End with a warm, motivational outro enco
 
 Start with the first slide. Wait for me to say "yes" before moving to the next one.
 
-explain in english
+explain in hinenglish
