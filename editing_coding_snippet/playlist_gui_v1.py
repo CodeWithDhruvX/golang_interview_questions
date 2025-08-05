@@ -17,7 +17,7 @@ class YouTubePlaylistManager:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("YouTube Playlist Manager")
-        self.root.geometry("1200x800")
+        self.root.geometry("1400x900")  # Increased width to accommodate new panel
         
         # YouTube API setup
         self.youtube = None
@@ -28,6 +28,8 @@ class YouTubePlaylistManager:
         self.playlists = {}
         self.current_playlist_id = None
         self.current_playlist_items = {}  # Store playlist items with their IDs
+        self.unassigned_videos = {}  # Store videos not in any playlist
+        self.channel_videos = {}  # Store all channel videos
         
         # Setup GUI
         self.setup_gui()
@@ -55,13 +57,26 @@ class YouTubePlaylistManager:
         self.auth_status.pack(side=tk.LEFT, padx=(10, 0))
         
         # Control buttons frame
-        control_frame = ttk.LabelFrame(top_frame, text="Playlist Controls", padding=10)
+        control_frame = ttk.LabelFrame(top_frame, text="Controls", padding=10)
         control_frame.pack(fill=tk.X, pady=(0, 10))
         
-        ttk.Button(control_frame, text="Create Playlist", command=self.create_playlist).pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(control_frame, text="Import Playlist", command=self.import_playlist).pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(control_frame, text="Delete Playlist", command=self.delete_playlist).pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(control_frame, text="Refresh Playlists", command=self.refresh_playlists).pack(side=tk.LEFT, padx=(0, 5))
+        # Playlist controls
+        playlist_controls = ttk.Frame(control_frame)
+        playlist_controls.pack(fill=tk.X)
+        
+        ttk.Label(playlist_controls, text="Playlist Controls:", font=('TkDefaultFont', 9, 'bold')).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(playlist_controls, text="Create Playlist", command=self.create_playlist).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(playlist_controls, text="Import Playlist", command=self.import_playlist).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(playlist_controls, text="Delete Playlist", command=self.delete_playlist).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(playlist_controls, text="Refresh Playlists", command=self.refresh_playlists).pack(side=tk.LEFT, padx=(0, 5))
+        
+        # Channel controls
+        channel_controls = ttk.Frame(control_frame)
+        channel_controls.pack(fill=tk.X, pady=(5, 0))
+        
+        ttk.Label(channel_controls, text="Channel Controls:", font=('TkDefaultFont', 9, 'bold')).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(channel_controls, text="Load Channel Videos", command=self.load_channel_videos).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(channel_controls, text="Find Unassigned Videos", command=self.find_unassigned_videos).pack(side=tk.LEFT, padx=(0, 5))
         
         # Export buttons
         export_frame = ttk.Frame(control_frame)
@@ -69,12 +84,31 @@ class YouTubePlaylistManager:
         ttk.Button(export_frame, text="Export CSV", command=self.export_csv).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(export_frame, text="Export JSON", command=self.export_json).pack(side=tk.LEFT)
         
-        # Main content area
+        # Main content area with notebook for tabs
         content_frame = ttk.Frame(main_frame)
         content_frame.pack(fill=tk.BOTH, expand=True)
         
+        # Create notebook for tabs
+        self.notebook = ttk.Notebook(content_frame)
+        self.notebook.pack(fill=tk.BOTH, expand=True)
+        
+        # Playlist tab
+        self.setup_playlist_tab()
+        
+        # Unassigned videos tab
+        self.setup_unassigned_videos_tab()
+        
+        # Status bar
+        self.status_bar = ttk.Label(main_frame, text="Ready", relief=tk.SUNKEN)
+        self.status_bar.pack(side=tk.BOTTOM, fill=tk.X, pady=(10, 0))
+    
+    def setup_playlist_tab(self):
+        """Setup the playlist management tab"""
+        playlist_frame = ttk.Frame(self.notebook)
+        self.notebook.add(playlist_frame, text="Playlists")
+        
         # Left panel - Playlists
-        left_frame = ttk.LabelFrame(content_frame, text="Playlists", padding=10)
+        left_frame = ttk.LabelFrame(playlist_frame, text="Playlists", padding=10)
         left_frame.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 10))
         
         # Playlist listbox with scrollbar
@@ -109,7 +143,7 @@ class YouTubePlaylistManager:
         ttk.Button(left_frame, text="View on YouTube", command=self.view_playlist_on_youtube).pack(pady=(5, 0))
         
         # Right panel - Videos
-        right_frame = ttk.LabelFrame(content_frame, text="Videos", padding=10)
+        right_frame = ttk.LabelFrame(playlist_frame, text="Videos", padding=10)
         right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
         
         # Video controls
@@ -122,6 +156,7 @@ class YouTubePlaylistManager:
         
         ttk.Button(control_row1, text="Add Video", command=self.add_video).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(control_row1, text="Remove Video", command=self.remove_video).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(control_row1, text="Remove Selected", command=self.remove_selected_videos).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(control_row1, text="Move Up", command=self.move_video_up).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(control_row1, text="Move Down", command=self.move_video_down).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(control_row1, text="Watch Video", command=self.watch_video).pack(side=tk.LEFT, padx=(0, 5))
@@ -132,6 +167,8 @@ class YouTubePlaylistManager:
         
         ttk.Button(control_row2, text="Move to Playlist", command=self.move_to_playlist).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(control_row2, text="Copy to Playlist", command=self.copy_to_playlist).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(control_row2, text="Select All", command=self.select_all_videos).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(control_row2, text="Select None", command=self.select_none_videos).pack(side=tk.LEFT)
         
         # Videos treeview
         video_frame = ttk.Frame(right_frame)
@@ -139,7 +176,7 @@ class YouTubePlaylistManager:
         
         # Treeview for videos
         columns = ('Title', 'Channel', 'Duration', 'Views', 'Published')
-        self.video_tree = ttk.Treeview(video_frame, columns=columns, show='tree headings')
+        self.video_tree = ttk.Treeview(video_frame, columns=columns, show='tree headings', selectmode='extended')
         
         # Configure columns
         self.video_tree.heading('#0', text='#')
@@ -164,11 +201,635 @@ class YouTubePlaylistManager:
         self.video_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         tree_scroll_y.pack(side=tk.RIGHT, fill=tk.Y)
         tree_scroll_x.pack(side=tk.BOTTOM, fill=tk.X)
+    
+    def setup_unassigned_videos_tab(self):
+        """Setup the unassigned videos tab"""
+        unassigned_frame = ttk.Frame(self.notebook)
+        self.notebook.add(unassigned_frame, text="Unassigned Videos")
         
-        # Status bar
-        self.status_bar = ttk.Label(main_frame, text="Ready", relief=tk.SUNKEN)
-        self.status_bar.pack(side=tk.BOTTOM, fill=tk.X, pady=(10, 0))
+        # Top frame for controls
+        control_frame = ttk.Frame(unassigned_frame)
+        control_frame.pack(fill=tk.X, pady=(0, 10))
         
+        ttk.Label(control_frame, text="Videos not in any playlist:", font=('TkDefaultFont', 12, 'bold')).pack(side=tk.LEFT)
+        
+        # Control buttons
+        button_frame = ttk.Frame(control_frame)
+        button_frame.pack(side=tk.RIGHT)
+        
+        ttk.Button(button_frame, text="Refresh", command=self.find_unassigned_videos).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Add to Playlist", command=self.add_unassigned_to_playlist).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Delete Video", command=self.delete_unassigned_video).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Delete Selected", command=self.delete_selected_unassigned_videos).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Edit Video", command=self.edit_unassigned_video).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Watch Video", command=self.watch_unassigned_video).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Select All", command=self.select_all_unassigned).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Select None", command=self.select_none_unassigned).pack(side=tk.LEFT)
+        
+        # Unassigned videos treeview
+        unassigned_video_frame = ttk.Frame(unassigned_frame)
+        unassigned_video_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Treeview for unassigned videos
+        columns = ('Title', 'Description', 'Duration', 'Views', 'Published', 'Privacy Status')
+        self.unassigned_tree = ttk.Treeview(unassigned_video_frame, columns=columns, show='tree headings', selectmode='extended')
+        
+        # Configure columns
+        self.unassigned_tree.heading('#0', text='#')
+        self.unassigned_tree.column('#0', width=50, minwidth=50)
+        
+        for col in columns:
+            self.unassigned_tree.heading(col, text=col)
+            if col == 'Title':
+                self.unassigned_tree.column(col, width=250, minwidth=200)
+            elif col == 'Description':
+                self.unassigned_tree.column(col, width=300, minwidth=150)
+            elif col == 'Views':
+                self.unassigned_tree.column(col, width=100, minwidth=80)
+            else:
+                self.unassigned_tree.column(col, width=120, minwidth=80)
+        
+        # Scrollbars for unassigned treeview
+        unassigned_scroll_y = ttk.Scrollbar(unassigned_video_frame, orient=tk.VERTICAL, command=self.unassigned_tree.yview)
+        unassigned_scroll_x = ttk.Scrollbar(unassigned_video_frame, orient=tk.HORIZONTAL, command=self.unassigned_tree.xview)
+        self.unassigned_tree.configure(yscrollcommand=unassigned_scroll_y.set, xscrollcommand=unassigned_scroll_x.set)
+        
+        self.unassigned_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        unassigned_scroll_y.pack(side=tk.RIGHT, fill=tk.Y)
+        unassigned_scroll_x.pack(side=tk.BOTTOM, fill=tk.X)
+        
+        # Info label
+        self.unassigned_info = ttk.Label(unassigned_frame, text="Click 'Find Unassigned Videos' to scan your channel")
+        self.unassigned_info.pack(pady=(10, 0))
+
+    # NEW METHODS FOR MULTIPLE SELECTION FUNCTIONALITY
+    def select_all_videos(self):
+        """Select all videos in the current playlist"""
+        for item in self.video_tree.get_children():
+            self.video_tree.selection_add(item)
+
+    def select_none_videos(self):
+        """Deselect all videos in the current playlist"""
+        for item in self.video_tree.selection():
+            self.video_tree.selection_remove(item)
+
+    def select_all_unassigned(self):
+        """Select all unassigned videos"""
+        for item in self.unassigned_tree.get_children():
+            self.unassigned_tree.selection_add(item)
+
+    def select_none_unassigned(self):
+        """Deselect all unassigned videos"""
+        for item in self.unassigned_tree.selection():
+            self.unassigned_tree.selection_remove(item)
+
+    def remove_selected_videos(self):
+        """Remove multiple selected videos from playlist"""
+        selections = self.video_tree.selection()
+        if not selections:
+            messagebox.showwarning("Warning", "Please select videos to remove!")
+            return
+
+        if not self.current_playlist_id:
+            messagebox.showwarning("Warning", "Please select a playlist first!")
+            return
+
+        # Get video details for confirmation
+        video_titles = []
+        video_data = []
+        
+        for selection in selections:
+            item = self.video_tree.item(selection)
+            video_id = item['tags'][0] if item['tags'] else None
+            video_title = item['values'][0] if item['values'] else "Unknown"
+            
+            if video_id and video_id in self.current_playlist_items:
+                video_titles.append(video_title)
+                video_data.append({
+                    'id': video_id,
+                    'title': video_title,
+                    'playlist_item_id': self.current_playlist_items[video_id]['playlist_item_id']
+                })
+
+        if not video_data:
+            messagebox.showerror("Error", "No valid videos selected!")
+            return
+
+        # Confirmation dialog
+        if len(video_data) == 1:
+            message = f"Are you sure you want to remove '{video_data[0]['title']}' from the playlist?"
+        else:
+            message = f"Are you sure you want to remove {len(video_data)} videos from the playlist?\n\nVideos to remove:\n"
+            for i, video in enumerate(video_data[:5]):  # Show first 5 videos
+                message += f"• {video['title']}\n"
+            if len(video_data) > 5:
+                message += f"... and {len(video_data) - 5} more videos"
+
+        if messagebox.askyesno("Confirm Remove", message):
+            def remove_videos():
+                try:
+                    self.update_status(f"Removing {len(video_data)} videos...")
+                    success_count = 0
+                    error_count = 0
+                    
+                    for video in video_data:
+                        try:
+                            request = self.youtube.playlistItems().delete(id=video['playlist_item_id'])
+                            request.execute()
+                            success_count += 1
+                        except Exception as e:
+                            error_count += 1
+                            print(f"Error removing video '{video['title']}': {str(e)}")
+
+                    # Show results
+                    if error_count == 0:
+                        messagebox.showinfo("Success", f"Successfully removed {success_count} videos from playlist!")
+                    else:
+                        messagebox.showwarning("Partial Success", 
+                                             f"Removed {success_count} videos successfully.\n{error_count} videos failed to remove.")
+
+                    # Reload playlist
+                    self.load_playlist_videos(self.current_playlist_id)
+                    self.update_status(f"Removed {success_count} videos from playlist")
+
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to remove videos: {str(e)}")
+                    self.update_status("Error removing videos")
+
+            threading.Thread(target=remove_videos, daemon=True).start()
+
+    def delete_selected_unassigned_videos(self):
+        """Delete multiple selected unassigned videos"""
+        selections = self.unassigned_tree.selection()
+        if not selections:
+            messagebox.showwarning("Warning", "Please select videos to delete!")
+            return
+
+        # Get video details for confirmation
+        video_data = []
+        
+        for selection in selections:
+            item = self.unassigned_tree.item(selection)
+            video_id = item['tags'][0] if item['tags'] else None
+            video_title = item['values'][0] if item['values'] else "Unknown"
+            
+            if video_id:
+                video_data.append({
+                    'id': video_id,
+                    'title': video_title
+                })
+
+        if not video_data:
+            messagebox.showerror("Error", "No valid videos selected!")
+            return
+
+        # Confirmation dialog
+        if len(video_data) == 1:
+            message = f"Are you sure you want to permanently delete '{video_data[0]['title']}'?\n\nThis action cannot be undone!"
+        else:
+            message = f"Are you sure you want to permanently delete {len(video_data)} videos?\n\nThis action cannot be undone!\n\nVideos to delete:\n"
+            for i, video in enumerate(video_data[:5]):  # Show first 5 videos
+                message += f"• {video['title']}\n"
+            if len(video_data) > 5:
+                message += f"... and {len(video_data) - 5} more videos"
+
+        if messagebox.askyesno("Confirm Delete", message):
+            def delete_videos():
+                try:
+                    self.update_status(f"Deleting {len(video_data)} videos...")
+                    success_count = 0
+                    error_count = 0
+                    
+                    for video in video_data:
+                        try:
+                            request = self.youtube.videos().delete(id=video['id'])
+                            request.execute()
+                            
+                            # Remove from local storage
+                            if video['id'] in self.unassigned_videos:
+                                del self.unassigned_videos[video['id']]
+                            if video['id'] in self.channel_videos:
+                                del self.channel_videos[video['id']]
+                            
+                            success_count += 1
+                        except Exception as e:
+                            error_count += 1
+                            print(f"Error deleting video '{video['title']}': {str(e)}")
+
+                    # Update display
+                    self.display_unassigned_videos()
+
+                    # Show results
+                    if error_count == 0:
+                        messagebox.showinfo("Success", f"Successfully deleted {success_count} videos!")
+                    else:
+                        messagebox.showwarning("Partial Success", 
+                                             f"Deleted {success_count} videos successfully.\n{error_count} videos failed to delete.")
+
+                    self.update_status(f"Deleted {success_count} videos")
+
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to delete videos: {str(e)}")
+                    self.update_status("Error deleting videos")
+
+            threading.Thread(target=delete_videos, daemon=True).start()
+
+    # EXISTING METHODS CONTINUE HERE...
+    def load_channel_videos(self):
+        """Load all videos from the user's channel"""
+        if not self.youtube:
+            messagebox.showerror("Error", "Please authenticate first!")
+            return
+        
+        def fetch_channel_videos():
+            try:
+                self.update_status("Loading channel videos...")
+                self.channel_videos = {}
+                
+                # Get channel info
+                channel_response = self.youtube.channels().list(
+                    part="contentDetails",
+                    mine=True
+                ).execute()
+                
+                if not channel_response['items']:
+                    messagebox.showerror("Error", "No channel found!")
+                    return
+                
+                uploads_playlist_id = channel_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+                
+                # Get all videos from uploads playlist
+                next_page_token = None
+                video_count = 0
+                
+                while True:
+                    request = self.youtube.playlistItems().list(
+                        part="snippet,contentDetails",
+                        playlistId=uploads_playlist_id,
+                        maxResults=50,
+                        pageToken=next_page_token
+                    )
+                    response = request.execute()
+                    
+                    video_ids = []
+                    for item in response['items']:
+                        video_id = item['contentDetails']['videoId']
+                        video_ids.append(video_id)
+                        self.channel_videos[video_id] = {
+                            'title': item['snippet']['title'],
+                            'description': item['snippet']['description'][:100] + '...' if len(item['snippet']['description']) > 100 else item['snippet']['description'],
+                            'published': item['snippet']['publishedAt'][:10],
+                        }
+                    
+                    # Get additional video details
+                    if video_ids:
+                        video_request = self.youtube.videos().list(
+                            part="statistics,contentDetails,status",
+                            id=','.join(video_ids)
+                        )
+                        video_response = video_request.execute()
+                        
+                        for video_item in video_response['items']:
+                            video_id = video_item['id']
+                            if video_id in self.channel_videos:
+                                self.channel_videos[video_id].update({
+                                    'duration': self.format_duration(video_item['contentDetails']['duration']),
+                                    'views': f"{int(video_item['statistics'].get('viewCount', 0)):,}",
+                                    'privacy_status': video_item['status']['privacyStatus']
+                                })
+                    
+                    video_count += len(response['items'])
+                    next_page_token = response.get('nextPageToken')
+                    
+                    if not next_page_token:
+                        break
+                
+                self.update_status(f"Loaded {video_count} channel videos")
+                messagebox.showinfo("Success", f"Loaded {video_count} videos from your channel!")
+                
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load channel videos: {str(e)}")
+                self.update_status("Error loading channel videos")
+        
+        threading.Thread(target=fetch_channel_videos, daemon=True).start()
+    
+    def find_unassigned_videos(self):
+        """Find videos that are not in any playlist"""
+        if not self.youtube:
+            messagebox.showerror("Error", "Please authenticate first!")
+            return
+        
+        if not self.channel_videos:
+            if messagebox.askyesno("Channel Videos", "Channel videos not loaded. Load them first?"):
+                self.load_channel_videos()
+            return
+        
+        def find_unassigned():
+            try:
+                self.update_status("Finding unassigned videos...")
+                
+                # Get all playlist items
+                playlist_video_ids = set()
+                
+                # First get all playlists if not already loaded
+                if not self.playlists:
+                    # Temporarily refresh playlists in this thread
+                    request = self.youtube.playlists().list(
+                        part="snippet,contentDetails",
+                        mine=True,
+                        maxResults=50
+                    )
+                    response = request.execute()
+                    
+                    temp_playlists = {}
+                    for item in response['items']:
+                        playlist_id = item['id']
+                        temp_playlists[playlist_id] = {
+                            'title': item['snippet']['title'],
+                            'video_count': item['contentDetails']['itemCount'],
+                            'description': item['snippet'].get('description', ''),
+                            'published': item['snippet']['publishedAt']
+                        }
+                    
+                    # Get video IDs from all playlists
+                    for playlist_id in temp_playlists.keys():
+                        try:
+                            request = self.youtube.playlistItems().list(
+                                part="contentDetails",
+                                playlistId=playlist_id,
+                                maxResults=50
+                            )
+                            response = request.execute()
+                            
+                            for item in response['items']:
+                                playlist_video_ids.add(item['contentDetails']['videoId'])
+                        except:
+                            continue  # Skip if playlist is inaccessible
+                else:
+                    # Get video IDs from all playlists
+                    for playlist_id in self.playlists.keys():
+                        try:
+                            request = self.youtube.playlistItems().list(
+                                part="contentDetails",
+                                playlistId=playlist_id,
+                                maxResults=50
+                            )
+                            response = request.execute()
+                            
+                            for item in response['items']:
+                                playlist_video_ids.add(item['contentDetails']['videoId'])
+                        except:
+                            continue  # Skip if playlist is inaccessible
+                
+                # Find videos not in any playlist
+                self.unassigned_videos = {}
+                for video_id, video_data in self.channel_videos.items():
+                    if video_id not in playlist_video_ids:
+                        self.unassigned_videos[video_id] = video_data
+                
+                # Update the unassigned videos display
+                self.display_unassigned_videos()
+                
+                self.update_status(f"Found {len(self.unassigned_videos)} unassigned videos")
+                
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to find unassigned videos: {str(e)}")
+                self.update_status("Error finding unassigned videos")
+        
+        threading.Thread(target=find_unassigned, daemon=True).start()
+    
+    def display_unassigned_videos(self):
+        """Display unassigned videos in the treeview"""
+        # Clear existing items
+        for item in self.unassigned_tree.get_children():
+            self.unassigned_tree.delete(item)
+        
+        # Add unassigned videos
+        for i, (video_id, video_data) in enumerate(self.unassigned_videos.items()):
+            self.unassigned_tree.insert('', 'end', text=str(i+1),
+                                      values=(
+                                          video_data.get('title', 'N/A'),
+                                          video_data.get('description', 'N/A'),
+                                          video_data.get('duration', 'N/A'),
+                                          video_data.get('views', 'N/A'),
+                                          video_data.get('published', 'N/A'),
+                                          video_data.get('privacy_status', 'N/A')
+                                      ),
+                                      tags=(video_id,))
+        
+        self.unassigned_info.config(text=f"Found {len(self.unassigned_videos)} videos not in any playlist")
+    
+    def add_unassigned_to_playlist(self):
+        """Add selected unassigned video to a playlist"""
+        selection = self.unassigned_tree.selection()
+        if not selection:
+            messagebox.showwarning("Warning", "Please select a video to add to playlist!")
+            return
+        
+        item = self.unassigned_tree.item(selection[0])
+        video_id = item['tags'][0] if item['tags'] else None
+        video_title = item['values'][0] if item['values'] else "Unknown"
+        
+        if not video_id:
+            messagebox.showerror("Error", "Could not get video ID!")
+            return
+        
+        # Show playlist selection dialog
+        self.show_playlist_selection_dialog(video_id, video_title, move=False, from_unassigned=True)
+    
+    def delete_unassigned_video(self):
+        """Delete selected unassigned video"""
+        selection = self.unassigned_tree.selection()
+        if not selection:
+            messagebox.showwarning("Warning", "Please select a video to delete!")
+            return
+        
+        item = self.unassigned_tree.item(selection[0])
+        video_id = item['tags'][0] if item['tags'] else None
+        video_title = item['values'][0] if item['values'] else "Unknown"
+        
+        if not video_id:
+            messagebox.showerror("Error", "Could not get video ID!")
+            return
+        
+        if messagebox.askyesno("Confirm Delete", f"Are you sure you want to permanently delete '{video_title}'?\n\nThis action cannot be undone!"):
+            def delete_video():
+                try:
+                    self.update_status("Deleting video...")
+                    
+                    request = self.youtube.videos().delete(id=video_id)
+                    request.execute()
+                    
+                    # Remove from local storage
+                    if video_id in self.unassigned_videos:
+                        del self.unassigned_videos[video_id]
+                    if video_id in self.channel_videos:
+                        del self.channel_videos[video_id]
+                    
+                    self.display_unassigned_videos()
+                    messagebox.showinfo("Success", "Video deleted successfully!")
+                    self.update_status("Video deleted successfully")
+                    
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to delete video: {str(e)}")
+                    self.update_status("Error deleting video")
+            
+            threading.Thread(target=delete_video, daemon=True).start()
+    
+    def edit_unassigned_video(self):
+        """Edit selected unassigned video details"""
+        selection = self.unassigned_tree.selection()
+        if not selection:
+            messagebox.showwarning("Warning", "Please select a video to edit!")
+            return
+        
+        item = self.unassigned_tree.item(selection[0])
+        video_id = item['tags'][0] if item['tags'] else None
+        current_title = item['values'][0] if item['values'] else ""
+        
+        if not video_id:
+            messagebox.showerror("Error", "Could not get video ID!")
+            return
+        
+        # Create edit dialog
+        self.show_video_edit_dialog(video_id, current_title)
+    
+    def show_video_edit_dialog(self, video_id, current_title):
+        """Show dialog to edit video details"""
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Edit Video")
+        dialog.geometry("500x400")
+        dialog.resizable(True, True)
+        
+        # Make dialog modal
+        dialog.transient(self.root)
+        dialog.grab_set()
+        
+        # Center the dialog
+        dialog.geometry("+%d+%d" % (self.root.winfo_rootx() + 50, self.root.winfo_rooty() + 50))
+        
+        # Main frame
+        main_frame = ttk.Frame(dialog, padding=10)
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Title
+        ttk.Label(main_frame, text="Title:", font=('TkDefaultFont', 10, 'bold')).pack(anchor=tk.W)
+        title_entry = tk.Text(main_frame, height=2, wrap=tk.WORD)
+        title_entry.pack(fill=tk.X, pady=(5, 10))
+        title_entry.insert('1.0', current_title)
+        
+        # Description
+        ttk.Label(main_frame, text="Description:", font=('TkDefaultFont', 10, 'bold')).pack(anchor=tk.W)
+        desc_entry = tk.Text(main_frame, height=8, wrap=tk.WORD)
+        desc_entry.pack(fill=tk.BOTH, expand=True, pady=(5, 10))
+        
+        # Privacy status
+        privacy_frame = ttk.Frame(main_frame)
+        privacy_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        ttk.Label(privacy_frame, text="Privacy Status:", font=('TkDefaultFont', 10, 'bold')).pack(side=tk.LEFT)
+        privacy_var = tk.StringVar(value="private")
+        privacy_combo = ttk.Combobox(privacy_frame, textvariable=privacy_var, 
+                                   values=["private", "public", "unlisted"], state="readonly")
+        privacy_combo.pack(side=tk.RIGHT)
+        
+        # Load current video details
+        def load_current_details():
+            try:
+                request = self.youtube.videos().list(
+                    part="snippet,status",
+                    id=video_id
+                )
+                response = request.execute()
+                
+                if response['items']:
+                    video = response['items'][0]
+                    desc_entry.insert('1.0', video['snippet'].get('description', ''))
+                    privacy_var.set(video['status']['privacyStatus'])
+                
+            except Exception as e:
+                self.update_status(f"Could not load video details: {str(e)}")
+        
+        load_current_details()
+        
+        # Buttons
+        button_frame = ttk.Frame(main_frame)
+        button_frame.pack(fill=tk.X, pady=(10, 0))
+        
+        def on_save():
+            new_title = title_entry.get('1.0', tk.END).strip()
+            new_description = desc_entry.get('1.0', tk.END).strip()
+            new_privacy = privacy_var.get()
+            
+            if not new_title:
+                messagebox.showwarning("Warning", "Title cannot be empty!")
+                return
+            
+            dialog.destroy()
+            self.update_video_details(video_id, new_title, new_description, new_privacy)
+        
+        def on_cancel():
+            dialog.destroy()
+        
+        ttk.Button(button_frame, text="Cancel", command=on_cancel).pack(side=tk.RIGHT, padx=(5, 0))
+        ttk.Button(button_frame, text="Save", command=on_save).pack(side=tk.RIGHT)
+    
+    def update_video_details(self, video_id, title, description, privacy_status):
+        """Update video details using YouTube API"""
+        def update_video():
+            try:
+                self.update_status("Updating video...")
+                
+                request = self.youtube.videos().update(
+                    part="snippet,status",
+                    body={
+                        "id": video_id,
+                        "snippet": {
+                            "title": title,
+                            "description": description,
+                            "categoryId": "22"  # Default category
+                        },
+                        "status": {
+                            "privacyStatus": privacy_status
+                        }
+                    }
+                )
+                response = request.execute()
+                
+                # Update local storage
+                if video_id in self.unassigned_videos:
+                    self.unassigned_videos[video_id]['title'] = title
+                    self.unassigned_videos[video_id]['description'] = description[:100] + '...' if len(description) > 100 else description
+                    self.unassigned_videos[video_id]['privacy_status'] = privacy_status
+                
+                if video_id in self.channel_videos:
+                    self.channel_videos[video_id]['title'] = title
+                    self.channel_videos[video_id]['description'] = description[:100] + '...' if len(description) > 100 else description
+                    self.channel_videos[video_id]['privacy_status'] = privacy_status
+                
+                self.display_unassigned_videos()
+                messagebox.showinfo("Success", "Video updated successfully!")
+                self.update_status("Video updated successfully")
+                
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to update video: {str(e)}")
+                self.update_status("Error updating video")
+        
+        threading.Thread(target=update_video, daemon=True).start()
+    
+    def watch_unassigned_video(self):
+        """Open selected unassigned video on YouTube"""
+        selection = self.unassigned_tree.selection()
+        if not selection:
+            messagebox.showwarning("Warning", "Please select a video to watch!")
+            return
+        
+        item = self.unassigned_tree.item(selection[0])
+        video_id = item['tags'][0] if item['tags'] else None
+        
+        if video_id:
+            webbrowser.open(f"https://www.youtube.com/watch?v={video_id}")
+    
     def load_credentials_file(self):
         """Load credentials from JSON file"""
         file_path = filedialog.askopenfilename(
@@ -494,10 +1155,10 @@ class YouTubePlaylistManager:
         # Create playlist selection dialog
         self.show_playlist_selection_dialog(video_id, video_title, move=False)
     
-    def show_playlist_selection_dialog(self, video_id, video_title, move=False):
+    def show_playlist_selection_dialog(self, video_id, video_title, move=False, from_unassigned=False):
         """Show dialog to select target playlist"""
         dialog = tk.Toplevel(self.root)
-        dialog.title(f"{'Move' if move else 'Copy'} Video to Playlist")
+        dialog.title(f"{'Move' if move else 'Add'} Video to Playlist")
         dialog.geometry("400x300")
         dialog.resizable(False, False)
         
@@ -512,7 +1173,8 @@ class YouTubePlaylistManager:
         info_frame = ttk.Frame(dialog, padding=10)
         info_frame.pack(fill=tk.X)
         
-        ttk.Label(info_frame, text=f"{'Moving' if move else 'Copying'} video:", font=('TkDefaultFont', 10, 'bold')).pack(anchor=tk.W)
+        action_text = "Moving" if move else "Adding"
+        ttk.Label(info_frame, text=f"{action_text} video:", font=('TkDefaultFont', 10, 'bold')).pack(anchor=tk.W)
         ttk.Label(info_frame, text=video_title, wraplength=350).pack(anchor=tk.W, pady=(5, 10))
         
         # Playlist selection
@@ -529,12 +1191,13 @@ class YouTubePlaylistManager:
         playlist_list.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         
-        # Populate playlist list (exclude current playlist)
+        # Populate playlist list
         playlist_ids = []
         for playlist_id, playlist_data in self.playlists.items():
-            if playlist_id != self.current_playlist_id:
-                playlist_list.insert(tk.END, f"{playlist_data['title']} ({playlist_data['video_count']} videos)")
-                playlist_ids.append(playlist_id)
+            if not from_unassigned and playlist_id == self.current_playlist_id:
+                continue  # Skip current playlist if moving from playlist
+            playlist_list.insert(tk.END, f"{playlist_data['title']} ({playlist_data['video_count']} videos)")
+            playlist_ids.append(playlist_id)
         
         # Buttons
         button_frame = ttk.Frame(dialog, padding=10)
@@ -551,16 +1214,16 @@ class YouTubePlaylistManager:
             
             dialog.destroy()
             
-            if move:
+            if move and not from_unassigned:
                 self.execute_move_video(video_id, video_title, target_playlist_id, target_playlist_title)
             else:
-                self.execute_copy_video(video_id, video_title, target_playlist_id, target_playlist_title)
+                self.execute_copy_video(video_id, video_title, target_playlist_id, target_playlist_title, from_unassigned)
         
         def on_cancel():
             dialog.destroy()
         
         ttk.Button(button_frame, text="Cancel", command=on_cancel).pack(side=tk.RIGHT, padx=(5, 0))
-        ttk.Button(button_frame, text=f"{'Move' if move else 'Copy'}", command=on_confirm).pack(side=tk.RIGHT)
+        ttk.Button(button_frame, text=f"{'Move' if move else 'Add'}", command=on_confirm).pack(side=tk.RIGHT)
     
     def execute_move_video(self, video_id, video_title, target_playlist_id, target_playlist_title):
         """Execute moving video to another playlist"""
@@ -599,11 +1262,11 @@ class YouTubePlaylistManager:
         
         threading.Thread(target=move_video, daemon=True).start()
     
-    def execute_copy_video(self, video_id, video_title, target_playlist_id, target_playlist_title):
+    def execute_copy_video(self, video_id, video_title, target_playlist_id, target_playlist_title, from_unassigned=False):
         """Execute copying video to another playlist"""
         def copy_video():
             try:
-                self.update_status(f"Copying video to {target_playlist_title}...")
+                self.update_status(f"Adding video to {target_playlist_title}...")
                 
                 # Add video to target playlist
                 request = self.youtube.playlistItems().insert(
@@ -620,12 +1283,18 @@ class YouTubePlaylistManager:
                 )
                 response = request.execute()
                 
-                messagebox.showinfo("Success", f"Video copied to '{target_playlist_title}' successfully!")
-                self.update_status("Video copied successfully!")
+                if from_unassigned:
+                    # Remove from unassigned videos list
+                    if video_id in self.unassigned_videos:
+                        del self.unassigned_videos[video_id]
+                    self.display_unassigned_videos()
+                
+                messagebox.showinfo("Success", f"Video added to '{target_playlist_title}' successfully!")
+                self.update_status("Video added successfully!")
                 
             except Exception as e:
-                messagebox.showerror("Error", f"Failed to copy video: {str(e)}")
-                self.update_status("Error copying video")
+                messagebox.showerror("Error", f"Failed to add video: {str(e)}")
+                self.update_status("Error adding video")
         
         threading.Thread(target=copy_video, daemon=True).start()
     
