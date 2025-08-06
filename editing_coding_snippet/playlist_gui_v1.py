@@ -160,6 +160,7 @@ class YouTubePlaylistManager:
         ttk.Button(control_row1, text="Move Up", command=self.move_video_up).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(control_row1, text="Move Down", command=self.move_video_down).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(control_row1, text="Watch Video", command=self.watch_video).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(control_row1, text="Edit Video", command=self.edit_video_in_studio).pack(side=tk.LEFT, padx=(0, 5))
         
         # Second row of controls
         control_row2 = ttk.Frame(video_control_frame)
@@ -222,6 +223,7 @@ class YouTubePlaylistManager:
         ttk.Button(button_frame, text="Delete Video", command=self.delete_unassigned_video).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(button_frame, text="Delete Selected", command=self.delete_selected_unassigned_videos).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(button_frame, text="Edit Video", command=self.edit_unassigned_video).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Edit in Studio", command=self.edit_unassigned_video_in_studio).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(button_frame, text="Watch Video", command=self.watch_unassigned_video).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(button_frame, text="Select All", command=self.select_all_unassigned).pack(side=tk.LEFT, padx=(0, 5))
         ttk.Button(button_frame, text="Select None", command=self.select_none_unassigned).pack(side=tk.LEFT)
@@ -262,7 +264,42 @@ class YouTubePlaylistManager:
         self.unassigned_info = ttk.Label(unassigned_frame, text="Click 'Find Unassigned Videos' to scan your channel")
         self.unassigned_info.pack(pady=(10, 0))
 
-    # NEW METHODS FOR MULTIPLE SELECTION FUNCTIONALITY
+    # NEW METHODS FOR EDIT VIDEO IN STUDIO FUNCTIONALITY
+    def edit_video_in_studio(self):
+        """Open selected video in YouTube Studio for editing"""
+        selection = self.video_tree.selection()
+        if not selection:
+            messagebox.showwarning("Warning", "Please select a video to edit!")
+            return
+        
+        item = self.video_tree.item(selection[0])
+        video_id = item['tags'][0] if item['tags'] else None
+        
+        if video_id:
+            studio_url = f"https://studio.youtube.com/video/{video_id}/edit"
+            webbrowser.open(studio_url)
+            self.update_status(f"Opened video in YouTube Studio for editing")
+        else:
+            messagebox.showerror("Error", "Could not get video ID!")
+
+    def edit_unassigned_video_in_studio(self):
+        """Open selected unassigned video in YouTube Studio for editing"""
+        selection = self.unassigned_tree.selection()
+        if not selection:
+            messagebox.showwarning("Warning", "Please select a video to edit!")
+            return
+        
+        item = self.unassigned_tree.item(selection[0])
+        video_id = item['tags'][0] if item['tags'] else None
+        
+        if video_id:
+            studio_url = f"https://studio.youtube.com/video/{video_id}/edit"
+            webbrowser.open(studio_url)
+            self.update_status(f"Opened video in YouTube Studio for editing")
+        else:
+            messagebox.showerror("Error", "Could not get video ID!")
+
+    # EXISTING METHODS FOR MULTIPLE SELECTION FUNCTIONALITY
     def select_all_videos(self):
         """Select all videos in the current playlist"""
         for item in self.video_tree.get_children():
