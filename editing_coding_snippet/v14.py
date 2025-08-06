@@ -614,7 +614,8 @@ def safe_text_escape(text):
 
 def generate_highlighted_subtitle_ass_improved(subtitle_groups, ass_path):
     """
-    IMPROVED: Generate ASS subtitles with better formatting and positioning
+    IMPROVED: Generate YouTube-friendly ASS subtitles with clean formatting,
+    modern font, transparent box background, and smooth fade animation.
     """
     try:
         with open(ass_path, "w", encoding="utf-8", errors='replace') as f:
@@ -627,30 +628,30 @@ YCbCr Matrix: TV.601
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,3,2,1,2,50,50,40,1
+Style: Default,Roboto Bold,18,&H00FFFFFF,&H000000FF,&H00000000,&H66000000,-1,0,0,0,100,100,0,0,3,2,1,2,50,50,40,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """)
-            
             for group in subtitle_groups:
                 text = safe_text_escape(group.text.strip())
                 if not text:
                     continue
-                
-                # Validate timing
+
+                # Ensure proper timing
                 start_time = max(0, group.start)
                 end_time = max(start_time + 1.0, group.end)
-                
-                # Enhanced formatting with fade effects
+
+                # Apply fade-in and fade-out (300ms each) with subtle outline and shadow
                 formatted_text = f"{{\\fad(300,300)\\bord2\\shad1}}{text}"
-                
+
+                # Write the dialogue line
                 f.write(f"Dialogue: 0,{format_time(start_time)},{format_time(end_time)},Default,,0,0,0,,{formatted_text}\n")
-        
-        logging.info(f"Generated ASS file with {len(subtitle_groups)} enhanced subtitles")
-        
+
+        logging.info(f"✅ Generated ASS file with {len(subtitle_groups)} styled subtitles")
+
     except Exception as e:
-        logging.error(f"Failed to generate ASS file: {e}")
+        logging.error(f"❌ Failed to generate ASS file: {e}")
         raise
 
 def get_title_for_video(input_video):

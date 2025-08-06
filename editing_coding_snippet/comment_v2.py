@@ -71,8 +71,9 @@ class YouTubeCommentManager:
         self.auth_status = ttk.Label(auth_section, text="❌ Not authenticated", foreground='red')
         self.auth_status.pack(side='left', padx=10)
         
-        ttk.Button(auth_section, text="🔄 Refresh Connection", 
-                  command=self.authenticate_youtube).pack(side='right', padx=5)
+        # NEW: Disconnect button
+        ttk.Button(auth_section, text="❌ Disconnect", 
+                  command=self.disconnect_youtube).pack(side='right', padx=5)
         
         # Video fetch controls
         fetch_section = ttk.LabelFrame(main_frame, text="Fetch Videos", padding=10)
@@ -233,6 +234,41 @@ class YouTubeCommentManager:
         # Bind events
         self.videos_tree.bind('<ButtonRelease-1>', self.on_video_select)
         self.comments_tree.bind('<ButtonRelease-1>', self.on_comment_select)
+        
+    def disconnect_youtube(self):
+        """Completely sign out the user."""
+        # Clear API object
+        self.youtube = None
+        
+        # Clear current data
+        self.current_videos = []
+        self.filtered_videos = []
+        self.current_comments = []
+        self.selected_video_data = None
+        self.current_video_id = None
+        
+        # Delete stored token
+        try:
+            if os.path.exists(self.token_path):
+                os.remove(self.token_path)
+        except OSError:
+            pass
+            
+        # Clear GUI displays
+        for item in self.videos_tree.get_children():
+            self.videos_tree.delete(item)
+        for item in self.comments_tree.get_children():
+            self.comments_tree.delete(item)
+        
+        # Reset video info
+        self.video_info.config(text="Select a video to view comments")
+        self.filter_status.config(text="")
+        
+        # Update auth status
+        self.auth_status.config(text="❌ Not authenticated", foreground='red')
+        
+        messagebox.showinfo("Disconnected", "You have been signed out successfully.")
+        self.log_action("🔌 Disconnected user (token removed)")
         
     def clear_filters(self):
         """Clear all filter fields"""
@@ -929,7 +965,6 @@ class YouTubeCommentManager:
                     try:
                         # Delete comment using YouTube API
                         self.youtube.comments().delete(id=comment_data['comment_id']).execute()
-                        
                         self.log_action(f"🗑️ Deleted comment by {comment_data['author']} on video {comment_data['video_title'][:30]}...")
                         messagebox.showinfo("Success", "Comment deleted successfully!")
                         
