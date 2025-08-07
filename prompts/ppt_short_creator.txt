@@ -1,0 +1,36 @@
+🎯 TASK:
+Generate **structured JSON** data for a short-form video (1–2 mins) on the topic:  
+**"Key features of Python?"**
+
+🧩 FORMAT:
+[
+  {
+    "title": "<Slide Title>",
+    "content": "<Formatted content in markdown if text or raw if code>",
+    "slide_type": "text" | "code" | "table"
+  }
+]
+
+📏 RULES:
+1. Create **4 to 5 slides only** — optimized for fast-paced YouTube Shorts.
+2. Each slide must deliver **maximum value** in minimum time:
+   - Use lists, emojis, bold keywords, analogies.
+   - Mix formats: **text**, **code**, or **table**.
+3. Use `slide_type` as:
+   - `"text"` → for concepts, analogies, or misconceptions (Markdown formatted)
+   - `"code"` → for tiny, engaging snippets (Python only here)
+   - `"table"` → for side-by-side comparisons (JSON-style array)
+4. **Avoid jargon** — use simple, beginner-friendly language.
+5. Slide 1 = Hook or myth (curiosity grabber)
+6. Final Slide = Curiosity-based outro (e.g., “Next: How Python ‘thinks’ differently from JavaScript”)
+7. Focus on **scroll-stopping clarity**, **emojis**, and **visual rhythm**.
+8. All content must fit within a **90s verbal script**.
+
+📱 USE CASE:
+YouTube Shorts, Instagram Reels, Coding carousels.
+
+💡 TONE:
+Conversational, beginner-focused, and curiosity-driven.
+
+🤖 STYLE:
+Think: “Explain like I’m 12, but make it viral.”
