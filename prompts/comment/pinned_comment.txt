@@ -16,4 +16,4 @@ or ‘Let’s grow together 💪’
 Keep it under 3 short lines. Make it feel like a real human wrote it, not a robot."
 
 
-give me in hinglish
+📊 GoLang Interview: Master Variadic Functions for Averages! 💡
