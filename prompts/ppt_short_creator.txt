@@ -1,36 +1,61 @@
 🎯 TASK:
-Generate **structured JSON** data for a short-form video (1–2 mins) on the topic:  
-**"**10. Compare Maps**ShortThe FATAL Mistake of Comparing Go Maps (==)**English:** "Trying to compare two maps in Go with `==`? Don't! It will crash your program. Here's why and what to do instead.""**
+You are to generate structured JSON data for multiple short-form videos (1–2 mins each) based on the list of topics I provide.
 
 🧩 FORMAT:
-[
-  {
-    "title": "<Slide Title>",
-    "content": "<Formatted content in markdown if text or raw if code>",
-    "slide_type": "text" | "code" | "table"
-  }
-]
+For each topic in my input list, output:
+{
+  "topic": "<The topic name>",
+  "slides": [
+    {
+      "title": "<Slide Title>",
+      "content": "<Formatted content in markdown if text or raw if code>",
+      "slide_type": "text" | "code" | "table"
+    }
+  ]
+}
 
 📏 RULES:
-1. Create **4 to 5 slides only** — optimized for fast-paced YouTube Shorts.
-2. Each slide must deliver **maximum value** in minimum time:
-   - Use lists, emojis, bold keywords, analogies.
+1. Exactly 4–5 slides per topic — optimized for fast-paced YouTube Shorts.
+2. Slide 1 = Hook or myth to grab attention.
+3. Final slide = Curiosity-based outro that hints at a follow-up.
+4. Each slide must deliver **maximum value** in minimum time:
+   - Use lists, emojis, **bold keywords**, and analogies.
    - Mix formats: **text**, **code**, or **table**.
-3. Use `slide_type` as:
-   - `"text"` → for concepts, analogies, or misconceptions (Markdown formatted)
-   - `"code"` → for tiny, engaging snippets (Python only here)
-   - `"table"` → for side-by-side comparisons (JSON-style array)
-4. **Avoid jargon** — use simple, beginner-friendly language.
-5. Slide 1 = Hook or myth (curiosity grabber)
-6. Final Slide = Curiosity-based outro (e.g., “Next: How Python ‘thinks’ differently from JavaScript”)
-7. Focus on **scroll-stopping clarity**, **emojis**, and **visual rhythm**.
-8. All content must fit within a **90s verbal script**.
+5. Keep it beginner-friendly — avoid jargon.
+6. All slides for all topics must be combined into one JSON array where each topic has its own `"slides"` array.
 
 📱 USE CASE:
-YouTube Shorts, Instagram Reels, Coding carousels.
+YouTube Shorts, Instagram Reels, LinkedIn Carousels.
 
 💡 TONE:
 Conversational, beginner-focused, and curiosity-driven.
 
 🤖 STYLE:
-Think: “Explain like I’m 12, but make it viral.”
+"Explain like I’m 12, but make it viral."
+
+📌 INPUT EXAMPLE:
+| **8. What are Maps?**           | Short            | Go Maps Explained in Under 60 Seconds                      | **English:** "Need to store key-value pairs in Go? Maps are your best friend. Here's everything you need to know to get started, fast."``**Hinglish:** "Go mein key-value pairs store karne hain? Maps aapke best friend hain. Jaldi se shuru karne ke liye, yahan sab kuch hai."                                                      |
+| **9. Check Key Existence**      | Short            | The Go "Comma OK" Idiom You NEED to Know                   | **English:** "Accessing a map key in Go can lie to you. Here's the foolproof 'comma ok' idiom to check if a key *actually* exists."``**Hinglish:** "Go mein map key access karna aapse jhoot bol sakta hai. Yeh raha 'comma ok' idiom, jisse aap sure ho sakte hain ki key exist karti hai."                                         |
+| **10. Compare Maps**            | Short            | The FATAL Mistake of Comparing Go Maps (==)                | **English:** "Trying to compare two maps in Go with `==`? Don't! It will crash your program. Here's why and what to do instead."``**Hinglish:** "Go mein do maps ko `==` se compare kar rahe ho? Mat karo! Aapka program crash ho jayega. Yeh hai reason aur iske badle kya karna hai."                                            |
+| **11. Delete Non-existent Key** | Short            | Deleting a Non-Existent Key in a Go Map... What Happens?   | **English:** "What if you try to `delete` a key from a map that isn't even there? Does it panic? Does it return an error? Let's find out."``**Hinglish:** "Agar aap ek map se aisi key `delete` karne ki koshish karte hain jo hai hi nahi, toh kya hoga? Panic? Error? Chalo dekhte hain."                                        |
+| **12. Slices as Map Keys**      | Short            | Why You CAN'T Use a Slice as a Map Key in Go               | **English:** "Ever tried to use a slice as a map key in Go and got a compiler error? There's a very important reason for that. I'll explain."``**Hinglish:** "Kabhi Go mein slice ko map key ki tarah use karke compiler error mila hai? Uska ek bahut important reason hai. Main batata hoon."                                        |
+| **13. Iterate Over a Map**      | Short            | The #1 Thing to Remember When Iterating Go Maps            | **English:** "Iterating over a Go map is simple, but there's a huge 'gotcha' about the order of iteration that catches everyone out."``**Hinglish:** "Go map par iterate karna simple hai, par iteration ke order ke baare mein ek bada 'gotcha' hai jismein sab phans jaate hain."                                                    |
+| **14. Sort a Map**              | Long-form        | How to Sort Maps in Go (By Key AND Value) - Complete Guide | **English:** "Go maps are unordered by default. But what if you need to sort them? In this video, we'll write the code to sort any map by its keys or values."``**Hinglish:** "Go maps default se unordered hote hain. Lekin agar aapko unhe sort karna ho toh? Is video mein, hum keys ya values se map sort karne ka code likhenge." |
+
+📌 OUTPUT FORMAT EXAMPLE:
+[
+  {
+    "topic": "Go maps comparison trap",
+    "slides": [
+      { "title": "...", "content": "...", "slide_type": "text" },
+      { "title": "...", "content": "...", "slide_type": "code" }
+    ]
+  },
+  {
+    "topic": "Python list vs tuple",
+    "slides": [
+      { "title": "...", "content": "...", "slide_type": "text" },
+      { "title": "...", "content": "...", "slide_type": "table" }
+    ]
+  }
+]
