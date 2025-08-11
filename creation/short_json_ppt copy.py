@@ -1,7 +1,7 @@
 import os
 import json
 import tkinter as tk
-from tkinter import filedialog, ttk, messagebox
+from tkinter import filedialog, ttk, messagebox, scrolledtext
 from pptx import Presentation
 from pptx.util import Inches, Pt, Cm
 from pptx.enum.text import PP_ALIGN, PP_PARAGRAPH_ALIGNMENT
@@ -11,6 +11,7 @@ from pygments import lexers, formatters
 from bs4 import BeautifulSoup
 import markdown2
 import re
+import datetime
 
 # Mobile-optimized themes with better contrast
 THEMES = {
@@ -25,7 +26,7 @@ class FinalPPTCreatorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("📱 Final Mobile PPT Generator - Multi JSON Support")
-        self.root.geometry("600x500")
+        self.root.geometry("700x600")
         self.all_topics_data = []
         self.loaded_files = []
         
@@ -59,7 +60,7 @@ class FinalPPTCreatorApp:
         subtitle_label.pack(pady=(0, 20))
         
         # JSON Input Section
-        json_frame = ttk.LabelFrame(main_frame, text="📄 JSON Files Management", padding="15")
+        json_frame = ttk.LabelFrame(main_frame, text="📄 JSON Input Management", padding="15")
         json_frame.pack(fill=tk.X, pady=(0, 20))
         
         # Buttons frame
@@ -72,23 +73,65 @@ class FinalPPTCreatorApp:
                                      command=self.load_multiple_json_files, cursor="hand2")
         load_multiple_btn.pack(side=tk.LEFT, padx=(0, 10))
         
-        # Load single JSON file button
-        load_single_btn = tk.Button(buttons_frame, text="📄 Add Single JSON File", 
-                                   font=("Arial", 11), bg="#17a2b8", fg="white",
-                                   command=self.load_single_json_file, cursor="hand2")
-        load_single_btn.pack(side=tk.LEFT, padx=(0, 10))
-        
         # Clear files button
         clear_btn = tk.Button(buttons_frame, text="🗑️ Clear All", 
                              font=("Arial", 11), bg="#dc3545", fg="white",
                              command=self.clear_all_files, cursor="hand2")
         clear_btn.pack(side=tk.RIGHT)
         
+        # JSON Text Input Area
+        text_input_frame = ttk.LabelFrame(json_frame, text="✏️ Paste JSON Content", padding="10")
+        text_input_frame.pack(fill=tk.BOTH, expand=True, pady=(10, 0))
+        
+        # Instructions
+        instruction_label = ttk.Label(text_input_frame, 
+                                    text="Paste your JSON array content below and click 'Add from Text':",
+                                    font=("Arial", 10))
+        instruction_label.pack(anchor=tk.W, pady=(0, 5))
+        
+        # Text area for JSON input
+        self.json_text_area = scrolledtext.ScrolledText(text_input_frame, 
+                                                       height=8, 
+                                                       width=60,
+                                                       font=("Consolas", 10),
+                                                       wrap=tk.WORD)
+        self.json_text_area.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        
+        # Add placeholder text
+        placeholder_text = '''[
+  {
+    "topic": "Sample Topic",
+    "slides": [
+      {
+        "title": "Introduction",
+        "content": "Your content here",
+        "slide_type": "text"
+      }
+    ]
+  }
+]'''
+        self.json_text_area.insert(tk.END, placeholder_text)
+        self.json_text_area.bind("<FocusIn>", self.clear_placeholder)
+        
+        # Button to add from text
+        text_buttons_frame = ttk.Frame(text_input_frame)
+        text_buttons_frame.pack(fill=tk.X)
+        
+        add_text_btn = tk.Button(text_buttons_frame, text="➕ Add from Text", 
+                                font=("Arial", 11, "bold"), bg="#17a2b8", fg="white",
+                                command=self.add_from_text, cursor="hand2")
+        add_text_btn.pack(side=tk.LEFT, padx=(0, 10))
+        
+        clear_text_btn = tk.Button(text_buttons_frame, text="🧹 Clear Text", 
+                                  font=("Arial", 10), bg="#6c757d", fg="white",
+                                  command=self.clear_text_area, cursor="hand2")
+        clear_text_btn.pack(side=tk.LEFT)
+        
         # Files list frame
         files_frame = ttk.Frame(json_frame)
-        files_frame.pack(fill=tk.BOTH, expand=True)
+        files_frame.pack(fill=tk.BOTH, expand=True, pady=(15, 0))
         
-        ttk.Label(files_frame, text="Loaded Files:", font=("Arial", 10, "bold")).pack(anchor=tk.W, pady=(0, 5))
+        ttk.Label(files_frame, text="Loaded Sources:", font=("Arial", 10, "bold")).pack(anchor=tk.W, pady=(0, 5))
         
         # Files listbox with scrollbar
         files_list_frame = ttk.Frame(files_frame)
@@ -184,13 +227,73 @@ class FinalPPTCreatorApp:
         generate_btn.pack(pady=20, fill=tk.X)
         
         # Status label
-        self.status_label = tk.Label(main_frame, text="Ready to create organized presentations from multiple JSON files", 
+        self.status_label = tk.Label(main_frame, text="Ready to create organized presentations from JSON content", 
                                    font=("Arial", 10), fg="gray")
         self.status_label.pack(pady=(10, 0))
 
         # Pack canvas and scrollbar
         main_canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
+
+    def clear_placeholder(self, event):
+        """Clear placeholder text when text area gains focus"""
+        current_text = self.json_text_area.get("1.0", tk.END).strip()
+        if current_text.startswith('['):
+            # Check if it's still the placeholder
+            try:
+                data = json.loads(current_text)
+                if (isinstance(data, list) and len(data) == 1 and 
+                    data[0].get("topic") == "Sample Topic"):
+                    self.json_text_area.delete("1.0", tk.END)
+            except:
+                pass
+
+    def clear_text_area(self):
+        """Clear the text area"""
+        self.json_text_area.delete("1.0", tk.END)
+
+    def add_from_text(self):
+        """Add topics from the text area content"""
+        json_text = self.json_text_area.get("1.0", tk.END).strip()
+        
+        if not json_text:
+            messagebox.showwarning("Warning", "Please paste JSON content in the text area")
+            return
+        
+        try:
+            # Parse JSON
+            data = json.loads(json_text)
+            
+            # Validate JSON structure
+            if not self.validate_json_structure(data, "Text Input"):
+                return
+            
+            # Add source info to each topic
+            for topic in data:
+                topic["_source_file"] = "Text Input"
+            
+            # Add to all topics data
+            self.all_topics_data.extend(data)
+            
+            # Add to loaded files list for tracking
+            source_name = f"Text Input ({len(data)} topics)"
+            if source_name not in self.loaded_files:
+                self.loaded_files.append(source_name)
+            
+            # Update UI
+            self.update_ui_after_load()
+            
+            # Clear text area after successful load
+            self.json_text_area.delete("1.0", tk.END)
+            
+            self.status_label.config(text=f"✅ Added {len(data)} topics from text input", fg="green")
+            
+        except json.JSONDecodeError as e:
+            messagebox.showerror("JSON Error", f"Invalid JSON format:\n{str(e)}")
+            self.status_label.config(text="❌ Invalid JSON format", fg="red")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error processing text input:\n{str(e)}")
+            self.status_label.config(text="❌ Error processing input", fg="red")
 
     def load_multiple_json_files(self):
         """Load multiple JSON files at once"""
@@ -206,15 +309,18 @@ class FinalPPTCreatorApp:
         
         for file_path in file_paths:
             try:
-                if file_path not in self.loaded_files:
+                filename = os.path.basename(file_path)
+                if filename not in [f.split(' (')[0] for f in self.loaded_files if not f.startswith("Text Input")]:
                     success = self.load_json_data(file_path)
                     if success:
                         successful_loads += 1
-                        self.loaded_files.append(file_path)
+                        # Count topics from this file for display
+                        topics_count = len([t for t in self.all_topics_data if t.get("_source_file") == filename])
+                        self.loaded_files.append(f"{filename} ({topics_count} topics)")
                     else:
-                        failed_loads.append(os.path.basename(file_path))
+                        failed_loads.append(filename)
                 else:
-                    self.status_label.config(text=f"⚠️ {os.path.basename(file_path)} already loaded", fg="orange")
+                    self.status_label.config(text=f"⚠️ {filename} already loaded", fg="orange")
             except Exception as e:
                 failed_loads.append(f"{os.path.basename(file_path)}: {str(e)}")
         
@@ -229,31 +335,6 @@ class FinalPPTCreatorApp:
         elif failed_loads:
             self.status_label.config(text=f"❌ Failed to load {len(failed_loads)} files", fg="red")
             messagebox.showerror("Load Error", f"Failed files:\n" + "\n".join(failed_loads[:3]))
-
-    def load_single_json_file(self):
-        """Load a single JSON file"""
-        file_path = filedialog.askopenfilename(
-            filetypes=[("JSON Files", "*.json")], 
-            title="Select Single JSON File"
-        )
-        if not file_path:
-            return
-
-        if file_path in self.loaded_files:
-            messagebox.showwarning("Already Loaded", f"File '{os.path.basename(file_path)}' is already loaded.")
-            return
-
-        try:
-            success = self.load_json_data(file_path)
-            if success:
-                self.loaded_files.append(file_path)
-                self.update_ui_after_load()
-                self.status_label.config(text=f"✅ Added {os.path.basename(file_path)}", fg="green")
-            else:
-                self.status_label.config(text=f"❌ Failed to load {os.path.basename(file_path)}", fg="red")
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to load file: {str(e)}")
-            self.status_label.config(text="❌ Error loading file", fg="red")
 
     def load_json_data(self, file_path):
         """Load and validate JSON data from a file"""
@@ -277,25 +358,25 @@ class FinalPPTCreatorApp:
             messagebox.showerror("JSON Error", f"Error in {os.path.basename(file_path)}:\n{str(e)}")
             return False
 
-    def validate_json_structure(self, data, file_path):
+    def validate_json_structure(self, data, source):
         """Validate the JSON structure"""
-        filename = os.path.basename(file_path)
+        source_name = source if isinstance(source, str) and not os.path.exists(source) else os.path.basename(source)
         
         if not isinstance(data, list):
-            messagebox.showerror("Invalid JSON", f"{filename}: JSON should be a list of topics")
+            messagebox.showerror("Invalid JSON", f"{source_name}: JSON should be a list of topics")
             return False
         
         for i, topic in enumerate(data):
             if not isinstance(topic, dict):
-                messagebox.showerror("Invalid JSON", f"{filename}: Topic {i+1} should be a dictionary")
+                messagebox.showerror("Invalid JSON", f"{source_name}: Topic {i+1} should be a dictionary")
                 return False
             
             if "topic" not in topic:
-                messagebox.showerror("Invalid JSON", f"{filename}: Topic {i+1} missing 'topic' field")
+                messagebox.showerror("Invalid JSON", f"{source_name}: Topic {i+1} missing 'topic' field")
                 return False
                 
             if "slides" not in topic or not isinstance(topic["slides"], list):
-                messagebox.showerror("Invalid JSON", f"{filename}: Topic {i+1} missing or invalid 'slides' field")
+                messagebox.showerror("Invalid JSON", f"{source_name}: Topic {i+1} missing or invalid 'slides' field")
                 return False
         
         return True
@@ -305,22 +386,19 @@ class FinalPPTCreatorApp:
         if not self.all_topics_data:
             return
         
-        result = messagebox.askyesno("Clear All", "Are you sure you want to clear all loaded files and topics?")
+        result = messagebox.askyesno("Clear All", "Are you sure you want to clear all loaded content?")
         if result:
             self.all_topics_data = []
             self.loaded_files = []
             self.update_ui_after_load()
-            self.status_label.config(text="🗑️ All files cleared", fg="orange")
+            self.status_label.config(text="🗑️ All content cleared", fg="orange")
 
     def update_ui_after_load(self):
         """Update UI elements after loading files"""
         # Update files listbox
         self.files_listbox.delete(0, tk.END)
-        for file_path in self.loaded_files:
-            filename = os.path.basename(file_path)
-            # Count topics from this file
-            topics_from_file = [t for t in self.all_topics_data if t.get("_source_file") == filename]
-            self.files_listbox.insert(tk.END, f"{filename} ({len(topics_from_file)} topics)")
+        for source in self.loaded_files:
+            self.files_listbox.insert(tk.END, source)
         
         # Update topics listbox and info
         self.topics_listbox.delete(0, tk.END)
@@ -336,7 +414,8 @@ class FinalPPTCreatorApp:
         
         # Update info label
         if self.all_topics_data:
-            info_text = f"📊 Total: {len(self.all_topics_data)} topics, {total_slides} slides from {len(self.loaded_files)} files"
+            source_count = len([s for s in self.loaded_files])
+            info_text = f"📊 Total: {len(self.all_topics_data)} topics, {total_slides} slides from {source_count} sources"
             self.topics_info_label.config(text=info_text, foreground="blue")
         else:
             self.topics_info_label.config(text="No topics loaded", foreground="gray")
@@ -361,7 +440,7 @@ class FinalPPTCreatorApp:
     def generate_all_presentations(self):
         """Generate PPTs for all loaded topics organized in folders"""
         if not self.all_topics_data:
-            messagebox.showwarning("Warning", "Please load at least one JSON file first")
+            messagebox.showwarning("Warning", "Please load at least one JSON file or add content from text")
             return
         
         try:
@@ -416,7 +495,7 @@ class FinalPPTCreatorApp:
             # Success message
             success_msg = f"🎉 Successfully created {len(created_folders)} PPTs!\n\n"
             success_msg += f"📂 Location: {output_base_dir}\n"
-            success_msg += f"📊 From {len(self.loaded_files)} JSON files\n\n"
+            success_msg += f"📊 From {len(self.loaded_files)} sources\n\n"
             success_msg += "📁 Created folders:\n"
             success_msg += "\n".join([f"• {folder}" for folder in created_folders[:8]])
             if len(created_folders) > 8:
@@ -424,7 +503,7 @@ class FinalPPTCreatorApp:
             
             messagebox.showinfo("Success! 🎉", success_msg)
             self.status_label.config(
-                text=f"✅ Created {len(created_folders)} PPTs from {len(self.loaded_files)} JSON files", 
+                text=f"✅ Created {len(created_folders)} PPTs from {len(self.loaded_files)} sources", 
                 fg="green"
             )
             
@@ -439,11 +518,11 @@ class FinalPPTCreatorApp:
         with open(summary_path, "w", encoding="utf-8") as f:
             f.write("📱 Mobile PPT Generator - Summary Report\n")
             f.write("=" * 50 + "\n\n")
-            f.write(f"📅 Generated on: {tk.datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write(f"📅 Generated on: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
             f.write(f"📂 Output Directory: {output_dir}\n")
             f.write(f"🎨 Theme Used: {self.theme_var.get()}\n")
             f.write(f"📊 Total Topics: {len(self.all_topics_data)}\n")
-            f.write(f"📄 Source Files: {len(self.loaded_files)}\n\n")
+            f.write(f"📄 Source Count: {len(self.loaded_files)}\n\n")
             
             f.write("📁 Generated Folders and PPTs:\n")
             f.write("-" * 40 + "\n")
@@ -759,7 +838,6 @@ class FinalPPTCreatorApp:
         return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
 
 if __name__ == "__main__":
-    import datetime
     root = tk.Tk()
     app = FinalPPTCreatorApp(root)
     root.mainloop()

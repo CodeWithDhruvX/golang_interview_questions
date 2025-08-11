@@ -1,0 +1,62 @@
+[
+  {
+    "topic": "if/elif/else",
+    "slides": [
+      {
+        "title": "Stop Writing Messy if/else Statements in Python!",
+        "content": "**Your `if/else` blocks are probably a mess. Here's a simple trick to clean them up!** 🚀\n\nLet's make your code readable and bug-free!",
+        "slide_type": "text"
+      },
+      {
+        "title": "Why Use `elif`?",
+        "content": "✅ Avoid writing multiple `if` statements that run separately.\n\n✅ `elif` connects conditions for better flow and faster checks.\n\nExample:\n```python\nif score >= 90:\n    print('A grade')\nelif score >= 80:\n    print('B grade')\nelse:\n    print('Try harder!')\n```",
+        "slide_type": "code"
+      },
+      {
+        "title": "Common Mistake 🚫",
+        "content": "- Using separate `if`s instead of `elif` causes multiple blocks to run.\n- Makes debugging hard and slows down your program.\n\n**Bad:**\n```python\nif score >= 90:\n    print('A grade')\nif score >= 80:\n    print('B grade')\n```",
+        "slide_type": "code"
+      },
+      {
+        "title": "Quick Tips ✨",
+        "content": "- Use `if` for the first condition.\n- Use `elif` for all middle conditions.\n- Use `else` as a fallback.\n\nThink of it as a flowchart guiding your program.",
+        "slide_type": "text"
+      },
+      {
+        "title": "Want Cleaner Code? 👀",
+        "content": "Next up: How to use **ternary operators** in Python for one-liners that'll wow your interviewer! Stay tuned! 🔥",
+        "slide_type": "text"
+      }
+    ]
+  },
+  {
+    "topic": "for vs while loops",
+    "slides": [
+      {
+        "title": "Python for vs while Loops: The 60-Second Rule",
+        "content": "🤔 Confused when to use `for` or `while`? Here's the fastest way to decide! ⏱️",
+        "slide_type": "text"
+      },
+      {
+        "title": "Use `for` When...",
+        "content": "- You know **how many times** to repeat.\n- You have a list, range, or collection to loop over.\n\nExample:\n```python\nfor i in range(5):\n    print(i)\n```",
+        "slide_type": "code"
+      },
+      {
+        "title": "Use `while` When...",
+        "content": "- You want to repeat **until a condition is false**.\n- You don't know how many times it will run.\n\nExample:\n```python\ncount = 0\nwhile count < 5:\n    print(count)\n    count += 1\n```",
+        "slide_type": "code"
+      },
+      {
+        "title": "Quick Comparison Table 📊",
+        "content": "| Loop Type | When to Use | How it Works |\n|-----------|-------------|--------------|\n| `for`    | Known repeats | Iterates over items |\n| `while`  | Unknown repeats | Runs till condition breaks |",
+        "slide_type": "table"
+      },
+      {
+        "title": "Want to Loop Like a Pro? 🤓",
+        "content": "Next video: How to break out of loops early like a ninja using `break` and `continue`! 🥷🔥",
+        "slide_type": "text"
+      }
+    ]
+  }
+]

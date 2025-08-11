@@ -1,205 +1,60 @@
 [
   {
-    "topic": "What are Maps?",
+    "topic": "`is` vs `==` in Python",
     "slides": [
       {
-        "title": "🚀 The Magic Box in Go",
-        "content": "**Myth:** Arrays are enough.\n**Truth:** If you want 🗝 key ➡ value lookups, **maps** are your best friend.",
+        "title": "Hook: `is` vs `==` Confusion 🤯",
+        "content": "**`is` checks identity, `==` checks equality!** Sounds simple? But it can cause bugs that waste hours.",
         "slide_type": "text"
       },
       {
-        "title": "📦 What is a Map?",
-        "content": "**Definition:** A map is like a dictionary 📖 —\n- **Key:** Unique ID\n- **Value:** Data linked to the key\n\nExample: Phonebook",
-        "slide_type": "text"
-      },
-      {
-        "title": "📝 Quick Syntax",
-        "content": "```go\nages := map[string]int{\n    \"Alice\": 25,\n    \"Bob\": 30,\n}\n```",
+        "title": "What does `==` do?",
+        "content": "```python\nx = [1, 2, 3]\ny = [1, 2, 3]\nprint(x == y)  # True: values are same\n```",
         "slide_type": "code"
       },
       {
-        "title": "⚡ Why Maps?",
-        "content": "- Super fast lookups 🔍\n- No fixed size 🚫\n- Keys can be strings, numbers, etc.",
+        "title": "What about `is`?",
+        "content": "```python\nx = [1, 2, 3]\ny = [1, 2, 3]\nprint(x is y)  # False: different objects in memory\n```",
+        "slide_type": "code"
+      },
+      {
+        "title": "When to use `is`? 🧐",
+        "content": "- Use `is` to check if two variables point to the **same object**\n- Common with `None`: `if x is None:`\n- Not for value comparison!",
         "slide_type": "text"
       },
       {
-        "title": "🤔 But... Are Maps Ordered?",
-        "content": "Spoiler: Nope! In the next video, you'll see why this matters when iterating. 👀",
+        "title": "Curious? 👀",
+        "content": "Next up: How Python caches small integers and why `is` can sometimes surprise you! Stay tuned.",
         "slide_type": "text"
       }
     ]
   },
   {
-    "topic": "Check Key Existence",
+    "topic": "Python's 5 Standard Data Types",
     "slides": [
       {
-        "title": "⚠️ The Map Lie",
-        "content": "Accessing a map key that doesn't exist? Go will return a **zero value**... and mislead you!",
+        "title": "Hook: 5 Data Types = 99% of Python Code 🚀",
+        "content": "Master these 5, and you'll understand most Python programs! Ready to simplify?",
         "slide_type": "text"
       },
       {
-        "title": "💡 The Fix: 'Comma OK'",
-        "content": "```go\nvalue, exists := ages[\"Charlie\"]\nif exists {\n    fmt.Println(\"Found:\", value)\n} else {\n    fmt.Println(\"Not Found\")\n}\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "📌 How It Works",
-        "content": "- `value`: The stored data (or zero value)\n- `exists`: **true/false** if the key is in the map",
-        "slide_type": "text"
-      },
-      {
-        "title": "🪤 Common Trap",
-        "content": "Without `exists`, you can’t tell if **0** is real data or just a placeholder.",
-        "slide_type": "text"
-      },
-      {
-        "title": "🔍 Want a Shortcut?",
-        "content": "Next, we'll see how comparing maps is even trickier! 🕵️",
-        "slide_type": "text"
-      }
-    ]
-  },
-  {
-    "topic": "Compare Maps",
-    "slides": [
-      {
-        "title": "💥 The `==` Disaster",
-        "content": "Try this: `map1 == map2` → **Compile-time panic!**\nGo doesn't let you compare maps directly.",
-        "slide_type": "text"
-      },
-      {
-        "title": "❓ Why Not?",
-        "content": "Maps are like bags of marbles — the order isn't fixed, so Go can't reliably compare them.",
-        "slide_type": "text"
-      },
-      {
-        "title": "✅ The Right Way",
-        "content": "```go\nfunc mapsEqual(a, b map[string]int) bool {\n    if len(a) != len(b) { return false }\n    for k, v := range a {\n        if b[k] != v { return false }\n    }\n    return true\n}\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "⚡ Tip",
-        "content": "Always write a small compare function for **custom logic**.",
-        "slide_type": "text"
-      },
-      {
-        "title": "🔮 Curious?",
-        "content": "What if you delete a key that doesn't exist? The answer is weirdly simple...",
-        "slide_type": "text"
-      }
-    ]
-  },
-  {
-    "topic": "Delete Non-existent Key",
-    "slides": [
-      {
-        "title": "😱 Will It Panic?",
-        "content": "Deleting a key that's not in the map? Sounds risky... right?",
-        "slide_type": "text"
-      },
-      {
-        "title": "💥 The Truth",
-        "content": "Go just shrugs. No error. No panic. Nothing.",
-        "slide_type": "text"
-      },
-      {
-        "title": "🧪 Demo",
-        "content": "```go\ndelete(ages, \"Ghost\") // totally fine\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "📌 Why Safe?",
-        "content": "Delete just checks internally — if key’s missing, it skips silently.",
-        "slide_type": "text"
-      },
-      {
-        "title": "🌀 Next Mystery",
-        "content": "But why can't we use a **slice** as a key? The reason is deeper...",
-        "slide_type": "text"
-      }
-    ]
-  },
-  {
-    "topic": "Slices as Map Keys",
-    "slides": [
-      {
-        "title": "🚫 Compiler Says No",
-        "content": "```go\nm := map[[]int]string{} // ❌ error\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "🔍 The Reason",
-        "content": "**Keys must be comparable.**\nSlices can change in place, so Go can’t use them as stable keys.",
-        "slide_type": "text"
-      },
-      {
-        "title": "✅ Allowed Keys",
-        "content": "- strings\n- integers\n- arrays\n- structs (comparable fields)",
+        "title": "The 5 Data Types Explained",
+        "content": "| Data Type | Description       | Example            |\n| --------- | ----------------- | ------------------ |\n| int       | Whole numbers     | `age = 25`         |\n| float     | Decimal numbers   | `price = 9.99`     |\n| str       | Text strings      | `name = 'Dhruv'`   |\n| bool      | True or False     | `is_active = True` |\n| list      | Collection of items| `nums = [1, 2, 3]` |",
         "slide_type": "table"
       },
       {
-        "title": "💡 Workaround",
-        "content": "Turn your slice into a **string** before using it:\n```go\nkey := fmt.Sprint([]int{1,2,3})\n```",
+        "title": "Quick Code Peek 👀",
+        "content": "```python\nage = 25         # int\nprice = 9.99     # float\nname = 'Dhruv'   # str\nis_active = True # bool\nnums = [1, 2, 3] # list\n```",
         "slide_type": "code"
       },
       {
-        "title": "⏭ What’s Next?",
-        "content": "If keys are fine… how does Go decide the **order** when you iterate? 🤔",
-        "slide_type": "text"
-      }
-    ]
-  },
-  {
-    "topic": "Iterate Over a Map",
-    "slides": [
-      {
-        "title": "🔀 Expect Chaos",
-        "content": "Go maps return items in **random order** each time you iterate.",
+        "title": "Why These Matter? 🤔",
+        "content": "- They cover numbers, text, truth values & collections.\n- Knowing these helps you read & write Python FAST!",
         "slide_type": "text"
       },
       {
-        "title": "🧪 Example",
-        "content": "```go\nfor k, v := range ages {\n    fmt.Println(k, v)\n}\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "❓ Why Random?",
-        "content": "To prevent relying on order — and to make internal map changes more efficient.",
-        "slide_type": "text"
-      },
-      {
-        "title": "✅ If You Need Order",
-        "content": "Sort the keys first, then loop.\nWe’ll do this in the **Sort a Map** video.",
-        "slide_type": "text"
-      }
-    ]
-  },
-  {
-    "topic": "Sort a Map",
-    "slides": [
-      {
-        "title": "📦 Maps Aren’t Ordered",
-        "content": "Want keys or values in order? You’ll need to **sort manually**.",
-        "slide_type": "text"
-      },
-      {
-        "title": "🛠 Sort by Keys",
-        "content": "```go\nkeys := make([]string, 0, len(ages))\nfor k := range ages {\n    keys = append(keys, k)\n}\nsort.Strings(keys)\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "🛠 Sort by Values",
-        "content": "Collect key-value pairs in a slice, then sort with `sort.Slice`.",
-        "slide_type": "text"
-      },
-      {
-        "title": "⚡ Tip",
-        "content": "Sorting is **extra work** in Go — only do it if you really need to.",
-        "slide_type": "text"
-      },
-      {
-        "title": "⏭ Coming Up",
-        "content": "What if we sorted **by value** *and* broke ties by key? That’s another fun trick!",
+        "title": "Want More? 🌟",
+        "content": "Next video: Dive into **dictionaries** — the secret sauce to fast data lookup in Python!",
         "slide_type": "text"
       }
     ]

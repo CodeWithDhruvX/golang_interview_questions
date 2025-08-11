@@ -1,180 +1,90 @@
 [
   {
-    "topic": "What are Structs?",
+    "topic": "What are pointers in Go?",
     "slides": [
       {
-        "title": "🚫 Stop Loose Variables!",
-        "content": "**Problem:** Too many scattered variables? \n**Solution:** Bundle them together like a lunchbox — that's what **structs** do in Go! 🍱",
+        "title": "🚀 Myth: Go has no pointers!",
+        "content": "Many beginners think Go doesn't have pointers like C/C++. Truth? Go **does** have pointers — just no pointer arithmetic.",
         "slide_type": "text"
       },
       {
-        "title": "📦 Meet the Struct",
-        "content": "A **struct** is your own custom data type — like a blueprint for objects in Go.",
+        "title": "📦 Think of pointers as...",
+        "content": "A **home address** for your data. Instead of carrying the whole house (value), you just give the **address**.",
         "slide_type": "text"
       },
       {
-        "title": "🛠 Your First Struct",
-        "content": "```go\npackage main\nimport \"fmt\"\n\ntype Person struct {\n    Name string\n    Age  int\n}\n\nfunc main() {\n    p := Person{Name: \"Amit\", Age: 21}\n    fmt.Println(p)\n}\n```",
+        "title": "🖥 Basic Pointer Example",
+        "content": "```go\npackage main\nimport \"fmt\"\n\nfunc main() {\n    x := 42\n    p := &x // pointer to x\n    fmt.Println(p)  // memory address\n    fmt.Println(*p) // value at address\n}\n```",
         "slide_type": "code"
       },
       {
-        "title": "💡 Why Use Structs?",
-        "content": "- Organize data neatly 📂\n- Avoid naming mess 🤯\n- Easy to share between functions 🔄",
+        "title": "🤯 Why care about pointers?",
+        "content": "- Avoid copying large data\n- Allow functions to modify values\n- Work with dynamic structures",
         "slide_type": "text"
       },
       {
-        "title": "🤔 Structs + Functions?",
-        "content": "Structs get **superpowers** when combined with methods. That’s coming next…",
+        "title": "⏭ Next up...",
+        "content": "How to **declare & use pointers** without confusion.",
         "slide_type": "text"
       }
     ]
   },
   {
-    "topic": "Struct Tags",
+    "topic": "How do you declare and use pointers?",
     "slides": [
       {
-        "title": "🤯 What's That Weird String?",
-        "content": "Ever seen this?\n```go\nName string `json:\"name\"`\n```\nThat’s a **struct tag** — a hidden hint for Go’s tools.",
-        "slide_type": "code"
-      },
-      {
-        "title": "🔑 What Tags Do",
-        "content": "- Rename JSON fields 🏷\n- Control serialization 📤\n- Add metadata for libraries 🛠",
+        "title": "🎯 Hook: Pointers look scary, but...",
+        "content": "In Go, they are **simpler** than you think. One symbol does all the magic.",
         "slide_type": "text"
       },
       {
-        "title": "📦 Example in Action",
-        "content": "```go\ntype Person struct {\n    FullName string `json:\"name\"`\n}\n```",
+        "title": "✏ Declaring a pointer",
+        "content": "```go\nvar p *int // p is a pointer to int\n```",
         "slide_type": "code"
       },
       {
-        "title": "📤 Struct → JSON",
-        "content": "```go\np := Person{FullName: \"Ravi\"}\njsonData, _ := json.Marshal(p)\nfmt.Println(string(jsonData)) // {\"name\":\"Ravi\"}\n```",
+        "title": "🔧 Using & and *",
+        "content": "```go\nx := 10\np := &x  // & gives address\nfmt.Println(*p) // * gets value\n*p = 20\nfmt.Println(x) // now 20\n```",
         "slide_type": "code"
       },
       {
-        "title": "🕵️‍♂️ More Than JSON?",
-        "content": "Tags aren’t just for JSON… XML, DB mapping, validation — curious? That’s next! 👀",
+        "title": "💡 Tip",
+        "content": "Think `&` = **address-of**, `*` = **value-at**.",
+        "slide_type": "text"
+      },
+      {
+        "title": "⏭ Next up...",
+        "content": "Pointer vs Value Receivers — why it matters for methods.",
         "slide_type": "text"
       }
     ]
   },
   {
-    "topic": "Embed Structs",
+    "topic": "What is the difference between pointer and value receivers?",
     "slides": [
       {
-        "title": "🚀 Go’s Secret Power",
-        "content": "Go doesn’t have classes, but **struct embedding** lets you reuse fields & methods like LEGO bricks 🧱.",
+        "title": "🛑 Common mistake",
+        "content": "Using a **value receiver** when you meant to update the original struct.",
         "slide_type": "text"
       },
       {
-        "title": "📦 Embedding Example",
-        "content": "```go\ntype Address struct {\n    City string\n}\n\ntype Person struct {\n    Name string\n    Address // embedded\n}\n```",
+        "title": "📦 Value Receiver Example",
+        "content": "```go\npackage main\nimport \"fmt\"\n\ntype Person struct {name string}\n\nfunc (p Person) changeName(newName string) {\n    p.name = newName // copy updated\n}\n\nfunc main() {\n    a := Person{\"Alice\"}\n    a.changeName(\"Bob\")\n    fmt.Println(a.name) // still Alice\n}\n```",
         "slide_type": "code"
       },
       {
-        "title": "⚡ Why Embed?",
-        "content": "- Inherit behavior without classes 🎭\n- Keep code clean 🧼\n- DRY: Don’t Repeat Yourself ♻️",
-        "slide_type": "text"
-      },
-      {
-        "title": "🛠 Access Embedded Fields",
-        "content": "```go\np := Person{Name: \"Amit\", Address: Address{City: \"Delhi\"}}\nfmt.Println(p.City) // Direct access!\n```",
+        "title": "📌 Pointer Receiver Example",
+        "content": "```go\nfunc (p *Person) changeName(newName string) {\n    p.name = newName // updates original\n}\n\nfunc main() {\n    a := Person{\"Alice\"}\n    a.changeName(\"Bob\")\n    fmt.Println(a.name) // Bob\n}\n```",
         "slide_type": "code"
       },
       {
-        "title": "🤔 Methods + Embedding?",
-        "content": "Embedded structs can bring their methods too. Want to see that magic? 🔮",
-        "slide_type": "text"
-      }
-    ]
-  },
-  {
-    "topic": "Compare Structs",
-    "slides": [
-      {
-        "title": "✅ You CAN Compare Structs!",
-        "content": "Unlike maps, structs can be compared using `==`… but there’s a twist! 🌀",
+        "title": "💡 Quick Rule",
+        "content": "- Use **pointer receiver** to modify data\n- Use **value receiver** for read-only ops",
         "slide_type": "text"
       },
       {
-        "title": "⚠️ The Rule",
-        "content": "- **All fields** must be comparable.\n- If any field is a slice, map, or func — ❌ compiler error.",
-        "slide_type": "text"
-      },
-      {
-        "title": "📝 Example",
-        "content": "```go\ntype Point struct { X, Y int }\nfmt.Println(Point{1, 2} == Point{1, 2}) // true\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "❌ Non-comparable Example",
-        "content": "```go\ntype Bad struct { Data []int }\n// Error: slice is not comparable\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "🤔 What About Deep Equal?",
-        "content": "`reflect.DeepEqual` can compare even complex structs. Want the demo? 🔍",
-        "slide_type": "text"
-      }
-    ]
-  },
-  {
-    "topic": "Shallow vs. Deep Copy",
-    "slides": [
-      {
-        "title": "📋 Copying in Go ≠ Always Safe",
-        "content": "Sometimes copying a struct copies **pointers**, not actual data. This can cause spooky bugs 👻.",
-        "slide_type": "text"
-      },
-      {
-        "title": "🛠 Shallow Copy",
-        "content": "- Copies values **as is**.\n- Pointers still point to old memory.\n- Changes in one affect the other. 🔗",
-        "slide_type": "text"
-      },
-      {
-        "title": "🔍 Deep Copy",
-        "content": "- Creates **new copies** of all data.\n- Completely independent. 🛡",
-        "slide_type": "text"
-      },
-      {
-        "title": "📝 Example",
-        "content": "```go\ntype Data struct { nums []int }\noriginal := Data{nums: []int{1,2}}\ncopy := original // shallow copy\ncopy.nums[0] = 99 // changes original too!\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "🤔 How to Deep Copy?",
-        "content": "Manual loops, `copy()` for slices, or libraries. Want a deep copy cheat sheet? 📄",
-        "slide_type": "text"
-      }
-    ]
-  },
-  {
-    "topic": "Struct to JSON",
-    "slides": [
-      {
-        "title": "⚡ JSON in Seconds",
-        "content": "Need an API? Struct → JSON is just a few lines in Go. 🏎",
-        "slide_type": "text"
-      },
-      {
-        "title": "📦 Example Struct",
-        "content": "```go\ntype User struct {\n    Name string `json:\"name\"`\n    Age  int    `json:\"age\"`\n}\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "📤 Convert to JSON",
-        "content": "```go\nu := User{Name: \"Amit\", Age: 30}\njsonData, _ := json.Marshal(u)\nfmt.Println(string(jsonData))\n```",
-        "slide_type": "code"
-      },
-      {
-        "title": "💡 Why Use Tags?",
-        "content": "- Match API field names 🏷\n- Avoid capitalized Go names leaking out 🛡",
-        "slide_type": "text"
-      },
-      {
-        "title": "🤔 What About JSON → Struct?",
-        "content": "Deserialization (`json.Unmarshal`) is just as easy. Want that in 30 seconds? ⏳",
+        "title": "⏭ Next up...",
+        "content": "Go methods — not just for structs!",
         "slide_type": "text"
       }
     ]

@@ -23,6 +23,7 @@ For each topic in my input list, output:
    - Mix formats: **text**, **code**, or **table**.
 5. Keep it beginner-friendly — avoid jargon.
 6. All slides for all topics must be combined into one JSON array where each topic has its own `"slides"` array.
+7. give me the full app code from the scratch and add the programming extension at the beginning where the slide_type is code
 
 📱 USE CASE:
 YouTube Shorts, Instagram Reels, LinkedIn Carousels.
@@ -34,28 +35,6 @@ Conversational, beginner-focused, and curiosity-driven.
 "Explain like I’m 12, but make it viral."
 
 📌 INPUT EXAMPLE:
-| **8. What are Maps?**           | Short            | Go Maps Explained in Under 60 Seconds                      | **English:** "Need to store key-value pairs in Go? Maps are your best friend. Here's everything you need to know to get started, fast."``**Hinglish:** "Go mein key-value pairs store karne hain? Maps aapke best friend hain. Jaldi se shuru karne ke liye, yahan sab kuch hai."                                                      |
-| **9. Check Key Existence**      | Short            | The Go "Comma OK" Idiom You NEED to Know                   | **English:** "Accessing a map key in Go can lie to you. Here's the foolproof 'comma ok' idiom to check if a key *actually* exists."``**Hinglish:** "Go mein map key access karna aapse jhoot bol sakta hai. Yeh raha 'comma ok' idiom, jisse aap sure ho sakte hain ki key exist karti hai."                                         |
-| **10. Compare Maps**            | Short            | The FATAL Mistake of Comparing Go Maps (==)                | **English:** "Trying to compare two maps in Go with `==`? Don't! It will crash your program. Here's why and what to do instead."``**Hinglish:** "Go mein do maps ko `==` se compare kar rahe ho? Mat karo! Aapka program crash ho jayega. Yeh hai reason aur iske badle kya karna hai."                                            |
-| **11. Delete Non-existent Key** | Short            | Deleting a Non-Existent Key in a Go Map... What Happens?   | **English:** "What if you try to `delete` a key from a map that isn't even there? Does it panic? Does it return an error? Let's find out."``**Hinglish:** "Agar aap ek map se aisi key `delete` karne ki koshish karte hain jo hai hi nahi, toh kya hoga? Panic? Error? Chalo dekhte hain."                                        |
-| **12. Slices as Map Keys**      | Short            | Why You CAN'T Use a Slice as a Map Key in Go               | **English:** "Ever tried to use a slice as a map key in Go and got a compiler error? There's a very important reason for that. I'll explain."``**Hinglish:** "Kabhi Go mein slice ko map key ki tarah use karke compiler error mila hai? Uska ek bahut important reason hai. Main batata hoon."                                        |
-| **13. Iterate Over a Map**      | Short            | The #1 Thing to Remember When Iterating Go Maps            | **English:** "Iterating over a Go map is simple, but there's a huge 'gotcha' about the order of iteration that catches everyone out."``**Hinglish:** "Go map par iterate karna simple hai, par iteration ke order ke baare mein ek bada 'gotcha' hai jismein sab phans jaate hain."                                                    |
-| **14. Sort a Map**              | Long-form        | How to Sort Maps in Go (By Key AND Value) - Complete Guide | **English:** "Go maps are unordered by default. But what if you need to sort them? In this video, we'll write the code to sort any map by its keys or values."``**Hinglish:** "Go maps default se unordered hote hain. Lekin agar aapko unhe sort karna ho toh? Is video mein, hum keys ya values se map sort karne ka code likhenge." |
+**`if/elif/else`?**ShortStop Writing Messy `if/else` Statements in Python!**EN** : "Your `if/else` blocks are probably a mess. Here's a simple trick to clean them up."`` **HI** : "Aapke `if/else` blocks shayad bekar hain. Unhe saaf karne ka ek aasan trick yahan hai."**`for` vs. `while` loops?**ShortPython `for` vs `while` Loops: The 60-Second Rule**EN** : "Confused between `for` and `while` loops? Use this one simple rule to always pick the right one."`` **HI** : "`for` aur `while` loops mein confuse ho? Hamesha sahi wala chunne ke liye yeh ek simple niyam use karo."
 
-📌 OUTPUT FORMAT EXAMPLE:
-[
-  {
-    "topic": "Go maps comparison trap",
-    "slides": [
-      { "title": "...", "content": "...", "slide_type": "text" },
-      { "title": "...", "content": "...", "slide_type": "code" }
-    ]
-  },
-  {
-    "topic": "Python list vs tuple",
-    "slides": [
-      { "title": "...", "content": "...", "slide_type": "text" },
-      { "title": "...", "content": "...", "slide_type": "table" }
-    ]
-  }
-]
+

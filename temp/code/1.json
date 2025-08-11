@@ -1,0 +1,54 @@
+{
+  "snippets": [
+    {
+      "title": "Your First Go Struct in 30 Seconds",
+      "code": "package main\nimport \"fmt\"\n\ntype Person struct { // Custom type\n\tName string\n\tAge  int\n}\n\nfunc main() {\n\tp := Person{\"Alice\", 25} // Init\n\tfmt.Println(p.Name, p.Age)\n}\n// Output: Alice 25",
+      "hook": "🚀 What would you name your first struct?"
+    },
+    {
+      "title": "The Secret Behind Struct Tags",
+      "code": "package main\nimport (\n\t\"encoding/json\"\n\t\"fmt\"\n)\n\ntype User struct {\n\tName string `json:\"full_name\"` // JSON tag\n\tAge  int    `json:\"age\"`\n}\n\nfunc main() {\n\tu := User{\"Bob\", 30}\n\tdata, _ := json.Marshal(u)\n\tfmt.Println(string(data))\n}\n// Output: {\"full_name\":\"Bob\",\"age\":30}",
+      "hook": "🤯 Ever seen these weird strings in Go structs?"
+    },
+    {
+      "title": "Struct Embedding: Go’s Hidden Superpower",
+      "code": "package main\nimport \"fmt\"\n\ntype Address struct {\n\tCity string\n}\n\ntype Employee struct {\n\tAddress // Embedded\n\tName    string\n}\n\nfunc main() {\n\te := Employee{Name: \"John\", Address: Address{\"NYC\"}}\n\tfmt.Println(e.Name, e.City) // Direct access\n}\n// Output: John NYC",
+      "hook": "💡 Did you know Go can do this without inheritance?"
+    },
+    {
+      "title": "Comparing Structs: Yes, BUT…",
+      "code": "package main\nimport \"fmt\"\n\ntype A struct{ X int }\ntype B struct{ X []int } // Slice inside\n\nfunc main() {\n\tfmt.Println(A{1} == A{1}) // ✅ Works\n\t// fmt.Println(B{[]int{1}} == B{[]int{1}}) // ❌ Compile error\n}",
+      "hook": "😮 Why can’t structs with slices be compared?"
+    },
+    {
+      "title": "Shallow vs Deep Copy in Go",
+      "code": "package main\nimport \"fmt\"\n\ntype Data struct {\n\tValue *int\n}\n\nfunc main() {\n\tx := 10\n\td1 := Data{&x} // Original\n\td2 := d1       // Shallow copy\n\t*d2.Value = 99 // Changes both!\n\tfmt.Println(*d1.Value, *d2.Value)\n}\n// Output: 99 99",
+      "hook": "⚠️ Did you just copy a pointer without knowing?"
+    },
+    {
+      "title": "Struct to JSON in 20 Seconds",
+      "code": "package main\nimport (\n\t\"encoding/json\"\n\t\"fmt\"\n)\n\ntype Product struct {\n\tName  string\n\tPrice int\n}\n\nfunc main() {\n\tp := Product{\"Book\", 299}\n\tj, _ := json.Marshal(p) // Convert\n\tfmt.Println(string(j))\n}\n// Output: {\"Name\":\"Book\",\"Price\":299}",
+      "hook": "📦 How would you use this in an API?"
+    },
+    {
+      "title": "Zero Value Trap in Structs",
+      "code": "package main\nimport \"fmt\"\n\ntype Account struct {\n\tBalance int\n\tActive  bool\n}\n\nfunc main() {\n\ta := Account{} // Zero values\n\tfmt.Println(a.Balance, a.Active)\n}\n// Output: 0 false",
+      "hook": "🤔 Ever wondered why fields are empty without init?"
+    },
+    {
+      "title": "Anonymous Structs: The Quick Hack",
+      "code": "package main\nimport \"fmt\"\n\nfunc main() {\n\tuser := struct { // No name\n\t\tName string\n\t\tAge  int\n\t}{\"Mike\", 40}\n\n\tfmt.Println(user.Name, user.Age)\n}\n// Output: Mike 40",
+      "hook": "⚡ When would you use a struct without naming it?"
+    },
+    {
+      "title": "Struct Literals vs new()",
+      "code": "package main\nimport \"fmt\"\n\ntype Point struct{ X, Y int }\n\nfunc main() {\n\tp1 := Point{1, 2}   // Literal\n\tp2 := new(Point)    // Pointer\n\tfmt.Println(p1)     // {1 2}\n\tfmt.Println(p2)     // &{0 0}\n}",
+      "hook": "📍 Which one do you use more: literal or new()?"
+    },
+    {
+      "title": "Nested Structs in Go",
+      "code": "package main\nimport \"fmt\"\n\ntype Engine struct {\n\tHP int\n}\n\ntype Car struct {\n\tModel  string\n\tEngine Engine\n}\n\nfunc main() {\n\tc := Car{\"Tesla\", Engine{500}}\n\tfmt.Println(c.Model, c.Engine.HP)\n}\n// Output: Tesla 500",
+      "hook": "🚗 How would you make HP accessible without Engine.?"
+    }
+  ]
+}
