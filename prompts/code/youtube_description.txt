@@ -75,6 +75,8 @@ func main() {
 
 please make sure that create 3 objects array of json using below information
 
+Golang Fundamentals QnA 🔥 | Arrays, Slices, Maps & Structs Explained
+
 "Generate a structured JSON object using above array of json. The object should contain the following fields:
 
 videoFile: Absolute file path of the video (e.g., "C:/Users/YourName/Videos/video.mp4").

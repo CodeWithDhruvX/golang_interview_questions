@@ -1,0 +1,66 @@
+Alright Dhruv, here’s the **voiceover script** for your **"The FATAL Mistake of Comparing Go Maps"** short —
+following your pacing, tone, and emotional flow exactly.
+
+---
+
+### **Slide 1 – 🚨 The Go Map Comparison Trap**
+
+**Voiceover Script:**
+"Have you ever tried to compare two maps in Go with double equals? \[pause]
+Looks innocent, right? \[pause]
+But in Go… that’s a straight-up **program crash**. 💥
+Not a warning, not a small bug — your code won’t even compile. \[pause]
+Let me show you why."
+
+---
+
+### **Slide 2 – 🛠 What Actually Happens**
+
+**Voiceover Script:**
+"As you can see here… \[pause] we have two maps.
+Now, if I try this — `if m1 == m2 {}` — boom! \[pause]
+Go throws an **error**: 'invalid operation'.
+Why?
+Because maps in Go are like **locked boxes**.
+The language doesn’t peek inside to check if keys and values match.
+It only checks **if a map is nil**.
+Anything else? \[pause] Not allowed."
+
+---
+
+### **Slide 3 – ⚡ The Right Way**
+
+**Voiceover Script:**
+"So, how do we compare maps without breaking things? \[pause]
+Two ways.
+First — go old school: loop through the keys, compare each value.
+Second — use `reflect.DeepEqual()`.
+It quickly checks if two maps have the same content. \[pause]
+Look here — this code runs fine and tells you if maps match."
+
+---
+
+### **Slide 4 – 💡 Why This Matters**
+
+**Voiceover Script:**
+"This tiny detail can save hours of frustration.
+You avoid crashes, you keep your program predictable, \[pause]
+and you escape those late-night debugging headaches.
+It’s one of those small habits… that makes you write **stronger Go code**."
+
+---
+
+### **Slide 5 – ⏭ Outro**
+
+**Voiceover Script:**
+"So, next time you need to compare maps, don’t reach for `==`.
+Remember the safe way — your future self will thank you.
+\[pause]
+If this saved you even a little trouble today,
+hit that **subscribe** button and let’s keep learning together.
+Your next big coding breakthrough might be… just one video away."
+
+---
+
+If you want, I can also **tighten this into a 60–70 second cut** for maximum Shorts retention while keeping all emotional beats intact.
+Do you want me to prepare that fast-paced version next?

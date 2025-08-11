@@ -1,0 +1,27 @@
+[
+  {
+    "title": "😮 Go Maps Can Trick You!",
+    "content": "**You check a map key** and… it shows a value.\n\nBut here’s the catch — Go will **still return a value** even if the key **doesn't exist**.\n\nIt’s like a shopkeeper handing you an empty bag with a smile. 🛍️",
+    "slide_type": "text"
+  },
+  {
+    "title": "⚠️ The Trap",
+    "content": "```go\nm := map[string]int{\"apples\": 5}\n\nfmt.Println(m[\"bananas\"]) // 0\n```\n**Looks harmless?**\nGo returns the *zero value* (0 here) if the key isn’t found.\nBut… how do you know if it was really 0 or just missing? 🤔",
+    "slide_type": "code"
+  },
+  {
+    "title": "✅ The 'Comma OK' Idiom",
+    "content": "```go\nm := map[string]int{\"apples\": 5}\n\nvalue, exists := m[\"bananas\"]\nif exists {\n    fmt.Println(\"Found:\", value)\n} else {\n    fmt.Println(\"Key missing\")\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "🔍 Why It Works",
+    "content": "- **value** → actual data (or zero value)\n- **exists** → true/false if key is present\n\nThink of it like **checking the guest list** before serving the cake. 🎂",
+    "slide_type": "text"
+  },
+  {
+    "title": "🚀 Next Pitfall?",
+    "content": "**Maps in Go can change size** while you use them.\nEver seen a map *panic* mid-iteration?\nThat’s our next story. 👀",
+    "slide_type": "text"
+  }
+]

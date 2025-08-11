@@ -1,0 +1,27 @@
+[
+  {
+    "title": "⚠️ Hook: Are Go slices passed by VALUE or REFERENCE?",
+    "content": "**Myth:** \"Slices are references, so functions can’t get a copy.\" \n\n**Reality (in 5s):** Go *copies the slice header* (value), **but** the header still points to the same underlying array — so it acts like a *shared window* into the array. 🤯",
+    "slide_type": "text"
+  },
+  {
+    "title": "🔍 Quick explainer — the slice header",
+    "content": "- A Go slice = **3 tiny things**: *pointer → array*, **len**, **cap**. \n- When you pass a slice to a function, **Go copies that header** (value copy). \n- **BUT** the header’s pointer points to the same underlying array, so **mutating elements** inside the function changes the original. ✅\n- **Important caveat:** **append** can allocate a *new array* if capacity is exceeded — then changes may not affect the caller. ⚠️",
+    "slide_type": "text"
+  },
+  {
+    "title": "💡 Tiny demo (Python analogy for shared mutation)",
+    "content": "def mutate(lst):\n    lst[0] = 'X'        # mutates same underlying list\n\narr = ['a','b','c']\nmutate(arr)\nprint(arr)  # -> ['X','b','c']\n\n# ⚠️ In Go: element mutation behaves the same.\n# But append may reallocate a NEW array (then caller won't see that appended element).",
+    "slide_type": "code"
+  },
+  {
+    "title": "📊 Quick compare — what happens inside a function?",
+    "content": "[\n  {\"question\":\"Is the slice header copied?\",\"answer\":\"Yes — passed by VALUE (header copied).\"},\n  {\"question\":\"Do element writes inside function affect caller?\",\"answer\":\"Yes — same underlying array, so element changes are visible.\"},\n  {\"question\":\"Is append always visible to caller?\",\"answer\":\"Not always — if append stays within capacity, caller sees it; if append reallocates, caller keeps old header.\"},\n  {\"question\":\"So is it value or reference?\",\"answer\":\"Both answers are used in interviews — **technically: header by value, data shared by reference**.\"}\n]",
+    "slide_type": "table"
+  },
+  {
+    "title": "🔥 Outro — Next curiosity",
+    "content": "**Next:** \"Why does `append` sometimes ‘lose’ changes?\" — Demo: append-within-cap vs append-causing-grow. \n\n**Retention hook:** 🤯 \"One small append can change who owns the array — want to see it live?\"",
+    "slide_type": "text"
+  }
+]

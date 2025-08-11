@@ -1,0 +1,36 @@
+"Most people think… appending to a slice is harmless. [pause] You just add more values, right?
+But here’s the twist — push a slice beyond its limit, and something BIG happens.
+It’s like pulling a rubber band… stretch too far, and it’s not the same band anymore.
+You might not even notice it — but this tiny change can silently break your code."
+
+Slide 2 – 🛠 Quick Setup
+"Let’s start simple.
+Here, we have a slice with three numbers. [pause] Its length is three… and capacity is also three.
+Now watch — when we append one more number… [pause] the output changes.
+But the real story is hiding behind the scenes. [pause]
+We’ve gone beyond its original capacity — and Go is doing something unexpected for you."
+
+Slide 3 – 📊 What Happens
+"Before the append, the slice length and capacity were the same. [pause]
+After adding one extra value — the length is four, but capacity jumps to six!
+Why? Because Go creates a new underlying array.
+The original one is gone, and your slice now points somewhere else.
+Look closely — the old and new slices are not linked anymore."
+
+Slide 4 – 💡 Why It Matters
+"Here’s why you should care.
+When capacity is crossed, Go doesn’t just make space — it makes a new home for your data.
+This means… if another slice was using the old array, it won’t see your changes.
+Imagine two friends sharing notes — suddenly one friend gets a brand new notebook.
+The other friend? Still writing in the old one.
+This is a hidden bug waiting to happen if you’re sharing slices."
+
+Slide 5 – ⏭ Coming Up…
+"And that’s the slice trap.
+It’s not just about adding numbers — it’s about knowing when Go replaces your entire storage.
+If you understand this, you’ll avoid many confusing bugs in real projects."
+
+Outro
+"So, next time you append to a slice, don’t just check the length — watch the capacity too.
+It could save you hours of head-scratching.
+If this helped you, hit subscribe and stay tuned — let’s keep learning, one smart step at a time."

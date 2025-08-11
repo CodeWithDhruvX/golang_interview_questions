@@ -1,0 +1,54 @@
+Slide 1: 😮 Go Maps Can Trick You!
+Voiceover:
+"Have you ever checked a map key in Go… and got a value? [pause]
+Feels normal, right? [pause]
+But here’s the TRUTH… Go can hand you a value even when the key doesn’t exist.
+It’s like asking for sugar… and getting an empty bowl. [pause]
+You smile… but deep inside, you know something’s wrong."
+
+Slide 2: ⚠️ The Trap
+Voiceover:
+"Look at this code. [pause]
+We have a map with apples set to five. [pause]
+Now, we ask for bananas. [pause]
+Go doesn’t shout an error. [pause]
+It quietly returns zero… the default value for integers.
+But here’s the problem — was it really zero… or was the key missing? [pause]
+You can’t tell… and that’s dangerous."
+
+Slide 3: ✅ The 'Comma OK' Idiom
+Voiceover:
+"Here’s the life-saver. [pause]
+We use the ‘comma ok’ trick.
+First value — the actual data. [pause]
+Second value — a simple true or false.
+If it’s true, the key exists.
+If it’s false… that key is missing.
+It’s like checking the guest list before serving the cake. [pause]
+No unwanted surprises."
+
+Slide 4: 🔍 Why It Works
+Voiceover:
+"The magic is simple. [pause]
+Go always gives you two pieces of info — the value, and the truth about it.
+Without this, you might treat a missing value as real.
+With it… you’re in control.
+It’s the difference between guessing and knowing for sure."
+
+Slide 5: 🚀 Next Pitfall?
+Voiceover:
+"Now you know the secret to checking keys.
+But Go maps have another surprise…
+They can change size while you use them.
+Sometimes… even panic mid-iteration.
+That’s a story for another day."
+
+Warm Motivational Outro
+Voiceover:
+"So… next time you work with Go maps, remember the ‘comma ok’.
+It’s small… but it saves you from big mistakes.
+Keep learning, keep building… and don’t be afraid of the details.
+Because in coding… the small details make you a master. [pause]
+If you found this helpful, subscribe… and let’s grow together."
+
+If you’d like, I can now also make a tight, punchy 90-second timing breakdown so this script perfectly fits YouTube Shorts pacing. That would make it flow like a story but hit like a quick tip. Would you like me to do that next?

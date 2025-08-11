@@ -1,0 +1,78 @@
+Got it ✅
+Here’s the **full voiceover script** for your JSON slides on **"Slices in Functions — Go"** rewritten in a **natural, friendly, and beginner-focused style**, following all 15 rules you gave.
+
+---
+
+**🎤 Voiceover Script:**
+
+---
+
+**Slide 1 – ⚠️ Hook: Are Go slices passed by VALUE or REFERENCE?**
+
+"Let me ask you something… \[pause]
+When you pass a slice to a function in Go… is it by value… or by reference? \[pause]
+Most people quickly say… *‘by reference, of course!’*
+But here’s the twist — that’s only **half the truth**.
+Go actually **copies the slice header**… but that header still points to the **same underlying array**.
+Think of it like handing someone a new TV remote… but both remotes control the same TV. \[pause]
+Sounds simple, but this is where many developers get caught."
+
+---
+
+**Slide 2 – 🔍 Quick explainer — the slice header**
+
+"See, a slice in Go is just **three small things**.
+A pointer to the array… its length… and its capacity. \[pause]
+When you pass it to a function, Go copies these three values.
+That’s why we say… it’s **passed by value**.
+But because the pointer is copied too… both the caller and the function are looking at the **same array**.
+So… if you change an element inside the function… it changes for the caller too. \[pause]
+The only time this breaks… is when you **append** beyond capacity.
+Then Go quietly makes a **new array**, and suddenly, the caller’s slice is stuck with the old one."
+
+---
+
+**Slide 3 – 💡 Tiny demo (Python analogy for shared mutation)**
+
+"Look at this quick analogy in Python.
+We have a list… pass it to a function… and inside, we change the first element to ‘X’.
+When we print it outside… the change is still there.
+That’s because both the caller and function are **looking at the same memory**.
+Go behaves exactly like this…
+Until… \[pause] you append past capacity…
+That’s when Go decides to get a brand-new array for itself…
+And from that point… changes stay hidden from the caller."
+
+---
+
+**Slide 4 – 📊 Quick compare — what happens inside a function?**
+
+"Let’s make it even clearer. \[pause]
+When you pass a slice… the header is **always copied**.
+Element changes? Yes — the caller will see them.
+Append within capacity? Caller sees that too.
+Append beyond capacity? Caller sees nothing — because now… you’re working with a completely **different array**.
+So is it value or reference?
+It’s both. Technically… header by value… data by reference."
+
+---
+
+**Slide 5 – 🔥 Outro — Next curiosity**
+
+"So… next time someone asks ‘Is a slice in Go passed by value or reference?’…
+You can smile and say… *‘Both, but here’s the real story.’*
+It’s a small detail… but in interviews… it can mean the difference between a confused look… and a confident answer."
+
+---
+
+**Final Warm Outro**
+
+"Alright… that’s a wrap for today.
+If this made slices crystal clear for you… take a second to **subscribe** and join me again.
+We’ll keep breaking down programming concepts… into simple, clear ideas…
+So you can walk into your next interview… with confidence and a smile.
+See you in the next one."
+
+---
+
+If you want, I can also **tighten the pacing** and **mark exact pauses for a perfect 90-second delivery** so it’s YouTube Shorts-ready. Would you like me to do that next?

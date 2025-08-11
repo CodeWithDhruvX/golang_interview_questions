@@ -1,0 +1,27 @@
+[
+  {
+    "title": "🚨 Len vs Cap — Don’t Mix Them!",
+    "content": "**Most beginners think** `len()` and `cap()` are the same.\n\n❌ Nope! In Go, they’re **two very different stories**.\n\nMix them up in an interview… and you’re in trouble. 😅",
+    "slide_type": "text"
+  },
+  {
+    "title": "📏 What They Really Mean",
+    "content": "- **`len()`** → How many items are *actually there* 🧮\n- **`cap()`** → How many items it *can hold before breaking* 📦\n\nThink: *Jar of cookies* → **Len** = cookies inside, **Cap** = jar’s size.",
+    "slide_type": "text"
+  },
+  {
+    "title": "💻 Quick Go Example",
+    "content": "```go\nnums := make([]int, 3, 5)\nfmt.Println(len(nums)) // 3\nfmt.Println(cap(nums)) // 5\n\nnums = append(nums, 10, 20)\nfmt.Println(len(nums)) // 5\nfmt.Println(cap(nums)) // 5\n\nnums = append(nums, 30)\nfmt.Println(len(nums)) // 6\nfmt.Println(cap(nums)) // 10 // 🔥 doubled!\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "🆚 Side-by-Side",
+    "content": "[\n  {\"Function\": \"len(slice)\", \"Tells You\": \"Count of elements now\"},\n  {\"Function\": \"cap(slice)\", \"Tells You\": \"Max space before resize\"}\n]",
+    "slide_type": "table"
+  },
+  {
+    "title": "🤯 Next Slice Mystery",
+    "content": "Ever wondered *why* Go sometimes **doubles** capacity when appending? That’s the secret sauce we’ll uncover next. 🍿",
+    "slide_type": "text"
+  }
+]

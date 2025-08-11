@@ -1,0 +1,30 @@
+[
+  {
+    "title": "🚨 The Go Slice Trap",
+    "content": "**Most beginners think** appending just makes a slice bigger.\n\nBut… **push it past its limit** and Go quietly changes *something* big. 🤯\n\nIt's like stretching a rubber band — at some point, it's **not the same band anymore**.",
+    "slide_type": "text"
+  },
+  {
+    "title": "🛠 Quick Setup",
+    "content": "```go\nnums := []int{1, 2, 3}\nfmt.Println(len(nums), cap(nums)) // 3 3\n\nnums2 := append(nums, 4)\nfmt.Println(nums2)\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "📊 What Happens",
+    "content": "[\n  {\"Action\": \"Before append\", \"Length\": 3, \"Capacity\": 3, \"Same array?\": \"Yes\"},\n  {\"Action\": \"+1 element\", \"Length\": 4, \"Capacity\": 6, \"Same array?\": \"No\"}\n]",
+    "slide_type": "table"
+  },
+  {
+    "title": "💡 Why It Matters",
+    "content": "- When **capacity is exceeded**, Go **creates a new array**\n- Old slice data is copied → new memory address\n- Any other slices pointing to the *old array* won't see changes\n- **Hidden bug alert** in shared slices! ⚠️",
+    "slide_type": "text"
+  },
+  {
+    "title": "⏭ Coming Up…",
+    "content": "Next: **Why Go’s slice copy might be slower than you think** — even when it looks O(1)! ⏳",
+    "slide_type": "text"
+  }
+]
+
+
+

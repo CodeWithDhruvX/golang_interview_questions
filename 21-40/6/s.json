@@ -1,0 +1,47 @@
+[
+  {
+    "title": "🎯 Why Multi-Dimensional Slices?",
+    "content": "**Imagine** a chessboard, a spreadsheet, or a game map.\n\nIn Go, you can represent these using **multi-dimensional slices** — basically, slices inside slices.\n\nThey let you store **rows and columns** of data in a clean way.",
+    "slide_type": "text"
+  },
+  {
+    "title": "📌 How They Work",
+    "content": "A multi-dimensional slice is **not** a true matrix — it's a slice where each element is **another slice**.\n\nThink: `[][]T` where `T` is your data type.\n\nThis means **each row can have a different length**.",
+    "slide_type": "text"
+  },
+  {
+    "title": "🛠 Basic Matrix Example",
+    "content": "```go\npackage main\nimport \"fmt\"\n\nfunc main() {\n    // Create a 3x3 matrix\n    matrix := [][]int{\n        {1, 2, 3},\n        {4, 5, 6},\n        {7, 8, 9},\n    }\n\n    fmt.Println(matrix[1][2]) // Output: 6\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "⚙ Building a Matrix Dynamically",
+    "content": "```go\nrows, cols := 3, 3\nmatrix := make([][]int, rows)\nfor i := range matrix {\n    matrix[i] = make([]int, cols)\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "💡 Filling the Matrix",
+    "content": "```go\nvalue := 1\nfor i := range matrix {\n    for j := range matrix[i] {\n        matrix[i][j] = value\n        value++\n    }\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "📊 Row Lengths Can Vary",
+    "content": "```go\nmatrix := [][]string{\n    {\"A\", \"B\"},\n    {\"C\", \"D\", \"E\"},\n}\nfmt.Println(matrix[1][2]) // Output: E\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "⚠ Common Pitfalls",
+    "content": "```json\n[\n  {\"mistake\": \"Assuming all rows have the same length\"},\n  {\"mistake\": \"Forgetting to initialize inner slices\"},\n  {\"mistake\": \"Index out of range errors when accessing elements\"}\n]\n```",
+    "slide_type": "table"
+  },
+  {
+    "title": "📌 When to Use",
+    "content": "- **Grid-based games** like chess or tic-tac-toe\n- **Data tables** or spreadsheets\n- **Image processing** where pixels are rows × columns",
+    "slide_type": "text"
+  },
+  {
+    "title": "🚀 Final Tip",
+    "content": "**Multi-dimensional slices in Go are flexible** — but they’re not fixed-size arrays.\n\nUse them when you need **dynamic row sizes** or **easy expansion**.\n\nFor fixed-size data, consider **arrays** for better performance.",
+    "slide_type": "text"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "title": "🚨 Go Slice Copy Myth!",
+    "content": "**Most beginners think** copying a slice makes a **brand new list**.\n\nBut… in Go, it might just be **pointing to the same memory**! 😱\n\nIt's like giving someone a *photocopy*… but it's still **linked to your notebook**.",
+    "slide_type": "text"
+  },
+  {
+    "title": "💻 Simple Slice Copy",
+    "content": "```go\nnums := []int{1, 2, 3}\ncopy1 := nums\n\ncopy1[0] = 99\nfmt.Println(nums)   // [99 2 3]\nfmt.Println(copy1)  // [99 2 3]\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "🧠 Why This Happens",
+    "content": "- Slices = **pointer + length + capacity**\n- Assigning a slice **copies the pointer**, not the data 📌\n- Both slices share **same underlying array** 🪢",
+    "slide_type": "text"
+  },
+  {
+    "title": "✅ Making a Real Copy",
+    "content": "```go\nnums := []int{1, 2, 3}\ncopy2 := make([]int, len(nums))\ncopy(copy2, nums)\n\ncopy2[0] = 99\nfmt.Println(nums)   // [1 2 3]\nfmt.Println(copy2)  // [99 2 3]\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "🤯 Still Think You Know Slices?",
+    "content": "Next: **Why appending to a slice can secretly break your code!** 🔥",
+    "slide_type": "text"
+  }
+]

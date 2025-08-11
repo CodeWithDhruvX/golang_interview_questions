@@ -1,4 +1,4 @@
-Generate structured JSON data for the topic: "What are microfrontends?".
+Generate structured JSON data for the topic: "**Multi-dimensional Slice**Long-formBuilding a Matrix in Go: The Ultimate Guide to Multi-Dimensional Slices**English:** "Think of a chessboard or a spreadsheet. How do you build that in Go? Today, we're mastering multi-dimensional slices from scratch".
 
 Use the following format for each slide:
 

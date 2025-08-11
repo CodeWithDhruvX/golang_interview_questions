@@ -1,6 +1,6 @@
 🎯 TASK:
 Generate **structured JSON** data for a short-form video (1–2 mins) on the topic:  
-**"Key features of Python?"**
+**"**10. Compare Maps**ShortThe FATAL Mistake of Comparing Go Maps (==)**English:** "Trying to compare two maps in Go with `==`? Don't! It will crash your program. Here's why and what to do instead.""**
 
 🧩 FORMAT:
 [

@@ -1,0 +1,27 @@
+[
+  {
+    "title": "🚨 The Go Map Comparison Trap",
+    "content": "**Most beginners think** you can compare two maps with `==`.\n\nBut in Go, doing this will **crash your program** instantly! 💥",
+    "slide_type": "text"
+  },
+  {
+    "title": "🛠 What Actually Happens",
+    "content": "Go **only allows** map comparison with `nil`.\n\nWhy? Because maps are like **locked boxes** — Go doesn't open them up for comparison.\n\nIf you try:\n```go\nif m1 == m2 {\n    fmt.Println(\"Equal\")\n}\n```\n➡ **Compile-time error**: `invalid operation: m1 == m2`",
+    "slide_type": "code"
+  },
+  {
+    "title": "⚡ The Right Way",
+    "content": "You have 2 safe options:\n\n1️⃣ **Loop & compare** keys/values.\n2️⃣ Use `reflect.DeepEqual()` for quick checks.\n\n```go\nif reflect.DeepEqual(m1, m2) {\n    fmt.Println(\"Equal\")\n}\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "💡 Why This Matters",
+    "content": "- Avoids program crashes ❌💥\n- Keeps your code **predictable** ✅\n- Saves you from **debugging nightmares** 😅",
+    "slide_type": "text"
+  },
+  {
+    "title": "⏭ Next Up",
+    "content": "**Ever wondered** why Go slices sometimes *magically* change? 🪄\nStay tuned for the **slice trap** episode! 📹",
+    "slide_type": "text"
+  }
+]

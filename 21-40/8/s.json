@@ -1,0 +1,27 @@
+[
+  {
+    "title": "🗺 What's a Map in Go?",
+    "content": "**Think of a real map** — it connects a place to its location.\n\nIn Go, a **map** connects a **key** to a **value**.\n\n📦 Perfect for storing **lookup data**: names, prices, scores.",
+    "slide_type": "text"
+  },
+  {
+    "title": "🛠 Creating a Map",
+    "content": "```go\n// Create with make\nscores := make(map[string]int)\n\n// Add values\nscores[\"Alice\"] = 90\nscores[\"Bob\"] = 85\n\nfmt.Println(scores)\n```",
+    "slide_type": "code"
+  },
+  {
+    "title": "🔍 Reading & Checking Keys",
+    "content": "```go\nval := scores[\"Alice\"]      // 90\nval, ok := scores[\"Charlie\"] // 0, false\n``` \n✅ `ok` tells if the key exists.\n🚫 Missing keys return **zero values**.",
+    "slide_type": "code"
+  },
+  {
+    "title": "⚡ Map Superpowers",
+    "content": "- **Fast** lookups 🔎\n- **Flexible**: any comparable type can be a key\n- **No order**: Go maps are **unordered**\n- **Delete** with: `delete(scores, \"Bob\")`",
+    "slide_type": "text"
+  },
+  {
+    "title": "🚀 What's Next?",
+    "content": "**Ever seen a map change while you loop over it?**\n\nThat's a wild Go trick — let's uncover it next. 😉",
+    "slide_type": "text"
+  }
+]
