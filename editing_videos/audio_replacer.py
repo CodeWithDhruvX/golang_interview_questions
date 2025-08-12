@@ -3,17 +3,18 @@ import subprocess
 import tkinter as tk
 from tkinter import filedialog, simpledialog, messagebox
 import moviepy as mp
+import ffmpeg
 
 class VideoAudioTool:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Video Audio Tool")
-        self.root.geometry("400x300")
+        self.root.geometry("450x400")
         self.setup_gui()
     
     def setup_gui(self):
         # Title
-        title_label = tk.Label(self.root, text="Video Audio Tool", font=("Arial", 16, "bold"))
+        title_label = tk.Label(self.root, text="Video Audio Tool", font=("Arial", 18, "bold"))
         title_label.pack(pady=20)
         
         # Extract Audio Button
@@ -21,9 +22,11 @@ class VideoAudioTool:
             self.root, 
             text="Extract Audio from Videos", 
             command=self.extract_audio_from_videos,
-            width=25,
+            width=30,
             height=2,
-            font=("Arial", 10)
+            font=("Arial", 10),
+            bg="#4CAF50",
+            fg="white"
         )
         extract_btn.pack(pady=10)
         
@@ -32,20 +35,37 @@ class VideoAudioTool:
             self.root, 
             text="Replace Audio in Videos", 
             command=self.replace_audio_in_videos,
-            width=25,
+            width=30,
             height=2,
-            font=("Arial", 10)
+            font=("Arial", 10),
+            bg="#2196F3",
+            fg="white"
         )
         replace_btn.pack(pady=10)
+        
+        # Merge Videos Button
+        merge_btn = tk.Button(
+            self.root, 
+            text="Merge Videos", 
+            command=self.merge_videos_interface,
+            width=30,
+            height=2,
+            font=("Arial", 10),
+            bg="#FF9800",
+            fg="white"
+        )
+        merge_btn.pack(pady=10)
         
         # Exit Button
         exit_btn = tk.Button(
             self.root, 
             text="Exit", 
             command=self.root.quit,
-            width=25,
+            width=30,
             height=1,
-            font=("Arial", 10)
+            font=("Arial", 10),
+            bg="#f44336",
+            fg="white"
         )
         exit_btn.pack(pady=20)
     
@@ -87,6 +107,7 @@ class VideoAudioTool:
                 if video.audio is None:
                     print(f"Warning: No audio track found in {os.path.basename(video_path)}")
                     error_count += 1
+                    video.close()
                     continue
                 
                 output_file = os.path.join(
@@ -219,6 +240,99 @@ class VideoAudioTool:
             print("Error: FFmpeg not found. Please make sure FFmpeg is installed and in your PATH.")
             messagebox.showerror("Error", "FFmpeg not found. Please install FFmpeg and add it to your PATH.")
             return False
+    
+    def merge_videos_interface(self):
+        """Interface for merging videos functionality"""
+        # Select video files
+        video_files = filedialog.askopenfilenames(
+            title="Select Video Files to Merge", 
+            filetypes=[
+                ("Video Files", "*.mp4;*.mkv;*.avi;*.mov"),
+                ("MP4 files", "*.mp4"),
+                ("MKV files", "*.mkv"),
+                ("AVI files", "*.avi"),
+                ("MOV files", "*.mov"),
+                ("All files", "*.*")
+            ]
+        )
+        
+        if not video_files:
+            messagebox.showinfo("Info", "No video files selected.")
+            return
+        
+        if len(video_files) < 2:
+            messagebox.showwarning("Warning", "Please select at least 2 video files to merge.")
+            return
+        
+        # Select output folder
+        output_folder = filedialog.askdirectory(title="Select Output Folder")
+        if not output_folder:
+            messagebox.showinfo("Info", "No output folder selected.")
+            return
+        
+        # Get output filename
+        output_filename = simpledialog.askstring(
+            "Output Filename", 
+            "Enter output filename (without extension):", 
+            initialvalue="merged_video"
+        )
+        
+        if not output_filename:
+            output_filename = "merged_video"
+        
+        # Merge videos
+        if self.merge_videos(list(video_files), output_folder, output_filename):
+            messagebox.showinfo("Success", f"Videos merged successfully!\nOutput: {output_filename}.mp4")
+        else:
+            messagebox.showerror("Error", "Failed to merge videos. Check console for details.")
+    
+    def merge_videos(self, video_files, output_folder, output_filename):
+        """Merge multiple video files using ffmpeg-python"""
+        if not video_files:
+            print("No video files provided. Exiting...")
+            return False
+
+        if not output_folder:
+            print("No output folder provided. Exiting...")
+            return False
+
+        output_file = os.path.join(output_folder, f"{output_filename}.mp4")
+        list_file = os.path.join(output_folder, "input_videos.txt")
+        
+        try:
+            # Create input list file
+            with open(list_file, "w") as f:
+                for video in video_files:
+                    # Normalize path for cross-platform compatibility
+                    normalized_path = os.path.normpath(video).replace("\\", "/")
+                    f.write(f"file '{normalized_path}'\n")
+            
+            print(f"Merging {len(video_files)} videos...")
+            for i, video in enumerate(video_files, 1):
+                print(f"{i}. {os.path.basename(video)}")
+            
+            # Use ffmpeg-python to merge videos
+            ffmpeg.input(list_file, format='concat', safe=0).output(
+                output_file, 
+                c='copy'
+            ).run(overwrite_output=True, quiet=True)
+            
+            print(f"Videos merged successfully into {output_file}")
+            return True
+            
+        except ffmpeg.Error as e:
+            print("Error merging videos:", e)
+            return False
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            return False
+        finally:
+            # Clean up the temporary list file
+            if os.path.exists(list_file):
+                try:
+                    os.remove(list_file)
+                except:
+                    pass
     
     def run(self):
         """Start the application"""
