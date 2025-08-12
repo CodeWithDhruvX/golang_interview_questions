@@ -781,10 +781,10 @@ class OptimizedVideoProcessor:
         if self.whisper_model is None:
             logging.info("🧠 Loading Whisper model...", extra={'is_status': True})
             try:
-                self.whisper_model = WhisperModel("small", compute_type="int8")
+                self.whisper_model = WhisperModel("large-v3", compute_type="int8")
             except Exception as e:
                 logging.warning(f"⚠️ Could not load 'small' model, falling back to 'tiny'. Reason: {e}", extra={'is_status': True})
-                self.whisper_model = WhisperModel("tiny", device="cpu", compute_type="int8")
+                self.whisper_model = WhisperModel("small", device="cpu", compute_type="int8")
         return self.whisper_model
 
     def hex_to_ass_color(self, hex_color):

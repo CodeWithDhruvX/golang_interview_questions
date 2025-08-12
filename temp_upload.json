@@ -1,0 +1,43 @@
+{
+  "videos": [
+    {
+      "videoFile": "C:/Users/dhruv/Videos/uploading/final/v1/subscribe/v1/2025-08-12 16-17-31_output_processed.mp4",
+      "title": "🧠 How Go Slices Change Memory on Append (Mind-blowing!)",
+      "description": "Track Go slice memory addresses to reveal hidden behavior 🧬\n\n💡 In this bite-sized demo:\n- Understand Go slice internals 👨‍💻\n- Learn when and why Go reallocates memory 📊\n- Avoid hidden performance costs 🚨\n\n👀 A must-watch for Go learners and performance tweakers!\n\n#golang #memory #slicereallocation #gointerview #goperformance #shorts #programmingtips",
+      "tags": ["golang", "memory", "slice", "reallocation", "golang interview", "go internals", "performance", "golangshorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_memory_address_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-13 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/uploading/final/v1/subscribe/v1/2025-08-12 16-56-37_output_processed.mp4",
+      "title": "❗ Go Slice Append Inside Functions — Gotcha You Must Know!",
+      "description": "Appending to slices inside functions isn't as simple as it looks in Go ⚠️\n\n📹 In this short:\n- Learn why your slice doesn't change outside a function 🙅‍♂️\n- Understand Go's pass-by-value behavior 🔄\n- Fix subtle bugs in your code ✅\n\n🎯 Essential for Go devs doing functional refactoring!\n\n#golang #functions #slicebehavior #codinggotchas #gointerview #golangshorts #refactoring #backend",
+      "tags": ["golang", "function", "slice", "append", "gotchas", "golang interview", "backend", "golangshorts"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/slice_append_function_thumbnail.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-14 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    },
+    {
+      "videoFile": "C:/Users/dhruv/Videos/uploading/final/v1/subscribe/v1/2025-08-12 17-26-56_output_processed.mp4",
+      "title": "⚡ Stop Copying Slices the Wrong Way in Go! Use This Trick Instead",
+      "description": "Learn how to properly copy slices in Golang using the built-in `copy()` function!\n\n✅ In this short:\n- Avoid common mistakes with slice memory\n- See how Go handles slice copying internally\n- Boost your Go interview answers\n\n🔥 Perfect for beginners and intermediate developers!\n\n#golang #shorts #goprogramming #devtips #codingtricks #interviewprep",
+      "tags": ["golang", "go programming", "copy slices", "golang tutorial", "go interview questions", "golang tips"],
+      "categoryName": "Education",
+      "privacyStatus": "public",
+      "thumbnail": "C:/Users/dhruv/Videos/2025/golang_interview_questions/11/thumbnails/copy_builtin.png",
+      "playlistName": "Golang Interview Shorts 🔥 | 1 Go Qn a Day | Crack Interviews Fast",
+      "publishAt": "2025-08-15 12:00:00",
+      "madeForKids": false,
+      "ageRestriction": false
+    }
+  ]
+}

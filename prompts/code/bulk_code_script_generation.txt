@@ -61,6 +61,7 @@ For EACH snippet in the JSON:
 4. Add stage directions in parentheses when helpful, e.g., “(show code on screen)”, “(zoom on output)”.
 5. Keep a friendly, confident tone — educational but lively.
 6. create the youtube script max 3 code snippet then moving to the next three one.
+7. Add **pauses and rhythm** where needed — use [pause] to show natural breaks.
 
 Now here is the JSON:
 [PASTE JSON HERE]
