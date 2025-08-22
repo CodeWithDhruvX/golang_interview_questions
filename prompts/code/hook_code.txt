@@ -16,7 +16,12 @@ A call-to-action (like comment, share, or watch next).programming langage name a
 7. please give me the question only relvant programming langauge
 
 
-Strings crud in the golang
+15. What are struct types in Go?
+16. How do you define and use struct tags?
+17. How to embed one struct into another?
+18. How do you compare two structs?
+19. What is the difference between shallow and deep copy in structs?
+20. How do you convert a struct to JSON?
 
 ===========================================================================
 
@@ -122,7 +127,7 @@ For EACH snippet in the JSON:
 5. Keep a friendly, confident tone — educational but lively.
 6. create the youtube script max 3 code snippet then moving to the next three one.
 7. Add **pauses and rhythm** where needed — use [pause] to show natural breaks.
-8. Topic title must folllow with numberic number. topic_name
+8. Topic title must folllow with numberic number. topic_name and don't add any icons in title
 
 
 Now here is the JSON:

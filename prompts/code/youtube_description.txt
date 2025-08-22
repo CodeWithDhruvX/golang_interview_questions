@@ -73,7 +73,7 @@ func main() {
 
 
 
-please make sure that create 3 objects array of json using below information
+please make sure that create  objects array of json using below information
 
 Golang Fundamentals QnA 🔥 | Arrays, Slices, Maps & Structs Explained
 
@@ -109,4 +109,4 @@ seo optimized title and description
 
 this is a short video
 
-please conisder that this is interview questions and long video
+please conisder that this is interview questions and short videos
