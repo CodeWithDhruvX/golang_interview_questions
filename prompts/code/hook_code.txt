@@ -16,7 +16,7 @@ A call-to-action (like comment, share, or watch next).programming langage name a
 7. please give me the question only relvant programming langauge
 
 
-What are pointers in Go?
+Strings crud in the golang
 
 ===========================================================================
 
@@ -50,35 +50,6 @@ Now, output only the JSON — no explanations, no extra text.
 
 
 ========================================================
-
-You are a YouTube scriptwriter who creates engaging, beginner-friendly programming explainer videos.
-
-I will give you a JSON object containing multiple programming code snippets. 
-Each snippet has:
-- "title": a short video title
-- "code": a complete code example
-- "hook": a short, intriguing sentence
-
-Your task:
-For EACH snippet in the JSON:
-1. Create a **1.5–3 minute YouTube script** explaining the code to beginners in an engaging way.
-2. Structure each script into the following sections:
-   - **Opening Hook (0:00–0:10)** — expand the given hook into a punchy, curiosity-driven intro that grabs attention.
-   - **Concept Explanation (0:10–0:40)** — explain what the concept is and why it matters.
-   - **Code Walkthrough (0:40–1:20)** — go through the provided code line by line, explaining what each part does.
-   - **Why It’s Useful (1:20–2:10)** — explain practical applications, real-world use cases, or common scenarios.
-   - **Outro (2:10–2:30)** — end with a question to encourage comments, and a call to like & subscribe for more content.
-3. Maintain technical accuracy while making it easy to follow for beginners.
-4. Add stage directions in parentheses when helpful, e.g., “(show code on screen)”, “(zoom on output)”.
-5. Keep a friendly, confident tone — educational but lively.
-6. create the youtube script max 3 code snippet then moving to the next three one.
-7. Add **pauses and rhythm** where needed — use [pause] to show natural breaks.
-
-Now here is the JSON:
-[PASTE JSON HERE]
-
-====================================================================
-
 
 
 Your task:  
@@ -126,3 +97,35 @@ Return **only** the JSON array inside a fenced JSON code block like this:
     "ageRestriction": false
   }
 ]
+
+============================================================
+
+You are a YouTube scriptwriter who creates engaging, beginner-friendly programming explainer videos.
+
+I will give you a JSON object containing multiple programming code objects. 
+Each snippet has:
+- "title": a short video title
+- "code": a complete code example
+- "hook": a short, intriguing sentence
+
+Your task:
+For EACH snippet in the JSON:
+1. Create a **1.5–3 minute YouTube script** explaining the code to beginners in an engaging way.
+2. Structure each script into the following sections:
+   - **Opening Hook (0:00–0:10)** — expand the given hook into a punchy, curiosity-driven intro that grabs attention.
+   - **Concept Explanation (0:10–0:40)** — explain what the concept is and why it matters.
+   - **Code Walkthrough (0:40–1:20)** — go through the provided code line by line, explaining what each part does.
+   - **Why It’s Useful (1:20–2:10)** — explain practical applications, real-world use cases, or common scenarios.
+   - **Outro (2:10–2:30)** — end with a question to encourage comments, and a call to like & subscribe for more content.
+3. Maintain technical accuracy while making it easy to follow for beginners.
+4. Add stage directions in parentheses when helpful, e.g., “(show code on screen)”, “(zoom on output)”.
+5. Keep a friendly, confident tone — educational but lively.
+6. create the youtube script max 3 code snippet then moving to the next three one.
+7. Add **pauses and rhythm** where needed — use [pause] to show natural breaks.
+8. Topic title must folllow with numberic number. topic_name
+
+
+Now here is the JSON:
+
+
+
