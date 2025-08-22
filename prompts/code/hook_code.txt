@@ -16,12 +16,10 @@ A call-to-action (like comment, share, or watch next).programming langage name a
 7. please give me the question only relvant programming langauge
 
 
-15. What are struct types in Go?
-16. How do you define and use struct tags?
-17. How to embed one struct into another?
-18. How do you compare two structs?
-19. What is the difference between shallow and deep copy in structs?
-20. How do you convert a struct to JSON?
+1. What are pointers in Go?
+2. How do you declare and use pointers?
+3. What is the difference between pointer and value receivers?
+4. What are methods in Go?
 
 ===========================================================================
 
