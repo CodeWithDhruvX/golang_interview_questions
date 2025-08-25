@@ -2,9 +2,9 @@
 
 I will provide a list of questions or topics. For each question:
 
-1. Generate a YouTube video script.
+1. Generate a YouTube video presentation text.
 
-2. Structure each script as follows:
+2. Structure each presentation as follows:
 
    * Introduction: Include a introduction about the topic text.
    * Key Points: 3–5 main points, each with:
@@ -28,6 +28,8 @@ Input format example:
 * Question 2: What is quantum computing?
 * Question 3: How do neural networks learn?
 
-Output: One file with scripts, diagrams, and visual cues for all questions.
+Output: One file with presentations, diagrams, and visual cues for all questions.
 
+
+make sure that this is not youtube script but youtube video presentation text
 ---
