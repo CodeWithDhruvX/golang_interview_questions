@@ -1,0 +1,27 @@
+==============================================================
+
+*"Generate a YouTube live streaming script. The script should include:
+
+An engaging introduction (welcome viewers, introduce the stream topic, thank them for joining).
+
+A short audience warm-up (encourage chat interaction, shoutouts, or quick poll).
+
+A structured Q&A section, where each of the provided questions is answered in a natural, conversational way. For each question:
+
+Acknowledge the audience/question
+
+Repeat the question aloud for clarity
+
+Provide a clear, structured answer (personal insight + actionable advice)
+
+Encourage chat engagement by asking viewers for their thoughts
+
+A few engagement reminders during the stream (like, subscribe, share, superchat/membership if relevant).
+
+A closing section that summarizes key takeaways, thanks the audience, and teases the next live or video.*
+
+Input: A list of audience questions.
+Output: A natural, host-style live streaming script ready to be read on YouTube."
+
+
+==============================================================
