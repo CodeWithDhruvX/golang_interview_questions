@@ -1,0 +1,54 @@
+I will give you 5 real-world app questions along with the programming language for each.
+
+Your task:
+
+1. For each question, create a JSON object in this exact format:
+
+{
+  "snippets": [
+    {
+      "title": "<short descriptive title>",
+      "code": "<programming language name, fully self-contained, short (15–25 lines), minimal inline comments (1–3 words), must solve the real-world problem, include // Output: with realistic sample output.
+
+      IMPORTANT:
+      - At the top of the code, add a comment with the programming language name (e.g., # Python, // Go, /* Java */).
+      - Inside the code, also include a short comment at the start describing the USER-FACING PROBLEM the app is solving.
+      - Add inline logic explanation comments where needed so the beginner understands how it works.
+      - Keep the code runnable, clean, and beginner-friendly.
+      - While generating the code, ensure that every line inside the "code" field is ≤ 52 characters. If a line exceeds this, wrap it into a new code line.
+      > Example: 
+      // Problem: User wants to track daily 
+      // expenses and calculate total.
+      > Logic: Store expenses in a slice, sum 
+      // them, and print total.
+      > Then actual code continues.
+      > Final section includes // Output: with realistic example>", 
+      "hook": "<1-line retention hook>"
+    }
+  ]
+}
+
+2. Requirements:
+- Always create a new app for each question — do NOT repeat previous ideas from all the previous chats.
+- Keep code clean, beginner-friendly, and runnable.
+- Must solve the real-world challenge described in the question.
+- Stay within 15–25 lines of code.
+- No external libraries unless absolutely necessary.
+- Include realistic sample output inside the code as a `// Output:` comment.
+- Each snippet must have:
+   - A short, catchy title
+   - A clear, readable app code with inline logic + problem comments
+   - A strong 1-line retention hook
+
+3. Return all 5 snippets together inside the "snippets" array in one JSON object.
+
+questions here:
+
+* What is the difference between an array and a slice?
+* How do you append to a slice?
+* What happens when a slice is appended beyond its capacity?
+* How do you copy slices?
+* What is the difference between len() and cap()?
+
+
+in golang
