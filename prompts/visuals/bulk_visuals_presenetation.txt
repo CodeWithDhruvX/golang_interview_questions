@@ -1,3 +1,4 @@
+````
 ---
 
 I will provide a list of questions or topics. For each question:
@@ -33,3 +34,38 @@ Output: One file with presentations, diagrams, and visual cues for all questions
 
 make sure that this is not youtube script but youtube video presentation text
 ---
+16. How to pass data between goroutines?
+17. What is the `runtime.GOMAXPROCS()` function?
+18. How do you detect deadlocks in Go?
+
+
+
+````
+ 
+
+=======================================================
+
+ based on the above result genrated resulta YouTube video presentation text, Your task is to turn this presentation into a YouTube script.  
+
+Requirements:  
+
+1. Use the original presentation text as the main source.  
+2. Expand short sentences into full narration suitable for a video.  
+3. Include natural spoken transitions and conversational phrasing.  
+4. Add prompts for visuals, on-screen text, or animations exactly where they appear in the presentation text.  
+5. Keep the tone engaging, friendly, and easy to follow.  
+6. Make it read like a script a YouTuber would actually speak, without changing the key points.  
+7. For diagrams or Mermaid placeholders in the presentation text, describe them in words for narration and suggest animations or visuals for the video.  
+8. Include opening greetings, brief hooks, and call-to-action at the end.  
+9. 5 to 7 minutes script text
+
+Output format:  
+
+* Introduction / Hook  
+* Section 1: (Narration + visual cues)  
+* Section 2: …  
+* Conclusion / Call-to-action  
+
+
+Here is the input presentation text:  
+[PASTE PRESENTATION TEXT HERE]

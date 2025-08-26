@@ -5,17 +5,20 @@ import os
 import webbrowser
 from pathlib import Path
 import tempfile
+import threading
+from concurrent.futures import ThreadPoolExecutor
 
 class MarkdownToHTMLConverter:
     def __init__(self, root):
         self.root = root
         self.root.title("Markdown to HTML Converter with Mermaid Support")
-        self.root.geometry("1200x800")
+        self.root.geometry("1400x900")
         self.root.configure(bg='#f0f0f0')
         
         # Variables
-        self.current_file = None
+        self.current_files = []
         self.output_html = ""
+        self.batch_results = []
         
         self.setup_ui()
         
@@ -28,67 +31,152 @@ class MarkdownToHTMLConverter:
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
         main_frame.columnconfigure(1, weight=1)
-        main_frame.rowconfigure(1, weight=1)
+        main_frame.rowconfigure(2, weight=1)
         
         # Title
         title_label = ttk.Label(main_frame, text="Markdown to HTML Converter", 
                                font=('Arial', 16, 'bold'))
         title_label.grid(row=0, column=0, columnspan=3, pady=(0, 10))
         
+        # Mode selection
+        mode_frame = ttk.LabelFrame(main_frame, text="Processing Mode", padding="5")
+        mode_frame.grid(row=1, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 10))
+        
+        self.processing_mode = tk.StringVar(value="single")
+        ttk.Radiobutton(mode_frame, text="Single File/Text Mode", 
+                       variable=self.processing_mode, value="single",
+                       command=self.toggle_mode).pack(side=tk.LEFT, padx=(0, 20))
+        ttk.Radiobutton(mode_frame, text="Batch Processing Mode", 
+                       variable=self.processing_mode, value="batch",
+                       command=self.toggle_mode).pack(side=tk.LEFT)
+        
         # Left panel - Input
         input_frame = ttk.LabelFrame(main_frame, text="Markdown Input", padding="5")
-        input_frame.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), padx=(0, 5))
+        input_frame.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), padx=(0, 5))
         input_frame.columnconfigure(0, weight=1)
-        input_frame.rowconfigure(1, weight=1)
+        input_frame.rowconfigure(2, weight=1)
         
-        # Input buttons
-        input_buttons = ttk.Frame(input_frame)
-        input_buttons.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
+        # Single mode buttons
+        self.single_buttons = ttk.Frame(input_frame)
+        self.single_buttons.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
         
-        ttk.Button(input_buttons, text="Load MD File", 
+        ttk.Button(self.single_buttons, text="Load MD File", 
                   command=self.load_markdown_file).pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(input_buttons, text="Clear", 
+        ttk.Button(self.single_buttons, text="Paste from Clipboard", 
+                  command=self.paste_from_clipboard).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(self.single_buttons, text="Clear", 
                   command=self.clear_input).pack(side=tk.LEFT, padx=(0, 5))
+        
+        # Batch mode buttons
+        self.batch_buttons = ttk.Frame(input_frame)
+        self.batch_buttons.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
+        
+        ttk.Button(self.batch_buttons, text="Select Multiple MD Files", 
+                  command=self.load_multiple_files).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(self.batch_buttons, text="Select Folder", 
+                  command=self.select_folder).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(self.batch_buttons, text="Clear Selection", 
+                  command=self.clear_file_selection).pack(side=tk.LEFT, padx=(0, 5))
+        
+        # File list for batch mode
+        self.file_list_frame = ttk.LabelFrame(input_frame, text="Selected Files", padding="5")
+        self.file_list_frame.grid(row=3, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(5, 0))
+        self.file_list_frame.columnconfigure(0, weight=1)
+        self.file_list_frame.rowconfigure(0, weight=1)
+        
+        self.file_listbox = tk.Listbox(self.file_list_frame, height=6)
+        file_scrollbar = ttk.Scrollbar(self.file_list_frame, orient="vertical")
+        self.file_listbox.config(yscrollcommand=file_scrollbar.set)
+        file_scrollbar.config(command=self.file_listbox.yview)
+        
+        self.file_listbox.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        file_scrollbar.grid(row=0, column=1, sticky=(tk.N, tk.S))
         
         # Input text area
         self.input_text = scrolledtext.ScrolledText(input_frame, wrap=tk.WORD, 
-                                                   width=50, height=25,
+                                                   width=50, height=20,
                                                    font=('Consolas', 10))
-        self.input_text.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        self.input_text.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Right panel - Preview/Output
         output_frame = ttk.LabelFrame(main_frame, text="HTML Preview", padding="5")
-        output_frame.grid(row=1, column=1, sticky=(tk.W, tk.E, tk.N, tk.S), padx=(5, 0))
+        output_frame.grid(row=2, column=1, sticky=(tk.W, tk.E, tk.N, tk.S), padx=(5, 0))
         output_frame.columnconfigure(0, weight=1)
-        output_frame.rowconfigure(1, weight=1)
+        output_frame.rowconfigure(2, weight=1)
         
-        # Output buttons
-        output_buttons = ttk.Frame(output_frame)
-        output_buttons.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
+        # Single mode output buttons
+        self.single_output_buttons = ttk.Frame(output_frame)
+        self.single_output_buttons.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
         
-        ttk.Button(output_buttons, text="Convert to HTML", 
+        ttk.Button(self.single_output_buttons, text="Convert to HTML", 
                   command=self.convert_to_html).pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(output_buttons, text="Save HTML", 
+        ttk.Button(self.single_output_buttons, text="Save HTML", 
                   command=self.save_html).pack(side=tk.LEFT, padx=(0, 5))
-        ttk.Button(output_buttons, text="Preview in Browser", 
+        ttk.Button(self.single_output_buttons, text="Preview in Browser", 
                   command=self.preview_in_browser).pack(side=tk.LEFT, padx=(0, 5))
+        
+        # Batch mode output buttons
+        self.batch_output_buttons = ttk.Frame(output_frame)
+        self.batch_output_buttons.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
+        
+        ttk.Button(self.batch_output_buttons, text="Convert All Files", 
+                  command=self.batch_convert).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(self.batch_output_buttons, text="Save All HTML", 
+                  command=self.batch_save_html).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(self.batch_output_buttons, text="Export Report", 
+                  command=self.export_batch_report).pack(side=tk.LEFT, padx=(0, 5))
+        
+        # Progress bar for batch operations
+        self.progress_var = tk.DoubleVar()
+        self.progress_bar = ttk.Progressbar(output_frame, variable=self.progress_var, 
+                                          maximum=100, length=300)
+        self.progress_bar.grid(row=3, column=0, sticky=(tk.W, tk.E), pady=(5, 0))
         
         # Output text area
         self.output_text = scrolledtext.ScrolledText(output_frame, wrap=tk.WORD, 
-                                                    width=50, height=25,
+                                                    width=50, height=20,
                                                     font=('Consolas', 9))
-        self.output_text.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        self.output_text.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Status bar
         self.status_var = tk.StringVar()
         self.status_var.set("Ready")
         status_bar = ttk.Label(main_frame, textvariable=self.status_var, 
                               relief=tk.SUNKEN, anchor=tk.W)
-        status_bar.grid(row=2, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
+        status_bar.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
         
-        # Add sample text
+        # Initialize UI state
+        self.toggle_mode()
         self.add_sample_text()
         
+    def toggle_mode(self):
+        """Toggle between single and batch processing modes"""
+        mode = self.processing_mode.get()
+        
+        if mode == "single":
+            # Show single mode elements
+            self.single_buttons.grid()
+            self.input_text.grid()
+            self.single_output_buttons.grid()
+            
+            # Hide batch mode elements
+            self.batch_buttons.grid_remove()
+            self.file_list_frame.grid_remove()
+            self.batch_output_buttons.grid_remove()
+            self.progress_bar.grid_remove()
+            
+        else:  # batch mode
+            # Hide single mode elements
+            self.single_buttons.grid_remove()
+            self.input_text.grid_remove()
+            self.single_output_buttons.grid_remove()
+            
+            # Show batch mode elements
+            self.batch_buttons.grid()
+            self.file_list_frame.grid()
+            self.batch_output_buttons.grid()
+            self.progress_bar.grid()
+            
     def add_sample_text(self):
         sample = """# Question 16: How do you define and use struct tags?
 
@@ -125,50 +213,13 @@ Today, we're diving into struct tags in Go. Struct tags let you add extra metada
 
    *(On-screen text: "Struct to JSON using tags")*
 
-3. **Other Tag Uses**
-
-   * Validation libraries use tags for rules.
-   * Example: `validate:"required"` ensures field is not empty.
-   * Tags make code cleaner and reusable.
-   *Visual placeholder:*
-
-   ```mermaid
-   graph LR
-   Field --> "Validation Rules" --> "Library Checks"
-   ```
-
-   *(On-screen text: "Struct tags for validation")*
-
 **Conclusion:**
 Struct tags are small but powerful. They help libraries understand your data. Start adding tags today to simplify serialization and validation.
-
----
-
-# Question 17: What are Go interfaces?
-
-**Introduction:**
-Go interfaces are one of the most powerful features in the language. They define behavior without specifying implementation.
-
-**Key Points:**
-
-1. **Interface Definition**
-
-   * An interface specifies method signatures
-   * Example: `type Writer interface { Write([]byte) (int, error) }`
-   * Any type implementing these methods satisfies the interface
-
-2. **Implicit Implementation**
-
-   * No explicit "implements" keyword needed
-   * If a type has the required methods, it implements the interface
-   * This enables duck typing: "If it walks like a duck..."
-
-**Conclusion:**
-Interfaces make Go code flexible and testable. They're the key to writing modular, maintainable programs.
 """
         self.input_text.insert("1.0", sample)
         
     def load_markdown_file(self):
+        """Load a single markdown file"""
         file_path = filedialog.askopenfilename(
             title="Select Markdown File",
             filetypes=[("Markdown files", "*.md"), ("Text files", "*.txt"), ("All files", "*.*")]
@@ -180,16 +231,71 @@ Interfaces make Go code flexible and testable. They're the key to writing modula
                     content = file.read()
                     self.input_text.delete("1.0", tk.END)
                     self.input_text.insert("1.0", content)
-                    self.current_file = file_path
+                    self.current_files = [file_path]
                     self.status_var.set(f"Loaded: {os.path.basename(file_path)}")
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to load file: {str(e)}")
                 
+    def load_multiple_files(self):
+        """Load multiple markdown files"""
+        file_paths = filedialog.askopenfilenames(
+            title="Select Multiple Markdown Files",
+            filetypes=[("Markdown files", "*.md"), ("Text files", "*.txt"), ("All files", "*.*")]
+        )
+        
+        if file_paths:
+            self.current_files = list(file_paths)
+            self.update_file_list()
+            self.status_var.set(f"Selected {len(file_paths)} files")
+            
+    def select_folder(self):
+        """Select a folder and load all markdown files from it"""
+        folder_path = filedialog.askdirectory(title="Select Folder with Markdown Files")
+        
+        if folder_path:
+            md_files = []
+            for ext in ['*.md', '*.txt', '*.markdown']:
+                md_files.extend(Path(folder_path).glob(ext))
+                md_files.extend(Path(folder_path).glob('**/' + ext))  # Include subdirectories
+            
+            if md_files:
+                self.current_files = [str(f) for f in md_files]
+                self.update_file_list()
+                self.status_var.set(f"Found {len(md_files)} markdown files in folder")
+            else:
+                messagebox.showinfo("No Files Found", "No markdown files found in the selected folder.")
+                
+    def update_file_list(self):
+        """Update the file listbox with current files"""
+        self.file_listbox.delete(0, tk.END)
+        for file_path in self.current_files:
+            self.file_listbox.insert(tk.END, os.path.basename(file_path))
+            
+    def clear_file_selection(self):
+        """Clear the file selection"""
+        self.current_files = []
+        self.update_file_list()
+        self.status_var.set("File selection cleared")
+        
+    def paste_from_clipboard(self):
+        """Paste content from clipboard"""
+        try:
+            clipboard_content = self.root.clipboard_get()
+            if clipboard_content:
+                self.input_text.delete("1.0", tk.END)
+                self.input_text.insert("1.0", clipboard_content)
+                self.status_var.set("Content pasted from clipboard")
+            else:
+                messagebox.showinfo("Clipboard Empty", "No content found in clipboard.")
+        except tk.TclError:
+            messagebox.showwarning("Clipboard Error", "Could not access clipboard content.")
+            
     def clear_input(self):
         self.input_text.delete("1.0", tk.END)
         self.status_var.set("Input cleared")
         
     def convert_to_html(self):
+        """Convert single markdown content to HTML"""
         markdown_content = self.input_text.get("1.0", tk.END)
         
         if not markdown_content.strip():
@@ -209,6 +315,145 @@ Interfaces make Go code flexible and testable. They're the key to writing modula
         except Exception as e:
             messagebox.showerror("Error", f"Conversion failed: {str(e)}")
             
+    def batch_convert(self):
+        """Convert multiple files in batch"""
+        if not self.current_files:
+            messagebox.showwarning("Warning", "Please select markdown files first.")
+            return
+            
+        # Start batch conversion in a separate thread
+        threading.Thread(target=self._batch_convert_worker, daemon=True).start()
+        
+    def _batch_convert_worker(self):
+        """Worker method for batch conversion"""
+        self.batch_results = []
+        total_files = len(self.current_files)
+        
+        self.root.after(0, lambda: self.progress_var.set(0))
+        self.root.after(0, lambda: self.status_var.set("Starting batch conversion..."))
+        
+        for i, file_path in enumerate(self.current_files):
+            try:
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    content = file.read()
+                    
+                html_content = self.markdown_to_html(content)
+                
+                result = {
+                    'file_path': file_path,
+                    'success': True,
+                    'html_content': html_content,
+                    'error': None
+                }
+                
+            except Exception as e:
+                result = {
+                    'file_path': file_path,
+                    'success': False,
+                    'html_content': None,
+                    'error': str(e)
+                }
+                
+            self.batch_results.append(result)
+            
+            # Update progress
+            progress = ((i + 1) / total_files) * 100
+            self.root.after(0, lambda p=progress: self.progress_var.set(p))
+            self.root.after(0, lambda i=i: self.status_var.set(f"Processing file {i+1} of {total_files}"))
+            
+        # Show results
+        self.root.after(0, self._show_batch_results)
+        
+    def _show_batch_results(self):
+        """Show batch conversion results"""
+        successful = sum(1 for r in self.batch_results if r['success'])
+        failed = len(self.batch_results) - successful
+        
+        result_text = f"Batch Conversion Results:\n"
+        result_text += f"Successfully converted: {successful} files\n"
+        result_text += f"Failed: {failed} files\n\n"
+        
+        if failed > 0:
+            result_text += "Failed files:\n"
+            for result in self.batch_results:
+                if not result['success']:
+                    result_text += f"- {os.path.basename(result['file_path'])}: {result['error']}\n"
+                    
+        self.output_text.delete("1.0", tk.END)
+        self.output_text.insert("1.0", result_text)
+        
+        self.status_var.set(f"Batch conversion completed: {successful} successful, {failed} failed")
+        
+    def batch_save_html(self):
+        """Save all converted HTML files"""
+        if not self.batch_results:
+            messagebox.showwarning("Warning", "Please convert files first.")
+            return
+            
+        output_dir = filedialog.askdirectory(title="Select Output Directory for HTML Files")
+        if not output_dir:
+            return
+            
+        successful_saves = 0
+        for result in self.batch_results:
+            if result['success']:
+                try:
+                    input_file = Path(result['file_path'])
+                    output_file = Path(output_dir) / f"{input_file.stem}.html"
+                    
+                    with open(output_file, 'w', encoding='utf-8') as file:
+                        file.write(result['html_content'])
+                        
+                    successful_saves += 1
+                    
+                except Exception as e:
+                    print(f"Failed to save {result['file_path']}: {e}")
+                    
+        messagebox.showinfo("Batch Save Complete", 
+                           f"Successfully saved {successful_saves} HTML files to:\n{output_dir}")
+        self.status_var.set(f"Saved {successful_saves} HTML files")
+        
+    def export_batch_report(self):
+        """Export a detailed batch processing report"""
+        if not self.batch_results:
+            messagebox.showwarning("Warning", "No batch results to export.")
+            return
+            
+        file_path = filedialog.asksaveasfilename(
+            title="Save Batch Report",
+            defaultextension=".txt",
+            filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
+        )
+        
+        if file_path:
+            try:
+                with open(file_path, 'w', encoding='utf-8') as file:
+                    file.write("Markdown to HTML Batch Conversion Report\n")
+                    file.write("=" * 50 + "\n\n")
+                    
+                    successful = sum(1 for r in self.batch_results if r['success'])
+                    failed = len(self.batch_results) - successful
+                    
+                    file.write(f"Total files processed: {len(self.batch_results)}\n")
+                    file.write(f"Successfully converted: {successful}\n")
+                    file.write(f"Failed conversions: {failed}\n\n")
+                    
+                    file.write("Detailed Results:\n")
+                    file.write("-" * 30 + "\n")
+                    
+                    for i, result in enumerate(self.batch_results, 1):
+                        file.write(f"{i}. {os.path.basename(result['file_path'])}\n")
+                        if result['success']:
+                            file.write("   Status: SUCCESS\n")
+                        else:
+                            file.write(f"   Status: FAILED - {result['error']}\n")
+                        file.write(f"   Full path: {result['file_path']}\n\n")
+                        
+                messagebox.showinfo("Report Saved", f"Batch report saved to:\n{file_path}")
+                
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to save report: {str(e)}")
+        
     def markdown_to_html(self, markdown_content):
         """Convert markdown content to HTML with Mermaid support"""
         
@@ -620,6 +865,13 @@ Interfaces make Go code flexible and testable. They're the key to writing modula
 def main():
     root = tk.Tk()
     app = MarkdownToHTMLConverter(root)
+    
+    # Add keyboard shortcuts
+    root.bind('<Control-o>', lambda e: app.load_markdown_file())
+    root.bind('<Control-v>', lambda e: app.paste_from_clipboard())
+    root.bind('<Control-s>', lambda e: app.save_html())
+    root.bind('<F5>', lambda e: app.convert_to_html())
+    
     root.mainloop()
 
 if __name__ == "__main__":
