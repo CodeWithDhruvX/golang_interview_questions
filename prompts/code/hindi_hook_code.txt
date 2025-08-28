@@ -1,0 +1,136 @@
+I want you to:
+1. Generate 10 viral YouTube Shorts ideas that are focused on following interview Q&A, pitfalls, or coding challenges. Each idea must have:
+
+
+A killer hook in the first 3 seconds.
+A clear structure for 30–60 seconds (problem > solution > quick tip).
+A call-to-action (like comment, share, or watch next).programming langage name added.
+2. Suggest 5 click-worthy titles and thumbnails for each idea (SEO + curiosity-based).
+
+3. Provide 1 full 30-second script for the highest potential idea.
+
+4. Optimize retention: ensure fast pacing, pattern interrupts, and rewatch loops.
+
+5. Suggest the best posting time strategy and hashtags to test for maximum reach.
+6. Add the programming lanuage name
+7. please give me the question only relvant programming langauge
+
+
+1. What are pointers in Go?
+2. How do you declare and use pointers?
+3. What is the difference between pointer and value receivers?
+4. What are methods in Go?
+
+===========================================================================
+
+You are to transform the following list of technical interview video ideas into a JSON array of objects.
+
+🎯 Output Format (MUST follow exactly):
+{
+  "snippets": [
+    {
+      "title": "<short descriptive title>",
+      "code": "<programming langauge name, fully self-contained, short (20–25 sec reading), minimal inline comments (1–3 words), highlight pitfall if relevant, include // Output comment>",
+      "hook": "<1-line retention hook>"
+    }
+  ]
+}
+
+📜 Rules for the code:
+- Language: programming language
+- Must be self-contained, runnable, and short
+- Use clear minimal inline comments
+- Show `// Output: ...` for expected result
+- If there is a pitfall, show Expected vs Actual in comments
+- No external packages unless required by the example
+- Format with proper indentation and escape quotes for JSON
+- Before writing any code, insert a comment containing the programming language name. Use the correct comment syntax for that language (e.g., # Python for Python, // Go for Go, /* Java */ for Java), and ensure the comment is properly aligned according to the language’s style guidelines.
+
+📥 Input list of ideas:
+<PASTE YOUR 10 IDEAS HERE>
+
+Now, output only the JSON — no explanations, no extra text.
+
+
+========================================================
+
+
+Your task:  
+Generate a structured JSON array where each object contains the following fields:
+
+1. videoFile: Absolute file path of the video (example: "C:/Users/YourName/Videos/<topic>.mp4").  
+2. title: An SEO-optimized title (≤100 chars) starting with "Go Interview Q<n>:" (increment number starting from the given Q number) + catchy hook + emojis.  
+3. description: YouTube-optimized description (around 500–1000 chars) including:  
+   - Attention-grabbing intro based on the English hook  
+   - 3–5 bullet points describing the video content  
+   - Relevant hashtags at the end  
+4. tags: An array of relevant YouTube tags (keywords).  
+5. categoryName: Always "Education".  
+6. privacyStatus: "public".  
+7. thumbnail: Absolute file path of the thumbnail image (example: "C:/Users/YourName/Videos/thumbnails/<topic>.png").  
+8. playlistName: An array of playlist names where this video belongs (example: ["Golang Interview Q&A", "Go Arrays & Slices Explained"]).  
+9. publishAt: Scheduled date & time in "YYYY-MM-DD HH:MM:SS" format (auto-increment 2 day per video).  
+10. madeForKids: false.  
+11. ageRestriction: false.
+
+✅ Rules:  
+- If type is "Short", make the description concise & hook-driven.  
+- If type is "Long-form", include more depth in the description and mention it's a complete guide.  
+- Include emojis in titles & descriptions for engagement.  
+- Use hashtags that are SEO-friendly for coding interviews and the Go programming language.  
+- Increment Q number sequentially for each video in the order given.  
+- Keep titles ≤100 characters but still catchy.
+
+Output format:  
+Return **only** the JSON array inside a fenced JSON code block like this:
+
+```json
+[
+  {
+    "videoFile": "C:/Users/YourName/Videos/example.mp4",
+    "title": "Go Interview Q21: 🚀 Example Title Here",
+    "description": "Example description here...",
+    "tags": ["golang", "go interview", "arrays", "slices"],
+    "categoryName": "Education",
+    "privacyStatus": "public",
+    "thumbnail": "C:/Users/YourName/Videos/thumbnails/example.png",
+    "playlistName": ["Golang Interview Q&A"],
+    "publishAt": "2025-08-08 10:00:00",
+    "madeForKids": false,
+    "ageRestriction": false
+  }
+]
+
+
+
+============================================================
+
+You are a YouTube scriptwriter who creates engaging, beginner-friendly programming explainer videos.
+
+I will give you a JSON object containing multiple programming code objects. 
+Each snippet has:
+- "title": a short video title
+- "code": a complete code example
+- "hook": a short, intriguing sentence
+
+Your task:
+For EACH snippet in the JSON:
+1. Create a **1.5–3 minute YouTube script** explaining the code to beginners in an engaging way.
+2. Structure each script into the following sections:
+   - **Opening Hook (0:00–0:10)** — expand the given hook into a punchy, curiosity-driven intro that grabs attention.
+   - **Concept Explanation (0:10–0:40)** — explain what the concept is and why it matters.
+   - **Code Walkthrough (0:40–1:20)** — go through the provided code line by line, explaining what each part does.
+   - **Why It’s Useful (1:20–2:10)** — explain practical applications, real-world use cases, or common scenarios.
+   - **Outro (2:10–2:30)** — end with a question to encourage comments, and a call to like & subscribe for more content.
+3. Maintain technical accuracy while making it easy to follow for beginners.
+4. Add stage directions in parentheses when helpful, e.g., “(show code on screen)”, “(zoom on output)”.
+5. Keep a friendly, confident tone — educational but lively.
+6. create the youtube script max 3 code snippet then moving to the next three one.
+7. Add **pauses and rhythm** where needed — use [pause] to show natural breaks.
+8. Topic title must folllow with numberic number. topic_name and don't add any icons in title
+9 give me the script in the hindi text
+
+Now here is the JSON:
+
+
+
