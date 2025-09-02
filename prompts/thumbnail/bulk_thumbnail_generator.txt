@@ -1,0 +1,22 @@
+*"I will give you a bulk list of YouTube audience questions. Analyze each question individually to uncover the main theme, underlying desire, or emotion behind it. Do not combine or generalize them — instead, focus on what makes each question unique.
+
+From this analysis, create 10 variations of YouTube thumbnail text for each question that are:
+
+Authentic and honest — no fake hype, no forced drama, no overused power words.
+
+Curiosity-driven — hinting at answers without fully revealing them.
+
+Emotionally engaging — reflecting the real struggles, curiosity, or motivations of the audience.
+
+Short, punchy, and scroll-stopping — grabbing attention while staying truthful.
+
+Flexible in tone — can be motivational, reflective, intriguing, or slightly mysterious, depending on the intent of the question.
+
+input questions:
+
+14. What are variadic functions?
+15. What is a type alias?
+16. What is the difference between `new()` and `make()`?
+    1. How do you handle errors in Go?
+17. What is panic and recover in Go?
+18. What are blank identifiers in Go?
