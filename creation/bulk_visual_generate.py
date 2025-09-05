@@ -2,13 +2,13 @@ import os
 import re
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, scrolledtext
+import tkinter.font as tkfont
 import webbrowser
 from pathlib import Path
 import tempfile
 import threading
 from concurrent.futures import ThreadPoolExecutor
 import uuid
-import markdown
 
 class CombinedMarkdownApp:
     def __init__(self, root):
@@ -23,13 +23,18 @@ class CombinedMarkdownApp:
         self.batch_results = []
         self.cancel_batch = False
         
+        # Create a default font
+        self.default_font = tkfont.Font(family="Arial", size=10)
+        self.title_font = tkfont.Font(family="Arial", size=16, weight="bold")
+        
         self.setup_styles()
         self.setup_ui()
         
     def setup_styles(self):
         """Configure ttk styles"""
         style = ttk.Style()
-        style.configure("Toolbutton.TButton", padding=6, font=('Arial', 10))
+        # Only configure padding, avoid font settings for ttk
+        style.configure("Toolbutton.TButton", padding=6)
 
     def setup_ui(self):
         # Create notebook for tabs
@@ -58,18 +63,18 @@ class CombinedMarkdownApp:
         
         # Title
         title_label = ttk.Label(main_frame, text="Markdown File Generator", 
-                               font=('Arial', 16, 'bold'))
+                               font=self.title_font)
         title_label.grid(row=0, column=0, columnspan=3, pady=(0, 20))
         
         # Folder selection
         ttk.Label(main_frame, text="Folder:").grid(row=1, column=0, sticky="e", padx=5, pady=5)
-        self.folder_entry = tk.Entry(main_frame, width=50)
+        self.folder_entry = tk.Entry(main_frame, width=50, font=self.default_font)
         self.folder_entry.grid(row=1, column=1, padx=5, pady=5)
         self.folder_entry.insert(0, "content")
         ttk.Button(main_frame, text="Browse", command=self.browse_folder).grid(row=1, column=2, padx=5, pady=5)
         
         # Text area
-        self.content_text_area = tk.Text(main_frame, width=100, height=25)
+        self.content_text_area = tk.Text(main_frame, width=100, height=25, font=self.default_font)
         self.content_text_area.grid(row=2, column=0, columnspan=3, padx=5, pady=5)
         self.add_content_sample_text()
         
@@ -94,7 +99,7 @@ class CombinedMarkdownApp:
         content_status_bar.grid(row=4, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(10, 0))
         
     def setup_visuals_tab(self):
-        """Setup the HTML converter tab"""
+        """Setup the HTML converter tab with enhanced functionality from code 2"""
         main_frame = ttk.Frame(self.visuals_frame, padding="10")
         main_frame.pack(fill="both", expand=True)
         
@@ -103,8 +108,8 @@ class CombinedMarkdownApp:
         main_frame.rowconfigure(2, weight=1)
         
         # Title
-        title_label = ttk.Label(main_frame, text="Markdown to HTML Converter", 
-                               font=('Arial', 16, 'bold'))
+        title_label = ttk.Label(main_frame, text="Markdown to HTML Converter with Mermaid Support", 
+                               font=self.title_font)
         title_label.grid(row=0, column=0, columnspan=3, pady=(0, 10))
         
         # Mode selection
@@ -155,7 +160,7 @@ class CombinedMarkdownApp:
         self.file_list_frame.columnconfigure(0, weight=1)
         self.file_list_frame.rowconfigure(0, weight=1)
         
-        self.file_listbox = tk.Listbox(self.file_list_frame, height=6)
+        self.file_listbox = tk.Listbox(self.file_list_frame, height=6, font=self.default_font)
         file_scrollbar = ttk.Scrollbar(self.file_list_frame, orient="vertical")
         self.file_listbox.config(yscrollcommand=file_scrollbar.set)
         file_scrollbar.config(command=self.file_listbox.yview)
@@ -200,7 +205,7 @@ class CombinedMarkdownApp:
         # Progress bar for batch operations
         self.progress_var = tk.DoubleVar()
         self.progress_bar = ttk.Progressbar(output_frame, variable=self.progress_var, 
-                                          maximum=100, length=300)
+                                            maximum=100, length=300)
         self.progress_bar.grid(row=3, column=0, sticky=(tk.W, tk.E), pady=(5, 0))
         
         # Output text area
@@ -227,18 +232,18 @@ class CombinedMarkdownApp:
         
         # Title
         title_label = ttk.Label(main_frame, text="Script File Generator", 
-                               font=('Arial', 16, 'bold'))
+                               font=self.title_font)
         title_label.grid(row=0, column=0, columnspan=3, pady=(0, 20))
         
         # Folder selection
         ttk.Label(main_frame, text="Folder:").grid(row=1, column=0, sticky="e", padx=5, pady=5)
-        self.script_folder_entry = tk.Entry(main_frame, width=50)
+        self.script_folder_entry = tk.Entry(main_frame, width=50, font=self.default_font)
         self.script_folder_entry.grid(row=1, column=1, padx=5, pady=5)
         self.script_folder_entry.insert(0, "content")
         ttk.Button(main_frame, text="Browse", command=self.browse_script_folder).grid(row=1, column=2, padx=5, pady=5)
         
         # Text area
-        self.script_text_area = tk.Text(main_frame, width=100, height=25)
+        self.script_text_area = tk.Text(main_frame, width=100, height=25, font=self.default_font)
         self.script_text_area.grid(row=2, column=0, columnspan=3, padx=5, pady=5)
         self.add_script_sample_text()
         
@@ -332,7 +337,7 @@ Python is a powerful tool for developers of all levels.
         self.content_status_var.set(f"Generated {len(matches)} files in '{folder_path}'")
         messagebox.showinfo("Success", f"Generated {len(matches)} files in '{folder_path}'.")
 
-    # Visuals Tab Methods
+    # Enhanced Visuals Tab Methods (from code 2)
     def toggle_mode(self):
         """Toggle between single and batch processing modes"""
         mode = self.processing_mode.get()
@@ -432,7 +437,8 @@ Struct tags are small but powerful. They help libraries understand your data. St
             folder = Path(folder_path)
             md_files = []
             for ext in ['*.md', '*.txt', '*.markdown']:
-                md_files.extend(folder.rglob(ext))
+                md_files.extend(folder.glob(ext))
+                md_files.extend(folder.glob('**/' + ext))  # Include subdirectories
             
             if md_files:
                 self.current_files = [str(f) for f in md_files]
@@ -581,7 +587,7 @@ Struct tags are small but powerful. They help libraries understand your data. St
                     
                     with output_file.open('w', encoding='utf-8') as file:
                         file.write(result['html_content'])
-                        
+                    
                     successful_saves += 1
                 except Exception as e:
                     print(f"Failed to save {result['file_path']}: {e}")
@@ -628,6 +634,7 @@ Struct tags are small but powerful. They help libraries understand your data. St
                 messagebox.showerror("Error", f"Failed to save report: {str(e)}")
         
     def markdown_to_html(self, markdown_content):
+        """Convert markdown content to HTML with Mermaid support and enhanced styling"""
         html_template = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -636,93 +643,355 @@ Struct tags are small but powerful. They help libraries understand your data. St
     <title>Converted Markdown Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
     <style>
-        body { font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333; background-color: #fff; max-width: 900px; margin: 0 auto; padding: 20px; }
-        h1 { font-size: 2.25em; font-weight: 300; padding-bottom: 0.3em; border-bottom: 2px solid #e1e4e8; color: #1a73e8; margin-top: 1.5em; }
-        h2 { font-size: 1.75em; font-weight: 400; margin-top: 1.5em; color: #1f2937; }
-        h3 { font-size: 1.5em; font-weight: 500; margin-top: 1.2em; color: #374151; }
-        .video-section { background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 30px 0; border-left: 4px solid #1a73e8; }
-        .introduction, .conclusion { background: #e3f2fd; padding: 15px; border-radius: 5px; margin: 15px 0; border-left: 3px solid #2196f3; }
-        .key-points { background: #f8f9fa; border: 1px solid #e1e4e8; border-radius: 5px; padding: 20px; margin: 15px 0; }
-        .on-screen-cue { background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 3px; padding: 8px 12px; margin: 10px 0; font-style: italic; color: #856404; display: inline-block; }
-        .visual-placeholder { background: #e8f5e8; border: 1px solid #4caf50; border-radius: 3px; padding: 8px 12px; margin: 10px 0; font-style: italic; color: #2e7d32; }
-        ol.main-points { counter-reset: item; padding-left: 0; }
-        ol.main-points > li { display: block; margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 5px; border-left: 3px solid #1a73e8; }
-        ol.main-points > li:before { content: counter(item) ". "; counter-increment: item; font-weight: bold; color: #1a73e8; font-size: 1.1em; }
-        ol.main-points > li h3 { display: inline; margin: 0; color: #1a73e8; }
-        ol.main-points > li ul { margin-top: 10px; }
-        code { background: #f1f3f4; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; color: #d73a49; }
-        pre { background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 16px; overflow: auto; }
-        pre code { background: none; padding: 0; color: #24292e; }
-        ul, ol { padding-left: 2em; }
-        li { margin-bottom: 8px; }
-        .mermaid { text-align: center; margin: 20px 0; background: #fff; border: 1px solid #e1e4e8; border-radius: 5px; padding: 20px; }
-        hr { border: none; height: 2px; background: linear-gradient(to right, #1a73e8, #4285f4, #1a73e8); margin: 40px 0; }
-        blockquote { border-left: 4px solid #dfe2e5; padding: 0 16px; color: #6a737d; margin: 16px 0; }
-        strong { color: #1a73e8; font-weight: 600; }
-        em { color: #586069; font-style: italic; }
+        body {{
+            font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+        
+        h1 {{
+            font-size: 2.25em;
+            font-weight: 300;
+            padding-bottom: 0.3em;
+            border-bottom: 2px solid #e1e4e8;
+            color: #1a73e8;
+            margin-top: 1.5em;
+        }}
+        
+        h2 {{
+            font-size: 1.75em;
+            font-weight: 400;
+            margin-top: 1.5em;
+            color: #1f2937;
+        }}
+        
+        h3 {{
+            font-size: 1.5em;
+            font-weight: 500;
+            margin-top: 1.2em;
+            color: #374151;
+        }}
+        
+        .video-section {{
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            border-left: 4px solid #1a73e8;
+        }}
+        
+        .introduction, .conclusion {{
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #2196f3;
+        }}
+        
+        .key-points {{
+            background: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+        }}
+        
+        .on-screen-cue {{
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #856404;
+            display: inline-block;
+        }}
+        
+        .visual-placeholder {{
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 3px;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #2e7d32;
+        }}
+        
+        ol.main-points {{
+            counter-reset: item;
+            padding-left: 0;
+        }}
+        
+        ol.main-points > li {{
+            display: block;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid #1a73e8;
+        }}
+        
+        ol.main-points > li:before {{
+            content: counter(item) ". ";
+            counter-increment: item;
+            font-weight: bold;
+            color: #1a73e8;
+            font-size: 1.1em;
+        }}
+        
+        ol.main-points > li h3 {{
+            display: inline;
+            margin: 0;
+            color: #1a73e8;
+        }}
+        
+        ol.main-points > li ul {{
+            margin-top: 10px;
+        }}
+        
+        code {{
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d73a49;
+        }}
+        
+        pre {{
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            overflow: auto;
+        }}
+        
+        pre code {{
+            background: none;
+            padding: 0;
+            color: #24292e;
+        }}
+        
+        ul, ol {{
+            padding-left: 2em;
+        }}
+        
+        li {{
+            margin-bottom: 8px;
+        }}
+        
+        .mermaid {{
+            text-align: center;
+            margin: 20px 0;
+            background: #fff;
+            border: 1px solid #e1e4e8;
+            border-radius: 5px;
+            padding: 20px;
+        }}
+        
+        hr {{
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #1a73e8, #4285f4, #1a73e8);
+            margin: 40px 0;
+        }}
+        
+        blockquote {{
+            border-left: 4px solid #dfe2e5;
+            padding: 0 16px;
+            color: #6a737d;
+            margin: 16px 0;
+        }}
+        
+        strong {{
+            color: #1a73e8;
+            font-weight: 600;
+        }}
+        
+        em {{
+            color: #586069;
+            font-style: italic;
+        }}
     </style>
 </head>
 <body>
 {content}
     <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+        mermaid.initialize({{
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {{
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }}
+        }});
     </script>
 </body>
 </html>"""
-        # Use markdown library for conversion
-        html_content = markdown.markdown(markdown_content, extensions=['fenced_code', 'codehilite'])
-        html_content = self.process_custom_markdown(html_content)
+        
+        # Convert markdown to HTML using enhanced processing
+        html_content = self.process_markdown(markdown_content)
         return html_template.format(content=html_content)
         
-    def process_custom_markdown(self, html_content):
-        """Process custom Markdown elements not handled by the markdown library"""
-        # Handle custom classes for specific sections
-        html_content = re.sub(
-            r'<p><strong>Introduction:</strong>(.*?)</p>',
-            r'<div class="introduction"><strong>Introduction:</strong>\1</div>',
-            html_content,
-            flags=re.DOTALL
-        )
-        html_content = re.sub(
-            r'<p><strong>Conclusion:</strong>(.*?)</p>',
-            r'<div class="conclusion"><strong>Conclusion:</strong>\1</div>',
-            html_content,
-            flags=re.DOTALL
-        )
-        html_content = re.sub(
-            r'<p><strong>Key Points:</strong></p>',
-            r'<div class="key-points"><strong>Key Points:</strong>',
-            html_content
-        )
+    def process_markdown(self, text):
+        """Convert markdown syntax to HTML with enhanced features"""
+        # Preserve line breaks in original text
+        text = text.replace('\r\n', '\n').replace('\r', '\n')
         
-        # Handle on-screen cues and visual placeholders
-        html_content = re.sub(
-            r'\(On-screen[^)]*: ([^)]+)\)',
-            r'<div class="on-screen-cue">On-screen: \1</div>',
-            html_content
-        )
-        html_content = re.sub(
-            r'\*Visual placeholder:\*',
-            r'<div class="visual-placeholder"><strong>Visual placeholder:</strong></div>',
-            html_content
-        )
+        # Handle mermaid code blocks first
+        mermaid_pattern = r'```mermaid\s*\n(.*?)\n\s*```'
+        text = re.sub(mermaid_pattern, lambda m: f'<div class="mermaid">{m.group(1).strip()}</div>', text, flags=re.DOTALL)
         
-        # Handle Mermaid diagrams
-        html_content = re.sub(
-            r'<pre><code class="language-mermaid">(.*?)</code></pre>',
-            r'<div class="mermaid">\1</div>',
-            html_content,
-            flags=re.DOTALL
-        )
+        # Handle regular code blocks
+        code_pattern = r'```(\w+)?\s*\n(.*?)\n\s*```'
+        text = re.sub(code_pattern, lambda m: f'<pre><code class="language-{m.group(1) or ""}">{m.group(2).strip()}</code></pre>', text, flags=re.DOTALL)
         
-        # Ensure key points list is closed properly
-        if '<div class="key-points">' in html_content:
-            html_content = html_content.replace('</div></div>', '</div>')
-            if html_content.count('<div class="key-points">') > html_content.count('</div>'):
-                html_content += '</div>'
+        # Handle headers
+        text = re.sub(r'^# (.*?)$', r'<h1>\1</h1>', text, flags=re.MULTILINE)
+        text = re.sub(r'^## (.*?)$', r'<h2>\1</h2>', text, flags=re.MULTILINE)
+        text = re.sub(r'^### (.*?)$', r'<h3>\1</h3>', text, flags=re.MULTILINE)
+        text = re.sub(r'^#### (.*?)$', r'<h4>\1</h4>', text, flags=re.MULTILINE)
         
-        return html_content
+        # Rest of the method remains unchanged
+        # Handle horizontal rules
+        text = re.sub(r'^---+\s*$', '<hr>', text, flags=re.MULTILINE)
         
+        # Handle special video content patterns
+        text = re.sub(r'\*\*Introduction:\*\*\s*(.*?)(?=\n\s*\*\*[A-Z]|\n\s*\d+\.|\n\s*$)', 
+                    r'<div class="introduction"><strong>Introduction:</strong>\1</div>', text, flags=re.DOTALL)
+        text = re.sub(r'\*\*Conclusion:\*\*\s*(.*?)(?=\n\s*\*\*[A-Z]|\n\s*---|\n\s*$)', 
+                    r'<div class="conclusion"><strong>Conclusion:</strong>\1</div>', text, flags=re.DOTALL)
+        text = re.sub(r'\*\*Key Points:\*\*', r'<div class="key-points"><strong>Key Points:</strong>', text)
+        
+        # Handle on-screen cues with flexible patterns
+        text = re.sub(r'\*\(On-screen[^)]*: ([^)]+)\)\*', r'<div class="on-screen-cue">On-screen: \1</div>', text)
+        text = re.sub(r'\(On-screen[^)]*: ([^)]+)\)', r'<div class="on-screen-cue">On-screen: \1</div>', text)
+        
+        # Handle Visual placeholder patterns
+        text = re.sub(r'\*Visual placeholder:\*', r'<div class="visual-placeholder"><strong>Visual placeholder:</strong></div>', text)
+        
+        # Process line by line for better control
+        lines = text.split('\n')
+        result_lines = []
+        in_list = False
+        in_numbered_list = False
+        in_key_points = False
+        
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            stripped = line.strip()
+            
+            # Check for Key Points section
+            if '<strong>Key Points:</strong>' in line:
+                in_key_points = True
+                result_lines.append(line)
+                i += 1
+                continue
+            
+            # Handle numbered list items (1., 2., etc.)
+            if re.match(r'^\s*\d+\.\s+\*\*(.*?)\*\*', stripped):
+                if in_list:
+                    result_lines.append('</ul>')
+                    in_list = False
+                if not in_numbered_list:
+                    result_lines.append('<ol class="main-points">')
+                    in_numbered_list = True
+                
+                # Extract the numbered item
+                match = re.match(r'^\s*\d+\.\s+\*\*(.*?)\*\*(.*)', stripped)
+                if match:
+                    title = match.group(1)
+                    rest = match.group(2)
+                    result_lines.append(f'<li><h3>{title}</h3>{rest}')
+                    
+                    # Look ahead for bullet points under this numbered item
+                    j = i + 1
+                    sub_items = []
+                    while j < len(lines):
+                        next_line = lines[j].strip()
+                        if next_line.startswith('* ') or next_line.startswith('- '):
+                            sub_items.append(next_line[2:])
+                            j += 1
+                        elif next_line and not re.match(r'^\s*\d+\.', next_line):
+                            # Continue with content for this numbered item
+                            if not next_line.startswith('<') and next_line:
+                                sub_items.append(next_line)
+                            j += 1
+                        else:
+                            break
+                    
+                    if sub_items:
+                        result_lines.append('<ul>')
+                        for item in sub_items:
+                            result_lines.append(f'<li>{item}</li>')
+                        result_lines.append('</ul>')
+                    
+                    result_lines.append('</li>')
+                    i = j - 1
+                    
+            # Handle regular bullet points
+            elif stripped.startswith('* ') or stripped.startswith('- '):
+                if in_numbered_list:
+                    result_lines.append('</ol>')
+                    in_numbered_list = False
+                if not in_list:
+                    result_lines.append('<ul>')
+                    in_list = True
+                result_lines.append(f'<li>{stripped[2:]}</li>')
+                
+            else:
+                # Close any open lists
+                if in_list:
+                    result_lines.append('</ul>')
+                    in_list = False
+                if in_numbered_list:
+                    result_lines.append('</ol>')
+                    in_numbered_list = False
+                    
+                # Add the line as is
+                result_lines.append(line)
+            
+            i += 1
+        
+        # Close any remaining open lists
+        if in_list:
+            result_lines.append('</ul>')
+        if in_numbered_list:
+            result_lines.append('</ol>')
+        if in_key_points:
+            result_lines.append('</div>')
+            
+        text = '\n'.join(result_lines)
+        
+        # Handle bold and italic (after list processing)
+        text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text)
+        text = re.sub(r'\*(.*?)\*', r'<em>\1</em>', text)
+        
+        # Handle inline code with backticks
+        text = re.sub(r'`([^`\n]+)`', r'<code>\1</code>', text)
+        
+        # Convert remaining text to paragraphs
+        paragraphs = re.split(r'\n\s*\n', text)
+        html_paragraphs = []
+        
+        for para in paragraphs:
+            para = para.strip()
+            if para:
+                # Don't wrap if it's already HTML
+                if (para.startswith('<') and para.endswith('>')) or \
+                '<div class=' in para or '<h' in para or '<ul>' in para or '<ol>' in para:
+                    html_paragraphs.append(para)
+                elif para:
+                    html_paragraphs.append(f'<p>{para}</p>')
+                    
+        return '\n\n'.join(html_paragraphs)
+    
     def save_html(self):
         if not self.output_html:
             messagebox.showwarning("Warning", "Please convert markdown to HTML first.")
@@ -829,3 +1098,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+    
