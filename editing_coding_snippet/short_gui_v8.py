@@ -116,7 +116,6 @@ class VideoProcessorGUI:
         tk.Button(config_frame, text="📤 Load Config JSON",
                   command=self.load_config, bg='#3498db', fg='white',
                   font=("Arial", 11, "bold"), padx=25, pady=8, relief='flat').pack(side='left', pady=5, padx=5)
-
         tk.Button(config_frame, text="💾 Save Current Config",
                   command=self.save_config, bg='#27ae60', fg='white',
                   font=("Arial", 11, "bold"), padx=25, pady=8, relief='flat').pack(side='left', pady=5, padx=5)
@@ -744,23 +743,18 @@ class VideoProcessorGUI:
             with open(file, 'r', encoding='utf-8') as f:
                 config = json.load(f)
             
-            # Set input videos
             self.input_videos = config.get('input_videos', [])
             self.update_input_listbox()
             
-            # Set extra video
             self.extra_video = config.get('extra_video')
             self.extra_label.config(text=f"Extra video: {os.path.basename(self.extra_video)}" if self.extra_video else "No extra video selected")
             
-            # Set background music
             self.background_music = config.get('background_music')
             self.music_label.config(text=f"Background music: {os.path.basename(self.background_music)}" if self.background_music else "No background music selected")
             
-            # Set output dir
             self.output_dir = config.get('output_dir')
             self.output_label.config(text=f"Output folder: {self.output_dir}" if self.output_dir else "No output folder selected")
             
-            # Set other variables
             self.quality_var.set(config.get('quality_preset', 'fast'))
             self.volume_var.set(config.get('music_volume', 0.30))
             self.auto_edit_var.set(config.get('enable_auto_edit', False))
@@ -783,8 +777,8 @@ class VideoProcessorGUI:
             self.hex_var.set(self.subtitle_color)
             self.enable_merge_var.set(config.get('enable_merge', False))
             
-            self.toggle_merge_options()  # Update UI based on merge enable
-            self.toggle_word_count()     # Update UI based on subtitle mode
+            self.toggle_merge_options()
+            self.toggle_word_count()
             
             messagebox.showinfo("Success", "Config loaded successfully! You can now start processing.")
         except Exception as e:
@@ -1122,9 +1116,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                         process.kill()
                     raise subprocess.TimeoutExpired(cmd, timeout)
                 time.sleep(check_stop_interval)
+            stdout, stderr = process.communicate()
             if process.returncode != 0:
-                stderr_output = process.stderr.read()
-                raise subprocess.CalledProcessError(process.returncode, cmd, stderr=stderr_output)
+                raise subprocess.CalledProcessError(process.returncode, cmd, output=stdout, stderr=stderr)
             return process
         except Exception as e:
             if self.check_stop():
@@ -1238,8 +1232,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 raise
 
     def process_single_video(self, input_video, output_path, extra_video, background_music,
-                           quality_preset, use_gpu, music_volume, enable_ducking,
-                           enable_auto_edit, subtitle_settings):
+                        quality_preset, use_gpu, music_volume, enable_ducking,
+                        enable_auto_edit, subtitle_settings):
         if self.check_stop():
             return
         base_name = Path(input_video).stem
@@ -1257,28 +1251,72 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     return
                 self.check_ffmpeg_availability()
                 current_video_path = Path(input_video)
+
+                # --------------------------
+                # AUTO-EDITOR PART UPDATED
+                # --------------------------
                 if enable_auto_edit:
                     logging.info(f"✂️ Auto-editing: {os.path.basename(input_video)}", extra={'is_status': True})
                     try:
-                        cmd = ["auto-editor", str(input_video), "-o", str(auto_edited), "--no-open", "--frame-rate", "30", "--silent-speed", "99999", "--video-codec", "libx264"]
-                        process = self.run_subprocess_with_timeout(cmd, timeout=1800)
-                        if process is None:
-                            return
-                        if os.path.exists(auto_edited):
-                            logging.info("✅ Auto-editing completed.")
+                        cmd = [
+                            "auto-editor", str(input_video),
+                            "--output", str(auto_edited),
+                            "--frame-rate", "30",
+                            "--silent-speed", "99999",
+                            "--video-codec", "libx264",
+                            "--margin", "0.2s",
+                            "--progress", "ascii",
+                            "--no-open"  # 🚀 prevent auto-opening
+                        ]
+
+
+                        process = subprocess.Popen(
+                            cmd,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT,
+                            text=True,
+                            bufsize=1
+                        )
+
+                        start = time.time()
+                        for line in process.stdout:
+                            logging.info(f"[auto-editor] {line.strip()}")
+                            if self.check_stop():
+                                process.kill()
+                                return
+                            if time.time() - start > 1800:  # 30 min timeout
+                                process.kill()
+                                raise TimeoutError("auto-editor took too long")
+
+                        process.wait()
+                        if process.returncode == 0 and os.path.exists(auto_edited):
+                            logging.info("✅ Auto-editing completed successfully.")
                             current_video_path = auto_edited
                         else:
-                            raise Exception("Auto-editor did not create output file")
+                            raise Exception("Auto-editor failed or did not create output file")
+
                     except Exception as e:
                         if self.check_stop():
                             return
                         logging.warning(f"⚠️ Auto-editor issue: {e}. Using original video.")
-                        shutil.copy2(input_video, auto_edited)
-                        current_video_path = auto_edited
+                        try:
+                            self._copy_file_safely(input_video, auto_edited)
+                            current_video_path = auto_edited
+                        except Exception as copy_error:
+                            logging.error(f"❌ Failed to copy video after auto-editor failure: {copy_error}")
+                            raise
                 else:
                     logging.info("ℹ️ Auto-editing disabled, using original video.")
-                    shutil.copy2(input_video, auto_edited)
-                    current_video_path = auto_edited
+                    try:
+                        self._copy_file_safely(input_video, auto_edited)
+                        current_video_path = auto_edited
+                    except Exception as copy_error:
+                        logging.error(f"❌ Failed to copy original video: {copy_error}")
+                        raise
+
+                # --------------------------
+                # REST OF YOUR PIPELINE
+                # --------------------------
                 if self.check_stop():
                     return
                 logging.info("🔊 Extracting audio for transcription...", extra={'is_status': True})
@@ -1288,10 +1326,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     return
                 if not os.path.exists(audio_path):
                     raise Exception("Failed to extract audio")
+
                 if self.check_stop():
                     return
                 logging.info("🧠 Performing enhanced speech recognition...", extra={'is_status': True})
                 words = self.transcribe_audio_optimized(str(audio_path))
+
                 if self.check_stop():
                     return
                 if words:
@@ -1327,87 +1367,75 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                             current_video_path = final_with_subs
                             logging.info(f"✅ Enhanced {mode_text} subtitles with speech recognition added successfully.")
                         else:
-                            raise Exception("Subtitle processing failed to create output")
+                            raise Exception("Failed to add subtitles")
                     except Exception as e:
                         if self.check_stop():
                             return
-                        logging.warning(f"⚠️ Enhanced subtitle processing failed: {e}")
-                if self.check_stop():
-                    return
-                if background_music and os.path.exists(background_music):
-                    success = self.add_background_music_with_ducking(str(current_video_path), background_music, str(final_with_music), words, music_volume, enable_ducking)
-                    if success and not self.check_stop():
-                        current_video_path = final_with_music
+                        logging.warning(f"⚠️ Subtitle addition failed: {e}. Continuing without subtitles.")
+                        try:
+                            self._copy_file_safely(current_video_path, final_with_subs)
+                            current_video_path = final_with_subs
+                        except Exception as copy_error:
+                            logging.error(f"❌ Failed to copy video after subtitle failure: {copy_error}")
+                            raise
                 else:
-                    logging.info("ℹ️ No background music selected, skipping step.")
-                if self.check_stop():
-                    return
-                if extra_video and os.path.exists(extra_video):
-                    logging.info(f"🔗 Merging with extra video: {os.path.basename(extra_video)}", extra={'is_status': True})
+                    logging.info("ℹ️ No speech words detected, skipping subtitle generation.")
                     try:
-                        self.merge_videos_fast(str(current_video_path), extra_video, str(merged_output))
-                        if self.check_stop():
-                            return
-                        if os.path.exists(merged_output):
-                            current_video_path = merged_output
-                            logging.info("✅ Video merging completed successfully.")
-                        else:
-                            raise Exception("Video merging failed to create output")
-                    except Exception as e:
-                        if self.check_stop():
-                            return
-                        logging.warning(f"⚠️ Video merging failed: {e}. Using processed video without merging.")
-                self._copy_file_safely(str(current_video_path), output_path)
-                if os.path.exists(output_path):
-                    size_mb = os.path.getsize(output_path) / (1024 * 1024)
-                    logging.info(f"✅ Video processed successfully: {os.path.basename(output_path)} (Size: {size_mb:.1f}MB)")
-                else:
-                    raise Exception("Final output file was not created")
-            except Exception as e:
+                        self._copy_file_safely(current_video_path, final_with_subs)
+                        current_video_path = final_with_subs
+                    except Exception as copy_error:
+                        logging.error(f"❌ Failed to copy video without subtitles: {copy_error}")
+                        raise
+
                 if self.check_stop():
                     return
-                logging.error(f"❌ Error processing video {os.path.basename(input_video)}: {e}", exc_info=True)
+                if background_music:
+                    success_music = self.add_background_music_with_ducking(
+                        str(current_video_path), background_music, str(final_with_music),
+                        words, volume=music_volume, enable_ducking=enable_ducking
+                    )
+                    if success_music:
+                        current_video_path = final_with_music
+                    else:
+                        logging.info("ℹ️ Proceeding without background music.")
+                else:
+                    logging.info("ℹ️ No background music selected, skipping music addition.")
+
+                if self.check_stop():
+                    return
+                if extra_video:
+                    self.merge_videos_fast(str(current_video_path), extra_video, output_path)
+                else:
+                    shutil.copy2(current_video_path, output_path)
+                    logging.info(f"📁 Saved processed video: {output_path}")
+            except Exception as e:
+                logging.error(f"❌ Processing failed for {input_video}: {e}", exc_info=True)
                 raise
 
-    def process_all_videos(self, input_videos, extra_video, output_dir, background_music, 
-                          quality_preset, use_gpu, music_volume, enable_ducking, 
-                          enable_auto_edit, subtitle_settings):
-        total_videos = len(input_videos)
-        for i, input_video in enumerate(input_videos):
+    def process_all_videos(self, input_videos, extra_video, output_dir, background_music,
+                           quality_preset, use_gpu, music_volume, enable_ducking,
+                           enable_auto_edit, subtitle_settings):
+        total = len(input_videos)
+        for idx, input_video in enumerate(input_videos, start=1):
             if self.check_stop():
                 break
+            filename = Path(input_video).stem
+            output_path = Path(output_dir) / f"{filename}_processed.mp4"
+            logging.info(f"▶️ Processing [{idx}/{total}]: {input_video}", extra={'is_status': True})
             try:
-                base_name = Path(input_video).stem
-                clean_name = "".join(c for c in base_name if c.isalnum() or c in (' ', '-', '_')).rstrip() or f"video_{hash(base_name)}"
-                output_path = os.path.join(output_dir, f"{clean_name}_processed.mp4")
-                if os.path.exists(output_path):
-                    counter = 1
-                    while os.path.exists(output_path):
-                        output_path = os.path.join(output_dir, f"{clean_name}_processed_{counter}.mp4")
-                        counter += 1
-                logging.info(f"📽️ Processing video {i+1}/{total_videos}: {os.path.basename(input_video)}", extra={'is_status': True})
                 self.process_single_video(
-                    input_video, output_path, extra_video, background_music,
+                    input_video, str(output_path), extra_video, background_music,
                     quality_preset, use_gpu, music_volume, enable_ducking,
                     enable_auto_edit, subtitle_settings
                 )
-                progress = ((i + 1) / total_videos) * 100
-                self.update_progress(progress)
-            except Exception as e:
-                if self.check_stop():
-                    break
-                logging.error(f"❌ Failed to process video {os.path.basename(input_video)}: {e}", exc_info=True)
+                progress_percent = int((idx / total) * 100)
+                self.update_progress(progress_percent)
+            except Exception:
+                logging.error(f"❌ Skipping video due to error: {input_video}")
                 continue
-        if not self.check_stop():
-            logging.info("🎉 All videos processed or skipped due to errors.", extra={'is_status': True})
-
-# --- Main Execution ---
+        self.update_progress(100)
 
 if __name__ == "__main__":
-    try:
-        root = tk.Tk()
-        app = VideoProcessorGUI(root)
-        root.mainloop()
-    except Exception as e:
-        logging.error(f"❌ Application failed to start: {e}", exc_info=True)
-        messagebox.showerror("Startup Error", f"Failed to start application: {str(e)}")
+    root = tk.Tk()
+    app = VideoProcessorGUI(root)
+    root.mainloop()
