@@ -25,32 +25,38 @@ A call-to-action (like comment, share, or watch next).programming langage name a
 
 You are to transform the following list of technical interview video ideas into a JSON array of objects.
 
-🎯 Output Format (MUST follow exactly):
 {
   "snippets": [
     {
       "title": "<short descriptive title>",
-      "code": "<programming langauge name, fully self-contained, short (20–25 sec reading), minimal inline comments (1–3 words), highlight pitfall if relevant, include // Output comment>",
+      "code": "<programming language name, first write 'Problem:' with code example and optional comments, then write 'Solution:' with fully self-contained, runnable code (20–25 sec reading) and minimal inline comments (1–3 words), highlight pitfall if relevant, include // Output comment>",
       "hook": "<1-line retention hook>"
     }
   ]
 }
-
 📜 Rules for the code:
-- Language: programming language
-- Must be self-contained, runnable, and short
-- Use clear minimal inline comments
-- Show `// Output: ...` for expected result
-- If there is a pitfall, show Expected vs Actual in comments
-- No external packages unless required by the example
-- Format with proper indentation and escape quotes for JSON
-- Before writing any code, insert a comment containing the programming language name. Use the correct comment syntax for that language (e.g., # Python for Python, // Go for Go, /* Java */ for Java), and ensure the comment is properly aligned according to the language’s style guidelines.
+
+Language: programming language
+
+First include a clearly labeled Problem: with a small code snippet (optional comments)
+
+Then include a clearly labeled Solution: with fully runnable code
+
+Code must be short (20–25 sec reading), clear, and self-contained
+
+Use minimal inline comments (1–3 words)
+
+Show // Output: ... for expected result
+
+If there is a pitfall, show Expected vs Actual in comments
+
+No external packages unless required
+
+Format with proper indentation and escape quotes for JSON
+
+Before writing any code, insert a comment containing the programming language name. Use the correct comment syntax for that language (e.g., # Python for Python, // Go for Go, /* Java */ for Java), and ensure the comment is properly aligned according to the language’s style guidelines
 
 📥 Input list of ideas:
-<PASTE YOUR 10 IDEAS HERE>
-
-Now, output only the JSON — no explanations, no extra text.
-
 
 ========================================================
 
