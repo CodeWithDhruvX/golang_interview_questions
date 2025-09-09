@@ -1,22 +1,28 @@
-# Copy Map in Go
+Got it ✅ I’ll take your given snippet and turn it into a **full YouTube script** (beginner-friendly, 1.5–3 min) with the structure you requested. Since you said max 3 per batch, here’s the **first script** for your provided problem + solution.
 
-10. Copy Map in Go
+---
 
-Opening Hook (0:00–0:10)
-"Think assigning one map to another in Go makes a copy? [pause] Wrong—it actually creates a trap that catches many beginners!"
+### 1. Copying Maps in Go
 
-Concept Explanation (0:10–0:40)
-"In Go, maps are reference types. That means if you do map2 := map1, both variables point to the same underlying data. Change one, and the other changes too. If you want a true copy, you need to loop through the map and copy each key-value pair."
+**Opening Hook (0:00–0:10)**
+"Think copying a map in Go is as simple as using `=`? \[pause] Wrong! What you’re actually doing might surprise you — and it could break your code in production."
 
-Code Walkthrough (0:40–1:20)
-"(show code on screen)
-We start with m1 := map[string]int{\"a\": 1}.
-Next, we create m2 := map[string]int{} — an empty map.
-Then we loop: for k, v := range m1 { m2[k] = v }. This copies every key and value into the new map.
-Finally, printing m1 and m2 shows map[a:1] map[a:1]. Two separate maps—modifying one won’t affect the other."
+**Concept Explanation (0:10–0:40)**
+"In Go, maps are reference types. That means when you assign one map to another, you’re not creating a brand-new copy. Instead, both variables point to the same underlying data. So, if you change one, the other changes too! \[pause] And that can lead to sneaky bugs if you’re expecting them to be separate."
 
-Why It’s Useful (1:20–2:10)
-"This is super useful when you need to duplicate data safely. [pause] For example, maybe you’re caching results and don’t want later changes to affect your backup. Or you’re writing a function that shouldn’t mutate the caller’s data. Knowing that maps are references—and how to copy them properly—helps avoid sneaky bugs in production."
+**Code Walkthrough (0:40–1:20)**
+(show problem code on screen)
+"Here’s the problem: we create `map1` with keys `'a'` and `'b'`. Then we write `map2 := map1`. It looks like a copy… but it’s not. When we update `map2["a"]` to `100`, guess what? `map1["a"]` also changes. And the output confirms it — both maps now show `'a': 100`. Ouch."
 
-Outro (2:10–2:30)
-"So, did you think map2 := map1 was making a copy before today? [pause] Tell me honestly in the comments. And if you want more Go pitfalls explained in plain English, hit like and subscribe so you never miss a tip!"
+(show solution code on screen)
+"So how do we actually make a copy? Simple. Create a new map, `map2 := make(map[string]int)`, then loop over `map1` and copy each key-value pair. Now when we change `map2["a"]`, only `map2` is affected. And printing them shows the difference — `map1` stays untouched."
+
+**Why It’s Useful (1:20–2:10)**
+"This is super important in real-world Go projects. Imagine you have a config map, or cached data, and you want to work with a copy without messing up the original. If you just assign, you’ll accidentally overwrite the original values. But if you do a deep copy like this, you keep both maps independent. \[pause] It’s a small trick, but it saves you from some very nasty bugs."
+
+**Outro (2:10–2:30)**
+"So — did you think `map2 := map1` created a new map before watching this? \[pause] Drop your answer in the comments. And if you found this tip helpful, hit like, subscribe, and stick around for more Go interview pitfalls explained the easy way."
+
+---
+
+👉 Do you want me to now generate scripts for **2 more snippets** (like your other Go map/concurrency examples), so we complete this batch of 3?
