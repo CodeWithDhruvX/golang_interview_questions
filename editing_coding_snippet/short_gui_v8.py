@@ -39,7 +39,7 @@ class TkinterLogHandler(logging.Handler):
 class VideoProcessorGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("🎬 Video Processor Pro - Enhanced Edition with Mixed Fonts & Speech Recognition")
+        self.root.title("🎬 Video Processor Pro - Enhanced Edition with Speech Recognition")
         self.root.geometry("1300x1000")
         self.root.configure(bg='#f0f0f0')
 
@@ -50,6 +50,12 @@ class VideoProcessorGUI:
         self.processing = False
         self.progress_queue = queue.Queue()
         self.stop_event = threading.Event()
+
+        self.font_families = [
+            "Impact", "Arial Black", "Comic Sans MS", "Times New Roman",
+            "Courier New", "Georgia", "Verdana", "Trebuchet MS",
+            "Lucida Console", "Palatino Linotype", "Book Antiqua", "Franklin Gothic Medium"
+        ]
 
         self.setup_logging()
         self.load_video_titles()
@@ -89,7 +95,7 @@ class VideoProcessorGUI:
         title_frame = tk.Frame(self.root, bg='#2c3e50', height=60)
         title_frame.pack(fill='x', padx=10, pady=10)
         title_frame.pack_propagate(False)
-        title_label = tk.Label(title_frame, text="🎬 Video Processor Pro - Enhanced Edition with Mixed Fonts & Speech Recognition",
+        title_label = tk.Label(title_frame, text="🎬 Video Processor Pro - Enhanced Edition with Speech Recognition",
                               font=("Arial", 18, "bold"), fg='white', bg='#2c3e50')
         title_label.pack(expand=True)
 
@@ -253,9 +259,6 @@ class VideoProcessorGUI:
         tk.Radiobutton(mode_options_frame, text="📄 Multiple Words Subtitles", variable=self.subtitle_mode_var,
                       value="multiple", bg='#f0f0f0', font=("Arial", 10),
                       command=self.toggle_word_count).pack(anchor='w', pady=2)
-        tk.Radiobutton(mode_options_frame, text="🎨 Mixed Font Styles (Creative)", variable=self.subtitle_mode_var,
-                      value="mixed", bg='#f0f0f0', font=("Arial", 10),
-                      command=self.toggle_word_count).pack(anchor='w', pady=2)
         self.words_count_frame = tk.Frame(subtitle_frame, bg='#f0f0f0')
         self.words_count_frame.pack(fill='x', padx=10, pady=8)
         words_count_inner = tk.Frame(self.words_count_frame, bg='#f0f0f0')
@@ -270,23 +273,6 @@ class VideoProcessorGUI:
                                          font=("Arial", 10, "bold"), bg='#f0f0f0', fg='#2c3e50')
         self.words_count_label.pack(side='left', padx=(5, 0))
         words_scale.configure(command=lambda val: self.words_count_label.config(text=f"{int(float(val))} words per group"))
-        self.mixed_font_frame = tk.LabelFrame(subtitle_frame, text="🎨 Mixed Font Styles Configuration", 
-                                             font=("Arial", 11, "bold"), bg='#f0f0f0', padx=10, pady=10)
-        self.mixed_font_frame.pack(fill='x', padx=10, pady=8)
-        font_options_row1 = tk.Frame(self.mixed_font_frame, bg='#f0f0f0')
-        font_options_row1.pack(fill='x', pady=5)
-        self.enable_random_fonts_var = tk.BooleanVar(value=True)
-        tk.Checkbutton(font_options_row1, text="🔀 Random Font Families", 
-                      variable=self.enable_random_fonts_var, bg='#f0f0f0', font=("Arial", 10)).pack(anchor='w')
-        self.enable_random_colors_var = tk.BooleanVar(value=True)
-        tk.Checkbutton(font_options_row1, text="🌈 Random Colors", 
-                      variable=self.enable_random_colors_var, bg='#f0f0f0', font=("Arial", 10)).pack(anchor='w')
-        self.enable_random_sizes_var = tk.BooleanVar(value=True)
-        tk.Checkbutton(font_options_row1, text="📏 Random Sizes", 
-                      variable=self.enable_random_sizes_var, bg='#f0f0f0', font=("Arial", 10)).pack(anchor='w')
-        self.enable_effects_var = tk.BooleanVar(value=True)
-        tk.Checkbutton(font_options_row1, text="✨ Special Effects (Bold, Italic)", 
-                      variable=self.enable_effects_var, bg='#f0f0f0', font=("Arial", 10)).pack(anchor='w')
         border_frame = tk.LabelFrame(subtitle_frame, text="📦 Speech Border Box Settings", 
                                     font=("Arial", 11, "bold"), bg='#f0f0f0', padx=10, pady=10)
         border_frame.pack(fill='x', padx=10, pady=8)
@@ -359,6 +345,29 @@ class VideoProcessorGUI:
                            command=lambda c=color: self.set_subtitle_color(c))
             btn.pack(side='left', padx=2)
             self.create_tooltip(btn, name)
+
+        font_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        font_row.pack(fill='x', padx=10, pady=8)
+        tk.Label(font_row, text="Font Family:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left')
+        self.font_family_var = tk.StringVar(value="Impact")
+        font_combo = ttk.Combobox(font_row, textvariable=self.font_family_var,
+                                  values=self.font_families, state="readonly", width=20)
+        font_combo.pack(side='left', padx=10)
+        style_frame = tk.Frame(font_row, bg='#f0f0f0')
+        style_frame.pack(side='left', padx=20)
+        self.bold_var = tk.BooleanVar(value=True)
+        tk.Checkbutton(style_frame, text="Bold", variable=self.bold_var, bg='#f0f0f0', font=("Arial", 10)).pack(side='left')
+        self.italic_var = tk.BooleanVar(value=False)
+        tk.Checkbutton(style_frame, text="Italic", variable=self.italic_var, bg='#f0f0f0', font=("Arial", 10)).pack(side='left', padx=10)
+
+        position_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        position_row.pack(fill='x', padx=10, pady=8)
+        tk.Label(position_row, text="Subtitle Position:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left')
+        self.position_var = tk.StringVar(value="Bottom")
+        position_combo = ttk.Combobox(position_row, textvariable=self.position_var,
+                                      values=["Bottom", "Top", "Center"], state="readonly", width=12)
+        position_combo.pack(side='left', padx=10)
+
         self.toggle_word_count()
         button_frame = tk.Frame(self.scrollable_main_frame, bg='#f0f0f0')
         button_frame.pack(pady=25)
@@ -481,15 +490,10 @@ class VideoProcessorGUI:
 
     def toggle_word_count(self):
         mode = self.subtitle_mode_var.get()
-        if mode == "multiple" or mode == "mixed":
+        if mode == "multiple":
             self.words_count_frame.pack(fill='x', padx=10, pady=8)
-            if mode == "mixed":
-                self.mixed_font_frame.pack(fill='x', padx=10, pady=8)
-            else:
-                self.mixed_font_frame.pack_forget()
         else:
             self.words_count_frame.pack_forget()
-            self.mixed_font_frame.pack_forget()
 
     def pick_subtitle_color(self):
         color = colorchooser.askcolor(title="Choose Subtitle Color",
@@ -676,12 +680,10 @@ class VideoProcessorGUI:
                 'enable_borders': self.speech_borders_var.get(),
                 'border_color': self.border_color,
                 'border_thickness': self.border_thickness_var.get(),
-                'mixed_font_settings': {
-                    'enable_random_fonts': self.enable_random_fonts_var.get(),
-                    'enable_random_colors': self.enable_random_colors_var.get(),
-                    'enable_random_sizes': self.enable_random_sizes_var.get(),
-                    'enable_effects': self.enable_effects_var.get()
-                }
+                'font_family': self.font_family_var.get(),
+                'bold': self.bold_var.get(),
+                'italic': self.italic_var.get(),
+                'position': self.position_var.get()
             }
             processor.process_all_videos(
                 self.input_videos, self.extra_video if self.enable_merge_var.get() else None, 
@@ -761,13 +763,8 @@ class VideoProcessorGUI:
             self.gpu_var.set(config.get('enable_gpu', True))
             self.ducking_var.set(config.get('enable_ducking', True))
             self.speech_borders_var.set(config.get('enable_speech_borders', True))
-            self.subtitle_mode_var.set(config.get('subtitle_mode', 'mixed'))
+            self.subtitle_mode_var.set(config.get('subtitle_mode', 'single'))
             self.words_count_var.set(config.get('words_count', 3))
-            mixed_settings = config.get('mixed_font_settings', {})
-            self.enable_random_fonts_var.set(mixed_settings.get('enable_random_fonts', True))
-            self.enable_random_colors_var.set(mixed_settings.get('enable_random_colors', True))
-            self.enable_random_sizes_var.set(mixed_settings.get('enable_random_sizes', True))
-            self.enable_effects_var.set(mixed_settings.get('enable_effects', True))
             self.border_thickness_var.set(config.get('border_thickness', 3))
             self.border_color = config.get('border_color', '#000000')
             self.border_preview.config(bg=self.border_color)
@@ -776,6 +773,10 @@ class VideoProcessorGUI:
             self.color_preview.config(bg=self.subtitle_color)
             self.hex_var.set(self.subtitle_color)
             self.enable_merge_var.set(config.get('enable_merge', False))
+            self.font_family_var.set(config.get('font_family', 'Impact'))
+            self.bold_var.set(config.get('bold', True))
+            self.italic_var.set(config.get('italic', False))
+            self.position_var.set(config.get('position', 'Bottom'))
             
             self.toggle_merge_options()
             self.toggle_word_count()
@@ -798,17 +799,15 @@ class VideoProcessorGUI:
             "enable_speech_borders": self.speech_borders_var.get(),
             "subtitle_mode": self.subtitle_mode_var.get(),
             "words_count": self.words_count_var.get(),
-            "mixed_font_settings": {
-                "enable_random_fonts": self.enable_random_fonts_var.get(),
-                "enable_random_colors": self.enable_random_colors_var.get(),
-                "enable_random_sizes": self.enable_random_sizes_var.get(),
-                "enable_effects": self.enable_effects_var.get()
-            },
             "border_thickness": self.border_thickness_var.get(),
             "border_color": self.border_color,
             "subtitle_size": self.subtitle_size_var.get(),
             "subtitle_color": self.subtitle_color,
-            "enable_merge": self.enable_merge_var.get()
+            "enable_merge": self.enable_merge_var.get(),
+            "font_family": self.font_family_var.get(),
+            "bold": self.bold_var.get(),
+            "italic": self.italic_var.get(),
+            "position": self.position_var.get()
         }
         file = filedialog.asksaveasfilename(
             defaultextension=".json",
@@ -828,16 +827,6 @@ class OptimizedVideoProcessor:
         self.video_title_map = video_title_map
         self.whisper_model = None
         self.stop_event = stop_event
-        self.font_families = [
-            "Impact", "Arial Black", "Comic Sans MS", "Times New Roman",
-            "Courier New", "Georgia", "Verdana", "Trebuchet MS",
-            "Lucida Console", "Palatino Linotype", "Book Antiqua", "Franklin Gothic Medium"
-        ]
-        self.color_palette = [
-            "#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7",
-            "#DDA0DD", "#98D8C8", "#F7DC6F", "#BB8FCE", "#85C1E9",
-            "#F8C471", "#82E0AA", "#F1948A", "#85929E", "#D5DBDB"
-        ]
 
     def update_progress(self, percentage):
         try:
@@ -882,45 +871,6 @@ class OptimizedVideoProcessor:
         cs = int((seconds * 100) % 100)
         return f"{h}:{m:02d}:{s:02d}.{cs:02d}"
 
-    def generate_mixed_font_styles(self, words, settings):
-        styled_words = []
-        for i, word_data in enumerate(words):
-            word = word_data.get("word", "").strip().upper()
-            if not word:
-                continue
-            style_tags = ""
-            if settings['mixed_font_settings']['enable_random_fonts']:
-                font = random.choice(self.font_families)
-                style_tags += f"{{\\fn{font}}}"
-            if settings['mixed_font_settings']['enable_random_colors']:
-                color = random.choice(self.color_palette)
-                ass_color = self.hex_to_ass_color(color)
-                style_tags += f"{{\\c{ass_color}}}"
-            if settings['mixed_font_settings']['enable_random_sizes']:
-                base_size = settings['size']
-                size_variation = random.randint(-8, 12)
-                new_size = max(12, base_size + size_variation)
-                style_tags += f"{{\\fs{new_size}}}"
-            if settings['mixed_font_settings']['enable_effects']:
-                if random.random() < 0.3:
-                    style_tags += "{\\b1}"
-                if random.random() < 0.2:
-                    style_tags += "{\\i1}"
-                if random.random() < 0.1:
-                    style_tags += "{\\u1}"
-            if settings['enable_borders']:
-                border_color = self.hex_to_ass_color(settings['border_color'])
-                thickness = settings['border_thickness']
-                style_tags += f"{{\\3c{border_color}\\bord{thickness}}}"
-            styled_word = {
-                "word": word,
-                "start": word_data["start"],
-                "end": word_data["end"],
-                "style": style_tags
-            }
-            styled_words.append(styled_word)
-        return styled_words
-
     def generate_ass_subtitles_enhanced(self, content, ass_path, settings):
         if self.check_stop():
             return
@@ -929,50 +879,57 @@ class OptimizedVideoProcessor:
             subtitle_color = settings['color']
             subtitle_size = settings['size']
             words_count = settings['words_count']
-            base_ass_color = self.hex_to_ass_color(subtitle_color)
-            border_settings = ""
+            primary = self.hex_to_ass_color(subtitle_color)
+            font_name = settings['font_family']
+            bold = "-1" if settings['bold'] else "0"
+            italic = "1" if settings['italic'] else "0"
+            underline = "0"
+            strikeout = "0"
+            secondary = "&H000000FF"
+            back = "&H00000000"
+            scale_x = "100"
+            scale_y = "100"
+            spacing = "0"
+            angle = "0"
+            border_style = "1"
+            shadow = "0"
+            alignment_map = {"Bottom": 2, "Top": 8, "Center": 5}
+            alignment = alignment_map[settings['position']]
+            margin_l = "10"
+            margin_r = "10"
+            margin_v = "90" if settings['position'] == "Bottom" else "10" if settings['position'] == "Top" else "0"
+            encoding = "1"
+
             if settings['enable_borders']:
-                border_color = self.hex_to_ass_color(settings['border_color'])
-                thickness = settings['border_thickness']
-                border_settings = f",BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding\nStyle: Default,Impact,{subtitle_size},{base_ass_color},{border_color},-1,0,0,0,100,100,0,0,1,{thickness},1,2,10,10,90,1"
-                border_settings += f"\nStyle: SpeechBorder,Impact,{subtitle_size + 2},{base_ass_color},{border_color},-1,0,0,0,100,100,0,0,1,{thickness + 1},2,2,10,10,90,1"
+                outline_color = self.hex_to_ass_color(settings['border_color'])
+                outline = str(settings['border_thickness'])
             else:
-                border_settings = f",BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding\nStyle: Default,Impact,{subtitle_size},{base_ass_color},&H00000000,-1,0,0,0,100,100,0,0,1,2,1,2,10,10,90,1"
+                outline_color = "&H00000000"
+                outline = "0"
+
+            format_str = "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding"
+            style_line = f"Style: Default,{font_name},{subtitle_size},{primary},{secondary},{outline_color},{back},{bold},{italic},{underline},{strikeout},{scale_x},{scale_y},{spacing},{angle},{border_style},{outline},{shadow},{alignment},{margin_l},{margin_r},{margin_v},{encoding}"
+
+            style_border = ""
+            if settings['enable_borders']:
+                size_border = str(subtitle_size + 2)
+                outline_border = str(int(outline) + 1) if outline != "0" else "1"
+                style_border = f"\nStyle: SpeechBorder,{font_name},{size_border},{primary},{secondary},{outline_color},{back},{bold},{italic},{underline},{strikeout},{scale_x},{scale_y},{spacing},{angle},{border_style},{outline_border},{shadow},{alignment},{margin_l},{margin_r},{margin_v},{encoding}"
+
             with open(ass_path, "w", encoding="utf-8") as f:
                 f.write(f"""[Script Info]
-Title: Enhanced Subtitles with Mixed Fonts and Speech Recognition
+Title: Enhanced Subtitles with Speech Recognition
 ScriptType: v4.00+
 
 [V4+ Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour{border_settings}
+{format_str}
+{style_line}{style_border}
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """)
-                if mode == "mixed":
-                    styled_words = self.generate_mixed_font_styles(content, settings)
-                    if words_count > 1:
-                        for i in range(0, len(styled_words), words_count):
-                            if self.check_stop():
-                                break
-                            group = styled_words[i:i + words_count]
-                            if group:
-                                start_time = group[0]["start"]
-                                end_time = group[-1]["end"]
-                                combined_text = ""
-                                for word_data in group:
-                                    combined_text += f"{word_data['style']}{word_data['word']} "
-                                combined_text = combined_text.strip()
-                                style_name = "SpeechBorder" if settings['enable_borders'] else "Default"
-                                f.write(f"Dialogue: 0,{self.format_ass_time(start_time)},{self.format_ass_time(end_time)},{style_name},,0,0,0,,{combined_text}\n")
-                    else:
-                        for word_data in styled_words:
-                            if self.check_stop():
-                                break
-                            style_name = "SpeechBorder" if settings['enable_borders'] else "Default"
-                            styled_text = f"{word_data['style']}{word_data['word']}"
-                            f.write(f"Dialogue: 0,{self.format_ass_time(word_data['start'])},{self.format_ass_time(word_data['end'])},{style_name},,0,0,0,,{styled_text}\n")
-                elif mode == "single":
+                style_name = "SpeechBorder" if settings['enable_borders'] else "Default"
+                if mode == "single":
                     for w in content:
                         if self.check_stop():
                             break
@@ -980,7 +937,6 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                             word = w.get("word", "").strip().upper()
                             start, end = w.get("start", 0), w.get("end", 0)
                             if word and end > start:
-                                style_name = "SpeechBorder" if settings['enable_borders'] else "Default"
                                 f.write(f"Dialogue: 0,{self.format_ass_time(start)},{self.format_ass_time(end)},{style_name},,0,0,0,,{word}\n")
                         except Exception as e:
                             logging.warning(f"⚠️ Error writing subtitle: {e}")
@@ -994,12 +950,11 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                             text = sub.get("text", "").strip().upper()
                             start, end = sub.get("start", 0), sub.get("end", 0)
                             if text and end > start:
-                                style_name = "SpeechBorder" if settings['enable_borders'] else "Default"
                                 f.write(f"Dialogue: 0,{self.format_ass_time(start)},{self.format_ass_time(end)},{style_name},,0,0,0,,{text}\n")
                         except Exception as e:
                             logging.warning(f"⚠️ Error writing grouped subtitle: {e}")
                             continue
-            mode_text = {"single": "single word", "multiple": f"{words_count} words per subtitle", "mixed": "mixed font styles"}[mode]
+            mode_text = {"single": "single word", "multiple": f"{words_count} words per subtitle"}[mode]
             border_text = " with speech border boxes" if settings['enable_borders'] else ""
             logging.info(f"✅ Generated enhanced ASS subtitles with {mode_text}{border_text}")
         except Exception as e:
@@ -1341,8 +1296,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                             return
                         mode_text = {
                             "single": "single word",
-                            "multiple": f"{subtitle_settings['words_count']} words per subtitle",
-                            "mixed": "mixed font styles with creative effects"
+                            "multiple": f"{subtitle_settings['words_count']} words per subtitle"
                         }[subtitle_settings['mode']]
                         border_text = " with speech recognition border boxes" if subtitle_settings['enable_borders'] else ""
                         logging.info(f"📝 Adding {mode_text} enhanced subtitles{border_text}...", extra={'is_status': True})
