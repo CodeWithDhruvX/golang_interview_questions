@@ -67,7 +67,7 @@ Your task:
 Generate a structured JSON array where each object contains the following fields:
 
 1. videoFile: Absolute file path of the video (example: "C:/Users/YourName/Videos/<topic>.mp4").  
-2. title: An SEO-optimized title (≤100 chars) starting with "Go Interview Q<n>:" (increment number starting from the given Q number) + catchy hook + emojis.  
+2. title: An SEO-optimized title (≤100 chars) starting with "<programming language name> Interview Q<n>:" (increment number starting from the given Q number) + catchy hook + emojis.  
 3. description: YouTube-optimized description (around 500–1000 chars) including:  
    - Attention-grabbing intro based on the English hook  
    - 3–5 bullet points describing the video content  
