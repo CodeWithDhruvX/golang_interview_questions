@@ -16,10 +16,9 @@ A call-to-action (like comment, share, or watch next).programming langage name a
 7. please give me the question only relvant programming langauge
 
 
-1. What are pointers in Go?
-2. How do you declare and use pointers?
-3. What is the difference between pointer and value receivers?
-4. What are methods in Go?
+1. What is Kubernetes?
+2. Why do we use Kubernetes?
+3. What is a Pod in Kubernetes?
 
 ===========================================================================
 
@@ -129,6 +128,9 @@ For EACH snippet in the JSON:
 7. Add **pauses and rhythm** where needed — use [pause] to show natural breaks.
 8. Topic title must folllow with numberic number. topic_name and don't add any icons in title
 9 give me the script in the hindi text
+
+Hindi (Devanagari) + English tech terms (the style you want):
+“आज हम समझेंगे sync.WaitGroup क्या है और इसका इस्तेमाल कहाँ किया जाता है।”
 
 Now here is the JSON:
 
