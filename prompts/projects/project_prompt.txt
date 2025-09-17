@@ -1,0 +1,5 @@
+give me the folder structure in the zip folder
+
+using above information, now fill up all the code on the respective files and give me the final zip file code
+
+please generate in another mode
