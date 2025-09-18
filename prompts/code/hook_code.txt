@@ -49,7 +49,11 @@ Transform the following list of technical interview video ideas into a JSON arra
 
 ========================================================
 
-give two seperate code snippet
+generate 10 more without repeating concepts and code give me the code
+
+========================================================
+
+give two seperate code snippet in a single file with the problem and solution statement
 
 ==========================================================
 
