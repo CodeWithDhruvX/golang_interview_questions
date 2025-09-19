@@ -138,8 +138,10 @@ class CodeSnippetGenerator:
         """Detect programming language from code content"""
         code_lower = code.lower().strip()
         
-        # Go language detection
-        if 'package main' in code_lower or 'func main()' in code_lower:
+        # Go detection
+        if ('package ' in code_lower or 'func ' in code_lower or
+            'fmt.' in code_lower or 'struct {' in code_lower or
+            ('type ' in code_lower and 'struct' in code_lower)):
             return 'go'
         
         # Python detection
@@ -147,10 +149,11 @@ class CodeSnippetGenerator:
             'def ' in code_lower or 'print(' in code_lower):
             return 'py'
         
-        # JavaScript detection
+        # JavaScript/TypeScript detection
         if ('function(' in code_lower or 'const ' in code_lower or 'let ' in code_lower or
-            'console.log' in code_lower or 'document.' in code_lower):
-            return 'js'
+            'console.log' in code_lower or 'document.' in code_lower or
+            'export ' in code_lower or 'interface ' in code_lower):
+            return 'ts' if 'interface ' in code_lower or 'type ' in code_lower else 'js'
         
         # Java detection
         if ('public class' in code_lower or 'public static void main' in code_lower):
@@ -163,6 +166,31 @@ class CodeSnippetGenerator:
         # C detection
         if ('#include <stdio.h>' in code_lower or 'printf(' in code_lower):
             return 'c'
+        
+        # Ruby detection
+        if ('def ' in code_lower or 'class ' in code_lower or 'puts ' in code_lower or
+            'require ' in code_lower or code_lower.endswith('.rb')):
+            return 'rb'
+        
+        # PHP detection
+        if (code_lower.startswith('<?php') or 'function ' in code_lower or
+            'echo ' in code_lower or '$' in code_lower):
+            return 'php'
+        
+        # Rust detection
+        if ('fn ' in code_lower or 'let ' in code_lower or 'println!' in code_lower or
+            'struct ' in code_lower or 'impl ' in code_lower):
+            return 'rs'
+        
+        # Swift detection
+        if ('func ' in code_lower or 'let ' in code_lower or 'var ' in code_lower or
+            'struct ' in code_lower or 'class ' in code_lower or 'import Foundation' in code_lower):
+            return 'swift'
+        
+        # Kotlin detection
+        if ('fun ' in code_lower or 'val ' in code_lower or 'var ' in code_lower or
+            'class ' in code_lower or 'package ' in code_lower):
+            return 'kt'
         
         # Default to txt if can't detect
         return 'txt'
@@ -226,8 +254,8 @@ class CodeSnippetGenerator:
                 file_content = code
                 if hook:
                     # Add hook as comment at the top
-                    comment_char = "//" if lang_ext in ['go', 'js', 'java', 'cpp', 'c'] else "#"
-                    file_content = f"{comment_char} {hook}\n{comment_char} {title}\n\n{code}"
+                    comment_char = "//" if lang_ext in ['go', 'js', 'ts', 'java', 'cpp', 'c', 'rs', 'swift', 'kt'] else "#" if lang_ext in ['py', 'rb', 'php'] else ""
+                    file_content = f"{comment_char} {hook}\n{comment_char} {title}\n\n{code}" if comment_char else f"{code}"
                 
                 # Write file
                 file_path = output_dir / filename
