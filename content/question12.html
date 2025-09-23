@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Converted Markdown Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.25em;
+            font-weight: 300;
+            padding-bottom: 0.3em;
+            border-bottom: 2px solid #e1e4e8;
+            color: #1a73e8;
+            margin-top: 1.5em;
+        }
+        
+        h2 {
+            font-size: 1.75em;
+            font-weight: 400;
+            margin-top: 1.5em;
+            color: #1f2937;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+            font-weight: 500;
+            margin-top: 1.2em;
+            color: #374151;
+        }
+        
+        .video-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .introduction, .conclusion {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #2196f3;
+        }
+        
+        .key-points {
+            background: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .on-screen-cue {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #856404;
+            display: inline-block;
+        }
+        
+        .visual-placeholder {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 3px;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #2e7d32;
+        }
+        
+        ol.main-points {
+            counter-reset: item;
+            padding-left: 0;
+        }
+        
+        ol.main-points > li {
+            display: block;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid #1a73e8;
+        }
+        
+        ol.main-points > li:before {
+            content: counter(item) ". ";
+            counter-increment: item;
+            font-weight: bold;
+            color: #1a73e8;
+            font-size: 1.1em;
+        }
+        
+        ol.main-points > li h3 {
+            display: inline;
+            margin: 0;
+            color: #1a73e8;
+        }
+        
+        ol.main-points > li ul {
+            margin-top: 10px;
+        }
+        
+        code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d73a49;
+        }
+        
+        pre {
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            overflow: auto;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: #24292e;
+        }
+        
+        ul, ol {
+            padding-left: 2em;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .mermaid {
+            text-align: center;
+            margin: 20px 0;
+            background: #fff;
+            border: 1px solid #e1e4e8;
+            border-radius: 5px;
+            padding: 20px;
+        }
+        
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #1a73e8, #4285f4, #1a73e8);
+            margin: 40px 0;
+        }
+        
+        blockquote {
+            border-left: 4px solid #dfe2e5;
+            padding: 0 16px;
+            color: #6a737d;
+            margin: 16px 0;
+        }
+        
+        strong {
+            color: #1a73e8;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #586069;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<h1>Question 12: What is <code>sync.Once</code>?  </h1>
+
+<h2>Introduction  </h2>
+अब हम समझेंगे <code>sync.Once</code> को। यह Go language का एक sync primitive है जो code सिर्फ एक बार चलाता है।
+
+<h2>Key Points  </h2>
+
+<ul>
+<li><strong>Definition</strong></li>
+<li><code>sync.Once</code> का मतलब है कि कोई function सिर्फ एक बार execute होगा।</li>
+<li>चाहे कितनी बार call हो, function एक बार ही run होगा।</li>
+</ul>
+  <div class="on-screen-cue">On-screen: "<code>sync.Once</code> = Run only once"</div>
+
+<ul>
+<li><strong>How it works</strong></li>
+<li><code>sync.Once</code> के पास <code>Do</code> method होता है।</li>
+<li><code>Do</code> को एक function दिया जाता है।</li>
+<li>वही function सिर्फ पहली बार call पर चलेगा।</li>
+</ul>
+  (Narration cue: "<code>Do</code> runs only once, even if called many times")
+
+<ul>
+<li><strong>Diagram</strong></li>
+</ul>
+<div class="mermaid">graph TD
+A[Function Call 1] -->|Do| C[Execute Function]
+B[Function Call 2] -->|Do| D[Skip Execution]
+E[Function Call 3] -->|Do| D</div>
+
+<ul>
+<li><strong>Use Case</strong></li>
+<li>Initialization code चलाने के लिए।</li>
+<li>जैसे database connection setup या configuration load।</li>
+</ul>
+  <div class="on-screen-cue">On-screen: Initialization"</div>
+
+<h2>Conclusion  </h2>
+तो <code>sync.Once</code> हमें किसी भी function को सिर्फ एक बार चलाने की guarantee देता है। इससे initialization safe और आसान हो जाता है।
+
+<hr>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>
