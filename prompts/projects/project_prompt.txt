@@ -1,0 +1,16 @@
+give me the folder structure in the zip folder
+
+using above information, now fill up all the code on the respective files and give me the final zip file code
+
+give me the folder project structure with the filename of the backend app
+
+is it any file missing or everything is there?
+
+please generate in another mode
+
+
+https://chatgpt.com/c/68ca4e7d-98e8-8320-9b9a-bcf831d8df79
+
+
+
+https://chatgpt.com/c/68ca75c4-1d08-832c-856c-9b9cff88cbda

@@ -1,81 +1,10 @@
-✅ Snippet 1: Basic File Closing Using defer
-go
-Copy
-Edit
-package main
-
-package main
-
-import "fmt"
-
-func main() {
-	// Array with fixed size
-	var arr = [3]int{1, 2, 3}
-	fmt.Println("Array:", arr)
-
-	// Slice derived from array
-	slice := arr[:]
-	fmt.Println("Slice:", slice)
-
-	// Modify array and see impact on slice
-	arr[0] = 100
-	fmt.Println("Modified Array:", arr)
-	fmt.Println("Slice reflects change:", slice)
-}
-
-✅ Snippet 2: Deferred Execution Order
-go
-Copy
-Edit
-package main
-
-import "fmt"
-
-func main() {
-	// Declare a slice using shorthand
-	numbers := []int{10, 20}
-	fmt.Println("Initial Slice:", numbers)
-
-	// Append new elements dynamically
-	numbers = append(numbers, 30, 40)
-	fmt.Println("After Append:", numbers)
-
-	// Slices grow dynamically; arrays cannot
-}
-
-
-
-✅ Snippet 3: Defer with Panic Recovery
-go
-Copy
-Edit
-package main
-
-import "fmt"
-
-func main() {
-	// Array occupies exact space for 5 elements
-	arr := [5]string{"a", "b", "c", "d", "e"}
-
-	// Slice from index 1 to 3 (excluding 4)
-	slice := arr[1:4]
-	fmt.Println("Original Array:", arr)
-	fmt.Println("Slice:", slice)
-	fmt.Printf("Slice len: %d, cap: %d\n",
-		len(slice), cap(slice))
-
-	// Append to slice
-	slice = append(slice, "z")
-	fmt.Println("After Append:", slice)
-}
+રિયલ એસ્ટેટ શું છે?
 
 
 
 
 
 please make sure that create  objects array of json using below information
-
-Golang Fundamentals QnA 🔥 | Arrays, Slices, Maps & Structs Explained
 
 "Generate a structured JSON object using above array of json. The object should contain the following fields:
 
@@ -109,4 +38,5 @@ seo optimized title and description
 
 this is a short video
 
-please conisder that this is interview questions and short videos
+
+

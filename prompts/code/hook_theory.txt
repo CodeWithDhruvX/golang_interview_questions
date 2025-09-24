@@ -16,9 +16,9 @@ A call-to-action (like comment, share, or watch next).programming langage name a
 7. please give me the question only relvant programming langauge
 
 
-1. What is Kubernetes?
-2. Why do we use Kubernetes?
-3. What is a Pod in Kubernetes?
+1. What is a ReplicaSet?
+2. How is a ReplicaSet different from a ReplicationController?
+3. How do you scale Pods in Kubernetes?
 
 ===========================================================================
 
@@ -29,21 +29,19 @@ You are to transform the following list of technical interview video ideas into 
   "snippets": [
     {
       "title": "<short descriptive title>",
-      "code": "<programming langauge name, fully self-contained, short (20–25 sec reading), minimal inline comments (1–3 words), highlight pitfall if relevant, include // Output comment>",
-      "hook": "<1-line retention hook>"
+      "theory": "<markdown formatted explanation, 3 min reading, concise, clear, highlight pitfalls if relevant, may include inline code snippets>"
     }
   ]
 }
 
-📜 Rules for the code:
-- Language: programming language
-- Must be self-contained, runnable, and short
-- Use clear minimal inline comments
-- Show `// Output: ...` for expected result
-- If there is a pitfall, show Expected vs Actual in comments
-- No external packages unless required by the example
-- Format with proper indentation and escape quotes for JSON
-- Before writing any code, insert a comment containing the programming language name. Use the correct comment syntax for that language (e.g., # Python for Python, // Go for Go, /* Java */ for Java), and ensure the comment is properly aligned according to the language’s style guidelines.
+📜 Rules for the theory:
+- Format in **Markdown**
+- Keep concise (3 min reading)
+- Explain concept clearly
+- Highlight pitfalls or common mistakes if relevant
+- Use inline code snippets only if needed (e.g., `example_code`)
+- No external references
+- Format cleanly for interview content
 
 📥 Input list of ideas:
 <PASTE YOUR 10 IDEAS HERE>
@@ -58,7 +56,7 @@ Your task:
 Generate a structured JSON array where each object contains the following fields:
 
 1. videoFile: Absolute file path of the video (example: "C:/Users/YourName/Videos/<topic>.mp4").  
-2. title: An SEO-optimized title (≤100 chars) starting with "Go Interview Q<n>:" (increment number starting from the given Q number) + catchy hook + emojis.  
+2. title: An SEO-optimized title (≤100 chars) starting with "<programming language name> Interview Q<n>:" (increment number starting from the given Q number) + catchy hook + emojis.  
 3. description: YouTube-optimized description (around 500–1000 chars) including:  
    - Attention-grabbing intro based on the English hook  
    - 3–5 bullet points describing the video content  
@@ -100,8 +98,6 @@ Return **only** the JSON array inside a fenced JSON code block like this:
   }
 ]
 
-
-
 ============================================================
 
 You are a YouTube scriptwriter who creates engaging, beginner-friendly programming explainer videos.
@@ -127,10 +123,7 @@ For EACH snippet in the JSON:
 6. create the youtube script max 3 code snippet then moving to the next three one.
 7. Add **pauses and rhythm** where needed — use [pause] to show natural breaks.
 8. Topic title must folllow with numberic number. topic_name and don't add any icons in title
-9 give me the script in the hindi text
 
-Hindi (Devanagari) + English tech terms (the style you want):
-“आज हम समझेंगे sync.WaitGroup क्या है और इसका इस्तेमाल कहाँ किया जाता है।”
 
 Now here is the JSON:
 
