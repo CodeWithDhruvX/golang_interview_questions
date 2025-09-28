@@ -1,0 +1,1768 @@
+import os
+import subprocess
+import json
+import threading
+import queue
+import shutil
+from pathlib import Path
+import logging
+from tkinter import ttk, filedialog, messagebox, colorchooser
+import tkinter as tk
+from faster_whisper import WhisperModel
+import time
+import tempfile
+import traceback
+import random
+
+# --- Custom Logging Handler ---
+
+class TkinterLogHandler(logging.Handler):
+    """Custom logging handler to redirect logs to a Tkinter widget via a queue."""
+    def __init__(self, log_queue):
+        super().__init__()
+        self.log_queue = log_queue
+
+    def emit(self, record):
+        """
+        Puts the log record into the queue.
+        Flags records with 'is_status' extra data to update the main status label.
+        """
+        try:
+            is_status_update = getattr(record, 'is_status', False)
+            msg_type = "STATUS" if is_status_update else "LOG"
+            self.log_queue.put((msg_type, self.format(record)))
+        except Exception:
+            pass
+
+# --- GUI Class ---
+
+class VideoProcessorGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("🎬 Video Processor Pro - Enhanced Edition with Speech Recognition")
+        self.root.geometry("1300x1000")
+        self.root.configure(bg='#f0f0f0')
+
+        self.input_videos = []
+        self.extra_video = None
+        self.background_music = None
+        self.output_dir = None
+        self.processing = False
+        self.progress_queue = queue.Queue()
+        self.stop_event = threading.Event()
+
+        self.font_families = [
+            "Impact", "Arial Black", "Comic Sans MS", "Times New Roman",
+            "Courier New", "Georgia", "Verdana", "Trebuchet MS",
+            "Lucida Console", "Palatino Linotype", "Book Antiqua", "Franklin Gothic Medium"
+        ]
+
+        self.setup_logging()
+        self.load_video_titles()
+        self.setup_ui()
+        self.check_progress()
+
+    def setup_logging(self):
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
+        if logger.hasHandlers():
+            logger.handlers.clear()
+        gui_handler = TkinterLogHandler(self.progress_queue)
+        gui_formatter = logging.Formatter("🔹 %(message)s")
+        gui_handler.setFormatter(gui_formatter)
+        logger.addHandler(gui_handler)
+        console_handler = logging.StreamHandler()
+        console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        console_handler.setFormatter(console_formatter)
+        logger.addHandler(console_handler)
+        logging.info("Logging initialized for Video Processor Pro.")
+
+    def load_video_titles(self):
+        try:
+            with open("video_titles.json", "r", encoding="utf-8") as f:
+                self.video_title_map = json.load(f)
+        except FileNotFoundError:
+            logging.info("Video titles file not found, using empty mapping")
+            self.video_title_map = []
+        except json.JSONDecodeError as e:
+            logging.warning(f"Invalid JSON in video_titles.json: {e}")
+            self.video_title_map = []
+        except Exception as e:
+            logging.warning(f"Could not load video titles: {e}")
+            self.video_title_map = []
+
+    def setup_ui(self):
+        title_frame = tk.Frame(self.root, bg='#2c3e50', height=60)
+        title_frame.pack(fill='x', padx=10, pady=10)
+        title_frame.pack_propagate(False)
+        title_label = tk.Label(title_frame, text="🎬 Video Processor Pro - Enhanced Edition with Speech Recognition",
+                              font=("Arial", 18, "bold"), fg='white', bg='#2c3e50')
+        title_label.pack(expand=True)
+
+        self.main_canvas = tk.Canvas(self.root, bg='#f0f0f0', highlightthickness=0)
+        main_scrollbar = ttk.Scrollbar(self.root, orient="vertical", command=self.main_canvas.yview)
+        self.scrollable_main_frame = tk.Frame(self.main_canvas, bg='#f0f0f0')
+        self.scrollable_main_frame.bind(
+            "<Configure>",
+            lambda e: self.main_canvas.configure(scrollregion=self.main_canvas.bbox("all"))
+        )
+        self.main_canvas.create_window((0, 0), window=self.scrollable_main_frame, anchor="nw")
+        self.main_canvas.configure(yscrollcommand=main_scrollbar.set)
+        self.main_canvas.pack(side="left", fill="both", expand=True, padx=(20, 0), pady=10)
+        main_scrollbar.pack(side="right", fill="y", padx=(0, 20), pady=10)
+
+        def _on_mousewheel(event):
+            self.main_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+        self.main_canvas.bind_all("<MouseWheel>", _on_mousewheel)
+
+        config_frame = tk.LabelFrame(self.scrollable_main_frame, text="🛠️ Config Management",
+                                     font=("Arial", 12, "bold"), bg='#f0f0f0', padx=15, pady=15)
+        config_frame.pack(fill='x', pady=10, padx=10)
+
+        tk.Button(config_frame, text="📤 Load Config JSON",
+                  command=self.load_config, bg='#3498db', fg='white',
+                  font=("Arial", 11, "bold"), padx=25, pady=8, relief='flat').pack(side='left', pady=5, padx=5)
+        tk.Button(config_frame, text="💾 Save Current Config",
+                  command=self.save_config, bg='#27ae60', fg='white',
+                  font=("Arial", 11, "bold"), padx=25, pady=8, relief='flat').pack(side='left', pady=5, padx=5)
+
+        files_frame = tk.LabelFrame(self.scrollable_main_frame, text="📁 File Selection",
+                                   font=("Arial", 12, "bold"), bg='#f0f0f0', padx=15, pady=15)
+        files_frame.pack(fill='x', pady=10, padx=10)
+
+        tk.Button(files_frame, text="🎥 Select Main Videos",
+                 command=self.select_input_videos, bg='#3498db', fg='white',
+                 font=("Arial", 11, "bold"), padx=25, pady=8, relief='flat').pack(pady=5)
+
+        input_display_frame = tk.Frame(files_frame, bg='#f0f0f0')
+        input_display_frame.pack(fill='x', pady=5)
+        tk.Label(input_display_frame, text="Selected Videos:", font=("Arial", 10, "bold"), 
+                bg='#f0f0f0').pack(anchor='w')
+        self.input_listbox_frame = tk.Frame(input_display_frame, bg='#f0f0f0')
+        self.input_listbox_frame.pack(fill='x', pady=2)
+        self.input_listbox = tk.Listbox(self.input_listbox_frame, height=4, font=("Arial", 9), 
+                                       selectmode=tk.EXTENDED, bg='#ffffff')
+        input_listbox_scroll = tk.Scrollbar(self.input_listbox_frame, orient="vertical",
+                                           command=self.input_listbox.yview)
+        self.input_listbox.configure(yscrollcommand=input_listbox_scroll.set)
+        self.input_listbox.pack(side="left", fill="both", expand=True)
+        input_listbox_scroll.pack(side="right", fill="y")
+
+        remove_btn_frame = tk.Frame(files_frame, bg='#f0f0f0')
+        remove_btn_frame.pack(pady=5)
+        tk.Button(remove_btn_frame, text="🗑️ Remove Selected",
+                 command=self.remove_selected_videos, bg='#e74c3c', fg='white',
+                 font=("Arial", 9), padx=15, pady=5, relief='flat').pack(side='left')
+        tk.Button(remove_btn_frame, text="🧹 Clear All",
+                 command=self.clear_all_videos, bg='#95a5a6', fg='white',
+                 font=("Arial", 9), padx=15, pady=5, relief='flat').pack(side='left', padx=(10, 0))
+
+        extra_frame = tk.LabelFrame(files_frame, text="🔗 Video Merging Options", 
+                                   font=("Arial", 11, "bold"), bg='#f0f0f0', padx=10, pady=10)
+        extra_frame.pack(fill='x', pady=(10, 5))
+        self.enable_merge_var = tk.BooleanVar(value=False)
+        merge_check = tk.Checkbutton(extra_frame, text="Enable Video Merging",
+                                   variable=self.enable_merge_var, bg='#f0f0f0',
+                                   font=("Arial", 10, "bold"), command=self.toggle_merge_options)
+        merge_check.pack(anchor='w', pady=5)
+        self.merge_options_frame = tk.Frame(extra_frame, bg='#f0f0f0')
+        self.merge_options_frame.pack(fill='x', pady=(5, 0))
+        self.select_extra_btn = tk.Button(self.merge_options_frame, text="➕ Select Extra Video to Merge",
+                                         command=self.select_extra_video, bg='#e67e22', fg='white',
+                                         font=("Arial", 10, "bold"), padx=20, pady=5, state='disabled', relief='flat')
+        self.select_extra_btn.pack(pady=2)
+        self.extra_label = tk.Label(self.merge_options_frame, text="No extra video selected",
+                                   bg='#f0f0f0', wraplength=800, state='disabled', font=("Arial", 9))
+        self.extra_label.pack(pady=2)
+        self.clear_extra_btn = tk.Button(self.merge_options_frame, text="❌ Clear Extra Video",
+                                        command=self.clear_extra_video, bg='#e74c3c', fg='white',
+                                        font=("Arial", 9), padx=10, pady=5, state='disabled', relief='flat')
+        self.clear_extra_btn.pack(pady=5)
+
+        music_frame = tk.LabelFrame(files_frame, text="🎵 Background Music Options", 
+                                   font=("Arial", 11, "bold"), bg='#f0f0f0', padx=10, pady=10)
+        music_frame.pack(fill='x', pady=5)
+        music_btn_frame = tk.Frame(music_frame, bg='#f0f0f0')
+        music_btn_frame.pack(pady=5)
+        tk.Button(music_btn_frame, text="🎵 Select Background Music",
+                 command=self.select_background_music, bg='#9b59b6', fg='white',
+                 font=("Arial", 10, "bold"), padx=20, pady=5, relief='flat').pack(side='left')
+        tk.Button(music_btn_frame, text="❌ Clear Music",
+                 command=self.clear_background_music, bg='#e74c3c', fg='white',
+                 font=("Arial", 9), padx=10, pady=5, relief='flat').pack(side='left', padx=(10, 0))
+        self.music_label = tk.Label(music_frame, text="No background music selected",
+                                   bg='#f0f0f0', wraplength=800, font=("Arial", 9))
+        self.music_label.pack(pady=2)
+
+        output_frame = tk.LabelFrame(files_frame, text="📂 Output Settings", 
+                                    font=("Arial", 11, "bold"), bg='#f0f0f0', padx=10, pady=10)
+        output_frame.pack(fill='x', pady=5)
+        tk.Button(output_frame, text="📂 Select Output Folder",
+                 command=self.select_output_dir, bg='#27ae60', fg='white',
+                 font=("Arial", 10, "bold"), padx=20, pady=5, relief='flat').pack(pady=5)
+        self.output_label = tk.Label(output_frame, text="No output folder selected",
+                                    bg='#f0f0f0', wraplength=800, font=("Arial", 9))
+        self.output_label.pack(pady=2)
+
+        subtitle_mgmt_frame = tk.LabelFrame(self.scrollable_main_frame, text="📝 Subtitle Management",
+                                            font=("Arial", 12, "bold"), bg='#f0f0f0', padx=15, pady=15)
+        subtitle_mgmt_frame.pack(fill='x', pady=10, padx=10)
+
+        tk.Button(subtitle_mgmt_frame, text="📝 Generate Subtitles",
+                  command=self.generate_subtitles, bg='#3498db', fg='white',
+                  font=("Arial", 11, "bold"), padx=25, pady=8, relief='flat').pack(side='left', pady=5, padx=5)
+        tk.Button(subtitle_mgmt_frame, text="✏️ Manually Edit Subtitle",
+                  command=self.manually_edit_subtitle, bg='#27ae60', fg='white',
+                  font=("Arial", 11, "bold"), padx=25, pady=8, relief='flat').pack(side='left', pady=5, padx=5)
+
+        options_frame = tk.LabelFrame(self.scrollable_main_frame, text="⚙️ Processing Options",
+                                     font=("Arial", 12, "bold"), bg='#f0f0f0', padx=15, pady=15)
+        options_frame.pack(fill='x', pady=10, padx=10)
+        options_row1 = tk.Frame(options_frame, bg='#f0f0f0')
+        options_row1.pack(fill='x', padx=10, pady=8)
+        quality_frame = tk.Frame(options_row1, bg='#f0f0f0')
+        quality_frame.pack(side='left', padx=(0, 30))
+        tk.Label(quality_frame, text="Quality Preset:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(anchor='w')
+        self.quality_var = tk.StringVar(value="fast")
+        quality_combo = ttk.Combobox(quality_frame, textvariable=self.quality_var,
+                                    values=["ultrafast", "fast", "medium", "slow"],
+                                    state="readonly", width=12)
+        quality_combo.pack(pady=2)
+        volume_frame = tk.Frame(options_row1, bg='#f0f0f0')
+        volume_frame.pack(side='left')
+        tk.Label(volume_frame, text="Music Volume:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(anchor='w')
+        volume_control_frame = tk.Frame(volume_frame, bg='#f0f0f0')
+        volume_control_frame.pack(pady=2)
+        self.volume_var = tk.DoubleVar(value=0.30)
+        volume_scale = tk.Scale(volume_control_frame, from_=0.0, to=0.5, resolution=0.05,
+                               orient='horizontal', variable=self.volume_var, length=140)
+        volume_scale.pack(side='left')
+        self.volume_label = tk.Label(volume_control_frame, text="0.30", font=("Arial", 9), bg='#f0f0f0')
+        self.volume_label.pack(side='left', padx=(5, 0))
+        volume_scale.configure(command=lambda val: self.volume_label.config(text=f"{float(val):.2f}"))
+        options_row2 = tk.Frame(options_frame, bg='#f0f0f0')
+        options_row2.pack(fill='x', padx=10, pady=8)
+        self.auto_edit_var = tk.BooleanVar(value=False)
+        tk.Checkbutton(options_row2, text="✂️ Auto-Edit Videos (Remove Silent Parts)",
+                      variable=self.auto_edit_var, bg='#f0f0f0', font=("Arial", 10, "bold")).pack(anchor='w', pady=2)
+        self.gpu_var = tk.BooleanVar(value=True)
+        tk.Checkbutton(options_row2, text="🚀 GPU Acceleration (NVENC if available)",
+                      variable=self.gpu_var, bg='#f0f0f0', font=("Arial", 10, "bold")).pack(anchor='w', pady=2)
+        self.ducking_var = tk.BooleanVar(value=True)
+        tk.Checkbutton(options_row2, text="🎵 Smart Music Ducking (Lower music during speech)",
+                      variable=self.ducking_var, bg='#f0f0f0', font=("Arial", 10, "bold")).pack(anchor='w', pady=2)
+        self.speech_borders_var = tk.BooleanVar(value=True)
+        tk.Checkbutton(options_row2, text="🗣️ Add Border Boxes to Spoken Words",
+                      variable=self.speech_borders_var, bg='#f0f0f0', font=("Arial", 10, "bold")).pack(anchor='w', pady=2)
+
+        subtitle_frame = tk.LabelFrame(self.scrollable_main_frame, text="📝 Advanced Subtitle Customization",
+                                      font=("Arial", 12, "bold"), bg='#f0f0f0', padx=15, pady=15)
+        subtitle_frame.pack(fill='x', pady=10, padx=10)
+        mode_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        mode_row.pack(fill='x', padx=10, pady=8)
+        tk.Label(mode_row, text="Display Mode:", font=("Arial", 11, "bold"), bg='#f0f0f0').pack(anchor='w')
+        mode_options_frame = tk.Frame(mode_row, bg='#f0f0f0')
+        mode_options_frame.pack(anchor='w', pady=5)
+        self.subtitle_mode_var = tk.StringVar(value="single")
+        tk.Radiobutton(mode_options_frame, text="📝 Single Word Subtitles", variable=self.subtitle_mode_var,
+                      value="single", bg='#f0f0f0', font=("Arial", 10), 
+                      command=self.toggle_word_count).pack(anchor='w', pady=2)
+        tk.Radiobutton(mode_options_frame, text="📄 Multiple Words Subtitles", variable=self.subtitle_mode_var,
+                      value="multiple", bg='#f0f0f0', font=("Arial", 10),
+                      command=self.toggle_word_count).pack(anchor='w', pady=2)
+        self.words_count_frame = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        self.words_count_frame.pack(fill='x', padx=10, pady=8)
+        words_count_inner = tk.Frame(self.words_count_frame, bg='#f0f0f0')
+        words_count_inner.pack(anchor='w')
+        tk.Label(words_count_inner, text="Words per subtitle group:", 
+                font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left')
+        self.words_count_var = tk.IntVar(value=3)
+        words_scale = tk.Scale(words_count_inner, from_=2, to=10, resolution=1,
+                             orient='horizontal', variable=self.words_count_var, length=200)
+        words_scale.pack(side='left', padx=(15, 5))
+        self.words_count_label = tk.Label(words_count_inner, text="3 words per group", 
+                                         font=("Arial", 10, "bold"), bg='#f0f0f0', fg='#2c3e50')
+        self.words_count_label.pack(side='left', padx=(5, 0))
+        words_scale.configure(command=lambda val: self.words_count_label.config(text=f"{int(float(val))} words per group"))
+
+        # Prefix/Suffix for Branding
+        branding_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        branding_row.pack(fill='x', padx=10, pady=8)
+        tk.Label(branding_row, text="Subtitle Branding:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left')
+        tk.Label(branding_row, text="Prefix:", font=("Arial", 9), bg='#f0f0f0').pack(side='left', padx=(10, 2))
+        self.prefix_var = tk.StringVar(value="")
+        tk.Entry(branding_row, textvariable=self.prefix_var, width=15, font=("Arial", 9)).pack(side='left', padx=2)
+        tk.Label(branding_row, text="Suffix:", font=("Arial", 9), bg='#f0f0f0').pack(side='left', padx=(10, 2))
+        self.suffix_var = tk.StringVar(value="")
+        tk.Entry(branding_row, textvariable=self.suffix_var, width=15, font=("Arial", 9)).pack(side='left', padx=2)
+
+        # Case Customization
+        case_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        case_row.pack(fill='x', padx=10, pady=8)
+        tk.Label(case_row, text="Subtitle Case:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left')
+        self.case_var = tk.StringVar(value="Uppercase")
+        case_combo = ttk.Combobox(case_row, textvariable=self.case_var,
+                                  values=["Uppercase", "Lowercase", "Title Case"], state="readonly", width=12)
+        case_combo.pack(side='left', padx=10)
+
+        # Random Colors
+        random_color_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        random_color_row.pack(fill='x', padx=10, pady=8)
+        self.random_colors_var = tk.BooleanVar(value=False)
+        tk.Checkbutton(random_color_row, text="Randomize Subtitle Colors per Segment",
+                       variable=self.random_colors_var, bg='#f0f0f0', font=("Arial", 10)).pack(anchor='w', pady=2)
+
+        # Background Box
+        bg_box_frame = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        bg_box_frame.pack(fill='x', padx=10, pady=8)
+        self.enable_bg_box_var = tk.BooleanVar(value=False)
+        tk.Checkbutton(bg_box_frame, text="Add Subtitle Background Box",
+                       variable=self.enable_bg_box_var, bg='#f0f0f0', font=("Arial", 10)).pack(anchor='w', pady=2)
+        tk.Label(bg_box_frame, text="Box Opacity:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left', pady=2)
+        self.bg_opacity_var = tk.DoubleVar(value=0.5)
+        bg_opacity_scale = tk.Scale(bg_box_frame, from_=0.0, to=1.0, resolution=0.1,
+                                    orient='horizontal', variable=self.bg_opacity_var, length=120)
+        bg_opacity_scale.pack(side='left', padx=10)
+        self.bg_opacity_label = tk.Label(bg_box_frame, text="0.50", font=("Arial", 9), bg='#f0f0f0')
+        self.bg_opacity_label.pack(side='left', padx=(5, 0))
+        bg_opacity_scale.configure(command=lambda val: self.bg_opacity_label.config(text=f"{float(val):.2f}"))
+
+        border_frame = tk.LabelFrame(subtitle_frame, text="📦 Speech Border Box Settings", 
+                                    font=("Arial", 11, "bold"), bg='#f0f0f0', padx=10, pady=10)
+        border_frame.pack(fill='x', padx=10, pady=8)
+        border_row1 = tk.Frame(border_frame, bg='#f0f0f0')
+        border_row1.pack(fill='x', pady=5)
+        tk.Label(border_row1, text="Border Thickness:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left')
+        self.border_thickness_var = tk.IntVar(value=3)
+        border_scale = tk.Scale(border_row1, from_=1, to=8, resolution=1,
+                               orient='horizontal', variable=self.border_thickness_var, length=120)
+        border_scale.pack(side='left', padx=(10, 5))
+        tk.Label(border_row1, text="Border Color:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left', padx=(20, 5))
+        self.border_color = "#000000"
+        self.border_preview = tk.Label(border_row1, text="  ", bg=self.border_color,
+                                      relief='solid', borderwidth=2, width=4, height=1, cursor='hand2')
+        self.border_preview.pack(side='left', padx=(0, 5))
+        self.border_preview.bind("<Button-1>", lambda e: self.pick_border_color())
+        tk.Button(border_row1, text="🎨", command=self.pick_border_color,
+                 bg='#34495e', fg='white', font=("Arial", 8), relief='flat').pack(side='left')
+        appearance_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        appearance_row.pack(fill='x', padx=10, pady=8)
+        size_frame = tk.Frame(appearance_row, bg='#f0f0f0')
+        size_frame.pack(side='left', padx=(0, 30))
+        tk.Label(size_frame, text="Base Subtitle Size (pixels):", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(anchor='w')
+        self.subtitle_size_var = tk.IntVar(value=24)
+        size_scale = tk.Scale(size_frame, from_=12, to=48, resolution=2,
+                             orient='horizontal', variable=self.subtitle_size_var, length=180)
+        size_scale.pack(side='left')
+        self.size_label = tk.Label(size_frame, text="24px", font=("Arial", 10, "bold"), 
+                                  bg='#f0f0f0', fg='#2c3e50')
+        self.size_label.pack(side='left', padx=(8, 0))
+        size_scale.configure(command=lambda val: self.size_label.config(text=f"{int(float(val))}px"))
+        color_frame = tk.Frame(appearance_row, bg='#f0f0f0')
+        color_frame.pack(side='left')
+        tk.Label(color_frame, text="Base Subtitle Color:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(anchor='w')
+        color_control_frame = tk.Frame(color_frame, bg='#f0f0f0')
+        color_control_frame.pack(pady=2)
+        self.subtitle_color = "#FFFFFF"
+        self.color_preview = tk.Label(color_control_frame, text="    ", bg=self.subtitle_color,
+                                     relief='solid', borderwidth=2, width=6, height=2, cursor='hand2')
+        self.color_preview.pack(side='left', padx=(0, 8))
+        self.color_preview.bind("<Button-1>", lambda e: self.pick_subtitle_color())
+        color_input_frame = tk.Frame(color_control_frame, bg='#f0f0f0')
+        color_input_frame.pack(side='left')
+        tk.Button(color_input_frame, text="🎨 Pick Color", command=self.pick_subtitle_color,
+                 bg='#f39c12', fg='white', font=("Arial", 9), relief='flat').pack(pady=(0, 2))
+        hex_frame = tk.Frame(color_input_frame, bg='#f0f0f0')
+        hex_frame.pack()
+        tk.Label(hex_frame, text="Hex:", font=("Arial", 9), bg='#f0f0f0').pack(side='left')
+        self.hex_var = tk.StringVar(value=self.subtitle_color)
+        self.hex_entry = tk.Entry(hex_frame, textvariable=self.hex_var, width=8, font=("Arial", 9))
+        self.hex_entry.pack(side='left', padx=2)
+        self.hex_entry.bind('<KeyRelease>', self.on_hex_change)
+        tk.Button(hex_frame, text="Apply", command=self.apply_hex_color,
+                 bg='#27ae60', fg='white', font=("Arial", 8), relief='flat').pack(side='left', padx=(2, 0))
+
+        preset_frame = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        preset_frame.pack(fill='x', padx=10, pady=8)
+        tk.Label(preset_frame, text="Quick Color Presets:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(anchor='w')
+        preset_colors_frame = tk.Frame(preset_frame, bg='#f0f0f0')
+        preset_colors_frame.pack(pady=5)
+        preset_colors = [
+            ("#FFFFFF", "White"), ("#FFFF00", "Yellow"), ("#FF0000", "Red"),
+            ("#00FF00", "Green"), ("#0000FF", "Blue"), ("#FF00FF", "Magenta"),
+            ("#00FFFF", "Cyan"), ("#FFA500", "Orange"), ("#000000", "Black"),
+            ("#808080", "Gray")
+        ]
+        for color, name in preset_colors:
+            btn = tk.Button(preset_colors_frame, text="  ", bg=color, width=4, height=2,
+                           relief='solid', borderwidth=1, cursor='hand2',
+                           command=lambda c=color: self.set_subtitle_color(c))
+            btn.pack(side='left', padx=2)
+            self.create_tooltip(btn, name)
+
+        font_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        font_row.pack(fill='x', padx=10, pady=8)
+        tk.Label(font_row, text="Font Family:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left')
+        self.font_family_var = tk.StringVar(value="Impact")
+        font_combo = ttk.Combobox(font_row, textvariable=self.font_family_var,
+                                  values=self.font_families, state="readonly", width=20)
+        font_combo.pack(side='left', padx=10)
+        style_frame = tk.Frame(font_row, bg='#f0f0f0')
+        style_frame.pack(side='left', padx=20)
+        self.bold_var = tk.BooleanVar(value=True)
+        tk.Checkbutton(style_frame, text="Bold", variable=self.bold_var, bg='#f0f0f0', font=("Arial", 10)).pack(side='left')
+        self.italic_var = tk.BooleanVar(value=False)
+        tk.Checkbutton(style_frame, text="Italic", variable=self.italic_var, bg='#f0f0f0', font=("Arial", 10)).pack(side='left', padx=10)
+
+        position_row = tk.Frame(subtitle_frame, bg='#f0f0f0')
+        position_row.pack(fill='x', padx=10, pady=8)
+        tk.Label(position_row, text="Subtitle Position:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(side='left')
+        self.position_var = tk.StringVar(value="Bottom")
+        position_combo = ttk.Combobox(position_row, textvariable=self.position_var,
+                                      values=["Bottom", "Top", "Center"], state="readonly", width=12)
+        position_combo.pack(side='left', padx=10)
+
+        animation_frame = tk.LabelFrame(subtitle_frame, text="🎥 Subtitle Animation Settings",
+                                        font=("Arial", 11, "bold"), bg='#f0f0f0', padx=10, pady=10)
+        animation_frame.pack(fill='x', padx=10, pady=8)
+        self.enable_animation_var = tk.BooleanVar(value=False)
+        tk.Checkbutton(animation_frame, text="Enable Subtitle Animations",
+                       variable=self.enable_animation_var, bg='#f0f0f0', font=("Arial", 10, "bold"),
+                       command=self.toggle_animation_options).pack(anchor='w', pady=2)
+        self.animation_options_frame = tk.Frame(animation_frame, bg='#f0f0f0')
+        self.animation_options_frame.pack(fill='x', pady=(5, 0))
+        tk.Label(self.animation_options_frame, text="Animation Type:", font=("Arial", 10, "bold"), bg='#f0f0f0').pack(anchor='w')
+        self.animation_type_var = tk.StringVar(value="Fade In/Out")
+        animation_combo = ttk.Combobox(self.animation_options_frame, textvariable=self.animation_type_var,
+                                       values=["Fade In/Out", "Pop Up", "Slide In", "Bounce"],
+                                       state="disabled", width=20)
+        animation_combo.pack(pady=2)
+
+        self.toggle_word_count()
+        self.toggle_animation_options()
+        button_frame = tk.Frame(self.scrollable_main_frame, bg='#f0f0f0')
+        button_frame.pack(pady=25)
+        self.process_btn = tk.Button(button_frame, text="🚀 START PROCESSING",
+                                    command=self.start_processing, bg='#e74c3c', fg='white',
+                                    font=("Arial", 14, "bold"), pady=12, padx=30, relief='flat',
+                                    cursor='hand2')
+        self.process_btn.pack(side='left', padx=(0, 15))
+        self.stop_btn = tk.Button(button_frame, text="⏹️ STOP PROCESSING",
+                                 command=self.stop_processing, bg='#e67e22', fg='white',
+                                 font=("Arial", 14, "bold"), pady=12, padx=30, state='disabled',
+                                 relief='flat', cursor='hand2')
+        self.stop_btn.pack(side='left')
+        progress_frame = tk.LabelFrame(self.scrollable_main_frame, text="📊 Processing Progress & Logs",
+                                      font=("Arial", 12, "bold"), bg='#f0f0f0', padx=15, pady=15)
+        progress_frame.pack(fill='both', expand=True, pady=10, padx=10)
+        progress_container = tk.Frame(progress_frame, bg='#f0f0f0')
+        progress_container.pack(fill='x', pady=10)
+        self.progress_var = tk.DoubleVar()
+        self.progress_bar = ttk.Progressbar(progress_container, variable=self.progress_var,
+                                          maximum=100, length=800, mode='determinate')
+        self.progress_bar.pack(side='left', fill='x', expand=True)
+        self.progress_percent_label = tk.Label(progress_container, text="0%", font=("Arial", 10, "bold"),
+                                             bg='#f0f0f0', width=5)
+        self.progress_percent_label.pack(side='right', padx=(10, 0))
+        self.status_label = tk.Label(progress_frame, text="Ready to process",
+                                    bg='#f0f0f0', font=("Arial", 11, "bold"), fg='#2c3e50')
+        self.status_label.pack(pady=8)
+        log_frame = tk.Frame(progress_frame, bg='#f0f0f0')
+        log_frame.pack(fill='both', expand=True, padx=5, pady=5)
+        self.log_text = tk.Text(log_frame, height=10, bg='#2c3e50', fg='#ecf0f1',
+                               font=("Consolas", 9), wrap=tk.WORD, state=tk.DISABLED)
+        log_scrollbar = ttk.Scrollbar(log_frame, orient="vertical", command=self.log_text.yview)
+        self.log_text.configure(yscrollcommand=log_scrollbar.set)
+        self.log_text.pack(side="left", fill="both", expand=True)
+        log_scrollbar.pack(side="right", fill="y")
+        log_control_frame = tk.Frame(progress_frame, bg='#f0f0f0')
+        log_control_frame.pack(pady=5)
+        tk.Button(log_control_frame, text="🧹 Clear Logs", command=self.clear_logs,
+                 bg='#95a5a6', fg='white', font=("Arial", 9), padx=15, pady=5, relief='flat').pack(side='left')
+        tk.Button(log_control_frame, text="💾 Save Logs", command=self.save_logs,
+                 bg='#3498db', fg='white', font=("Arial", 9), padx=15, pady=5, relief='flat').pack(side='left', padx=(10, 0))
+
+    def create_tooltip(self, widget, text):
+        def show_tooltip(event):
+            tooltip = tk.Toplevel()
+            tooltip.wm_overrideredirect(True)
+            tooltip.wm_geometry(f"+{event.x_root+10}+{event.y_root+10}")
+            label = tk.Label(tooltip, text=text, font=("Arial", 8), bg="#ffffe0", 
+                           relief="solid", borderwidth=1)
+            label.pack()
+            widget.tooltip = tooltip
+        def hide_tooltip(event):
+            if hasattr(widget, 'tooltip'):
+                widget.tooltip.destroy()
+                delattr(widget, 'tooltip')
+        widget.bind("<Enter>", show_tooltip)
+        widget.bind("<Leave>", hide_tooltip)
+
+    def remove_selected_videos(self):
+        selected_indices = self.input_listbox.curselection()
+        if selected_indices:
+            for index in reversed(selected_indices):
+                if 0 <= index < len(self.input_videos):
+                    del self.input_videos[index]
+            self.update_input_listbox()
+        else:
+            messagebox.showinfo("No Selection", "Please select videos to remove from the list.")
+
+    def clear_all_videos(self):
+        if self.input_videos and messagebox.askquestion("Clear All", 
+                                                        "Are you sure you want to clear all selected videos?") == 'yes':
+            self.input_videos.clear()
+            self.update_input_listbox()
+
+    def update_input_listbox(self):
+        self.input_listbox.delete(0, tk.END)
+        for video in self.input_videos:
+            filename = os.path.basename(video)
+            try:
+                if os.path.exists(video):
+                    size_mb = os.path.getsize(video) / (1024 * 1024)
+                    self.input_listbox.insert(tk.END, f"{filename} ({size_mb:.1f} MB)")
+                else:
+                    self.input_listbox.insert(tk.END, f"{filename} (File not found)")
+            except Exception:
+                self.input_listbox.insert(tk.END, filename)
+
+    def clear_extra_video(self):
+        self.extra_video = None
+        self.extra_label.config(text="No extra video selected")
+
+    def clear_logs(self):
+        self.log_text.config(state=tk.NORMAL)
+        self.log_text.delete(1.0, tk.END)
+        self.log_text.config(state=tk.DISABLED)
+
+    def save_logs(self):
+        try:
+            filename = filedialog.asksaveasfilename(
+                defaultextension=".txt",
+                filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
+                title="Save Processing Logs"
+            )
+            if filename:
+                with open(filename, 'w', encoding='utf-8') as f:
+                    f.write(self.log_text.get(1.0, tk.END))
+                messagebox.showinfo("Success", f"Logs saved to: {filename}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save logs: {e}")
+
+    def toggle_merge_options(self):
+        enabled = self.enable_merge_var.get()
+        state = 'normal' if enabled else 'disabled'
+        self.select_extra_btn.config(state=state)
+        self.clear_extra_btn.config(state=state)
+        self.extra_label.config(fg='black' if enabled else 'gray')
+        if not enabled:
+            self.clear_extra_video()
+
+    def toggle_word_count(self):
+        mode = self.subtitle_mode_var.get()
+        if mode == "multiple":
+            self.words_count_frame.pack(fill='x', padx=10, pady=8)
+        else:
+            self.words_count_frame.pack_forget()
+
+    def toggle_animation_options(self):
+        enabled = self.enable_animation_var.get()
+        for child in self.animation_options_frame.winfo_children():
+            if isinstance(child, ttk.Combobox):
+                child.config(state='readonly' if enabled else 'disabled')
+
+    def pick_subtitle_color(self):
+        color = colorchooser.askcolor(title="Choose Subtitle Color",
+                                     initialcolor=self.subtitle_color)
+        if color[1]:
+            self.set_subtitle_color(color[1])
+
+    def pick_border_color(self):
+        color = colorchooser.askcolor(title="Choose Border Color",
+                                     initialcolor=self.border_color)
+        if color[1]:
+            self.border_color = color[1].upper()
+            self.border_preview.config(bg=self.border_color)
+
+    def set_subtitle_color(self, color_hex):
+        self.subtitle_color = color_hex.upper()
+        self.color_preview.config(bg=self.subtitle_color)
+        self.hex_var.set(self.subtitle_color)
+
+    def on_hex_change(self, event):
+        hex_value = self.hex_var.get().strip()
+        if len(hex_value) == 7 and hex_value.startswith('#'):
+            try:
+                self.root.winfo_rgb(hex_value)
+                self.color_preview.config(bg=hex_value)
+            except Exception:
+                pass
+
+    def apply_hex_color(self):
+        hex_value = self.hex_var.get().strip().upper()
+        if not hex_value.startswith('#'):
+            hex_value = '#' + hex_value
+        if len(hex_value) == 7:
+            try:
+                self.root.winfo_rgb(hex_value)
+                self.set_subtitle_color(hex_value)
+            except Exception:
+                messagebox.showerror("Invalid Color", "Please enter a valid hex color (e.g., #FFFFFF)")
+        else:
+            messagebox.showerror("Invalid Format", "Hex color must be 6 characters (e.g., #FFFFFF)")
+
+    def log_message(self, message):
+        try:
+            self.log_text.config(state=tk.NORMAL)
+            self.log_text.insert(tk.END, message + "\n")
+            self.log_text.see(tk.END)
+            self.log_text.config(state=tk.DISABLED)
+            self.root.update_idletasks()
+        except Exception:
+            pass
+
+    def select_input_videos(self):
+        files = filedialog.askopenfilenames(
+            title="Select Main Input Videos",
+            filetypes=[("Video Files", "*.mp4 *.mov *.mkv *.avi *.m4v *.wmv *.flv")]
+        )
+        if files:
+            valid_files = []
+            invalid_files = []
+            for file in files:
+                if os.path.exists(file):
+                    valid_files.append(file)
+                else:
+                    invalid_files.append(os.path.basename(file))
+            if invalid_files:
+                messagebox.showwarning("Invalid Files", 
+                                     f"The following files could not be found:\n{', '.join(invalid_files)}")
+            if valid_files:
+                self.input_videos = list(valid_files)
+                self.update_input_listbox()
+
+    def select_extra_video(self):
+        file = filedialog.askopenfilename(
+            title="Select Extra Video to Merge",
+            filetypes=[("Video Files", "*.mp4 *.mov *.mkv *.avi *.m4v *.wmv *.flv")]
+        )
+        if file:
+            if os.path.exists(file):
+                self.extra_video = file
+                filename = os.path.basename(file)
+                try:
+                    size_mb = os.path.getsize(file) / (1024 * 1024)
+                    self.extra_label.config(text=f"✅ Extra video: {filename} ({size_mb:.1f} MB)")
+                except Exception:
+                    self.extra_label.config(text=f"✅ Extra video: {filename}")
+                self.clear_extra_btn.config(state='normal')
+            else:
+                messagebox.showerror("File Not Found", f"The selected file could not be found:\n{file}")
+
+    def select_background_music(self):
+        file = filedialog.askopenfilename(
+            title="Select Background Music (Optional)",
+            filetypes=[("Audio Files", "*.mp3 *.wav *.aac *.m4a *.ogg *.flac *.wma")]
+        )
+        if file:
+            if os.path.exists(file):
+                self.background_music = file
+                filename = os.path.basename(file)
+                try:
+                    size_mb = os.path.getsize(file) / (1024 * 1024)
+                    self.music_label.config(text=f"✅ Background music: {filename} ({size_mb:.1f} MB)")
+                except Exception:
+                    self.music_label.config(text=f"✅ Background music: {filename}")
+            else:
+                messagebox.showerror("File Not Found", f"The selected file could not be found:\n{file}")
+
+    def clear_background_music(self):
+        self.background_music = None
+        self.music_label.config(text="No background music selected")
+
+    def select_output_dir(self):
+        directory = filedialog.askdirectory(title="Select Output Folder")
+        if directory:
+            if os.path.exists(directory) and os.path.isdir(directory):
+                self.output_dir = directory
+                self.output_label.config(text=f"✅ Output folder: {directory}")
+            else:
+                messagebox.showerror("Invalid Directory", "The selected directory is not valid or accessible.")
+
+    def validate_inputs(self):
+        if not self.input_videos:
+            messagebox.showerror("Error", "Please select main input videos")
+            return False
+        missing_videos = []
+        for video in self.input_videos:
+            if not os.path.exists(video):
+                missing_videos.append(os.path.basename(video))
+        if missing_videos:
+            messagebox.showerror("Missing Videos", 
+                               f"The following videos could not be found:\n{', '.join(missing_videos)}")
+            return False
+        if self.enable_merge_var.get():
+            if not self.extra_video:
+                messagebox.showerror("Error", "Please select extra video to merge or disable video merging")
+                return False
+            if not os.path.exists(self.extra_video):
+                messagebox.showerror("Error", "The selected extra video could not be found")
+                return False
+        if not self.output_dir:
+            messagebox.showerror("Error", "Please select output folder")
+            return False
+        if not os.path.exists(self.output_dir) or not os.path.isdir(self.output_dir):
+            messagebox.showerror("Error", "The selected output directory is not valid")
+            return False
+        if self.background_music and not os.path.exists(self.background_music):
+            messagebox.showerror("Error", "The selected background music file could not be found")
+            return False
+        return True
+
+    def start_processing(self):
+        if not self.validate_inputs():
+            return
+        if self.processing:
+            messagebox.showwarning("Warning", "Processing already in progress!")
+            return
+        self.stop_event.clear()
+        self.processing = True
+        self.process_btn.config(state='disabled', text="⏳ PROCESSING...")
+        self.stop_btn.config(state='normal')
+        self.progress_var.set(0)
+        self.progress_percent_label.config(text="0%")
+        self.clear_logs()
+        thread = threading.Thread(target=self.process_videos_thread, daemon=True)
+        thread.start()
+
+    def stop_processing(self):
+        if not self.processing:
+            return
+        if messagebox.askquestion("Stop Processing",
+                                 "Are you sure you want to stop processing?\nCurrent video will be completed, but remaining videos will be skipped.",
+                                 icon='warning') == 'yes':
+            self.stop_event.set()
+            logging.warning("🛑 Stop requested by user. Finishing current video...")
+            self.stop_btn.config(state='disabled', text="⏳ STOPPING...")
+
+    def generate_subtitles(self):
+        if not self.input_videos:
+            messagebox.showerror("Error", "No videos selected")
+            return
+        if not self.output_dir:
+            self.select_output_dir()
+        if not self.output_dir:
+            return
+        if self.processing:
+            messagebox.showwarning("Warning", "Processing already in progress!")
+            return
+        self.stop_event.clear()
+        self.processing = True
+        self.process_btn.config(state='disabled')
+        self.stop_btn.config(state='normal')
+        self.progress_var.set(0)
+        self.progress_percent_label.config(text="0%")
+        self.clear_logs()
+        thread = threading.Thread(target=self.generate_subtitles_thread, daemon=True)
+        thread.start()
+
+    def generate_subtitles_thread(self):
+        try:
+            processor = OptimizedVideoProcessor(self.progress_queue, self.video_title_map, self.stop_event)
+            subtitle_settings = {
+                'mode': self.subtitle_mode_var.get(),
+                'words_count': self.words_count_var.get(),
+                'prefix': self.prefix_var.get(),
+                'suffix': self.suffix_var.get(),
+                'case_style': self.case_var.get()
+            }
+            total_videos = len(self.input_videos)
+            processed = 0
+            temp_dir = tempfile.gettempdir()
+            for video_path in self.input_videos:
+                if self.stop_event.is_set():
+                    break
+                video_name = os.path.splitext(os.path.basename(video_path))[0]
+                srt_path = os.path.join(self.output_dir, f"{video_name}.srt")
+                temp_audio = os.path.join(temp_dir, f"temp_audio_{video_name}.mp3")
+                if processor.extract_audio(video_path, temp_audio):
+                    words = processor.transcribe_audio_optimized(temp_audio)
+                    processor.generate_srt_subtitles(words, srt_path, subtitle_settings)
+                    if os.path.exists(temp_audio):
+                        os.remove(temp_audio)
+                    logging.info(f"✅ Generated subtitle file: {os.path.basename(srt_path)}")
+                processed += 1
+                self.progress_var.set((processed / total_videos) * 100)
+                self.progress_percent_label.config(text=f"{int((processed / total_videos) * 100)}%")
+            if self.stop_event.is_set():
+                self.progress_queue.put(("STOPPED", "🛑 Subtitle generation stopped by user"))
+            else:
+                self.progress_queue.put(("COMPLETE", "🎉 All subtitles generated successfully!"))
+        except Exception as e:
+            if self.stop_event.is_set():
+                self.progress_queue.put(("STOPPED", "🛑 Subtitle generation stopped by user"))
+            else:
+                logging.error(f"❌ Subtitle generation failed: {e}", exc_info=True)
+                self.progress_queue.put(("ERROR", f"❌ An unexpected error occurred: {str(e)}"))
+        finally:
+            self.processing = False
+            self.process_btn.config(state='normal')
+            self.stop_btn.config(state='disabled')
+
+    def manually_edit_subtitle(self):
+        video_file = filedialog.askopenfilename(
+            title="Select Video File for Subtitle Synchronization",
+            filetypes=[("Video Files", "*.mp4 *.mov *.mkv *.avi *.m4v *.wmv *.flv")]
+        )
+        if not video_file:
+            return
+        srt_file = filedialog.askopenfilename(
+            title="Select SRT Subtitle File to Edit",
+            filetypes=[("SRT Files", "*.srt")]
+        )
+        if not srt_file:
+            return
+        try:
+            with open(srt_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            edit_window = tk.Toplevel(self.root)
+            edit_window.title(f"Edit Subtitle File: {os.path.basename(srt_file)}")
+            edit_window.geometry("800x600")
+            text = tk.Text(edit_window, wrap='word', font=("Consolas", 10))
+            text.pack(fill='both', expand=True, padx=10, pady=10)
+            text.insert(tk.END, content)
+            def save_changes():
+                try:
+                    new_content = text.get(1.0, tk.END).strip()
+                    temp_srt = os.path.join(tempfile.gettempdir(), f"temp_edited_{os.path.basename(srt_file)}")
+                    with open(temp_srt, 'w', encoding='utf-8') as f:
+                        f.write(new_content)
+                    processor = OptimizedVideoProcessor(self.progress_queue, self.video_title_map, self.stop_event)
+                    synced_srt = os.path.join(os.path.dirname(srt_file), f"synced_{os.path.basename(srt_file)}")
+                    processor.synchronize_srt_subtitles(video_file, temp_srt, synced_srt)
+                    messagebox.showinfo("Saved", f"Changes saved and synchronized to: {synced_srt}")
+                    edit_window.destroy()
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to save or synchronize changes: {e}")
+            save_btn = tk.Button(edit_window, text="Save and Synchronize", command=save_changes,
+                                 bg='#27ae60', fg='white', font=("Arial", 11, "bold"), padx=15, pady=5)
+            save_btn.pack(pady=10)
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to open file: {e}")
+
+    def process_videos_thread(self):
+        try:
+            processor = OptimizedVideoProcessor(self.progress_queue, self.video_title_map, self.stop_event)
+            subtitle_settings = {
+                'color': self.subtitle_color,
+                'mode': self.subtitle_mode_var.get(),
+                'size': self.subtitle_size_var.get(),
+                'words_count': self.words_count_var.get(),
+                'enable_borders': self.speech_borders_var.get(),
+                'border_color': self.border_color,
+                'border_thickness': self.border_thickness_var.get(),
+                'font_family': self.font_family_var.get(),
+                'bold': self.bold_var.get(),
+                'italic': self.italic_var.get(),
+                'position': self.position_var.get(),
+                'enable_animation': self.enable_animation_var.get(),
+                'animation_type': self.animation_type_var.get(),
+                'prefix': self.prefix_var.get(),
+                'suffix': self.suffix_var.get(),
+                'case_style': self.case_var.get(),
+                'random_colors': self.random_colors_var.get(),
+                'enable_bg_box': self.enable_bg_box_var.get(),
+                'bg_opacity': self.bg_opacity_var.get()
+            }
+            processor.process_all_videos(
+                self.input_videos, self.extra_video if self.enable_merge_var.get() else None, 
+                self.output_dir, self.background_music, self.quality_var.get(), self.gpu_var.get(), 
+                self.volume_var.get(), self.ducking_var.get(), self.auto_edit_var.get(), 
+                subtitle_settings
+            )
+            if self.stop_event.is_set():
+                self.progress_queue.put(("STOPPED", "🛑 Processing stopped by user"))
+            else:
+                self.progress_queue.put(("COMPLETE", "🎉 All videos processed successfully!"))
+        except Exception as e:
+            if self.stop_event.is_set():
+                self.progress_queue.put(("STOPPED", "🛑 Processing stopped by user"))
+            else:
+                logging.error(f"❌ Processing failed: {e}", exc_info=True)
+                self.progress_queue.put(("ERROR", f"❌ An unexpected error occurred: {str(e)}"))
+        finally:
+            self.processing = False
+            self.process_btn.config(state='normal', text="🚀 START PROCESSING")
+            self.stop_btn.config(state='disabled', text="⏹️ STOP PROCESSING")
+
+    def check_progress(self):
+        try:
+            while True:
+                msg_type, message = self.progress_queue.get_nowait()
+                if msg_type == "PROGRESS":
+                    self.progress_var.set(message)
+                    self.progress_percent_label.config(text=f"{int(message)}%")
+                elif msg_type == "STATUS":
+                    self.status_label.config(text=message)
+                    self.log_message(message)
+                elif msg_type == "LOG":
+                    self.log_message(message)
+                elif msg_type in ("COMPLETE", "STOPPED", "ERROR"):
+                    self.status_label.config(text=message)
+                    if msg_type != "ERROR":
+                       self.log_message(message)
+                    self.process_btn.config(state='normal', text="🚀 START PROCESSING")
+                    self.stop_btn.config(state='disabled', text="⏹️ STOP PROCESSING")
+                    if msg_type == "COMPLETE":
+                        self.progress_var.set(100)
+                        self.progress_percent_label.config(text="100%")
+                        messagebox.showinfo("Success", "All videos processed successfully!")
+                    elif msg_type == "STOPPED":
+                        messagebox.showinfo("Stopped", "Processing stopped by user")
+                    elif msg_type == "ERROR":
+                        messagebox.showerror("Error", message)
+        except queue.Empty:
+            pass
+        self.root.after(100, self.check_progress)
+
+    def load_config(self):
+        file = filedialog.askopenfilename(
+            title="Select Config JSON",
+            filetypes=[("JSON Files", "*.json")]
+        )
+        if not file:
+            return
+        try:
+            with open(file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+            
+            self.input_videos = config.get('input_videos', [])
+            self.update_input_listbox()
+            
+            self.extra_video = config.get('extra_video')
+            self.extra_label.config(text=f"Extra video: {os.path.basename(self.extra_video)}" if self.extra_video else "No extra video selected")
+            
+            self.background_music = config.get('background_music')
+            self.music_label.config(text=f"Background music: {os.path.basename(self.background_music)}" if self.background_music else "No background music selected")
+            
+            self.output_dir = config.get('output_dir')
+            self.output_label.config(text=f"Output folder: {self.output_dir}" if self.output_dir else "No output folder selected")
+            
+            self.quality_var.set(config.get('quality_preset', 'fast'))
+            self.volume_var.set(config.get('music_volume', 0.30))
+            self.auto_edit_var.set(config.get('enable_auto_edit', False))
+            self.gpu_var.set(config.get('enable_gpu', True))
+            self.ducking_var.set(config.get('enable_ducking', True))
+            self.speech_borders_var.set(config.get('enable_speech_borders', True))
+            self.subtitle_mode_var.set(config.get('subtitle_mode', 'single'))
+            self.words_count_var.set(config.get('words_count', 3))
+            self.border_thickness_var.set(config.get('border_thickness', 3))
+            self.border_color = config.get('border_color', '#000000')
+            self.border_preview.config(bg=self.border_color)
+            self.subtitle_size_var.set(config.get('subtitle_size', 24))
+            self.subtitle_color = config.get('subtitle_color', '#FFFFFF')
+            self.color_preview.config(bg=self.subtitle_color)
+            self.hex_var.set(self.subtitle_color)
+            self.enable_merge_var.set(config.get('enable_merge', False))
+            self.font_family_var.set(config.get('font_family', 'Impact'))
+            self.bold_var.set(config.get('bold', True))
+            self.italic_var.set(config.get('italic', False))
+            self.position_var.set(config.get('position', 'Bottom'))
+            self.enable_animation_var.set(config.get('enable_animation', False))
+            self.animation_type_var.set(config.get('animation_type', 'Fade In/Out'))
+            self.prefix_var.set(config.get('prefix', ''))
+            self.suffix_var.set(config.get('suffix', ''))
+            self.case_var.set(config.get('case_style', 'Uppercase'))
+            self.random_colors_var.set(config.get('random_colors', False))
+            self.enable_bg_box_var.set(config.get('enable_bg_box', False))
+            self.bg_opacity_var.set(config.get('bg_opacity', 0.5))
+            
+            self.toggle_merge_options()
+            self.toggle_word_count()
+            self.toggle_animation_options()
+            
+            messagebox.showinfo("Success", "Config loaded successfully! You can now start processing.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load config: {str(e)}")
+
+    def save_config(self):
+        config = {
+            "input_videos": self.input_videos,
+            "extra_video": self.extra_video,
+            "background_music": self.background_music,
+            "output_dir": self.output_dir,
+            "quality_preset": self.quality_var.get(),
+            "music_volume": self.volume_var.get(),
+            "enable_auto_edit": self.auto_edit_var.get(),
+            "enable_gpu": self.gpu_var.get(),
+            "enable_ducking": self.ducking_var.get(),
+            "enable_speech_borders": self.speech_borders_var.get(),
+            "subtitle_mode": self.subtitle_mode_var.get(),
+            "words_count": self.words_count_var.get(),
+            "border_thickness": self.border_thickness_var.get(),
+            "border_color": self.border_color,
+            "subtitle_size": self.subtitle_size_var.get(),
+            "subtitle_color": self.subtitle_color,
+            "enable_merge": self.enable_merge_var.get(),
+            "font_family": self.font_family_var.get(),
+            "bold": self.bold_var.get(),
+            "italic": self.italic_var.get(),
+            "position": self.position_var.get(),
+            "enable_animation": self.enable_animation_var.get(),
+            "animation_type": self.animation_type_var.get(),
+            "prefix": self.prefix_var.get(),
+            "suffix": self.suffix_var.get(),
+            "case_style": self.case_var.get(),
+            "random_colors": self.random_colors_var.get(),
+            "enable_bg_box": self.enable_bg_box_var.get(),
+            "bg_opacity": self.bg_opacity_var.get()
+        }
+        file = filedialog.asksaveasfilename(
+            defaultextension=".json",
+            filetypes=[("JSON Files", "*.json")],
+            title="Save Config JSON"
+        )
+        if file:
+            with open(file, 'w', encoding='utf-8') as f:
+                json.dump(config, f, indent=4)
+            messagebox.showinfo("Success", f"Config saved to: {file}")
+
+# --- Video Processing Class ---
+
+class OptimizedVideoProcessor:
+    def __init__(self, progress_queue, video_title_map, stop_event):
+        self.progress_queue = progress_queue
+        self.video_title_map = video_title_map
+        self.whisper_model = None
+        self.stop_event = stop_event
+        self.random_colors_list = ["#FFFFFF", "#FFFF00", "#FF0000", "#00FF00", "#0000FF", 
+                                  "#FF00FF", "#00FFFF", "#FFA500", "#000000", "#808080"]
+
+    def update_progress(self, percentage):
+        try:
+            self.progress_queue.put(("PROGRESS", max(0, min(100, percentage))))
+        except Exception:
+            pass
+
+    def check_stop(self):
+        return self.stop_event.is_set()
+
+    def get_whisper_model(self):
+        if self.whisper_model is None:
+            logging.info("🧠 Loading Whisper model...", extra={'is_status': True})
+            try:
+                self.whisper_model = WhisperModel("large-v3", compute_type="int8")
+                logging.info("✅ Loaded large-v3 Whisper model")
+            except Exception as e:
+                logging.warning(f"⚠️ Could not load 'large-v3' model, trying 'small'. Reason: {e}")
+                try:
+                    self.whisper_model = WhisperModel("small", compute_type="int8")
+                    logging.info("✅ Loaded small Whisper model")
+                except Exception as e2:
+                    logging.warning(f"⚠️ Could not load 'small' model, falling back to 'tiny'. Reason: {e2}")
+                    self.whisper_model = WhisperModel("tiny", device="cpu", compute_type="int8")
+                    logging.info("✅ Loaded tiny Whisper model")
+        return self.whisper_model
+
+    def hex_to_ass_color(self, hex_color):
+        try:
+            hex_color = hex_color.lstrip('#')
+            r = int(hex_color[0:2], 16)
+            g = int(hex_color[2:4], 16)
+            b = int(hex_color[4:6], 16)
+            return f"&H{b:02X}{g:02X}{r:02X}"
+        except Exception:
+            return "&HFFFFFF"
+
+    def hex_to_ass_color_with_alpha(self, hex_color, opacity):
+        try:
+            hex_color = hex_color.lstrip('#')
+            r = int(hex_color[0:2], 16)
+            g = int(hex_color[2:4], 16)
+            b = int(hex_color[4:6], 16)
+            alpha = int(255 * (1 - opacity))
+            return f"&H{alpha:02X}{b:02X}{g:02X}{r:02X}"
+        except Exception:
+            return "&H80000000"
+
+    def format_ass_time(self, seconds):
+        h = int(seconds // 3600)
+        m = int((seconds % 3600) // 60)
+        s = int(seconds % 60)
+        cs = int((seconds * 100) % 100)
+        return f"{h}:{m:02d}:{s:02d}.{cs:02d}"
+
+    def format_srt_time(self, seconds):
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        secs = int(seconds % 60)
+        millis = int((seconds * 1000) % 1000)
+        return f"{hours:02d}:{minutes:02d}:{secs:02d},{millis:03d}"
+
+    def get_animation_tag(self, animation_type, start, end):
+        duration = end - start
+        if animation_type == "Fade In/Out":
+            fade_in = int(duration * 1000 * 0.2)
+            fade_out = int(duration * 1000 * 0.2)
+            return f"\\fad({fade_in},{fade_out})"
+        elif animation_type == "Pop Up":
+            return "\\t(0,200,\\fscx150\\fscy150)\\t(200,300,\\fscx100\\fscy100)"
+        elif animation_type == "Slide In":
+            return "\\move(-200,0,0,0)"
+        elif animation_type == "Bounce":
+            return "\\t(0,100,\\fscy120)\\t(100,200,\\fscy100)\\t(200,300,\\fscy110)\\t(300,400,\\fscy100)"
+        return ""
+
+    def generate_srt_subtitles(self, content, srt_path, settings):
+        if self.check_stop():
+            return
+        try:
+            mode = settings['mode']
+            words_count = settings['words_count']
+            prefix = settings.get('prefix', '')
+            suffix = settings.get('suffix', '')
+            case_style = settings.get('case_style', 'Uppercase')
+
+            with open(srt_path, "w", encoding="utf-8") as f:
+                if mode == "single":
+                    for i, w in enumerate(content, 1):
+                        if self.check_stop():
+                            break
+                        try:
+                            word = w.get("word", "").strip()
+                            if case_style == "Lowercase":
+                                word = word.lower()
+                            elif case_style == "Title Case":
+                                word = word.title()
+                            else:
+                                word = word.upper()
+                            word = f"{prefix}{word}{suffix}"
+                            start, end = w.get("start", 0), w.get("end", 0)
+                            if word and end > start:
+                                f.write(f"{i}\n")
+                                f.write(f"{self.format_srt_time(start)} --> {self.format_srt_time(end)}\n")
+                                f.write(f"{word}\n\n")
+                        except Exception as e:
+                            logging.warning(f"⚠️ Error writing subtitle: {e}")
+                            continue
+                else:
+                    grouped_subs = self.generate_grouped_subtitles(content, words_count)
+                    for i, sub in enumerate(grouped_subs, 1):
+                        if self.check_stop():
+                            break
+                        try:
+                            text = sub.get("text", "").strip()
+                            if case_style == "Lowercase":
+                                text = text.lower()
+                            elif case_style == "Title Case":
+                                text = text.title()
+                            else:
+                                text = text.upper()
+                            text = f"{prefix}{text}{suffix}"
+                            start, end = sub.get("start", 0), sub.get("end", 0)
+                            if text and end > start:
+                                f.write(f"{i}\n")
+                                f.write(f"{self.format_srt_time(start)} --> {self.format_srt_time(end)}\n")
+                                f.write(f"{text}\n\n")
+                        except Exception as e:
+                            logging.warning(f"⚠️ Error writing grouped subtitle: {e}")
+                            continue
+            mode_text = {"single": "single word", "multiple": f"{words_count} words per subtitle"}[mode]
+            branding_text = f" with prefix '{prefix}' and suffix '{suffix}'" if prefix or suffix else ""
+            case_text = f" in {case_style.lower()} case"
+            logging.info(f"✅ Generated SRT subtitles with {mode_text}{branding_text}{case_text}")
+        except Exception as e:
+            logging.error(f"❌ SRT subtitle generation failed: {e}", exc_info=True)
+            raise
+
+    def srt_to_ass(self, srt_path, ass_path, settings):
+        if self.check_stop():
+            return
+        try:
+            with open(srt_path, 'r', encoding='utf-8') as f:
+                srt_content = f.read().strip().split('\n\n')
+            
+            subtitle_color = settings['color']
+            subtitle_size = settings['size']
+            random_colors = settings.get('random_colors', False)
+            case_style = settings.get('case_style', 'Uppercase')
+            enable_bg_box = settings.get('enable_bg_box', False)
+            bg_opacity = settings.get('bg_opacity', 0.5)
+            font_name = settings['font_family']
+            bold = "-1" if settings['bold'] else "0"
+            italic = "1" if settings['italic'] else "0"
+            underline = "0"
+            strikeout = "0"
+            secondary = "&H000000FF"
+            back = self.hex_to_ass_color_with_alpha("#000000", bg_opacity) if enable_bg_box else "&H00000000"
+            scale_x = "100"
+            scale_y = "100"
+            spacing = "0"
+            angle = "0"
+            border_style = "3" if enable_bg_box else "1"
+            shadow = "0"
+            alignment_map = {"Bottom": 2, "Top": 8, "Center": 5}
+            alignment = alignment_map[settings['position']]
+            margin_l = "10"
+            margin_r = "10"
+            margin_v = "90" if settings['position'] == "Bottom" else "10" if settings['position'] == "Top" else "0"
+            encoding = "1"
+
+            if settings['enable_borders']:
+                outline_color = self.hex_to_ass_color(settings['border_color'])
+                outline = str(settings['border_thickness'])
+            else:
+                outline_color = "&H00000000"
+                outline = "0"
+
+            primary_ass = self.hex_to_ass_color(subtitle_color)
+
+            format_str = "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding"
+            style_line = f"Style: Default,{font_name},{subtitle_size},{primary_ass},{secondary},{outline_color},{back},{bold},{italic},{underline},{strikeout},{scale_x},{scale_y},{spacing},{angle},{border_style},{outline},{shadow},{alignment},{margin_l},{margin_r},{margin_v},{encoding}"
+
+            style_border = ""
+            if settings['enable_borders']:
+                size_border = str(subtitle_size + 2)
+                outline_border = str(int(outline) + 1) if outline != "0" else "1"
+                style_border = f"\nStyle: SpeechBorder,{font_name},{size_border},{primary_ass},{secondary},{outline_color},{back},{bold},{italic},{underline},{strikeout},{scale_x},{scale_y},{spacing},{angle},{border_style},{outline_border},{shadow},{alignment},{margin_l},{margin_r},{margin_v},{encoding}"
+
+            with open(ass_path, "w", encoding="utf-8") as f:
+                f.write(f"""[Script Info]
+Title: Enhanced Subtitles with Speech Recognition
+ScriptType: v4.00+
+
+[V4+ Styles]
+{format_str}
+{style_line}{style_border}
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+""")
+                style_name = "SpeechBorder" if settings['enable_borders'] else "Default"
+                enable_animation = settings.get('enable_animation', False)
+                animation_type = settings.get('animation_type', 'Fade In/Out')
+                for sub in srt_content:
+                    if self.check_stop():
+                        break
+                    lines = sub.strip().split('\n')
+                    if len(lines) >= 3:
+                        try:
+                            index = int(lines[0])
+                            time_line = lines[1]
+                            text = ' '.join(lines[2:]).strip()
+                            start_str, end_str = time_line.split(' --> ')
+                            start = self.parse_srt_time(start_str)
+                            end = self.parse_srt_time(end_str)
+                            if case_style == "Lowercase":
+                                text = text.lower()
+                            elif case_style == "Title Case":
+                                text = text.title()
+                            else:
+                                text = text.upper()
+                            primary_override = f"\\c{self.hex_to_ass_color(random.choice(self.random_colors_list))}" if random_colors else ""
+                            animation_tag = self.get_animation_tag(animation_type, start, end) if enable_animation else ""
+                            tags = primary_override + animation_tag
+                            sub_text = f"{{{tags}}}{text}" if tags else text
+                            f.write(f"Dialogue: 0,{self.format_ass_time(start)},{self.format_ass_time(end)},{style_name},,0,0,0,,{sub_text}\n")
+                        except Exception as e:
+                            logging.warning(f"⚠️ Error converting SRT entry: {e}")
+                            continue
+            logging.info(f"✅ Converted SRT to enhanced ASS subtitles")
+        except Exception as e:
+            logging.error(f"❌ SRT to ASS conversion failed: {e}", exc_info=True)
+            raise
+
+    def parse_srt_time(self, time_str):
+        h, m, s_ms = time_str.split(':')
+        s, ms = s_ms.split(',')
+        return int(h) * 3600 + int(m) * 60 + int(s) + int(ms) / 1000
+
+    def synchronize_srt_subtitles(self, video_path, input_srt, output_srt):
+        if self.check_stop():
+            return
+        try:
+            logging.info(f"🔄 Synchronizing subtitles for: {os.path.basename(video_path)}", extra={'is_status': True})
+            temp_audio = os.path.join(tempfile.gettempdir(), f"temp_audio_sync_{os.path.basename(video_path)}.mp3")
+            if not self.extract_audio(video_path, temp_audio):
+                raise Exception("Failed to extract audio for synchronization")
+            words = self.transcribe_audio_optimized(temp_audio)
+            if os.path.exists(temp_audio):
+                os.remove(temp_audio)
+            
+            with open(input_srt, 'r', encoding='utf-8') as f:
+                srt_lines = f.read().strip().split('\n\n')
+            
+            new_subtitles = []
+            word_index = 0
+            for sub in srt_lines:
+                lines = sub.strip().split('\n')
+                if len(lines) >= 3:
+                    try:
+                        index = int(lines[0])
+                        time_line = lines[1]
+                        text = ' '.join(lines[2:])
+                        start_str, end_str = time_line.split(' --> ')
+                        orig_start = self.parse_srt_time(start_str)
+                        orig_end = self.parse_srt_time(end_str)
+                        matched_words = []
+                        text_words = text.split()
+                        while word_index < len(words) and len(matched_words) < len(text_words):
+                            if word_index >= len(words):
+                                break
+                            matched_words.append(words[word_index])
+                            word_index += 1
+                        if matched_words:
+                            new_start = matched_words[0]["start"]
+                            new_end = matched_words[-1]["end"]
+                            new_subtitles.append({
+                                "index": index,
+                                "start": new_start,
+                                "end": new_end,
+                                "text": text
+                            })
+                        else:
+                            new_subtitles.append({
+                                "index": index,
+                                "start": orig_start,
+                                "end": orig_end,
+                                "text": text
+                            })
+                    except Exception as e:
+                        logging.warning(f"⚠️ Error processing subtitle entry {lines[0]}: {e}")
+                        continue
+            
+            with open(output_srt, 'w', encoding='utf-8') as f:
+                for sub in new_subtitles:
+                    f.write(f"{sub['index']}\n")
+                    f.write(f"{self.format_srt_time(sub['start'])} --> {self.format_srt_time(sub['end'])}\n")
+                    f.write(f"{sub['text']}\n\n")
+            logging.info(f"✅ Synchronized SRT subtitles saved to: {os.path.basename(output_srt)}")
+        except Exception as e:
+            logging.error(f"❌ Subtitle synchronization failed: {e}", exc_info=True)
+            raise
+
+    def check_ffmpeg_availability(self):
+        missing_tools = []
+        try:
+            subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True, text=True, timeout=10)
+            logging.info("✅ FFmpeg is available")
+        except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+            missing_tools.append("FFmpeg")
+        try:
+            subprocess.run(["auto-editor", "--version"], capture_output=True, check=True, text=True, timeout=10)
+            logging.info("✅ auto-editor is available")
+        except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
+            missing_tools.append("auto-editor")
+        if missing_tools:
+            raise Exception(f"Required tools not found: {', '.join(missing_tools)}. Please install them and ensure they are in your system's PATH.")
+        return True
+
+    def transcribe_audio_optimized(self, audio_path):
+        try:
+            if self.check_stop():
+                return []
+            if not os.path.exists(audio_path):
+                logging.error(f"Audio file not found: {audio_path}")
+                return []
+            logging.info(f"🧠 Transcribing: {os.path.basename(audio_path)}", extra={'is_status': True})
+            model = self.get_whisper_model()
+            segments, _ = model.transcribe(
+                audio_path, beam_size=1, best_of=1, word_timestamps=True,
+                language="en", condition_on_previous_text=False
+            )
+            words = []
+            for segment in segments:
+                if self.check_stop():
+                    break
+                if hasattr(segment, 'words') and segment.words:
+                    for w in segment.words:
+                        if w.word and w.word.strip():
+                            words.append({
+                                "word": w.word.strip(),
+                                "start": max(0, w.start),
+                                "end": max(w.start, w.end),
+                                "confidence": getattr(w, 'probability', 0.5)
+                            })
+            logging.info(f"✅ Transcribed {len(words)} words with speech recognition confidence")
+            return words
+        except Exception as e:
+            logging.error(f"❌ Transcription failed: {e}", exc_info=True)
+            return []
+
+    def generate_grouped_subtitles(self, words, words_per_group):
+        if not words:
+            return []
+        grouped_subtitles = []
+        for i in range(0, len(words), words_per_group):
+            group = words[i:i + words_per_group]
+            if group:
+                try:
+                    text = " ".join([w["word"] for w in group if w.get("word")])
+                    start_time = group[0]["start"]
+                    end_time = group[-1]["end"]
+                    avg_confidence = sum(w.get("confidence", 0.5) for w in group) / len(group)
+                    if end_time > start_time and text.strip():
+                        grouped_subtitles.append({
+                            "text": text.strip(),
+                            "start": start_time,
+                            "end": end_time,
+                            "confidence": avg_confidence
+                        })
+                except Exception as e:
+                    logging.warning(f"⚠️ Error grouping subtitle segment: {e}")
+                    continue
+        return grouped_subtitles
+
+    def _copy_file_safely(self, src, dst):
+        try:
+            if not os.path.exists(src):
+                raise FileNotFoundError(f"Source file not found: {src}")
+            dst_dir = os.path.dirname(dst)
+            os.makedirs(dst_dir, exist_ok=True)
+            shutil.copy2(src, dst)
+            logging.info(f"📋 Copied original video to output: {os.path.basename(dst)}")
+        except Exception as copy_error:
+            logging.error(f"❌ Failed to copy video: {copy_error}")
+            raise
+
+    def run_subprocess_with_timeout(self, cmd, timeout=None, check_stop_interval=1):
+        try:
+            process = subprocess.Popen(
+                cmd, 
+                stdout=subprocess.PIPE, 
+                stderr=subprocess.PIPE, 
+                text=True,
+                creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+            )
+            start_time = time.time()
+            while process.poll() is None:
+                if self.check_stop():
+                    process.terminate()
+                    try:
+                        process.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                    return None
+                if timeout and (time.time() - start_time) > timeout:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                    raise subprocess.TimeoutExpired(cmd, timeout)
+                time.sleep(check_stop_interval)
+            stdout, stderr = process.communicate()
+            if process.returncode != 0:
+                raise subprocess.CalledProcessError(process.returncode, cmd, output=stdout, stderr=stderr)
+            return process
+        except Exception as e:
+            if self.check_stop():
+                return None
+            raise
+
+    def add_background_music_with_ducking(self, video_path, music_path, output_path, words, volume=0.15, enable_ducking=True):
+        if self.check_stop():
+            return False
+        try:
+            logging.info(f"🎵 Adding background music: {os.path.basename(music_path)}", extra={'is_status': True})
+            for file_path, file_type in [(video_path, "Video"), (music_path, "Music")]:
+                if not os.path.exists(file_path):
+                    raise FileNotFoundError(f"{file_type} file not found: {file_path}")
+            if not enable_ducking:
+                logging.info("🎵 Adding music without ducking...")
+                cmd = [
+                    "ffmpeg", "-y", "-loglevel", "warning", "-i", video_path,
+                    "-stream_loop", "-1", "-i", music_path,
+                    "-filter_complex", f"[1:a]volume={volume}[music];[0:a][music]amix=inputs=2:duration=first:dropout_transition=2[audio_out]",
+                    "-map", "0:v", "-map", "[audio_out]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", output_path
+                ]
+            else:
+                logging.info("🎵 Adding music with smart ducking based on speech recognition...")
+                cmd = [
+                    "ffmpeg", "-y", "-loglevel", "warning", "-i", video_path,
+                    "-stream_loop", "-1", "-i", music_path,
+                    "-filter_complex", f"[1:a]volume={volume}[music];[0:a]asplit[original][sidechain];[music][sidechain]sidechaincompress=threshold=0.003:ratio=20:attack=5:release=50[ducked_music];[original][ducked_music]amix=inputs=2:duration=first[audio_out]",
+                    "-map", "0:v", "-map", "[audio_out]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", output_path
+                ]
+            process = self.run_subprocess_with_timeout(cmd, timeout=3600)
+            if process is None:
+                return False
+            if os.path.exists(output_path):
+                size_mb = os.path.getsize(output_path) / (1024 * 1024)
+                logging.info(f"✅ Background music added successfully with speech-aware ducking (Size: {size_mb:.1f}MB)")
+                return True
+            else:
+                raise Exception("Output file was not created")
+        except Exception as e:
+            logging.error(f"❌ Failed to add background music: {e}")
+            return False
+
+    def auto_edit_video(self, input_path, output_path):
+        if self.check_stop():
+            return False
+        try:
+            logging.info(f"✂️ Auto-editing: {os.path.basename(input_path)}", extra={'is_status': True})
+            if not os.path.exists(input_path):
+                raise FileNotFoundError(f"Video file not found: {input_path}")
+            cmd = [
+                "auto-editor", input_path, "--no-open",
+                "--output", output_path,
+                "--edit", "audio:threshold=-30dB,margin=0.1s"
+            ]
+            process = self.run_subprocess_with_timeout(cmd, timeout=3600)
+            if process is None:
+                return False
+            if os.path.exists(output_path):
+                size_mb = os.path.getsize(output_path) / (1024 * 1024)
+                logging.info(f"✅ Auto-edited video successfully (Size: {size_mb:.1f} MB)")
+                return True
+            else:
+                raise Exception("Auto-edited output file was not created")
+        except Exception as e:
+            logging.error(f"❌ Auto-edit failed: {e}")
+            return False
+
+    def merge_videos(self, main_video, extra_video, output_path):
+        if self.check_stop():
+            return False
+        try:
+            logging.info(f"🔗 Merging videos: {os.path.basename(main_video)} + {os.path.basename(extra_video)}", extra={'is_status': True})
+            for video_path in [main_video, extra_video]:
+                if not os.path.exists(video_path):
+                    raise FileNotFoundError(f"Video file not found: {video_path}")
+            concat_file = os.path.join(tempfile.gettempdir(), "concat_list.txt")
+            with open(concat_file, 'w', encoding='utf-8') as f:
+                f.write(f"file '{main_video}'\nfile '{extra_video}'")
+            cmd = [
+                "ffmpeg", "-y", "-loglevel", "warning", "-f", "concat",
+                "-safe", "0", "-i", concat_file,
+                "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", output_path
+            ]
+            process = self.run_subprocess_with_timeout(cmd, timeout=3600)
+            if process is None:
+                return False
+            if os.path.exists(output_path):
+                size_mb = os.path.getsize(output_path) / (1024 * 1024)
+                logging.info(f"✅ Merged videos successfully (Size: {size_mb:.1f} MB)")
+                return True
+            else:
+                raise Exception("Merged output file was not created")
+        except Exception as e:
+            logging.error(f"❌ Video merging failed: {e}")
+            return False
+        finally:
+            if os.path.exists(concat_file):
+                try:
+                    os.remove(concat_file)
+                except Exception:
+                    pass
+
+    def encode_video_with_subtitles(self, input_path, subtitle_path, output_path, quality, use_gpu):
+        if self.check_stop():
+            return False
+        try:
+            logging.info(f"🎬 Encoding video with subtitles: {os.path.basename(input_path)}", extra={'is_status': True})
+
+            if not os.path.exists(input_path):
+                raise FileNotFoundError(f"Video file not found: {input_path}")
+            if not os.path.exists(subtitle_path):
+                raise FileNotFoundError(f"Subtitle file not found: {subtitle_path}")
+
+            input_path = str(Path(input_path).resolve())
+            subtitle_path = str(Path(subtitle_path).resolve())
+            output_path = str(Path(output_path).resolve())
+
+            subtitle_path_escaped = subtitle_path.replace('\\', '/').replace(':', '\\:')
+
+            preset = quality if quality in ["ultrafast", "fast", "medium", "slow"] else "fast"
+
+            if use_gpu and self.is_nvenc_available():
+                codec = "h264_nvenc"
+                nvenc_preset_map = {"ultrafast": "p1", "fast": "p2", "medium": "p4", "slow": "p7"}
+                preset_value = nvenc_preset_map.get(preset, "p4")
+
+                cmd = [
+                    "ffmpeg", "-y", "-loglevel", "warning", "-i", input_path,
+                    "-vf", f"ass='{subtitle_path_escaped}'",
+                    "-c:v", codec, "-preset:v", preset_value,
+                    "-rc:v", "vbr", "-cq:v", "23",
+                    "-c:a", "aac", "-b:a", "192k", "-f", "mp4", output_path
+                ]
+
+                try:
+                    process = self.run_subprocess_with_timeout(cmd, timeout=3600)
+                    if process is None:
+                        return False
+                    if os.path.exists(output_path):
+                        size_mb = os.path.getsize(output_path) / (1024 * 1024)
+                        logging.info(f"✅ Encoded video with subtitles successfully using NVENC (Size: {size_mb:.1f} MB)")
+                        return True
+                    else:
+                        raise Exception("Encoded output file was not created")
+                except subprocess.CalledProcessError as e:
+                    logging.warning(f"⚠️ NVENC encoding failed: {e.stderr}. Falling back to libx264.")
+
+            codec = "libx264"
+            cmd = [
+                "ffmpeg", "-y", "-loglevel", "warning", "-i", input_path,
+                "-vf", f"ass='{subtitle_path_escaped}'",
+                "-c:v", codec, "-preset", preset, "-crf", "23",
+                "-c:a", "aac", "-b:a", "192k", "-f", "mp4", output_path
+            ]
+
+            process = self.run_subprocess_with_timeout(cmd, timeout=3600)
+            if process is None:
+                return False
+            if os.path.exists(output_path):
+                size_mb = os.path.getsize(output_path) / (1024 * 1024)
+                logging.info(f"✅ Encoded video with subtitles successfully using libx264 (Size: {size_mb:.1f} MB)")
+                return True
+            else:
+                raise Exception("Encoded output file was not created")
+
+        except subprocess.CalledProcessError as e:
+            logging.error(f"❌ Video encoding with subtitles failed: {e}. FFmpeg output: {e.stderr}")
+            return False
+        except Exception as e:
+            logging.error(f"❌ Video encoding with subtitles failed: {e}")
+            return False
+
+    def is_nvenc_available(self):
+        try:
+            result = subprocess.run(["ffmpeg", "-encoders"], capture_output=True, text=True, timeout=10)
+            return "h264_nvenc" in result.stdout
+        except Exception:
+            return False
+
+    def extract_audio(self, video_path, audio_path):
+        if self.check_stop():
+            return False
+        try:
+            logging.info(f"🔊 Extracting audio from: {os.path.basename(video_path)}")
+            if not os.path.exists(video_path):
+                raise FileNotFoundError(f"Video file not found: {video_path}")
+            cmd = [
+                "ffmpeg", "-y", "-loglevel", "warning", "-i", video_path,
+                "-vn", "-acodec", "mp3", "-q:a", "2", audio_path
+            ]
+            process = self.run_subprocess_with_timeout(cmd, timeout=600)
+            if process is None:
+                return False
+            if os.path.exists(audio_path):
+                logging.info("✅ Audio extracted successfully")
+                return True
+            else:
+                raise Exception("Audio file was not created")
+        except Exception as e:
+            logging.error(f"❌ Audio extraction failed: {e}")
+            return False
+
+    def process_all_videos(self, input_videos, extra_video, output_dir, background_music, quality, use_gpu, music_volume, enable_ducking, enable_auto_edit, subtitle_settings):
+        try:
+            self.check_ffmpeg_availability()
+            total_videos = len(input_videos)
+            processed_videos = 0
+            temp_dir = tempfile.gettempdir()
+            for idx, video_path in enumerate(input_videos, 1):
+                if self.check_stop():
+                    break
+                logging.info(f"📼 Processing video {idx}/{total_videos}: {os.path.basename(video_path)}", extra={'is_status': True})
+                video_name = os.path.splitext(os.path.basename(video_path))[0]
+                video_title = video_name
+                if self.video_title_map:
+                    try:
+                        for item in self.video_title_map:
+                            if isinstance(item, dict) and "filename" in item and "title" in item:
+                                if item["filename"] == video_name:
+                                    video_title = item["title"]
+                                    break
+                        else:
+                            logging.warning(f"No title found for '{video_name}' in video_title_map, using filename")
+                    except Exception as e:
+                        logging.warning(f"Invalid video_title_map structure: {e}, using filename")
+                self.update_progress((processed_videos / total_videos) * 100)
+                try:
+                    temp_audio = os.path.join(temp_dir, f"temp_audio_{idx}.mp3")
+                    temp_video = os.path.join(temp_dir, f"temp_video_{idx}.mp4")
+                    temp_ass = os.path.join(temp_dir, f"temp_ass_{idx}.ass")
+                    final_output = os.path.join(output_dir, f"{video_title}_processed.mp4")
+
+                    srt_path = os.path.join(output_dir, f"{video_name}.srt")
+                    synced_srt_path = os.path.join(output_dir, f"synced_{video_name}.srt")
+                    use_existing_sub = os.path.exists(synced_srt_path) or os.path.exists(srt_path)
+                    srt_file = synced_srt_path if os.path.exists(synced_srt_path) else srt_path if os.path.exists(srt_path) else None
+                    words = []
+
+                    if use_existing_sub:
+                        logging.info(f"✅ Using existing SRT file: {os.path.basename(srt_file)}")
+                        self.srt_to_ass(srt_file, temp_ass, subtitle_settings)
+                    else:
+                        if self.extract_audio(video_path, temp_audio):
+                            words = self.transcribe_audio_optimized(temp_audio)
+                            if self.check_stop():
+                                break
+                            temp_srt = os.path.join(temp_dir, f"temp_srt_{idx}.srt")
+                            self.generate_srt_subtitles(words, temp_srt, subtitle_settings)
+                            temp_synced_srt = os.path.join(temp_dir, f"temp_synced_srt_{idx}.srt")
+                            self.synchronize_srt_subtitles(video_path, temp_srt, temp_synced_srt)
+                            srt_file = temp_synced_srt if os.path.exists(temp_synced_srt) else temp_srt
+                            self.srt_to_ass(srt_file, temp_ass, subtitle_settings)
+                        else:
+                            logging.warning(f"⚠️ Audio extraction failed for {video_name}, copying original video")
+                            self._copy_file_safely(video_path, final_output)
+                            continue
+
+                    current_video = video_path
+                    if enable_auto_edit:
+                        auto_edited_path = os.path.join(temp_dir, f"auto_edited_{idx}.mp4")
+                        if self.auto_edit_video(video_path, auto_edited_path):
+                            current_video = auto_edited_path
+                        else:
+                            current_video = video_path
+                    if extra_video:
+                        merged_path = os.path.join(temp_dir, f"merged_{idx}.mp4")
+                        if self.merge_videos(current_video, extra_video, merged_path):
+                            current_video = merged_path
+                        else:
+                            logging.warning("⚠️ Video merging failed, proceeding with original video")
+                    if background_music:
+                        music_output = os.path.join(temp_dir, f"music_{idx}.mp4")
+                        if self.add_background_music_with_ducking(current_video, background_music, music_output, words, music_volume, enable_ducking):
+                            current_video = music_output
+                        else:
+                            logging.warning("⚠️ Adding background music failed, proceeding without music")
+                    if not self.encode_video_with_subtitles(current_video, temp_ass, final_output, quality, use_gpu):
+                        logging.warning(f"⚠️ Encoding failed for {video_name}, copying original video")
+                        self._copy_file_safely(video_path, final_output)
+                    processed_videos += 1
+                    self.update_progress((processed_videos / total_videos) * 100)
+                except Exception as e:
+                    logging.error(f"❌ Error processing video {video_name}: {e}", exc_info=True)
+                    self._copy_file_safely(video_path, os.path.join(output_dir, f"{video_title}_failed.mp4"))
+                    processed_videos += 1
+                    self.update_progress((processed_videos / total_videos) * 100)
+                finally:
+                    for temp_file in [temp_audio, temp_video, temp_ass, temp_srt if 'temp_srt' in locals() else None, temp_synced_srt if 'temp_synced_srt' in locals() else None, merged_path if extra_video else None, music_output if background_music else None, auto_edited_path if enable_auto_edit else None]:
+                        if temp_file and os.path.exists(temp_file):
+                            try:
+                                os.remove(temp_file)
+                            except Exception:
+                                pass
+            if not self.check_stop():
+                logging.info(f"🎉 Completed processing {processed_videos}/{total_videos} videos", extra={'is_status': True})
+        except Exception as e:
+            logging.error(f"❌ Fatal error in processing pipeline: {e}", exc_info=True)
+            raise
+
+if __name__ == "__main__":
+    try:
+        root = tk.Tk()
+        app = VideoProcessorGUI(root)
+        root.mainloop()
+    except Exception as e:
+        logging.error(f"❌ Application failed to start: {e}", exc_info=True)
+        messagebox.showerror("Fatal Error", f"Application failed to start: {str(e)}")
+
+
+        grouped subtitle per word is not working when the manually editing the subtitle so please give me the final app code
