@@ -1,25 +1,35 @@
-// You can even use pointers to channels—here’s how!
-// Pointer to Channel
+// You can even use pointers to channels — here’s how!
+// Topic: Pointer to Channel
 
-// Go
-// Problem:
-ch := make(chan int)
-ptr := &ch // trying to pass pointer to send?
-
-// Solution:
+// ---------------- PROBLEM ----------------
 package main
+
 import "fmt"
+
+func problem() {
+	ch := make(chan int)
+	ptr := &ch // pointer to channel
+
+	// Trying to send directly using the pointer — ❌ not allowed
+	*ptr <- 10 // uncommenting this will cause confusion for most beginners
+
+	fmt.Println("Problem: You can't directly send using pointer to channel!")
+}
+
+// ---------------- SOLUTION ----------------
 func send(ch *chan int, val int) {
-    *ch <- val // send via pointer
+	*ch <- val // send via pointer
 }
+
+func solution() {
+	ch := make(chan int)
+	go func() {
+		send(&ch, 42)
+	}()
+	fmt.Println("Solution Output:", <-ch) // ✅ Output: 42
+}
+
 func main() {
-    ch := make(chan int)
-    go func() {
-        send(&ch, 42)
-    }()
-    fmt.Println(<-ch)
+	problem()
+	solution()
 }
-// Output: 42
-
-
-give two seperate code snippet in a single file with the problem and solution statement

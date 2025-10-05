@@ -1,23 +1,20 @@
-// Looping over maps? Here’s why pointers inside range fail!
-// Pointer in Range Over Map
-
-// Go
-// Problem:
-m := map[string]int{"a":1,"b":2}
-for k, v := range m {
-    ptr := &v
-    *ptr *= 2
-}
-fmt.Println(m) // unchanged ❌
-
-// Solution:
 package main
+
 import "fmt"
+
 func main() {
-    m := map[string]int{"a":1,"b":2}
-    for k := range m {
-        m[k] *= 2
-    }
-    fmt.Println(m)
+	fmt.Println("=== Problem: Pointers in range ===")
+	m1 := map[string]int{"x": 1, "y": 2}
+	for _, v := range m1 {
+		ptr := &v // pointer to loop variable (copy!)
+		*ptr *= 2 // modifies the copy, not the map
+	}
+	fmt.Println("Map after loop:", m1) // unchanged ❌
+
+	fmt.Println("\n=== Solution: Direct map update ===")
+	m2 := map[string]int{"x": 1, "y": 2}
+	for k := range m2 {
+		m2[k] *= 2 // directly updates the map
+	}
+	fmt.Println("Map after loop:", m2) // updated ✅
 }
-// Output: map[a:2 b:4]

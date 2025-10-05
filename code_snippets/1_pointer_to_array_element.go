@@ -1,22 +1,29 @@
 // Want to update array elements efficiently? Pointers to the rescue!
-// Pointer to Array Element
+// Topic: Pointer to Array Element
 
-// Go
-// Problem:
-arr := [3]int{1,2,3}
-ptr := &arr[0]
-*ptr = 10
-fmt.Println(arr) // 10 ✅ only first element
-
-// Solution:
+// ---------------- PROBLEM ----------------
 package main
+
 import "fmt"
-func main() {
-    arr := [3]int{1,2,3}
-    for i := range arr {
-        ptr := &arr[i] // pointer each
-        *ptr *= 2
-    }
-    fmt.Println(arr)
+
+func problem() {
+	arr := [3]int{1, 2, 3}
+	ptr := &arr[0]                      // pointer to first element
+	*ptr = 2                            // modifies only arr[0]
+	fmt.Println("Problem Output:", arr) // [10 2 3]
 }
-// Output: [2 4 6]
+
+// ---------------- SOLUTION ----------------
+func solution() {
+	arr := [3]int{1, 2, 3}
+	for i := range arr {
+		ptr := &arr[i] // pointer to each element
+		*ptr *= 2
+	}
+	fmt.Println("Solution Output:", arr) // [2 4 6]
+}
+
+func main() {
+	problem()
+	solution()
+}

@@ -1,4 +1,4 @@
-I want you to:
+zI want you to:
 1. Generate 10 viral YouTube Shorts ideas that are focused on following interview Q&A, pitfalls, or coding challenges. Each idea must have:
 
 
@@ -53,9 +53,9 @@ generate 10 more without repeating concepts and code give me the code
 
 ========================================================
 
-give two seperate code snippet in a single file with the problem and solution statement
+please give me the problem and solution statement through another code snippet by differentiate output both output same so what's the difference that i can't shopw in the output.give two seperate code snippet in a single file with the problem and solution statement
 
-==========================================================
+============================================================================
 
 
 Your task:  

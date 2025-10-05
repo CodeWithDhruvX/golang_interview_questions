@@ -1,20 +1,30 @@
-// Pointers with interfaces can surprise you—here's how to update safely!
-// Pointer to Interface Value
-
-// Go
-// Problem:
-var i interface{} = 5
-pi := &i
-*pi = 10
-fmt.Println(i) // Output might be confusing
-
-// Solution:
 package main
+
 import "fmt"
-func main() {zz
-    var i interface{} = 5
-    pi := &i
-    *pi = 10
-    fmt.Println(i) // updated
+
+func main() {
+	// ----------------------------
+	// ❌ Problem: Pointer to Interface
+	// ----------------------------
+	fmt.Println("=== Problem: Pointer to Interface ===")
+	a := 5
+	var i interface{} = a // interface holds a copy of 'a'
+	pi := &i              // pointer to interface
+
+	*pi = 10              // update interface
+	fmt.Println("a =", a) // original variable unchanged
+	fmt.Println("i =", i) // interface updated
+
+	fmt.Println()
+
+	// ----------------------------
+	// ✅ Solution: Pointer to Concrete Value
+	// ----------------------------
+	fmt.Println("=== Solution: Pointer to Concrete Value ===")
+	b := 5
+	var j interface{} = &b // interface holds pointer to 'b'
+
+	*(j.(*int)) = 10      // safely update underlying value
+	fmt.Println("b =", b) // original variable updated
+	fmt.Println("j =", j) // interface updated
 }
-// Output: 10

@@ -1,22 +1,37 @@
-// Swap variables in Go using pointers—super clean trick!
-// Pointer Swapping
-
-// Go
-// Problem:
-a, b := 1, 2
-a, b = b, a // works, but pointers version?
-
-// Solution:
 package main
+
 import "fmt"
-func swap(x, y *int) {
-    *x, *y = *y, *x // swap values
+
+// ----------------------------
+// ❌ Problem: Swapping without pointers
+// ----------------------------
+func swapProblem(x, y int) {
+	x, y = y, x                              // only swaps local copies
+	fmt.Println("Inside swapProblem:", x, y) // swapped inside function
 }
+
+func problem() {
+	fmt.Println("=== Problem ===")
+	a, b := 1, 2
+	swapProblem(a, b)
+	fmt.Println("Outside swapProblem:", a, b) // ❌ values unchanged: 1 2
+}
+
+// ----------------------------
+// ✅ Solution: Swapping with pointers
+// ----------------------------
+func swapSolution(x, y *int) {
+	*x, *y = *y, *x // swaps actual values via pointers
+}
+
+func solution() {
+	fmt.Println("=== Solution ===")
+	a, b := 1, 2
+	swapSolution(&a, &b)
+	fmt.Println("After swapSolution:", a, b) // ✅ values swapped: 2 1
+}
+
 func main() {
-    a, b := 1, 2
-    swap(&a, &b)
-    fmt.Println(a, b)
+	problem()
+	solution()
 }
-// Output: 2 1
-
-
