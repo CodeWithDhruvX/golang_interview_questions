@@ -7,13 +7,14 @@ package main
 import "fmt"
 
 func problem() {
-	ch := make(chan int)
-	ptr := &ch // pointer to channel
+	// ch := make(chan int)
+	// ptr := &ch // pointer to channel
 
-	// Trying to send directly using the pointer — ❌ not allowed
-	*ptr <- 10 // uncommenting this will cause confusion for most beginners
+	// // Trying to send directly using the pointer
+	// // — ❌ not allowed
+	// *ptr <- 10 // uncommenting this will cause confusion for most beginners
 
-	fmt.Println("Problem: You can't directly send using pointer to channel!")
+	// fmt.Println("Problem: You can't directly send using pointer to channel!")
 }
 
 // ---------------- SOLUTION ----------------

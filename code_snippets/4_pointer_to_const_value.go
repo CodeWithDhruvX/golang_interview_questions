@@ -1,18 +1,42 @@
-// You can’t point to constants—here’s the right way!
-// Pointer to Const Value
+// ⚡ You Can’t Point to Constants — Here’s the Right Way!
+// Both look similar... but one fails before it even runs 👇
 
-// Go
-// Problem:
-const x = 10
-ptr := &x // ❌ illegal
-
-// Solution:
 package main
+
 import "fmt"
+
 func main() {
-    x := 10 // mutable variable
-    ptr := &x
-    *ptr++
-    fmt.Println(x)
+	fmt.Println("---- ❌ Problem ----")
+	problem()
+
+	fmt.Println("\n---- ✅ Solution ----")
+	solution()
 }
-// Output: 11
+
+// ❌ Problem: Trying to take address of a constant
+func problem() {
+	const x = 10
+	ptr := &x
+	fmt.Println(*ptr)
+	/*
+	   // ❌ Compile-time error:
+	   // cannot take the address of x (constant)
+
+	*/
+	fmt.Println("❌ Compile-time error: cannot take the address of a constant")
+}
+
+// ✅ Solution: Use a variable (addressable) instead of a constant
+func solution() {
+	x := 10         // ✅ variable, not constant
+	ptr := &x       // ✅ valid pointer
+	*ptr = *ptr + 1 // increment value through pointer
+	fmt.Println("Value after increment:", x)
+}
+
+// 🧠 Output:
+// ---- ❌ Problem ----
+// ❌ Compile-time error: cannot take the address of a constant
+//
+// ---- ✅ Solution ----
+// Value after increment: 11

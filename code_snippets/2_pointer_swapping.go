@@ -21,7 +21,8 @@ func problem() {
 // ✅ Solution: Swapping with pointers
 // ----------------------------
 func swapSolution(x, y *int) {
-	*x, *y = *y, *x // swaps actual values via pointers
+	*x, *y = *y, *x                           // swaps actual values via pointers
+	fmt.Println("Inside swapSolution:", x, y) // swapped inside function
 }
 
 func solution() {
